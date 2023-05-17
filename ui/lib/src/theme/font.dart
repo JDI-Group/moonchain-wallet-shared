@@ -73,8 +73,12 @@ class TextStylePack {
   DecoratableTextStyle get error =>
       DecoratableTextStyle(_primary.copyWith(color: colorsTheme.error));
 
-  DecoratableTextStyle get buttonDisabled => DecoratableTextStyle(
-        _primary.copyWith(color: colorsTheme.buttonDisabled),
+  DecoratableTextStyle get button => DecoratableTextStyle(
+        _primary.copyWith(color: colorsTheme.white),
+      );
+
+  DecoratableTextStyle get disabledButton => DecoratableTextStyle(
+        _primary.copyWith(color: colorsTheme.disabledButton),
       );
 }
 

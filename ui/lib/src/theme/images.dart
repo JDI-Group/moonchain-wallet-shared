@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mxc_ui/mxc_ui.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class ImagesTheme {
   const ImagesTheme._();
@@ -19,6 +20,11 @@ class ImagesTheme {
   }
 
   // login
+  ImageProvider get datadash => const AssetImage(
+        'assets/images/login/datadash.png',
+        package: mxcUiPackageName,
+      );
+
   ImageProvider get mxc => const AssetImage(
         'assets/images/login/mxc.png',
         package: mxcUiPackageName,

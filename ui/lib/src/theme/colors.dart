@@ -52,7 +52,8 @@ class ColorsTheme {
   final secondaryText = const Color(0xFF98A6AD);
 
   // button
-  final buttonDisabled = const Color(0xFFBBBFC6);
+  final disabledButton = const Color(0xFFBBBFC6);
+  final fullRoundButton = const Color(0xFF292929);
 
   // tip
   final success = const Color(0xFF10C469);
@@ -130,7 +131,10 @@ class ColorsThemeDark implements ColorsTheme {
 
   // button
   @override
-  Color get buttonDisabled => const Color(0xFF484A4D);
+  Color get disabledButton => const Color(0xFF484A4D);
+
+  @override
+  Color get fullRoundButton => const Color(0xFF484A4D);
 
   // tip
   @override
