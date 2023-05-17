@@ -1,0 +1,24 @@
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  strong-mode:
+    implicit-casts: false
+    implicit-dynamic: false
+  exclude:
+    - "**/generated_plugin_registrant.dart"
+    - 'lib/**/*.chopper.dart'
+    - 'lib/**/*.swagger.dart'
+    - 'lib/**/*.g.dart'
+  errors:
+    todo: ignore
+
+linter:
+  rules:
+    always_put_required_named_parameters_first: false
+    avoid_classes_with_only_static_members: false # we love util classes
+    sort_constructors_first: true
+    prefer_single_quotes: true
+    public_member_api_docs: false
+    sort_pub_dependencies: false # we sort pub deps by feature not alphabetically
+    avoid_dynamic_calls: true
+    require_trailing_commas: true

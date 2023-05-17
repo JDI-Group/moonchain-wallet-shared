@@ -1,0 +1,12 @@
+targets:
+  $default:
+    sources:
+      - lib/**
+      - swagger/**
+      - $package$
+    builders:
+      swagger_dart_code_generator:
+        options:
+          with_base_url: false
+          input_folder: swagger/
+          output_folder: lib/src/data/api/supernode/
