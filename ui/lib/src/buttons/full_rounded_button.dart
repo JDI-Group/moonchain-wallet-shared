@@ -28,7 +28,7 @@ class _MxcFullRoundedButtonState extends State<MxcFullRoundedButton> {
     var buttonColor = primaryColor;
 
     if (widget.onTap == null) {
-      buttonColor = ColorsTheme.of(context).disabledButton;
+      buttonColor = ColorsTheme.of(context).disabledButton.withOpacity(0.2);
     } else if (hovering) {
       buttonColor = buttonColor.withOpacity(0.8);
     }
