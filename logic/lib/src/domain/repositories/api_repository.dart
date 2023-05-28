@@ -1,7 +1,11 @@
+import 'package:mxc_logic/mxc_logic.dart';
+
 import 'wallet/address.dart';
 
 class ApiRepository {
-  ApiRepository();
+  ApiRepository({required this.authStorageRepository});
 
-  AddressService get address => const AddressService();
+  final AuthenticationStorageRepository authStorageRepository;
+
+  AddressService get address => AddressService(authStorageRepository);
 }

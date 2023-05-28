@@ -2,17 +2,22 @@ import 'package:bip39/bip39.dart' as bip39;
 import 'package:convert/convert.dart';
 import 'package:ed25519_hd_key/ed25519_hd_key.dart';
 import 'package:hex/hex.dart';
+import 'package:mxc_logic/mxc_logic.dart';
 import 'package:web3dart/credentials.dart';
 
 abstract class IAddressService {
   String generateMnemonic();
   Future<String> getPrivateKey(String mnemonic);
   Future<EthereumAddress> getPublicAddress(String privateKey);
+  Future<bool> setupFromMnemonic(String mnemonic);
+  Future<bool> setupFromPrivateKey(String privateKey);
   String entropyToMnemonic(String entropyMnemonic);
 }
 
 class AddressService implements IAddressService {
-  const AddressService();
+  const AddressService(this._userSetupStore);
+
+  final AuthenticationStorageRepository _userSetupStore;
 
   @override
   String generateMnemonic() {
@@ -44,4 +49,20 @@ class AddressService implements IAddressService {
     return private.address;
   }
 
+  @override
+  Future<bool> setupFromMnemonic(String mnemonic) async {
+    final cryptMnemonic = bip39.mnemonicToEntropy(mnemonic);
+    final privateKey = await getPrivateKey(mnemonic);
+
+    _userSetupStore.saveMnemonic(cryptMnemonic);
+    _userSetupStore.savePrivateKey(privateKey);
+    return true;
+  }
+
+  @override
+  Future<bool> setupFromPrivateKey(String privateKey) async {
+    _userSetupStore.saveMnemonic(null);
+    _userSetupStore.savePrivateKey(privateKey);
+    return true;
+  }
 }
