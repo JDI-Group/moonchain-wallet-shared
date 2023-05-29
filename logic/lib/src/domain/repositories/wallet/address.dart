@@ -15,9 +15,9 @@ abstract class IAddressService {
 }
 
 class AddressService implements IAddressService {
-  const AddressService(this._userSetupStore);
+  const AddressService(this._authStorageRepository);
 
-  final AuthenticationStorageRepository _userSetupStore;
+  final AuthenticationStorageRepository _authStorageRepository;
 
   @override
   String generateMnemonic() {
@@ -54,15 +54,15 @@ class AddressService implements IAddressService {
     final cryptMnemonic = bip39.mnemonicToEntropy(mnemonic);
     final privateKey = await getPrivateKey(mnemonic);
 
-    _userSetupStore.saveMnemonic(cryptMnemonic);
-    _userSetupStore.savePrivateKey(privateKey);
+    _authStorageRepository.saveMnemonic(cryptMnemonic);
+    _authStorageRepository.savePrivateKey(privateKey);
     return true;
   }
 
   @override
   Future<bool> setupFromPrivateKey(String privateKey) async {
-    _userSetupStore.saveMnemonic(null);
-    _userSetupStore.savePrivateKey(privateKey);
+    _authStorageRepository.saveMnemonic(null);
+    _authStorageRepository.savePrivateKey(privateKey);
     return true;
   }
 }
