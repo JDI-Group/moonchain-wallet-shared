@@ -80,6 +80,10 @@ class TextStylePack {
   DecoratableTextStyle get disabledButton => DecoratableTextStyle(
         _primary.copyWith(color: colorsTheme.disabledButton),
       );
+
+  DecoratableTextStyle get white => DecoratableTextStyle(
+        _primary.copyWith(color: colorsTheme.white),
+      );
 }
 
 class DecoratableTextStyle {
