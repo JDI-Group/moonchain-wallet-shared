@@ -18,6 +18,8 @@ abstract class MxcCircleButton extends StatelessWidget {
     this.title,
     this.color,
     this.titleStyle,
+    this.textSpace,
+    this.shadowRadius
   }) : super(key: key);
 
   const factory MxcCircleButton.image({
@@ -37,6 +39,9 @@ abstract class MxcCircleButton extends StatelessWidget {
     String? title,
     Color? color,
     TextStyle? titleStyle,
+    double? iconSize,
+    double? textSpace,
+    final double? shadowRadius
   }) = _MxcCircleIconButton;
 
   const factory MxcCircleButton.svg({
@@ -54,6 +59,8 @@ abstract class MxcCircleButton extends StatelessWidget {
   final String? title;
   final Color? color;
   final TextStyle? titleStyle;
+  final double? textSpace;
+  final double? shadowRadius;
 
   Color _contentColor(BuildContext context) {
     Color color;
@@ -96,8 +103,8 @@ abstract class MxcCircleButton extends StatelessWidget {
                 ),
             ],
           ),
-          width: 52,
-          height: 52,
+          width: shadowRadius ?? 52,
+          height: shadowRadius ?? 52,
           child: buildChild(context),
         ),
       ),
@@ -107,7 +114,7 @@ abstract class MxcCircleButton extends StatelessWidget {
       widget = Column(
         children: [
           widget,
-          const SizedBox(height: 6),
+          SizedBox(height: textSpace ?? 6),
           Text(
             title!,
             textAlign: TextAlign.center,
@@ -176,6 +183,9 @@ class _MxcCircleIconButton extends MxcCircleButton {
     String? title,
     Color? color,
     TextStyle? titleStyle,
+    double? this.iconSize, 
+    double? textSpace,
+    double? shadowRadius
   }) : super._(
           key: key,
           filled: filled,
@@ -183,13 +193,17 @@ class _MxcCircleIconButton extends MxcCircleButton {
           title: title,
           color: color,
           titleStyle: titleStyle,
+          textSpace: textSpace,
+          shadowRadius: shadowRadius
         );
 
   final IconData icon;
+  final double? iconSize;
 
   @override
   Widget buildChild(BuildContext context) => Icon(
         icon,
+        size: iconSize,
         color: _contentColor(context),
       );
 }
