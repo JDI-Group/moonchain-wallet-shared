@@ -65,10 +65,10 @@ class ColorsThemeDark implements ColorsTheme {
 
   // background
   @override
-  final primaryBackground = const Color(0xFF111111);
+  final primaryBackground = const Color(0xFF0C0C0D);
 
   @override
-  final secondaryBackground = const Color(0xFF1C1C1E);
+  final secondaryBackground = const Color(0xFF292929);
 
   @override
   final white = Colors.white;
