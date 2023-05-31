@@ -19,14 +19,14 @@ class ImagesTheme {
     return Provider.of<ImagesTheme>(context, listen: listen);
   }
 
-  // login
+  // Splash
   ImageProvider get datadash => const AssetImage(
-        'assets/images/login/datadash.png',
+        'assets/images/splash/datadash.png',
         package: mxcUiPackageName,
       );
 
   ImageProvider get mxc => const AssetImage(
-        'assets/images/login/mxc.png',
+        'assets/images/splash/mxc.png',
         package: mxcUiPackageName,
       );
 }

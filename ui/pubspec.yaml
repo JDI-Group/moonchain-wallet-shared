@@ -34,5 +34,5 @@ flutter:
           weight: 600
   assets:
     - assets/images/app/
-    - assets/images/login/
+    - assets/images/splash/
     - assets/svg/
