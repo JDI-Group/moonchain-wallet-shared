@@ -19,14 +19,23 @@ class ImagesTheme {
     return Provider.of<ImagesTheme>(context, listen: listen);
   }
 
-  // login
+  // Splash
   ImageProvider get datadash => const AssetImage(
-        'assets/images/login/datadash.png',
+        'assets/images/splash/datadash.png',
         package: mxcUiPackageName,
       );
 
   ImageProvider get mxc => const AssetImage(
-        'assets/images/login/mxc.png',
+        'assets/images/splash/mxc.png',
+        package: mxcUiPackageName,
+      );
+    ImageProvider get bitcoin => const AssetImage(
+        'assets/images/bitcoin.png',
+        package: mxcUiPackageName,
+      );
+
+        ImageProvider get sliderPlaceHolder => const AssetImage(
+        'assets/images/slider_placeholder.png',
         package: mxcUiPackageName,
       );
 }
