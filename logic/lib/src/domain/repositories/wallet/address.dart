@@ -32,12 +32,11 @@ class AddressService implements IAddressService {
   @override
   Future<String> getPrivateKey(String mnemonic) async {
     final seed = bip39.mnemonicToSeedHex(mnemonic);
-    final master = await ED25519_HD_KEY.getMasterKeyFromSeed(hex.decode(seed),
-        masterSecret: 'Bitcoin seed');
+    final master = await ED25519_HD_KEY.getMasterKeyFromSeed(
+      hex.decode(seed),
+      masterSecret: 'mxc_seed',
+    );
     final privateKey = HEX.encode(master.key);
-
-    print('private: $privateKey');
-
     return privateKey;
   }
 
@@ -45,7 +44,6 @@ class AddressService implements IAddressService {
   Future<EthereumAddress> getPublicAddress(String privateKey) async {
     final private = EthPrivateKey.fromHex(privateKey);
 
-    print('address: ${private.address}');
     return private.address;
   }
 
