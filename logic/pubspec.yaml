@@ -22,9 +22,10 @@ dependencies:
   bip39: ^1.0.6
   ed25519_hd_key: ^2.2.0
   hex: ^0.2.0
-  web3dart: ^2.6.1
   built_value: ^8.4.4
   built_collection: ^5.1.1
+  web3dart:
+    path: ../../web3dart
 
 dev_dependencies:
   flutter_lints: ^2.0.1
