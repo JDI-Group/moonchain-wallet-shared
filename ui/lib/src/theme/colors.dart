@@ -25,6 +25,10 @@ class ColorsTheme {
   final white = Colors.white;
   final box = Colors.white;
 
+  // indicator
+  final onTertiary = const Color(0xff171717);
+  final tertiary = const Color(0xffBFBFBF);
+
   // components
   final purpleMain = const Color(0xFF461AB2);
   final purple600 = const Color(0xFF2A0F69);
@@ -41,6 +45,8 @@ class ColorsTheme {
   final mxcPurple200 = const Color(0xFFDECAFD);
   final mxcPurple100 = const Color(0xFFF4EFFC);
 
+  final green = const Color(0xff65C466);
+
   // shadow
   Color get shadow => purple200;
 
@@ -54,10 +60,12 @@ class ColorsTheme {
   // button
   final disabledButton = const Color(0xFFBBBFC6);
   final fullRoundButton = const Color(0xFF292929);
+  final focusButton = const Color(0xff32D8A1);
 
   // tip
   final success = const Color(0xFF10C469);
   final error = const Color(0xFFD22D2D);
+  final active = const Color(0xff40DF32);
 }
 
 class ColorsThemeDark implements ColorsTheme {
@@ -69,6 +77,12 @@ class ColorsThemeDark implements ColorsTheme {
 
   @override
   final secondaryBackground = const Color(0xFF292929);
+
+  @override
+  final onTertiary = const Color(0xffBFBFBF);
+  
+  @override
+  final tertiary = const Color(0xff171717);
 
   @override
   final white = Colors.white;
@@ -117,6 +131,9 @@ class ColorsThemeDark implements ColorsTheme {
   final mxcPurple100 = const Color(0xFF242228);
 
   @override
+  Color get green => const Color(0xff65C466);
+
+  @override
   Color get shadow => purple200;
 
   @override
@@ -136,10 +153,17 @@ class ColorsThemeDark implements ColorsTheme {
   @override
   Color get fullRoundButton => const Color(0xFF484A4D);
 
+  @override
+  Color get focusButton => const Color(0xff32D8A1);
+
   // tip
   @override
   Color get success => const Color(0xFF10C469);
 
   @override
   Color get error => const Color(0xFFFC8383);
+
+  @override
+  Color get active => const Color(0xff40DF32);
+
 }
