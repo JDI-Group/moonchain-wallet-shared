@@ -1,7 +1,7 @@
 import 'auth_storage_repository.dart';
 
-class LoginUseCase {
-  LoginUseCase(
+class AuthUseCase {
+  AuthUseCase(
     this.authStorageRepository,
   );
 
