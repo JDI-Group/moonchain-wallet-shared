@@ -19,7 +19,8 @@ abstract class MxcCircleButton extends StatelessWidget {
     this.color,
     this.titleStyle,
     this.textSpace,
-    this.shadowRadius
+    this.shadowRadius,
+    this.buttonDecoration
   }) : super(key: key);
 
   const factory MxcCircleButton.image({
@@ -61,6 +62,7 @@ abstract class MxcCircleButton extends StatelessWidget {
   final TextStyle? titleStyle;
   final double? textSpace;
   final double? shadowRadius;
+  final BoxDecoration? buttonDecoration;
 
   Color _contentColor(BuildContext context) {
     Color color;
@@ -94,15 +96,17 @@ abstract class MxcCircleButton extends StatelessWidget {
         customBorder: const CircleBorder(),
         child: Container(
           alignment: Alignment.center,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            boxShadow: [
-              if (onTap != null)
-                MxcBoxShadow(
-                  color: ColorsTheme.of(context).shadow,
-                ),
-            ],
-          ),
+          decoration: buttonDecoration,
+          // decoration: BoxDecoration(
+          //   shape: BoxShape.circle,
+          //   boxShadow: [
+          //     if (onTap != null)
+          //       MxcBoxShadow(
+          //         color: ColorsTheme.of(context).shadow,
+          //       ),
+          //   ],
+
+          // ),
           width: shadowRadius ?? 52,
           height: shadowRadius ?? 52,
           child: buildChild(context),
