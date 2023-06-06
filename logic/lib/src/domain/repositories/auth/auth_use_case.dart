@@ -14,4 +14,6 @@ class LoginUseCase {
     authStorageRepository.saveMnemonic(mnemonic);
     authStorageRepository.savePrivateKey(privateKey);
   }
+
+  bool get loggedIn => authStorageRepository.loggedIn;
 }
