@@ -9,7 +9,8 @@ class ColorsTheme {
   factory ColorsTheme.fromOption(MxcThemeOption option) {
     switch (option) {
       case MxcThemeOption.day:
-        return ColorsTheme._();
+        return ColorsThemeDark._();
+        // return ColorsTheme._();
       case MxcThemeOption.night:
         return ColorsThemeDark._();
     }
@@ -63,8 +64,8 @@ class ColorsTheme {
   final focusButton = const Color(0xff32D8A1);
 
   // tip
-  final success = const Color(0xFF10C469);
-  final error = const Color(0xFFD22D2D);
+  final mainGreen = const Color(0xFF10C469);
+  final mainRed = const Color(0xFFD22D2D);
   final active = const Color(0xff40DF32);
 }
 
@@ -73,10 +74,10 @@ class ColorsThemeDark implements ColorsTheme {
 
   // background
   @override
-  final primaryBackground = const Color(0xFF0C0C0D);
+  final primaryBackground = const Color(0xFF111111);
 
   @override
-  final secondaryBackground = const Color(0xFF292929);
+  final secondaryBackground = const Color(0xFF2C2C2E);
 
   @override
   final onTertiary = const Color(0xffBFBFBF);
@@ -141,7 +142,7 @@ class ColorsThemeDark implements ColorsTheme {
 
   // text
   @override
-  Color get primaryText => Colors.white;
+  Color get primaryText => const Color(0xFFFFFFFF);
 
   @override
   Color get secondaryText => const Color(0xFFEBEFF2);
@@ -158,10 +159,10 @@ class ColorsThemeDark implements ColorsTheme {
 
   // tip
   @override
-  Color get success => const Color(0xFF10C469);
+  Color get mainGreen => const Color(0xFF30A78B);
 
   @override
-  Color get error => const Color(0xFFFC8383);
+  Color get mainRed => const Color(0xFFFF7878);
 
   @override
   Color get active => const Color(0xff40DF32);

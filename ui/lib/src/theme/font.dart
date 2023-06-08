@@ -71,10 +71,10 @@ class TextStylePack {
       DecoratableTextStyle(_primary.copyWith(color: colorsTheme.secondaryText));
 
   DecoratableTextStyle get alert =>
-      DecoratableTextStyle(_primary.copyWith(color: colorsTheme.error));
+      DecoratableTextStyle(_primary.copyWith(color: colorsTheme.mainRed));
 
   DecoratableTextStyle get error =>
-      DecoratableTextStyle(_primary.copyWith(color: colorsTheme.error));
+      DecoratableTextStyle(_primary.copyWith(color: colorsTheme.mainRed));
 
   DecoratableTextStyle get button => DecoratableTextStyle(
         _primary.copyWith(color: colorsTheme.white),
