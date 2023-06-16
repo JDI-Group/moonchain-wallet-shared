@@ -8,7 +8,7 @@ import 'package:web3dart/credentials.dart';
 abstract class IAddressService {
   String generateMnemonic();
   Future<String> getPrivateKey(String mnemonic);
-  Future<EthereumAddress> getPublicAddress(String privateKey);
+  Future<EthereumAddress> getPublicAddress();
   Future<bool> setupFromMnemonic(String mnemonic);
   Future<bool> setupFromPrivateKey(String privateKey);
   String entropyToMnemonic(String entropyMnemonic);
@@ -34,17 +34,22 @@ class AddressService implements IAddressService {
     final seed = bip39.mnemonicToSeedHex(mnemonic);
     final master = await ED25519_HD_KEY.getMasterKeyFromSeed(
       hex.decode(seed),
-      masterSecret: 'mxc_seed',
+      masterSecret: 'datadash_wallet_seed',
     );
     final privateKey = HEX.encode(master.key);
     return privateKey;
   }
 
   @override
-  Future<EthereumAddress> getPublicAddress(String privateKey) async {
-    final private = EthPrivateKey.fromHex(privateKey);
+  Future<EthereumAddress> getPublicAddress() async {
+    final key = _authStorageRepository.privateKey;
+    if (key != null && key.isNotEmpty) {
+      final private = EthPrivateKey.fromHex(key!);
 
-    return private.address;
+      return private.address;
+    }
+
+    throw Exception('Private Key is empty.');
   }
 
   @override
