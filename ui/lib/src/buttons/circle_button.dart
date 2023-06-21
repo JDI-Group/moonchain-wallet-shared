@@ -105,7 +105,6 @@ abstract class MxcCircleButton extends StatelessWidget {
           //         color: ColorsTheme.of(context).shadow,
           //       ),
           //   ],
-
           // ),
           width: shadowRadius ?? 52,
           height: shadowRadius ?? 52,

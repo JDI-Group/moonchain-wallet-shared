@@ -53,8 +53,8 @@ class FontTheme {
   TextStylePack get h7 => TextStylePack(_colorsTheme,
       _baseTextStyle.copyWith(fontSize: 12, fontWeight: FontWeight.w500));
 
-  TextStylePack get h8 =>
-    TextStylePack(_colorsTheme, _baseTextStyle.copyWith(fontSize: 8, fontWeight: FontWeight.w300));
+  TextStylePack get h8 => TextStylePack(_colorsTheme,
+      _baseTextStyle.copyWith(fontSize: 8, fontWeight: FontWeight.w300));
 }
 
 class TextStylePack {
@@ -76,8 +76,8 @@ class TextStylePack {
   DecoratableTextStyle get error =>
       DecoratableTextStyle(_primary.copyWith(color: colorsTheme.mainRed));
 
-  DecoratableTextStyle get button => DecoratableTextStyle(
-        _primary.copyWith(color: colorsTheme.white),
+  DecoratableTextStyle get primaryButton => DecoratableTextStyle(
+        _primary.copyWith(color: colorsTheme.primaryButtonText),
       );
 
   DecoratableTextStyle get disabledButton => DecoratableTextStyle(
