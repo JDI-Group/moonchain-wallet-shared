@@ -62,7 +62,7 @@ class MxcAppBar extends StatelessWidget {
     this.centerTitle = true,
   }) : super(key: key);
 
-  MxcAppBar.splash({
+  MxcAppBar.splashBack({
     Key? key,
     required String text,
     this.padding,
@@ -73,7 +73,7 @@ class MxcAppBar extends StatelessWidget {
           builder: (context) => MxcAppBarTextTitle(
             text,
             centerTitle: centerTitle,
-            color: ColorsTheme.of(context).secondaryText,
+            color: ColorsTheme.of(context).primaryText,
             subtitle: subtitle,
           ),
         ),
@@ -81,7 +81,7 @@ class MxcAppBar extends StatelessWidget {
           builder: (context) => MxcAppBarButton.icon(
             Icons.arrow_back,
             key: const ValueKey('nav_back'),
-            color: ColorsTheme.of(context).secondaryText,
+            color: ColorsTheme.of(context).primaryText,
             onTap: appBarPopHandlerBuilder(context),
           ),
         ),
