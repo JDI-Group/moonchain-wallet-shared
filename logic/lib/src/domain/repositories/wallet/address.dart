@@ -44,7 +44,7 @@ class AddressService implements IAddressService {
   Future<EthereumAddress> getPublicAddress() async {
     final key = _authStorageRepository.privateKey;
     if (key != null && key.isNotEmpty) {
-      final private = EthPrivateKey.fromHex(key!);
+      final private = EthPrivateKey.fromHex(key);
 
       return private.address;
     }

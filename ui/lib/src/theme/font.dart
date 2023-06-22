@@ -54,7 +54,7 @@ class FontTheme {
       _baseTextStyle.copyWith(fontSize: 12, fontWeight: FontWeight.w500));
 
   TextStylePack get h8 =>
-    TextStylePack(_colorsTheme, _baseTextStyle.copyWith(fontSize: 8, fontWeight: FontWeight.w300));
+    TextStylePack(_colorsTheme, _baseTextStyle.copyWith(fontSize: 8, fontWeight: FontWeight.w500));
 }
 
 class TextStylePack {
