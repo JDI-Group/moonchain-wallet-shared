@@ -74,7 +74,7 @@ class TextStylePack {
       DecoratableTextStyle(_primary.copyWith(color: colorsTheme.mainRed));
 
   DecoratableTextStyle get error =>
-      DecoratableTextStyle(_primary.copyWith(color: colorsTheme.mainRed));
+      DecoratableTextStyle(_primary.copyWith(color: colorsTheme.errorText));
 
   DecoratableTextStyle get primaryButton => DecoratableTextStyle(
         _primary.copyWith(color: colorsTheme.primaryButtonText),
