@@ -57,6 +57,7 @@ class ColorsTheme {
   // text
   final primaryText = const Color(0xFF25282B);
   final secondaryText = const Color(0xFFA5A6AC);
+  final errorText = const Color(0xFFFC8383);
   final primaryButtonText = const Color(0xFF25282B);
   final secondaryButtonText = const Color(0xFFFFFFFF);
   final disabledButtonText = const Color(0xFF5F6366);
@@ -150,6 +151,9 @@ class ColorsThemeDark implements ColorsTheme {
 
   @override
   Color get secondaryText => const Color(0xFFA5A6AC);
+
+  @override
+  Color get errorText => const Color(0xFFFC8383);
 
   @override
   Color get primaryButtonText => const Color(0xFF25282B);

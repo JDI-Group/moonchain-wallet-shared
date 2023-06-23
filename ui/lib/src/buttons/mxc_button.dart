@@ -139,6 +139,18 @@ class _MxcButtonState extends State<MxcButton> with TickerProviderStateMixin {
     super.dispose();
   }
 
+  void startAnimate() {
+    if (mounted) {
+      setState(() {
+        _isTappedDown = true;
+        _animationController.reset();
+        _animationController.forward();
+      });
+    }
+  }
+
+  void endAnimate() => setState(() => _isTappedDown = false);
+
   @override
   Widget build(BuildContext context) {
     return Transform.scale(
@@ -152,16 +164,10 @@ class _MxcButtonState extends State<MxcButton> with TickerProviderStateMixin {
         borderRadius: BorderRadius.circular(40),
         child: GestureDetector(
           onTap: widget.onTap,
-          onTapDown: (_) {
-            if (mounted) {
-              setState(() {
-                _isTappedDown = true;
-                _animationController.reset();
-                _animationController.forward();
-              });
-            }
-          },
-          onTapUp: (_) => setState(() => _isTappedDown = false),
+          onTapDown: (_) => startAnimate(),
+          onLongPressDown: (_) => startAnimate(),
+          onTapUp: (_) => endAnimate(),
+          onLongPressUp: () => endAnimate(),
           child: Container(
             width: widget.fillWidth ? double.infinity : null,
             height: getHeight(),
@@ -188,17 +194,13 @@ class _MxcButtonState extends State<MxcButton> with TickerProviderStateMixin {
                   textAlign: TextAlign.center,
                   style: widget.onTap != null
                       ? FontTheme.of(context).body2().copyWith(
-                            color:
-                                widget.buttonType == MxcButtonType.primary
-                                    ? widget.titleColor ??
-                                        ColorsTheme.of(context)
-                                            .primaryButtonText
-                                    : ColorsTheme.of(context)
-                                        .secondaryButtonText,
+                            color: widget.buttonType == MxcButtonType.primary
+                                ? widget.titleColor ??
+                                    ColorsTheme.of(context).primaryButtonText
+                                : ColorsTheme.of(context).secondaryButtonText,
                           )
                       : FontTheme.of(context).body2().copyWith(
-                            color: ColorsTheme.of(context)
-                                .disabledButtonText,
+                            color: ColorsTheme.of(context).disabledButtonText,
                           ),
                 ),
               ],
