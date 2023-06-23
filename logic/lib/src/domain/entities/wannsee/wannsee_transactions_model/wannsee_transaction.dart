@@ -1,0 +1,291 @@
+import 'dart:convert';
+
+import 'package:equatable/equatable.dart';
+
+import 'fee.dart';
+import 'from.dart';
+import 'to.dart';
+
+class WannseeTransactionModel extends Equatable {
+  final DateTime? timestamp;
+  final Fee? fee;
+  final String? gasLimit;
+  final int? block;
+  final String? status;
+  final dynamic method;
+  final int? confirmations;
+  final int? type;
+  final dynamic exchangeRate;
+  final To? to;
+  final String? txBurntFee;
+  final String? maxFeePerGas;
+  final String? result;
+  final String? hash;
+  final String? gasPrice;
+  final String? priorityFee;
+  final String? baseFeePerGas;
+  final From? from;
+  final dynamic tokenTransfers;
+  final List<dynamic>? txTypes;
+  final String? gasUsed;
+  final dynamic createdContract;
+  final int? position;
+  final int? nonce;
+  final bool? hasErrorInInternalTxs;
+  final List<dynamic>? actions;
+  final dynamic decodedInput;
+  final dynamic tokenTransfersOverflow;
+  final String? rawInput;
+  final String? value;
+  final String? maxPriorityFeePerGas;
+  final dynamic revertReason;
+  final List<dynamic>? confirmationDuration;
+  final dynamic txTag;
+
+  const WannseeTransactionModel({
+    this.timestamp,
+    this.fee,
+    this.gasLimit,
+    this.block,
+    this.status,
+    this.method,
+    this.confirmations,
+    this.type,
+    this.exchangeRate,
+    this.to,
+    this.txBurntFee,
+    this.maxFeePerGas,
+    this.result,
+    this.hash,
+    this.gasPrice,
+    this.priorityFee,
+    this.baseFeePerGas,
+    this.from,
+    this.tokenTransfers,
+    this.txTypes,
+    this.gasUsed,
+    this.createdContract,
+    this.position,
+    this.nonce,
+    this.hasErrorInInternalTxs,
+    this.actions,
+    this.decodedInput,
+    this.tokenTransfersOverflow,
+    this.rawInput,
+    this.value,
+    this.maxPriorityFeePerGas,
+    this.revertReason,
+    this.confirmationDuration,
+    this.txTag,
+  });
+
+  factory WannseeTransactionModel.fromMap(Map<String, dynamic> data) => WannseeTransactionModel(
+        timestamp: data['timestamp'] == null
+            ? null
+            : DateTime.parse(data['timestamp'] as String),
+        fee: data['fee'] == null
+            ? null
+            : Fee.fromMap(data['fee'] as Map<String, dynamic>),
+        gasLimit: data['gas_limit'] as String?,
+        block: data['block'] as int?,
+        status: data['status'] as String?,
+        method: data['method'] as dynamic,
+        confirmations: data['confirmations'] as int?,
+        type: data['type'] as int?,
+        exchangeRate: data['exchange_rate'] as dynamic,
+        to: data['to'] == null
+            ? null
+            : To.fromMap(data['to'] as Map<String, dynamic>),
+        txBurntFee: data['tx_burnt_fee'] as String?,
+        maxFeePerGas: data['max_fee_per_gas'] as String?,
+        result: data['result'] as String?,
+        hash: data['hash'] as String?,
+        gasPrice: data['gas_price'] as String?,
+        priorityFee: data['priority_fee'] as String?,
+        baseFeePerGas: data['base_fee_per_gas'] as String?,
+        from: data['from'] == null
+            ? null
+            : From.fromMap(data['from'] as Map<String, dynamic>),
+        tokenTransfers: data['token_transfers'] as dynamic,
+        txTypes: data['tx_types'] as List<dynamic>?,
+        gasUsed: data['gas_used'] as String?,
+        createdContract: data['created_contract'] as dynamic,
+        position: data['position'] as int?,
+        nonce: data['nonce'] as int?,
+        hasErrorInInternalTxs: data['has_error_in_internal_txs'] as bool?,
+        actions: data['actions'] as List<dynamic>?,
+        decodedInput: data['decoded_input'] as dynamic,
+        tokenTransfersOverflow: data['token_transfers_overflow'] as dynamic,
+        rawInput: data['raw_input'] as String?,
+        value: data['value'] as String?,
+        maxPriorityFeePerGas: data['max_priority_fee_per_gas'] as String?,
+        revertReason: data['revert_reason'] as dynamic,
+        confirmationDuration: data['confirmation_duration'] as List<dynamic>?,
+        txTag: data['tx_tag'] as dynamic,
+      );
+
+  Map<String, dynamic> toMap() => <String, dynamic>{
+        'timestamp': timestamp?.toIso8601String(),
+        'fee': fee?.toMap(),
+        'gas_limit': gasLimit,
+        'block': block,
+        'status': status,
+        'method': method,
+        'confirmations': confirmations,
+        'type': type,
+        'exchange_rate': exchangeRate,
+        'to': to?.toMap(),
+        'tx_burnt_fee': txBurntFee,
+        'max_fee_per_gas': maxFeePerGas,
+        'result': result,
+        'hash': hash,
+        'gas_price': gasPrice,
+        'priority_fee': priorityFee,
+        'base_fee_per_gas': baseFeePerGas,
+        'from': from?.toMap(),
+        'token_transfers': tokenTransfers,
+        'tx_types': txTypes,
+        'gas_used': gasUsed,
+        'created_contract': createdContract,
+        'position': position,
+        'nonce': nonce,
+        'has_error_in_internal_txs': hasErrorInInternalTxs,
+        'actions': actions,
+        'decoded_input': decodedInput,
+        'token_transfers_overflow': tokenTransfersOverflow,
+        'raw_input': rawInput,
+        'value': value,
+        'max_priority_fee_per_gas': maxPriorityFeePerGas,
+        'revert_reason': revertReason,
+        'confirmation_duration': confirmationDuration,
+        'tx_tag': txTag,
+      };
+
+  /// `dart:convert`
+  ///
+  /// Parses the string and returns the resulting Json object as [WannseeTransactionModel].
+  factory WannseeTransactionModel.fromJson(String data) {
+    return WannseeTransactionModel.fromMap(json.decode(data) as Map<String, dynamic>);
+  }
+
+  /// `dart:convert`
+  ///
+  /// Converts [WannseeTransactionModel] to a JSON string.
+  String toJson() => json.encode(toMap());
+
+  WannseeTransactionModel copyWith({
+    DateTime? timestamp,
+    Fee? fee,
+    String? gasLimit,
+    int? block,
+    String? status,
+    dynamic method,
+    int? confirmations,
+    int? type,
+    dynamic exchangeRate,
+    To? to,
+    String? txBurntFee,
+    String? maxFeePerGas,
+    String? result,
+    String? hash,
+    String? gasPrice,
+    String? priorityFee,
+    String? baseFeePerGas,
+    From? from,
+    dynamic tokenTransfers,
+    List<String>? txTypes,
+    String? gasUsed,
+    dynamic createdContract,
+    int? position,
+    int? nonce,
+    bool? hasErrorInInternalTxs,
+    List<dynamic>? actions,
+    dynamic decodedInput,
+    dynamic tokenTransfersOverflow,
+    String? rawInput,
+    String? value,
+    String? maxPriorityFeePerGas,
+    dynamic revertReason,
+    List<dynamic>? confirmationDuration,
+    dynamic txTag,
+  }) {
+    return WannseeTransactionModel(
+      timestamp: timestamp ?? this.timestamp,
+      fee: fee ?? this.fee,
+      gasLimit: gasLimit ?? this.gasLimit,
+      block: block ?? this.block,
+      status: status ?? this.status,
+      method: method ?? this.method,
+      confirmations: confirmations ?? this.confirmations,
+      type: type ?? this.type,
+      exchangeRate: exchangeRate ?? this.exchangeRate,
+      to: to ?? this.to,
+      txBurntFee: txBurntFee ?? this.txBurntFee,
+      maxFeePerGas: maxFeePerGas ?? this.maxFeePerGas,
+      result: result ?? this.result,
+      hash: hash ?? this.hash,
+      gasPrice: gasPrice ?? this.gasPrice,
+      priorityFee: priorityFee ?? this.priorityFee,
+      baseFeePerGas: baseFeePerGas ?? this.baseFeePerGas,
+      from: from ?? this.from,
+      tokenTransfers: tokenTransfers ?? this.tokenTransfers,
+      txTypes: txTypes ?? this.txTypes,
+      gasUsed: gasUsed ?? this.gasUsed,
+      createdContract: createdContract ?? this.createdContract,
+      position: position ?? this.position,
+      nonce: nonce ?? this.nonce,
+      hasErrorInInternalTxs:
+          hasErrorInInternalTxs ?? this.hasErrorInInternalTxs,
+      actions: actions ?? this.actions,
+      decodedInput: decodedInput ?? this.decodedInput,
+      tokenTransfersOverflow:
+          tokenTransfersOverflow ?? this.tokenTransfersOverflow,
+      rawInput: rawInput ?? this.rawInput,
+      value: value ?? this.value,
+      maxPriorityFeePerGas: maxPriorityFeePerGas ?? this.maxPriorityFeePerGas,
+      revertReason: revertReason ?? this.revertReason,
+      confirmationDuration: confirmationDuration ?? this.confirmationDuration,
+      txTag: txTag ?? this.txTag,
+    );
+  }
+
+  @override
+  List<Object?> get props {
+    return [
+      timestamp,
+      fee,
+      gasLimit,
+      block,
+      status,
+      method,
+      confirmations,
+      type,
+      exchangeRate,
+      to,
+      txBurntFee,
+      maxFeePerGas,
+      result,
+      hash,
+      gasPrice,
+      priorityFee,
+      baseFeePerGas,
+      from,
+      tokenTransfers,
+      txTypes,
+      gasUsed,
+      createdContract,
+      position,
+      nonce,
+      hasErrorInInternalTxs,
+      actions,
+      decodedInput,
+      tokenTransfersOverflow,
+      rawInput,
+      value,
+      maxPriorityFeePerGas,
+      revertReason,
+      confirmationDuration,
+      txTag,
+    ];
+  }
+}
