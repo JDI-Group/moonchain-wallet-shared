@@ -12,6 +12,7 @@ abstract class IAddressService {
   Future<bool> setupFromMnemonic(String mnemonic);
   Future<bool> setupFromPrivateKey(String privateKey);
   String entropyToMnemonic(String entropyMnemonic);
+  bool validateMnemonic(String mnemonic);
   void reset();
 }
 
@@ -74,5 +75,11 @@ class AddressService implements IAddressService {
   void reset() {
     _authStorageRepository.saveMnemonic(null);
     _authStorageRepository.savePrivateKey(null);
+  }
+
+  @override
+  bool validateMnemonic(String mnemonic) {
+    if (mnemonic.isNotEmpty) return false;
+    return bip39.validateMnemonic(mnemonic);
   }
 }
