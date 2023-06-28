@@ -11,17 +11,17 @@ abstract class MxcCircleButton extends StatelessWidget {
     String? title,
   }) = _MxcCircleChildButton;
 
-  const MxcCircleButton._({
-    required Key? key,
-    required this.onTap,
-    this.filled = false,
-    this.title,
-    this.color,
-    this.titleStyle,
-    this.textSpace,
-    this.shadowRadius,
-    this.buttonDecoration
-  }) : super(key: key);
+  const MxcCircleButton._(
+      {required Key? key,
+      required this.onTap,
+      this.filled = false,
+      this.title,
+      this.color,
+      this.titleStyle,
+      this.textSpace,
+      this.shadowRadius,
+      this.buttonDecoration})
+      : super(key: key);
 
   const factory MxcCircleButton.image({
     required Key? key,
@@ -32,18 +32,17 @@ abstract class MxcCircleButton extends StatelessWidget {
     Color? color,
   }) = _MxcCircleImageButton;
 
-  const factory MxcCircleButton.icon({
-    required Key? key,
-    required IconData icon,
-    required VoidCallback? onTap,
-    bool filled,
-    String? title,
-    Color? color,
-    TextStyle? titleStyle,
-    double? iconSize,
-    double? textSpace,
-    final double? shadowRadius
-  }) = _MxcCircleIconButton;
+  const factory MxcCircleButton.icon(
+      {required Key? key,
+      required IconData icon,
+      required VoidCallback? onTap,
+      bool filled,
+      String? title,
+      Color? color,
+      TextStyle? titleStyle,
+      double? iconSize,
+      double? textSpace,
+      final double? shadowRadius}) = _MxcCircleIconButton;
 
   const factory MxcCircleButton.svg({
     required Key? key,
@@ -178,27 +177,26 @@ class _MxcCircleImageButton extends MxcCircleButton {
 }
 
 class _MxcCircleIconButton extends MxcCircleButton {
-  const _MxcCircleIconButton({
-    required Key? key,
-    required this.icon,
-    required VoidCallback? onTap,
-    bool filled = false,
-    String? title,
-    Color? color,
-    TextStyle? titleStyle,
-    double? this.iconSize, 
-    double? textSpace,
-    double? shadowRadius
-  }) : super._(
-          key: key,
-          filled: filled,
-          onTap: onTap,
-          title: title,
-          color: color,
-          titleStyle: titleStyle,
-          textSpace: textSpace,
-          shadowRadius: shadowRadius
-        );
+  const _MxcCircleIconButton(
+      {required Key? key,
+      required this.icon,
+      required VoidCallback? onTap,
+      bool filled = false,
+      String? title,
+      Color? color,
+      TextStyle? titleStyle,
+      double? this.iconSize,
+      double? textSpace,
+      double? shadowRadius})
+      : super._(
+            key: key,
+            filled: filled,
+            onTap: onTap,
+            title: title,
+            color: color,
+            titleStyle: titleStyle,
+            textSpace: textSpace,
+            shadowRadius: shadowRadius);
 
   final IconData icon;
   final double? iconSize;

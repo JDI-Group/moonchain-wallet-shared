@@ -6,7 +6,7 @@ class From extends Equatable {
   final String? hash;
   final dynamic implementationName;
   final bool? isContract;
-  final bool? isVerified;
+  final dynamic isVerified;
   final dynamic name;
   final List<dynamic>? privateTags;
   final List<dynamic>? publicTags;
@@ -27,7 +27,7 @@ class From extends Equatable {
         hash: data['hash'] as String?,
         implementationName: data['implementation_name'] as dynamic,
         isContract: data['is_contract'] as bool?,
-        isVerified: data['is_verified'] as bool?,
+        isVerified: data['is_verified'] as dynamic,
         name: data['name'] as dynamic,
         privateTags: data['private_tags'] as List<dynamic>?,
         publicTags: data['public_tags'] as List<dynamic>?,
@@ -61,7 +61,7 @@ class From extends Equatable {
     String? hash,
     dynamic implementationName,
     bool? isContract,
-    bool? isVerified,
+    dynamic isVerified,
     dynamic name,
     List<dynamic>? privateTags,
     List<dynamic>? publicTags,

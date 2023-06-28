@@ -29,12 +29,12 @@ class ImagesTheme {
         'assets/images/splash/mxc.png',
         package: mxcUiPackageName,
       );
-    ImageProvider get bitcoin => const AssetImage(
+  ImageProvider get bitcoin => const AssetImage(
         'assets/images/bitcoin.png',
         package: mxcUiPackageName,
       );
 
-        ImageProvider get sliderPlaceHolder => const AssetImage(
+  ImageProvider get sliderPlaceHolder => const AssetImage(
         'assets/images/slider_placeholder.png',
         package: mxcUiPackageName,
       );
