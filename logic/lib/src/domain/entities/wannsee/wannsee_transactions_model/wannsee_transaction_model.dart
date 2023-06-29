@@ -7,7 +7,7 @@ import '../wannsee_models.dart';
 import '../shared/shared.dart';
 import 'fee.dart';
 
-class WannseeTransactionModel with EquatableMixin {
+class WannseeTransactionModel extends Equatable {
   final DateTime? timestamp;
   final Fee? fee;
   final String? gasLimit;
@@ -40,7 +40,7 @@ class WannseeTransactionModel with EquatableMixin {
   String? value;
   final String? maxPriorityFeePerGas;
   final dynamic revertReason;
-  final List<int>? confirmationDuration;
+  final List<double>? confirmationDuration;
   final dynamic txTag;
 
   WannseeTransactionModel({
@@ -124,8 +124,9 @@ class WannseeTransactionModel with EquatableMixin {
       value: data['value'] as String?,
       maxPriorityFeePerGas: data['max_priority_fee_per_gas'] as String?,
       revertReason: data['revert_reason'] as dynamic,
-      confirmationDuration:
-          (data['confirmation_duration'] as List<dynamic>?)?.cast<int>(),
+      confirmationDuration: (data['confirmation_duration'] as List<dynamic>?)
+          ?.map<double>((dynamic item) => double.parse(item.toString()))
+          .toList(),
       txTag: data['tx_tag'] as dynamic,
     );
   }
@@ -213,7 +214,7 @@ class WannseeTransactionModel with EquatableMixin {
     String? value,
     String? maxPriorityFeePerGas,
     dynamic revertReason,
-    List<int>? confirmationDuration,
+    List<double>? confirmationDuration,
     dynamic txTag,
   }) {
     return WannseeTransactionModel(

@@ -4,7 +4,7 @@ import 'package:equatable/equatable.dart';
 
 import '../shared/shared.dart';
 
-class WannseeTokenTransfersModel with EquatableMixin {
+class WannseeTokenTransfersModel extends Equatable {
   final List<TokenTransfer>? items;
   final dynamic nextPageParams;
 

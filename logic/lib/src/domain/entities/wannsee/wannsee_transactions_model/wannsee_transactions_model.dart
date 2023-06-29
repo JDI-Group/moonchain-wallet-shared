@@ -8,7 +8,7 @@ export 'wannsee_transaction_model.dart';
 
 import '../shared/shared.dart';
 
-class WannseeTransactionsModel with EquatableMixin {
+class WannseeTransactionsModel extends Equatable {
   final List<WannseeTransactionModel>? items;
   final dynamic nextPageParams;
 
