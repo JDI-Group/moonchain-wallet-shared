@@ -1,4 +1,5 @@
 import 'package:http/http.dart';
+import 'package:mxc_logic/src/data/api/client/rest_client.dart';
 import 'package:mxc_logic/src/domain/entities/network_type.dart';
 import 'package:web3dart/web3dart.dart';
 import 'package:web_socket_channel/io.dart';
@@ -42,6 +43,6 @@ class ContractLocator {
     // final contract = await ContractParser.fromAssets(
     //     'TargaryenCoin.json', networkConfig.contractAddress);
 
-    return ContractService(client, contract: null);
+    return ContractService(client, RestClient(), contract: null);
   }
 }
