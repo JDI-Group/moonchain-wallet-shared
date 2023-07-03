@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:mxc_logic/src/data/api/client/rest_client.dart';
 import 'package:mxc_logic/src/domain/entities/default_tokens/default_tokens.dart';
 import 'package:mxc_logic/src/domain/entities/network_type.dart';
@@ -28,7 +29,7 @@ abstract class IContractService {
   Future<EtherAmount> getEthBalance(EthereumAddress from);
   Future<void> dispose();
   StreamSubscription<FilterEvent> listenTransfer(TransferEvent onTransfer);
-  Future<dynamic> getTransactionsByAddress(String address);
+  Future<dynamic> getTransactionsByAddress(EthereumAddress address);
   Future<WannseeTransactionModel?> getTransactionByHash(String hash);
   Future<bool> checkConnectionToNetwork();
   Future<bool> subscribeToBalanceEvent(
@@ -37,7 +38,7 @@ abstract class IContractService {
   );
   Future<DefaultTokens?> getDefaultTokens();
   Future<WannseeTokenTransfersModel?> getTokenTransfersByAddress(
-    String address,
+    EthereumAddress address,
   );
 }
 
@@ -159,8 +160,7 @@ class ContractService implements IContractService {
   }
 
   @override
-  Future<WannseeTransactionsModel?> getTransactionsByAddress(
-    String address,
+  Future<WannseeTransactionsModel?> getTransactionsByAddress(EthereumAddress address,
   ) async {
     final response = await _restClient.client.get(
         Uri.parse(
@@ -177,7 +177,7 @@ class ContractService implements IContractService {
 
   @override
   Future<WannseeTokenTransfersModel?> getTokenTransfersByAddress(
-    String address,
+    EthereumAddress address,
   ) async {
     final response = await _restClient.client.get(
       Uri.parse(
