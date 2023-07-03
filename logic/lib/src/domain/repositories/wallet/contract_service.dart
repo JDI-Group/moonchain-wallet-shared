@@ -1,13 +1,12 @@
 import 'dart:async';
-import 'dart:convert';
-import 'dart:developer';
+import 'package:mxc_logic/src/data/api/client/rest_client.dart';
+import 'package:mxc_logic/src/domain/entities/default_tokens/default_tokens.dart';
 import 'package:mxc_logic/src/domain/entities/network_type.dart';
+import 'package:mxc_logic/src/domain/entities/wannsee/wannsee_token_transfers_model/wannsee_token_transfer_model.dart';
 import 'package:mxc_logic/src/domain/entities/wannsee/wannsee_transactions_model/wannsee_transactions_model.dart';
 import 'package:web3dart/web3dart.dart';
 import '../../../data/socket/mxc_socket_client.dart';
 import '../../entities/wallet_transfer.dart';
-import 'package:http/http.dart' as http;
-
 
 typedef TransferEvent = void Function(
   EthereumAddress from,
@@ -29,18 +28,24 @@ abstract class IContractService {
   Future<EtherAmount> getEthBalance(EthereumAddress from);
   Future<void> dispose();
   StreamSubscription<FilterEvent> listenTransfer(TransferEvent onTransfer);
-  Future<dynamic> getTransactionsByAddress();
-  Future<dynamic> getTokenRecentTransactions(EthereumAddress from);
+  Future<dynamic> getTransactionsByAddress(String address);
+  Future<WannseeTransactionModel?> getTransactionByHash(String hash);
   Future<bool> checkConnectionToNetwork();
-  Future<void> subscribeToBalanceEvent(
-      String event, void Function(dynamic) listeningCallBack);
-  Future<void> subscribeToTransactionsEvent();
+  Future<bool> subscribeToBalanceEvent(
+    String event,
+    void Function(dynamic) listeningCallBack,
+  );
+  Future<DefaultTokens?> getDefaultTokens();
+  Future<WannseeTokenTransfersModel?> getTokenTransfersByAddress(
+    String address,
+  );
 }
 
 class ContractService implements IContractService {
-  ContractService(this._client, {this.contract});
+  ContractService(this._client, this._restClient, {this.contract});
 
   final Web3Client _client;
+  final RestClient _restClient;
   final DeployedContract? contract;
 
   ContractEvent _transferEvent() => contract!.event('Transfer');
@@ -100,8 +105,6 @@ class ContractService implements IContractService {
         }
       });
 
-      print('transact started $transactionId');
-
       return transactionId;
     } catch (ex) {
       if (onError != null) {
@@ -151,78 +154,63 @@ class ContractService implements IContractService {
       final to = decoded[1] as EthereumAddress;
       final value = decoded[2] as BigInt;
 
-      print('$from}');
-      print('$to}');
-      print('$value}');
-
       onTransfer(from, to, value);
     });
   }
 
   @override
-  Future<WannseeTransactionsModel?> getTransactionsByAddress() async {
-//     final _httpLink = HttpLink(
-//       'https://wannsee-explorer-v1.mxc.com/graphiql',
-//     );
-
-//     Link? _link;
-
-//     final _wsLink = WebSocketLink('wss://wannsee-explorer-v1.mxc.com/socket');
-//     _link = Link.split((request) => request.isSubscription, _wsLink, _httpLink);
-
-//     final GraphQLClient client = GraphQLClient(
-//       /// **NOTE** The default store is the InMemoryStore, which does NOT persist to disk
-//       cache: GraphQLCache(),
-//       link: _link,
-//     );
-//     const String txHash = "0xe87fff848427687077d522d1a04449902d34083a";
-
-//     const String getTransactions = r'''
-//       query {address(hash: "0xe87fff848427687077d522d1a04449902d34083a") {
-//   transactions (first: 5) {pageInfo{hasNextPage hasPreviousPage} edges { node {s r v  fromAddressHash toAddressHash value error hash id} }}
-// }}
-//       ''';
-
-//     final QueryOptions options = QueryOptions(
-//       document: gql(getTransactions),
-//       variables: <String, dynamic>{
-//         'txHash': txHash,
-//       },
-//     );
-
-//     final QueryResult result = await client.query(options);
-
-//     if (result.hasException) {
-//       print(result.exception.toString());
-//     } else {
-//       print(result.data);
-//       final txList = Transactions.fromMap(result.data as Map<String, dynamic>);
-//       inspect(txList);
-//     }
-
-    // final response = await http.Client().get(Uri.parse('https://wannsee-explorer-v1.mxc.com/api?module=account&action=txlist&address=0xE87FfF848427687077d522d1A04449902d34083a'),headers: {'accept': 'application/json'});
-
-    // if (response.statusCode == 200){
-    //   TransactionHistory.fromJson(jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>);
-    // }
-
-    final response = await http.Client().get(
+  Future<WannseeTransactionsModel?> getTransactionsByAddress(
+    String address,
+  ) async {
+    final response = await _restClient.client.get(
         Uri.parse(
-            'https://wannsee-explorer-v1.mxc.com/api/v2/addresses/0xe87fff848427687077d522d1a04449902d34083a/transactions'),
+            'https://wannsee-explorer-v1.mxc.com/api/v2/addresses/$address/transactions'),
         headers: {'accept': 'application/json'});
 
     if (response.statusCode == 200) {
       final txList = WannseeTransactionsModel.fromJson(response.body);
       return txList;
-    }else {
+    } else {
       return null;
     }
   }
 
   @override
-  Future getTokenRecentTransactions(EthereumAddress from) {
-    // TODO: implement getTokenRecentTransactions
-    throw UnimplementedError();
+  Future<WannseeTokenTransfersModel?> getTokenTransfersByAddress(
+    String address,
+  ) async {
+    final response = await _restClient.client.get(
+      Uri.parse(
+          'https://wannsee-explorer-v1.mxc.com/api/v2/addresses/$address/token-transfers?type='),
+      headers: {'accept': 'application/json'},
+    );
+
+    if (response.statusCode == 200) {
+      final txList = WannseeTokenTransfersModel.fromJson(response.body);
+      return txList;
+    } else {
+      return null;
+    }
+  }
+
+  /// If the transaction is successful then not null
+  @override
+  Future<WannseeTransactionModel?> getTransactionByHash(
+    String hash,
+  ) async {
+    final response = await _restClient.client.get(
+      Uri.parse(
+        'https://wannsee-explorer-v1.mxc.com/api/v2/transactions/$hash',
+      ),
+      headers: {'accept': 'application/json'},
+    );
+
+    if (response.statusCode == 200) {
+      final txList = WannseeTransactionModel.fromJson(response.body);
+      return txList;
+    } else {
+      return null;
+    }
   }
 
   @override
@@ -238,7 +226,6 @@ class ContractService implements IContractService {
     _mxcSocketService.initialize(NetworkType.Wannsee);
     final isConnected = await _mxcSocketService.connect();
     if (isConnected == false) {
-      print('Error with connection');
       return false;
     } else {
       _mxcSocketService.subscribeToEvent(event, listeningCallBack);
@@ -247,9 +234,20 @@ class ContractService implements IContractService {
   }
 
   @override
-  Future<void> subscribeToTransactionsEvent() {
-    // TODO: implement subscribeToTransactionsEvent
-    throw UnimplementedError();
+  Future<DefaultTokens?> getDefaultTokens() async {
+    final response = await _restClient.client.get(
+      Uri.parse(
+        'https://raw.githubusercontent.com/reasje/wannseeswap-tokenlist/main/tokenlist.json',
+      ),
+      headers: {'accept': 'application/json'},
+    );
+
+    if (response.statusCode == 200) {
+      final defaultTokens = DefaultTokens.fromJson(response.body);
+      return defaultTokens;
+    } else {
+      return null;
+    }
   }
 
   @override

@@ -2,9 +2,11 @@ import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 
-import 'wannsee_transaction.dart';
+import 'wannsee_transaction_model.dart';
 
-export 'wannsee_transaction.dart';
+export 'wannsee_transaction_model.dart';
+
+import '../shared/shared.dart';
 
 class WannseeTransactionsModel extends Equatable {
   final List<WannseeTransactionModel>? items;
@@ -15,7 +17,8 @@ class WannseeTransactionsModel extends Equatable {
   factory WannseeTransactionsModel.fromMap(Map<String, dynamic> data) {
     return WannseeTransactionsModel(
       items: (data['items'] as List<dynamic>?)
-          ?.map((dynamic e) => WannseeTransactionModel.fromMap(e as Map<String, dynamic>))
+          ?.map((dynamic e) =>
+              WannseeTransactionModel.fromMap(e as Map<String, dynamic>))
           .toList(),
       nextPageParams: data['next_page_params'] as dynamic,
     );

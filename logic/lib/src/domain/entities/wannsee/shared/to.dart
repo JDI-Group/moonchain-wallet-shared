@@ -7,7 +7,7 @@ class To extends Equatable {
   final dynamic implementationName;
   final bool? isContract;
   final bool? isVerified;
-  final dynamic name;
+  final String? name;
   final List<dynamic>? privateTags;
   final List<dynamic>? publicTags;
   final List<dynamic>? watchlistNames;
@@ -28,7 +28,7 @@ class To extends Equatable {
         implementationName: data['implementation_name'] as dynamic,
         isContract: data['is_contract'] as bool?,
         isVerified: data['is_verified'] as bool?,
-        name: data['name'] as dynamic,
+        name: data['name'] as String?,
         privateTags: data['private_tags'] as List<dynamic>?,
         publicTags: data['public_tags'] as List<dynamic>?,
         watchlistNames: data['watchlist_names'] as List<dynamic>?,
@@ -62,7 +62,7 @@ class To extends Equatable {
     dynamic implementationName,
     bool? isContract,
     bool? isVerified,
-    dynamic name,
+    String? name,
     List<dynamic>? privateTags,
     List<dynamic>? publicTags,
     List<dynamic>? watchlistNames,

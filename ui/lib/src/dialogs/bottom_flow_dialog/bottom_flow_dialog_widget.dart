@@ -92,8 +92,7 @@ class BottomFlowDialogState extends State<BottomFlowDialog> {
     }
   }
 
-  Color get background =>
-      ColorsTheme.of(context).primaryBackground;
+  Color get background => ColorsTheme.of(context).primaryBackground;
 
   double get expectedBorderRadius =>
       BottomFlowDialog.calculateBorderRadius(overscrollValue.valueOrNull ?? 0);

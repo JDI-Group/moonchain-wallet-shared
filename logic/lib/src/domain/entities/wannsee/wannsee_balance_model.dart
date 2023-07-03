@@ -1,4 +1,6 @@
-class WannseeBalanceModel {
+import 'package:equatable/equatable.dart';
+
+class WannseeBalanceModel extends Equatable {
   String? balance;
 
   WannseeBalanceModel({this.balance});
@@ -12,4 +14,7 @@ class WannseeBalanceModel {
     data['balance'] = this.balance;
     return data;
   }
+
+  @override
+  List<Object?> get props => [balance];
 }
