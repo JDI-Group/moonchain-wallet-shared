@@ -46,7 +46,7 @@ class ColorsTheme {
   final mxcPurple200 = const Color(0xFFDECAFD);
   final mxcPurple100 = const Color(0xFFF4EFFC);
 
-  final green = const Color(0xFF65C466);
+  final greenMain = const Color(0xFF30A78B);
 
   // shadow
   Color get shadow => purple200;
@@ -61,6 +61,7 @@ class ColorsTheme {
   final primaryButtonText = const Color(0xFF25282B);
   final secondaryButtonText = const Color(0xFFFFFFFF);
   final disabledButtonText = const Color(0xFF5F6366);
+  final orangeText = const Color(0xFFB1742A);
 
   // button
   final disabledButton = const Color(0xFF323233);
@@ -71,7 +72,7 @@ class ColorsTheme {
   // tip
   final mainGreen = const Color(0xFF10C469);
   final mainRed = const Color(0xFFD22D2D);
-  final active = const Color(0xFF40DF32);
+  final systemStatusActive = const Color(0xFF63C174);
 }
 
 class ColorsThemeDark implements ColorsTheme {
@@ -137,7 +138,7 @@ class ColorsThemeDark implements ColorsTheme {
   final mxcPurple100 = const Color(0xFF242228);
 
   @override
-  Color get green => const Color(0xFF65C466);
+  Color get greenMain => const Color(0xFF30A78B);
 
   @override
   Color get shadow => purple200;
@@ -164,6 +165,9 @@ class ColorsThemeDark implements ColorsTheme {
   @override
   Color get disabledButtonText => const Color(0xFF5F6366);
 
+  @override
+  Color get orangeText => const Color(0xFFB1742A);
+
   // button
   @override
   Color get disabledButton => const Color(0xFF323233);
@@ -185,5 +189,5 @@ class ColorsThemeDark implements ColorsTheme {
   Color get mainRed => const Color(0xFFFF7878);
 
   @override
-  Color get active => const Color(0xFF40DF32);
+  Color get systemStatusActive => const Color(0xFF63C174);
 }
