@@ -170,6 +170,10 @@ class ContractService implements IContractService {
     if (response.statusCode == 200) {
       final txList = WannseeTransactionsModel.fromJson(response.body);
       return txList;
+    } if (response.statusCode == 404) {
+      // new wallet and nothing is returned
+      final txList = WannseeTransactionsModel(items: [],);
+      return txList;
     } else {
       return null;
     }
@@ -184,9 +188,12 @@ class ContractService implements IContractService {
           'https://wannsee-explorer-v1.mxc.com/api/v2/addresses/$address/token-transfers?type='),
       headers: {'accept': 'application/json'},
     );
-
     if (response.statusCode == 200) {
       final txList = WannseeTokenTransfersModel.fromJson(response.body);
+      return txList;
+    } if (response.statusCode == 404) {
+      // new wallet and nothing is returned
+      final txList = WannseeTokenTransfersModel(items: [],);
       return txList;
     } else {
       return null;
