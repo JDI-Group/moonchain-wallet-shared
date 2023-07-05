@@ -357,7 +357,10 @@ class _MxcNonFormTextFieldState extends State<_MxcNonFormTextField> {
                     ),
                     if (controller.text.isNotEmpty)
                       InkWell(
-                        child: SvgPicture.asset('assets/svg/ic_clear.svg'),
+                        child: Icon(
+                          Icons.cancel_rounded,
+                          color: ColorsTheme.of(context).primaryButton,
+                        ),
                         onTap: () => controller.clear(),
                       ),
                     if (widget.button != null)
@@ -391,7 +394,11 @@ class _MxcNonFormTextFieldState extends State<_MxcNonFormTextField> {
             const SizedBox(height: 4),
             Row(
               children: [
-                SvgPicture.asset('assets/svg/ic_alert.svg'),
+                // SvgPicture.asset('assets/svg/ic_alert.svg'),
+                Icon(
+                  Icons.error_rounded,
+                  color: ColorsTheme.of(context).errorText,
+                ),
                 const SizedBox(width: 5),
                 Expanded(
                   child: Text(

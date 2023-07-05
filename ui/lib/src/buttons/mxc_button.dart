@@ -116,7 +116,7 @@ class _MxcButtonState extends State<MxcButton> with TickerProviderStateMixin {
 
   void initAnimation() {
     _animationController = AnimationController(
-        duration: const Duration(milliseconds: 200), vsync: this);
+        duration: const Duration(milliseconds: 300), vsync: this);
 
     _scaleAnimate = Tween<double>(
       begin: 0.9,
@@ -131,6 +131,12 @@ class _MxcButtonState extends State<MxcButton> with TickerProviderStateMixin {
         ),
       ),
     );
+
+    // _animationController.addStatusListener((status) {
+    //   if (status == AnimationStatus.completed) {
+    //     endAnimate();
+    //   }
+    // });
   }
 
   @override
@@ -165,9 +171,9 @@ class _MxcButtonState extends State<MxcButton> with TickerProviderStateMixin {
         child: GestureDetector(
           onTap: widget.onTap,
           onTapDown: (_) => startAnimate(),
-          onLongPressDown: (_) => startAnimate(),
+          // onLongPressDown: (_) => startAnimate(),
           onTapUp: (_) => endAnimate(),
-          onLongPressUp: () => endAnimate(),
+          // onLongPressUp: () => endAnimate(),
           child: Container(
             width: widget.fillWidth ? double.infinity : null,
             height: getHeight(),
