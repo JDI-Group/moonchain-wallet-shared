@@ -56,8 +56,8 @@ class ColorsTheme {
 
   // text
   final primaryText = const Color(0xFF25282B);
-  final secondaryText = const Color(0xFFA5A6AC);
-  final errorText = const Color(0xFFFC8383);
+  final secondaryText = const Color(0xFF74767B);
+  final errorText = const Color(0xFFD22D2D);
   final primaryButtonText = const Color(0xFF25282B);
   final secondaryButtonText = const Color(0xFFFFFFFF);
   final disabledButtonText = const Color(0xFF5F6366);

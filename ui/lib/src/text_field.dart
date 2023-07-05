@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mxc_ui/mxc_ui.dart';
 
 class MxcTextField extends FormField<String> {
@@ -17,6 +18,8 @@ class MxcTextField extends FormField<String> {
     String? suffixText,
     bool obscure = false,
     AutovalidateMode? autovalidateMode,
+    String? followText,
+    String? errorText,
   }) : super(
           key: key,
           initialValue: controller.text,
@@ -36,7 +39,8 @@ class MxcTextField extends FormField<String> {
               readOnly: readOnly,
               suffixText: suffixText,
               width: width,
-              errorText: field.errorText,
+              errorText: field.errorText ?? errorText,
+              followText: followText,
             );
           },
         );
@@ -53,6 +57,7 @@ class MxcTextField extends FormField<String> {
     TextInputType? keyboardType,
     String? suffixText,
     bool obscure = false,
+    String? followText,
   })  : controller = null,
         super(
           key: key,
@@ -67,6 +72,7 @@ class MxcTextField extends FormField<String> {
             obscure: obscure,
             suffixText: suffixText,
             width: width,
+            followText: followText,
           ),
         );
 
@@ -101,9 +107,14 @@ class MxcTextField extends FormField<String> {
     String? label,
     required TextEditingController this.controller,
     String? hint,
+    FormFieldValidator<String>? validator,
+    AutovalidateMode? autovalidateMode,
+    TextInputAction? action,
   }) : super(
           key: key,
           initialValue: controller.text,
+          validator: validator,
+          autovalidateMode: autovalidateMode,
           builder: (field) {
             return _MxcNonFormTextField(
               key: null,
@@ -114,6 +125,8 @@ class MxcTextField extends FormField<String> {
               readOnly: false,
               width: double.infinity,
               maxLines: 7,
+              action: action,
+              errorText: field.errorText,
             );
           },
         );
@@ -168,6 +181,7 @@ class _MxcNonFormTextField extends StatefulWidget {
     this.suffixText,
     this.obscure = false,
     this.errorText,
+    this.followText,
   })  : _controller = controller,
         _initialValue = null,
         onChanged = null,
@@ -187,6 +201,7 @@ class _MxcNonFormTextField extends StatefulWidget {
     this.suffixText,
     this.obscure = false,
     this.disabled = false,
+    this.followText,
   })  : _initialValue = text,
         readOnly = true,
         _controller = null,
@@ -213,6 +228,8 @@ class _MxcNonFormTextField extends StatefulWidget {
   final String? errorText;
   final ValueChanged<String>? onChanged;
 
+  final String? followText;
+
   @override
   State<_MxcNonFormTextField> createState() => _MxcNonFormTextFieldState();
 }
@@ -222,10 +239,25 @@ class _MxcNonFormTextFieldState extends State<_MxcNonFormTextField> {
   late bool focused;
   TextEditingController? _internalController;
 
+  double followPosition = 0;
+
   TextEditingController get controller {
     if (widget._controller != null) return widget._controller!;
     return _internalController ??=
         TextEditingController(text: widget._initialValue);
+  }
+
+  Size boundingTextSize(String text, TextStyle style,
+      {int maxLines = 2 ^ 31, double maxWidth = double.infinity}) {
+    if (text.isEmpty) {
+      return Size.zero;
+    }
+    final TextPainter textPainter = TextPainter(
+        textDirection: TextDirection.ltr,
+        text: TextSpan(text: text, style: style),
+        maxLines: maxLines)
+      ..layout(maxWidth: maxWidth);
+    return textPainter.size;
   }
 
   @override
@@ -238,6 +270,14 @@ class _MxcNonFormTextFieldState extends State<_MxcNonFormTextField> {
       focused = focusNode.hasFocus;
       focusNode.addListener(_focusNodeListener);
     }
+
+    controller.addListener(() {
+      if (widget.followText != null) {
+        Size textSize = boundingTextSize(
+            controller.text, FontTheme.of(context, listen: false).body1());
+        setState(() => followPosition = textSize.width);
+      }
+    });
   }
 
   void _focusNodeListener() {
@@ -258,114 +298,110 @@ class _MxcNonFormTextFieldState extends State<_MxcNonFormTextField> {
     return SizedBox(
       width: widget.width,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 8),
           if (widget.label != null)
-            AnimatedContainer(
-              duration: const Duration(milliseconds: 200),
-              padding: EdgeInsets.only(
-                top: focused ? 4.5 : 3,
-                bottom: focused ? 10 : 8,
-              ),
-              alignment: Alignment.centerLeft,
-              child: AnimatedDefaultTextStyle(
-                duration: const Duration(milliseconds: 200),
-                style: widget.disabled
-                    ? FontTheme.of(context).caption1().copyWith(
-                          color: ColorsTheme.of(context).disabledButton,
-                        )
-                    : focused
-                        ? FontTheme.of(context).caption1().copyWith(
-                              color: MxcScopedTheme.of(context).primaryColor,
-                            )
-                        : FontTheme.of(context).body1(),
-                child: Text(
-                  widget.label!,
-                  maxLines: 1,
-                ),
-              ),
+            Text(
+              widget.label!,
+              style: FontTheme.of(context).caption1(),
             ),
           AnimatedContainer(
             duration: const Duration(milliseconds: 200),
+            margin: const EdgeInsets.symmetric(vertical: 4),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
             decoration: BoxDecoration(
-              borderRadius: (widget.maxLines == 1)
-                  ? null
-                  : const BorderRadius.all(Radius.circular(10)),
-              border: (widget.maxLines == 1)
-                  ? Border(
-                      bottom: BorderSide(
-                        width: focused ? 2 : 1,
-                        color: widget.disabled
-                            ? ColorsTheme.of(context).disabledButton
-                            : focused
-                                ? MxcScopedTheme.of(context).primaryColor
-                                : ColorsTheme.of(context).primaryText,
-                      ),
-                    )
-                  : Border.all(
-                      color: ColorsTheme.of(context).primaryBackground,
-                    ),
+              borderRadius: const BorderRadius.all(Radius.circular(12)),
+              border: Border.all(
+                  color: focused
+                      ? ColorsTheme.of(context).primaryText
+                      : ColorsTheme.of(context).primaryText.withOpacity(0.32)),
             ),
-            padding: (widget.maxLines == 1)
-                ? const EdgeInsets.only(bottom: 2)
-                : const EdgeInsets.all(16),
-            child: Row(
+            child: Stack(
               children: [
-                Expanded(
-                  child: Scrollbar(
-                    child: TextField(
-                      readOnly: widget.readOnly,
-                      keyboardType: widget.keyboardType,
-                      focusNode: focusNode,
-                      maxLines: widget.maxLines,
-                      textInputAction: widget.action,
-                      controller: controller,
-                      cursorColor: ColorsTheme.of(context).primaryText,
-                      style: (widget.disabled)
-                          ? FontTheme.of(context).subtitle1().copyWith(
-                                color: ColorsTheme.of(context).disabledButton,
-                              )
-                          : FontTheme.of(context).subtitle1(),
-                      obscureText: widget.obscure,
-                      onChanged: widget.onChanged,
-                      decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.fromLTRB(0, 0, 0, 6),
-                        isDense: true,
-                        floatingLabelBehavior: FloatingLabelBehavior.always,
-                        hintText: widget.hint,
-                        hintStyle: FontTheme.of(context).subtitle1.secondary(),
-                        enabledBorder: InputBorder.none,
-                        focusedBorder: InputBorder.none,
-                        errorBorder: InputBorder.none,
-                        focusedErrorBorder: InputBorder.none,
-                        disabledBorder: InputBorder.none,
-                        suffixText: widget.suffixText,
+                Row(
+                  children: [
+                    Expanded(
+                      child: Scrollbar(
+                        child: TextField(
+                          readOnly: widget.readOnly,
+                          keyboardType: widget.keyboardType,
+                          focusNode: focusNode,
+                          maxLines: widget.maxLines,
+                          textInputAction: widget.action,
+                          controller: controller,
+                          cursorColor: ColorsTheme.of(context).primaryText,
+                          style: (widget.disabled)
+                              ? FontTheme.of(context).body1().copyWith(
+                                    color:
+                                        ColorsTheme.of(context).disabledButton,
+                                  )
+                              : FontTheme.of(context).body1(),
+                          obscureText: widget.obscure,
+                          onChanged: widget.onChanged,
+                          decoration: InputDecoration(
+                            isDense: true,
+                            floatingLabelBehavior: FloatingLabelBehavior.always,
+                            hintText: widget.hint,
+                            hintStyle:
+                                FontTheme.of(context).subtitle1.secondary(),
+                            enabledBorder: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                            errorBorder: InputBorder.none,
+                            focusedErrorBorder: InputBorder.none,
+                            disabledBorder: InputBorder.none,
+                            suffixText: widget.suffixText,
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+                    if (controller.text.isNotEmpty)
+                      InkWell(
+                        child: SvgPicture.asset('assets/svg/ic_clear.svg'),
+                        onTap: () => controller.clear(),
+                      ),
+                    if (widget.button != null)
+                      MxcScopedTheme(
+                        data: MxcScopedThemeData(
+                          primaryColor: widget.disabled
+                              ? ColorsTheme.of(context).disabledButton
+                              : focused
+                                  ? MxcScopedTheme.of(context).primaryColor
+                                  : ColorsTheme.of(context).primaryText,
+                        ),
+                        child: widget.button!,
+                      ),
+                  ],
                 ),
-                if (widget.button != null)
-                  MxcScopedTheme(
-                    data: MxcScopedThemeData(
-                      primaryColor: widget.disabled
-                          ? ColorsTheme.of(context).disabledButton
-                          : focused
-                              ? MxcScopedTheme.of(context).primaryColor
-                              : ColorsTheme.of(context).primaryText,
+                if (widget.followText != null)
+                  Positioned(
+                    top: 8,
+                    left: followPosition,
+                    child: Text(
+                      widget.followText!,
+                      style: FontTheme.of(context).body1().copyWith(
+                            color: Colors.white.withOpacity(0.32),
+                          ),
                     ),
-                    child: widget.button!,
                   ),
               ],
             ),
           ),
           if (widget.errorText != null) ...[
             const SizedBox(height: 4),
-            SizedBox(
-              width: double.infinity,
-              child: Text(
-                widget.errorText!,
-                style: FontTheme.of(context).caption1.error(),
-              ),
+            Row(
+              children: [
+                SvgPicture.asset('assets/svg/ic_alert.svg'),
+                const SizedBox(width: 5),
+                Expanded(
+                  child: Text(
+                    widget.errorText!,
+                    style: FontTheme.of(context)
+                        .subtitle1()
+                        .copyWith(color: ColorsTheme.of(context).errorText),
+                  ),
+                )
+              ],
             ),
           ],
           const SizedBox(height: 8),
