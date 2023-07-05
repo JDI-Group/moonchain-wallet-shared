@@ -8,6 +8,7 @@ class MXCDropDown<T> extends StatefulWidget {
   final Widget? icon;
   final BorderRadius? borderRadius;
   final Widget? leadingIcon;
+  final TextStyle? textStyle;
   const MXCDropDown(
       {super.key,
       required this.itemList,
@@ -15,7 +16,8 @@ class MXCDropDown<T> extends StatefulWidget {
       required this.selectedItem,
       this.icon,
       this.borderRadius,
-      this.leadingIcon});
+      this.leadingIcon,
+      this.textStyle});
 
   @override
   State<MXCDropDown<T>> createState() => _MXCDropDownState<T>();
@@ -28,7 +30,7 @@ class _MXCDropDownState<T> extends State<MXCDropDown<T>> {
       value: widget.selectedItem,
       icon: widget.icon ?? Container(),
       underline: Container(),
-      focusColor: ColorsTheme.of(context).box,
+      focusColor: ColorsTheme.of(context).secondaryBackground,
       dropdownColor: ColorsTheme.of(context).box,
       elevation: 16,
       isDense: true,
@@ -41,7 +43,7 @@ class _MXCDropDownState<T> extends State<MXCDropDown<T>> {
                 child: Row(
                   children: [
                     widget.leadingIcon ?? Container(),
-                    Text(item.toString(), style: FontTheme.of(context).h7()),
+                    Text(item.toString(), style: widget.textStyle ?? FontTheme.of(context).h7()),
                   ],
                 ),
               ))

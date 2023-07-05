@@ -20,7 +20,8 @@ abstract class MxcCircleButton extends StatelessWidget {
       this.titleStyle,
       this.textSpace,
       this.shadowRadius,
-      this.buttonDecoration})
+      this.buttonDecoration,
+      this.iconFillColor})
       : super(key: key);
 
   const factory MxcCircleButton.image({
@@ -42,7 +43,8 @@ abstract class MxcCircleButton extends StatelessWidget {
       TextStyle? titleStyle,
       double? iconSize,
       double? textSpace,
-      final double? shadowRadius}) = _MxcCircleIconButton;
+      final double? shadowRadius,
+      final Color iconFillColor}) = _MxcCircleIconButton;
 
   const factory MxcCircleButton.svg({
     required Key? key,
@@ -62,6 +64,7 @@ abstract class MxcCircleButton extends StatelessWidget {
   final double? textSpace;
   final double? shadowRadius;
   final BoxDecoration? buttonDecoration;
+  final Color? iconFillColor;
 
   Color _contentColor(BuildContext context) {
     Color color;
@@ -82,6 +85,8 @@ abstract class MxcCircleButton extends StatelessWidget {
     Color fillColor;
     if (onTap == null) {
       fillColor = ColorsTheme.of(context).disabledButton;
+    } else if (iconFillColor != null) {
+      fillColor = iconFillColor!;
     } else if (filled) {
       fillColor = color ?? MxcScopedTheme.of(context).primaryColor;
     } else {
@@ -187,7 +192,8 @@ class _MxcCircleIconButton extends MxcCircleButton {
       TextStyle? titleStyle,
       double? this.iconSize,
       double? textSpace,
-      double? shadowRadius})
+      double? shadowRadius,
+      Color? iconFillColor})
       : super._(
             key: key,
             filled: filled,
@@ -196,7 +202,8 @@ class _MxcCircleIconButton extends MxcCircleButton {
             color: color,
             titleStyle: titleStyle,
             textSpace: textSpace,
-            shadowRadius: shadowRadius);
+            shadowRadius: shadowRadius,
+            iconFillColor: iconFillColor);
 
   final IconData icon;
   final double? iconSize;
