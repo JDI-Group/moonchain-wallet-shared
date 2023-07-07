@@ -119,6 +119,7 @@ abstract class MxcCircleButton extends StatelessWidget {
 
     if (title != null) {
       widget = Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           widget,
           SizedBox(height: textSpace ?? 6),
