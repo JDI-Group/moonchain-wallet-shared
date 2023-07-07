@@ -1,13 +1,9 @@
 import 'dart:async';
 import 'dart:developer';
+import 'package:mxc_logic/mxc_logic.dart';
 import 'package:mxc_logic/src/data/api/client/rest_client.dart';
-import 'package:mxc_logic/src/domain/entities/default_tokens/default_tokens.dart';
-import 'package:mxc_logic/src/domain/entities/network_type.dart';
-import 'package:mxc_logic/src/domain/entities/wannsee/wannsee_token_transfers_model/wannsee_token_transfer_model.dart';
-import 'package:mxc_logic/src/domain/entities/wannsee/wannsee_transactions_model/wannsee_transactions_model.dart';
 import 'package:web3dart/web3dart.dart';
 import '../../../data/socket/mxc_socket_client.dart';
-import '../../entities/wallet_transfer.dart';
 
 typedef TransferEvent = void Function(
   EthereumAddress from,
@@ -40,6 +36,7 @@ abstract class IContractService {
   Future<WannseeTokenTransfersModel?> getTokenTransfersByAddress(
     EthereumAddress address,
   );
+  Future<WannseeTokensBalanceModel?> getTokensBalance(EthereumAddress from);
 }
 
 class ContractService implements IContractService {
@@ -132,6 +129,31 @@ class ContractService implements IContractService {
   }
 
   @override
+  Future<WannseeTokensBalanceModel?> getTokensBalance(
+      EthereumAddress from) async {
+    final response = await _restClient.client.get(
+      Uri.parse(
+        'https://wannsee-explorer-v1.mxc.com/api/v2/addresses/${from.hex}/tokens?type=ERC-20',
+      ),
+      headers: {'accept': 'application/json'},
+    );
+
+    if (response.statusCode == 200) {
+      final txList = WannseeTokensBalanceModel.fromJson(response.body);
+      return txList;
+    }
+    if (response.statusCode == 404) {
+      // new wallet and nothing is returned
+      const txList = WannseeTokensBalanceModel(
+        items: [],
+      );
+      return txList;
+    } else {
+      return null;
+    }
+  }
+
+  @override
   StreamSubscription<FilterEvent> listenTransfer(TransferEvent onTransfer,
       {int? take}) {
     var events = _client.events(FilterOptions.events(
@@ -159,8 +181,10 @@ class ContractService implements IContractService {
     });
   }
 
+  // Reza wallet -> Token  Contract address -> Adam wallet confirmed
   @override
-  Future<WannseeTransactionsModel?> getTransactionsByAddress(EthereumAddress address,
+  Future<WannseeTransactionsModel?> getTransactionsByAddress(
+    EthereumAddress address,
   ) async {
     final response = await _restClient.client.get(
         Uri.parse(
@@ -170,9 +194,12 @@ class ContractService implements IContractService {
     if (response.statusCode == 200) {
       final txList = WannseeTransactionsModel.fromJson(response.body);
       return txList;
-    } if (response.statusCode == 404) {
+    }
+    if (response.statusCode == 404) {
       // new wallet and nothing is returned
-      final txList = WannseeTransactionsModel(items: [],);
+      const txList = WannseeTransactionsModel(
+        items: [],
+      );
       return txList;
     } else {
       return null;
@@ -191,9 +218,12 @@ class ContractService implements IContractService {
     if (response.statusCode == 200) {
       final txList = WannseeTokenTransfersModel.fromJson(response.body);
       return txList;
-    } if (response.statusCode == 404) {
+    }
+    if (response.statusCode == 404) {
       // new wallet and nothing is returned
-      final txList = WannseeTokenTransfersModel(items: [],);
+      final txList = WannseeTokenTransfersModel(
+        items: [],
+      );
       return txList;
     } else {
       return null;
@@ -244,7 +274,7 @@ class ContractService implements IContractService {
   Future<DefaultTokens?> getDefaultTokens() async {
     final response = await _restClient.client.get(
       Uri.parse(
-        'https://raw.githubusercontent.com/reasje/wannseeswap-tokenlist/main/tokenlist.json',
+        'https://raw.githubusercontent.com/MXCzkEVM/wannseeswap-tokenlist/main/tokenlist.json',
       ),
       headers: {'accept': 'application/json'},
     );
