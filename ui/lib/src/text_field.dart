@@ -20,6 +20,7 @@ class MxcTextField extends FormField<String> {
     AutovalidateMode? autovalidateMode,
     String? followText,
     String? errorText,
+    final ValueChanged<String>? onChanged,
   }) : super(
           key: key,
           initialValue: controller.text,
@@ -41,6 +42,7 @@ class MxcTextField extends FormField<String> {
               width: width,
               errorText: field.errorText ?? errorText,
               followText: followText,
+              onChanged: onChanged,
             );
           },
         );
@@ -182,9 +184,9 @@ class _MxcNonFormTextField extends StatefulWidget {
     this.obscure = false,
     this.errorText,
     this.followText,
+    this.onChanged,
   })  : _controller = controller,
         _initialValue = null,
-        onChanged = null,
         disabled = false,
         super(key: key);
 
@@ -302,13 +304,16 @@ class _MxcNonFormTextFieldState extends State<_MxcNonFormTextField> {
         children: [
           const SizedBox(height: 8),
           if (widget.label != null)
-            Text(
-              widget.label!,
-              style: FontTheme.of(context).caption1(),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Text(
+                widget.label!,
+                style: FontTheme.of(context).caption1(),
+              ),
             ),
           AnimatedContainer(
             duration: const Duration(milliseconds: 200),
-            margin: const EdgeInsets.symmetric(vertical: 4),
+            margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.all(Radius.circular(12)),
