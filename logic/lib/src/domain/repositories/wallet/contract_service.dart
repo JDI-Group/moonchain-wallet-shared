@@ -37,6 +37,7 @@ abstract class IContractService {
     EthereumAddress address,
   );
   Future<WannseeTokensBalanceModel?> getTokensBalance(EthereumAddress from);
+  Future<Token?> getToken(String address);
 }
 
 class ContractService implements IContractService {
@@ -289,6 +290,7 @@ class ContractService implements IContractService {
     }
   }
 
+  @override
   Future<Token?> getToken(String address) async {
     try {
       final data = EthereumAddress.fromHex(address);
