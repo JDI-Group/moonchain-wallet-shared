@@ -8,12 +8,12 @@ import 'wallet/address.dart';
 class ApiRepository {
   ApiRepository({
     required this.authStorageRepository,
-  });
+  }) : _constracts = ContractLocator.setup();
 
   final AuthenticationStorageRepository authStorageRepository;
+  final ContractLocator _constracts;
 
   AddressService get address => AddressService(authStorageRepository);
 
-  Future<ContractService> get contract async =>
-      (await ContractLocator.setup()).getInstance(NetworkType.Wannsee);
+  ContractService get contract => _constracts.getInstance(NetworkType.Wannsee);
 }

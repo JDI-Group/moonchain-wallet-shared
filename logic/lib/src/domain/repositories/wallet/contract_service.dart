@@ -1,7 +1,8 @@
 import 'dart:async';
-import 'dart:developer';
+import 'package:ens_dart/ens_dart.dart';
 import 'package:mxc_logic/src/data/api/client/rest_client.dart';
 import 'package:mxc_logic/src/domain/entities/default_tokens/default_tokens.dart';
+import 'package:mxc_logic/src/domain/entities/default_tokens/token.dart';
 import 'package:mxc_logic/src/domain/entities/network_type.dart';
 import 'package:mxc_logic/src/domain/entities/wannsee/wannsee_token_transfers_model/wannsee_token_transfer_model.dart';
 import 'package:mxc_logic/src/domain/entities/wannsee/wannsee_transactions_model/wannsee_transactions_model.dart';
@@ -43,15 +44,17 @@ abstract class IContractService {
 }
 
 class ContractService implements IContractService {
-  ContractService(this._client, this._restClient, {this.contract});
+  ContractService(this._web3Client, this._ens, this._restClient,
+      {this.contract});
 
-  final Web3Client _client;
+  final Web3Client _web3Client;
+  final Ens _ens;
   final RestClient _restClient;
   final DeployedContract? contract;
 
   ContractEvent _transferEvent() => contract!.event('Transfer');
   ContractFunction _balanceFunction() => contract!.function('balanceOf');
-  ContractFunction _sendFunction() => contract!.function('transfer');
+  ContractFunction _sendFunction() => contract!.function('sendCoin');
 
   @override
   EthPrivateKey getCredentials(String privateKey) =>
@@ -68,9 +71,9 @@ class ContractService implements IContractService {
   }) async {
     final credentials = getCredentials(privateKey);
     final from = credentials.address;
-    final networkId = await _client.getNetworkId();
+    final networkId = await _web3Client.getNetworkId();
 
-    final gasPrice = await _client.getGasPrice();
+    final gasPrice = await _web3Client.getGasPrice();
     final transaction = type == WalletTransferType.ether
         ? Transaction(
             from: from,
@@ -87,7 +90,7 @@ class ContractService implements IContractService {
           );
 
     try {
-      final transactionId = await _client.sendTransaction(
+      final transactionId = await _web3Client.sendTransaction(
         credentials,
         transaction,
         chainId: networkId,
@@ -95,7 +98,7 @@ class ContractService implements IContractService {
 
       // pooling the transaction receipt every x seconds.
       Timer.periodic(const Duration(seconds: 2), (timer) async {
-        final receipt = await _client.getTransactionReceipt(transactionId);
+        final receipt = await _web3Client.getTransactionReceipt(transactionId);
 
         if (receipt?.status ?? false) {
           if (onTransfer != null) {
@@ -117,12 +120,12 @@ class ContractService implements IContractService {
 
   @override
   Future<EtherAmount> getEthBalance(EthereumAddress from) async {
-    return _client.getBalance(from);
+    return _web3Client.getBalance(from);
   }
 
   @override
   Future<BigInt> getTokenBalance(EthereumAddress from) async {
-    final response = await _client.call(
+    final response = await _web3Client.call(
       contract: contract!,
       function: _balanceFunction(),
       params: <EthereumAddress>[from],
@@ -134,7 +137,7 @@ class ContractService implements IContractService {
   @override
   StreamSubscription<FilterEvent> listenTransfer(TransferEvent onTransfer,
       {int? take}) {
-    var events = _client.events(FilterOptions.events(
+    var events = _web3Client.events(FilterOptions.events(
       contract: contract!,
       event: _transferEvent(),
     ));
@@ -160,7 +163,8 @@ class ContractService implements IContractService {
   }
 
   @override
-  Future<WannseeTransactionsModel?> getTransactionsByAddress(EthereumAddress address,
+  Future<WannseeTransactionsModel?> getTransactionsByAddress(
+    EthereumAddress address,
   ) async {
     final response = await _restClient.client.get(
         Uri.parse(
@@ -170,9 +174,12 @@ class ContractService implements IContractService {
     if (response.statusCode == 200) {
       final txList = WannseeTransactionsModel.fromJson(response.body);
       return txList;
-    } if (response.statusCode == 404) {
+    }
+    if (response.statusCode == 404) {
       // new wallet and nothing is returned
-      final txList = WannseeTransactionsModel(items: [],);
+      final txList = WannseeTransactionsModel(
+        items: [],
+      );
       return txList;
     } else {
       return null;
@@ -191,9 +198,12 @@ class ContractService implements IContractService {
     if (response.statusCode == 200) {
       final txList = WannseeTokenTransfersModel.fromJson(response.body);
       return txList;
-    } if (response.statusCode == 404) {
+    }
+    if (response.statusCode == 404) {
       // new wallet and nothing is returned
-      final txList = WannseeTokenTransfersModel(items: [],);
+      final txList = WannseeTokenTransfersModel(
+        items: [],
+      );
       return txList;
     } else {
       return null;
@@ -222,7 +232,7 @@ class ContractService implements IContractService {
 
   @override
   Future<bool> checkConnectionToNetwork() async {
-    final isConnected = await _client.isListeningForNetwork();
+    final isConnected = await _web3Client.isListeningForNetwork();
     return isConnected;
   }
 
@@ -257,8 +267,26 @@ class ContractService implements IContractService {
     }
   }
 
+  Future<Token?> getToken(String address) async {
+    try {
+      final data = EthereumAddress.fromHex(address);
+      final ensToken = EnsToken(client: _web3Client, address: data);
+      final symbol = await ensToken.symbol();
+      final decimals = await ensToken.decimals();
+
+      return Token(
+        address: address,
+        name: symbol,
+        symbol: symbol,
+        decimals: decimals.toInt(),
+      );
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
   @override
   Future<void> dispose() async {
-    await _client.dispose();
+    await _web3Client.dispose();
   }
 }

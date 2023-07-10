@@ -6,16 +6,17 @@ class AppConfig {
   static Map<NetworkType, AppConfigParams> networks =
       <NetworkType, AppConfigParams>{
     NetworkType.Wannsee: AppConfigParams(
-      web3RpcHttpUrl: "https://wannsee-explorer-v1.mxc.com/api/eth-rpc",
-      web3WebSocketUrl:
-          'wss://wannsee-explorer-v1.mxc.com/socket/v2/websocket?vsn=2.0.0',
+      web3RpcHttpUrl: 'https://wannsee-rpc.mxc.com',
+      web3WebSocketUrl: 'wss://wannsee-rpc.mxc.com',
       web3RpcWebsocketUrl: null,
-      contractAddress: '0xD933a953f4786Eed5E58D234dFeadE15c96bAa8b',
+      contractAddress:
+          '0xD933a953f4786Eed5E58D234dFeadE15c96bAa8b', //need to confirm
       symbol: 'MXC',
       faucetUrl: 'about:blank',
       explorerUrl: 'https://wannsee-explorer.mxc.com',
       enabled: true,
       label: 'MXC Wannsee',
+      chainId: 5167003,
     ),
     // NetworkType.Local: AppConfigParams(
     //   'http://192.168.40.197:8545',
@@ -77,6 +78,7 @@ class AppConfigParams {
     required this.explorerUrl,
     required this.web3RpcWebsocketUrl,
     required this.web3WebSocketUrl,
+    required this.chainId,
     this.icon = Icons.attach_money,
   });
   final String? web3RpcWebsocketUrl;
@@ -89,4 +91,5 @@ class AppConfigParams {
   final bool enabled;
   final String label;
   final String explorerUrl;
+  final int chainId;
 }

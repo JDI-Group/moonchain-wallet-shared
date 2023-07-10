@@ -15,5 +15,7 @@ class AuthUseCase {
     authStorageRepository.savePrivateKey(privateKey);
   }
 
+  String? getPublicAddress() => authStorageRepository.publicAddress;
+
   bool get loggedIn => authStorageRepository.loggedIn;
 }

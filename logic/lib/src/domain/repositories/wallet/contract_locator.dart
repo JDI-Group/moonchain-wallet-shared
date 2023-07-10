@@ -3,6 +3,7 @@ import 'package:mxc_logic/src/data/api/client/rest_client.dart';
 import 'package:mxc_logic/src/domain/entities/network_type.dart';
 import 'package:web3dart/web3dart.dart';
 import 'package:web_socket_channel/io.dart';
+import 'package:ens_dart/ens_dart.dart';
 
 import 'app_config.dart';
 import 'contract_service.dart';
@@ -13,11 +14,9 @@ class ContractLocator {
   static Map<NetworkType, ContractService> instance =
       <NetworkType, ContractService>{};
 
-  static Future<ContractLocator> setup() async {
-    if (instance[NetworkType.Wannsee] == null) {
-      for (final network in NetworkType.enabledValues) {
-        instance[network] = await createInstance(network.config);
-      }
+  static ContractLocator setup() {
+    for (final network in NetworkType.enabledValues) {
+      instance[network] = createInstance(network.config);
     }
 
     return ContractLocator._();
@@ -27,10 +26,9 @@ class ContractLocator {
     return instance[network]!;
   }
 
-  static Future<ContractService> createInstance(
-      AppConfigParams networkConfig) async {
+  static ContractService createInstance(AppConfigParams networkConfig) {
     final rpcWSAddress = networkConfig.web3RpcWebsocketUrl;
-    final client = Web3Client(
+    final web3client = Web3Client(
       networkConfig.web3RpcHttpUrl,
       Client(),
       socketConnector: rpcWSAddress != null
@@ -43,6 +41,8 @@ class ContractLocator {
     // final contract = await ContractParser.fromAssets(
     //     'TargaryenCoin.json', networkConfig.contractAddress);
 
-    return ContractService(client, RestClient(), contract: null);
+    final ens = Ens(client: web3client, chainId: networkConfig.chainId);
+  
+    return ContractService(web3client, ens, RestClient(), contract: null);
   }
 }

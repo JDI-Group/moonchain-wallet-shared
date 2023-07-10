@@ -6,33 +6,19 @@ import 'package:hex/hex.dart';
 import 'package:mxc_logic/mxc_logic.dart';
 import 'package:web3dart/credentials.dart';
 
-abstract class IAddressService {
-  String generateMnemonic();
-  Future<String> getPrivateKey(String mnemonic);
-  Future<EthereumAddress> getPublicAddress();
-  Future<bool> setupFromMnemonic(String mnemonic);
-  Future<bool> setupFromPrivateKey(String privateKey);
-  String entropyToMnemonic(String entropyMnemonic);
-  bool validateMnemonic(String mnemonic);
-  void reset();
-}
-
-class AddressService implements IAddressService {
+class AddressService {
   const AddressService(this._authStorageRepository);
 
   final AuthenticationStorageRepository _authStorageRepository;
 
-  @override
   String generateMnemonic() {
     return bip39.generateMnemonic();
   }
 
-  @override
   String entropyToMnemonic(String entropyMnemonic) {
     return bip39.entropyToMnemonic(entropyMnemonic);
   }
 
-  @override
   Future<String> getPrivateKey(String mnemonic) async {
     final seed = bip39.mnemonicToSeedHex(mnemonic);
 
@@ -44,32 +30,19 @@ class AddressService implements IAddressService {
     return privateKey;
   }
 
-  @override
-  Future<EthereumAddress> getPublicAddress() async {
-    final key = _authStorageRepository.privateKey;
-    if (key != null && key.isNotEmpty) {
-      final private = EthPrivateKey.fromHex(key);
-
-      return private.address;
-    }
-
-    throw Exception('Private Key is empty.');
+  Future<EthereumAddress> getPublicAddress(String privateKey) async {
+    final key = EthPrivateKey.fromHex(privateKey);
+    return key.address;
   }
 
-  @override
   Future<bool> setupFromMnemonic(String mnemonic) async {
     final cryptMnemonic = bip39.mnemonicToEntropy(mnemonic);
     final privateKey = await getPrivateKey(mnemonic);
+    final publicAddress = EthPrivateKey.fromHex(privateKey).address;
 
     _authStorageRepository.saveMnemonic(cryptMnemonic);
     _authStorageRepository.savePrivateKey(privateKey);
-    return true;
-  }
-
-  @override
-  Future<bool> setupFromPrivateKey(String privateKey) async {
-    _authStorageRepository.saveMnemonic(null);
-    _authStorageRepository.savePrivateKey(privateKey);
+    _authStorageRepository.savePublicAddress(publicAddress.hex);
     return true;
   }
 
@@ -77,10 +50,13 @@ class AddressService implements IAddressService {
   void reset() {
     _authStorageRepository.saveMnemonic(null);
     _authStorageRepository.savePrivateKey(null);
+    _authStorageRepository.savePublicAddress(null);
   }
 
   @override
   bool validateMnemonic(String mnemonic) => bip39.validateMnemonic(mnemonic);
 
   String? getLocalstoragePrivateKey() => _authStorageRepository.privateKey;
+  EthereumAddress? getLocalstoragePublicAddress() =>
+      EthereumAddress.fromHex(_authStorageRepository.publicAddress!);
 }
