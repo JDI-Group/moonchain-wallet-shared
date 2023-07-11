@@ -9,8 +9,7 @@ class AppConfig {
       web3RpcHttpUrl: 'https://wannsee-rpc.mxc.com',
       web3WebSocketUrl: 'wss://wannsee-rpc.mxc.com',
       web3RpcWebsocketUrl: null,
-      contractAddress:
-          '0xD933a953f4786Eed5E58D234dFeadE15c96bAa8b', //need to confirm
+      contractAddress: '',
       symbol: 'MXC',
       faucetUrl: 'about:blank',
       explorerUrl: 'https://wannsee-explorer.mxc.com',

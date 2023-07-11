@@ -21,7 +21,7 @@ class MxcAppBarEvenly extends StatelessWidget {
     bool isActionTap = false,
   })  : title = Builder(
           builder: (context) => Text(
-            FlutterI18n.translate(context, titleText),
+            titleText,
             style: FontTheme.of(context).body2(),
             textAlign: TextAlign.center,
             softWrap: true,
@@ -32,7 +32,7 @@ class MxcAppBarEvenly extends StatelessWidget {
           builder: (context) => InkWell(
             onTap: appBarCloseHandlerBuilder(context),
             child: Text(
-              FlutterI18n.translate(context, leadingText ?? 'cancel'),
+              leadingText ?? FlutterI18n.translate(context, 'cancel'),
               style: FontTheme.of(context).body1(),
               textAlign: TextAlign.left,
               softWrap: true,
@@ -45,7 +45,7 @@ class MxcAppBarEvenly extends StatelessWidget {
                 builder: (context) => InkWell(
                   onTap: isActionTap ? onActionTap : null,
                   child: Text(
-                    FlutterI18n.translate(context, actionText),
+                    actionText,
                     style: isActionTap
                         ? FontTheme.of(context).body2()
                         : FontTheme.of(context).body2.secondary(),

@@ -20,7 +20,7 @@ class MxcTextField extends FormField<String> {
     AutovalidateMode? autovalidateMode,
     String? followText,
     String? errorText,
-    final ValueChanged<String>? onChanged,
+    ValueChanged<String>? onChanged,
   }) : super(
           key: key,
           initialValue: controller.text,
@@ -133,6 +133,45 @@ class MxcTextField extends FormField<String> {
           },
         );
 
+  MxcTextField.search({
+    required Key? key,
+    String? label,
+    required TextEditingController this.controller,
+    String? hint,
+    double width = double.infinity,
+    Color? backgroundColor,
+    FormFieldValidator<String>? validator,
+    AutovalidateMode? autovalidateMode,
+    TextInputAction? action,
+    ValueChanged<String>? onChanged,
+    Widget? prefix,
+  }) : super(
+          key: key,
+          initialValue: controller.text,
+          validator: validator,
+          autovalidateMode: autovalidateMode,
+          builder: (field) {
+            return _MxcNonFormTextField(
+              key: null,
+              label: label,
+              controller: controller,
+              hint: hint,
+              obscure: false,
+              readOnly: false,
+              width: width,
+              action: action,
+              errorText: field.errorText,
+              useAnimation: false,
+              backgroundColor: backgroundColor,
+              margin: EdgeInsets.zero,
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 0),
+              borderRadius: const BorderRadius.all(Radius.circular(100)),
+              onChanged: onChanged,
+              prefix: prefix,
+            );
+          },
+        );
+
   final TextEditingController? controller;
 
   @override
@@ -185,6 +224,12 @@ class _MxcNonFormTextField extends StatefulWidget {
     this.errorText,
     this.followText,
     this.onChanged,
+    this.useAnimation = true,
+    this.backgroundColor,
+    this.margin,
+    this.padding,
+    this.borderRadius,
+    this.prefix,
   })  : _controller = controller,
         _initialValue = null,
         disabled = false,
@@ -204,6 +249,12 @@ class _MxcNonFormTextField extends StatefulWidget {
     this.obscure = false,
     this.disabled = false,
     this.followText,
+    this.useAnimation = true,
+    this.backgroundColor,
+    this.margin,
+    this.padding,
+    this.borderRadius,
+    this.prefix,
   })  : _initialValue = text,
         readOnly = true,
         _controller = null,
@@ -231,6 +282,14 @@ class _MxcNonFormTextField extends StatefulWidget {
   final ValueChanged<String>? onChanged;
 
   final String? followText;
+
+  final bool useAnimation;
+  final Color? backgroundColor;
+  final EdgeInsetsGeometry? margin;
+  final EdgeInsetsGeometry? padding;
+  final BorderRadiusGeometry? borderRadius;
+
+  final Widget? prefix;
 
   @override
   State<_MxcNonFormTextField> createState() => _MxcNonFormTextFieldState();
@@ -260,6 +319,38 @@ class _MxcNonFormTextFieldState extends State<_MxcNonFormTextField> {
         maxLines: maxLines)
       ..layout(maxWidth: maxWidth);
     return textPainter.size;
+  }
+
+  Widget useAnimationContainer({
+    bool useAnimation = true,
+    Widget? child,
+  }) {
+    if (useAnimation) {
+      return AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        decoration: BoxDecoration(
+          borderRadius: const BorderRadius.all(Radius.circular(12)),
+          border: Border.all(
+            color: focused
+                ? ColorsTheme.of(context).primaryText
+                : ColorsTheme.of(context).primaryText.withOpacity(0.32),
+          ),
+        ),
+        child: child,
+      );
+    }
+
+    return Container(
+      margin: widget.margin,
+      padding: widget.padding,
+      decoration: BoxDecoration(
+        color: widget.backgroundColor,
+        borderRadius: widget.borderRadius,
+      ),
+      child: child,
+    );
   }
 
   @override
@@ -311,21 +402,13 @@ class _MxcNonFormTextFieldState extends State<_MxcNonFormTextField> {
                 style: FontTheme.of(context).caption1(),
               ),
             ),
-          AnimatedContainer(
-            duration: const Duration(milliseconds: 200),
-            margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-            decoration: BoxDecoration(
-              borderRadius: const BorderRadius.all(Radius.circular(12)),
-              border: Border.all(
-                  color: focused
-                      ? ColorsTheme.of(context).primaryText
-                      : ColorsTheme.of(context).primaryText.withOpacity(0.32)),
-            ),
+          useAnimationContainer(
+            useAnimation: widget.useAnimation,
             child: Stack(
               children: [
                 Row(
                   children: [
+                    if (widget.prefix != null) widget.prefix!,
                     Expanded(
                       child: Scrollbar(
                         child: TextField(
