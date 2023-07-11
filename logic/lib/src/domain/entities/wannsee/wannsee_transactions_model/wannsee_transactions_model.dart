@@ -9,10 +9,10 @@ export 'wannsee_transaction_model.dart';
 import '../shared/shared.dart';
 
 class WannseeTransactionsModel extends Equatable {
-  final List<WannseeTransactionModel>? items;
+  List<WannseeTransactionModel>? items;
   final dynamic nextPageParams;
 
-  const WannseeTransactionsModel({this.items, this.nextPageParams});
+  WannseeTransactionsModel({this.items, this.nextPageParams});
 
   factory WannseeTransactionsModel.fromMap(Map<String, dynamic> data) {
     return WannseeTransactionsModel(
