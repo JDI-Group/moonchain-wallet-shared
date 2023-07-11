@@ -33,18 +33,19 @@ abstract class MxcCircleButton extends StatelessWidget {
     Color? color,
   }) = _MxcCircleImageButton;
 
-  const factory MxcCircleButton.icon(
-      {required Key? key,
-      required IconData icon,
-      required VoidCallback? onTap,
-      bool filled,
-      String? title,
-      Color? color,
-      TextStyle? titleStyle,
-      double? iconSize,
-      double? textSpace,
-      final double? shadowRadius,
-      final Color iconFillColor}) = _MxcCircleIconButton;
+  const factory MxcCircleButton.icon({
+    required Key? key,
+    required IconData icon,
+    required VoidCallback? onTap,
+    bool filled,
+    String? title,
+    Color? color,
+    TextStyle? titleStyle,
+    double? iconSize,
+    double? textSpace,
+    double? shadowRadius,
+    Color iconFillColor,
+  }) = _MxcCircleIconButton;
 
   const factory MxcCircleButton.svg({
     required Key? key,

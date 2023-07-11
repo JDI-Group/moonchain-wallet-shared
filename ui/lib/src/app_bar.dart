@@ -61,7 +61,7 @@ class MxcAppBar extends StatelessWidget {
     this.leading,
     this.centerTitle = true,
   }) : super(key: key);
-
+  
   MxcAppBar.splashBack({
     Key? key,
     required String text,
@@ -185,7 +185,7 @@ class MxcAppBar extends StatelessWidget {
           Expanded(
             child: Padding(
               padding: EdgeInsets.only(
-                left: action != null ? 60 : 0,
+                left: action != null ? 32 : 0,
                 right: leading != null ? 32 : 0,
               ),
               child: title,
@@ -193,7 +193,7 @@ class MxcAppBar extends StatelessWidget {
           ),
           if (action != null)
             SizedBox(
-              width: 60,
+              width: 32,
               child: action,
             ),
         ],
