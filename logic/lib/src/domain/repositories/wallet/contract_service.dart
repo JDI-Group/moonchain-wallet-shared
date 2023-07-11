@@ -38,14 +38,13 @@ abstract class IContractService {
   );
   Future<WannseeTokensBalanceModel?> getTokensBalance(EthereumAddress from);
   Future<Token?> getToken(String address);
+  Future<String> getName(String address);
 }
 
 class ContractService implements IContractService {
-  ContractService(this._web3Client, this._ens, this._restClient,
-      {this.contract});
+  ContractService(this._web3Client, this._restClient, {this.contract});
 
   final Web3Client _web3Client;
-  final Ens _ens;
   final RestClient _restClient;
   final DeployedContract? contract;
 
@@ -306,6 +305,18 @@ class ContractService implements IContractService {
       );
     } catch (e) {
       throw Exception(e.toString());
+    }
+  }
+
+  @override
+  Future<String> getName(String address) async {
+    try {
+      final ens = Ens(client: _web3Client).withAddress(address);
+      final name = await ens.getName();
+
+      return name;
+    } catch (e) {
+      return Future.value(address);
     }
   }
 

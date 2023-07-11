@@ -43,7 +43,8 @@ class _MXCDropDownState<T> extends State<MXCDropDown<T>> {
                 child: Row(
                   children: [
                     widget.leadingIcon ?? Container(),
-                    Text(item.toString(), style: widget.textStyle ?? FontTheme.of(context).h7()),
+                    Text(item.toString(),
+                        style: widget.textStyle ?? FontTheme.of(context).h7()),
                   ],
                 ),
               ))

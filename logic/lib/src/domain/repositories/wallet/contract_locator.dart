@@ -40,9 +40,7 @@ class ContractLocator {
     // every contract has a address to interact & also has an ABI
     // final contract = await ContractParser.fromAssets(
     //     'TargaryenCoin.json', networkConfig.contractAddress);
-
-    final ens = Ens(client: web3client, chainId: networkConfig.chainId);
   
-    return ContractService(web3client, ens, RestClient(), contract: null);
+    return ContractService(web3client, RestClient(), contract: null);
   }
 }
