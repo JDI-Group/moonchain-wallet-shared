@@ -200,8 +200,8 @@ class ContractService implements IContractService {
     }
     if (response.statusCode == 404) {
       // new wallet and nothing is returned
-      const txList = WannseeTransactionsModel(
-        items: [],
+      final txList = WannseeTransactionsModel(
+        items: const [],
       );
       return txList;
     } else {

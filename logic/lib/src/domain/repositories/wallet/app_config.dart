@@ -7,8 +7,9 @@ class AppConfig {
       <NetworkType, AppConfigParams>{
     NetworkType.Wannsee: AppConfigParams(
       web3RpcHttpUrl: 'https://wannsee-rpc.mxc.com',
-      web3WebSocketUrl: 'wss://wannsee-rpc.mxc.com',
-      web3RpcWebsocketUrl: null,
+      web3WebSocketUrl:
+          'wss://wannsee-explorer-v1.mxc.com/socket/v2/websocket?vsn=2.0.0',
+      web3RpcWebsocketUrl: 'wss://wannsee-rpc.mxc.com',
       contractAddress:
           '0xD933a953f4786Eed5E58D234dFeadE15c96bAa8b', //need to confirm
       symbol: 'MXC',
