@@ -9,6 +9,7 @@ class Token extends Equatable {
   final String? symbol;
   final int? decimals;
   final String? logoUri;
+  final double? balance;
 
   const Token({
     this.chainId,
@@ -17,6 +18,7 @@ class Token extends Equatable {
     this.symbol,
     this.decimals,
     this.logoUri,
+    this.balance = 0.0
   });
 
   factory Token.fromMap(Map<String, dynamic> data) => Token(
@@ -26,6 +28,7 @@ class Token extends Equatable {
         symbol: data['symbol'] as String?,
         decimals: data['decimals'] as int?,
         logoUri: data['logoURI'] as String?,
+        balance: data['balance'] == null ? 0.0 : data['balance'] as double,
       );
 
   Map<String, dynamic> toMap() => <String, dynamic>{
@@ -35,6 +38,7 @@ class Token extends Equatable {
         'symbol': symbol,
         'decimals': decimals,
         'logoURI': logoUri,
+        'balance' : balance
       };
 
   /// `dart:convert`
@@ -56,6 +60,7 @@ class Token extends Equatable {
     String? symbol,
     int? decimals,
     String? logoUri,
+    double? balance
   }) {
     return Token(
       chainId: chainId ?? this.chainId,
@@ -64,6 +69,7 @@ class Token extends Equatable {
       symbol: symbol ?? this.symbol,
       decimals: decimals ?? this.decimals,
       logoUri: logoUri ?? this.logoUri,
+      balance: balance ?? this.balance
     );
   }
 
@@ -76,6 +82,7 @@ class Token extends Equatable {
       symbol,
       decimals,
       logoUri,
+      balance
     ];
   }
 }

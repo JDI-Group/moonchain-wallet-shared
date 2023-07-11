@@ -36,8 +36,9 @@ abstract class IContractService {
   Future<WannseeTokenTransfersModel?> getTokenTransfersByAddress(
     EthereumAddress address,
   );
-  Future<WannseeTokensBalanceModel?> getTokensBalance(EthereumAddress from);
+  // Future<WannseeTokensBalanceModel?> getTokensBalance(EthereumAddress from);
   Future<Token?> getToken(String address);
+  Future<List<Token>> getTokensBalance(List<Token> tokens);
 }
 
 class ContractService implements IContractService {
@@ -131,30 +132,30 @@ class ContractService implements IContractService {
     return response.first as BigInt;
   }
 
-  @override
-  Future<WannseeTokensBalanceModel?> getTokensBalance(
-      EthereumAddress from) async {
-    final response = await _restClient.client.get(
-      Uri.parse(
-        'https://wannsee-explorer-v1.mxc.com/api/v2/addresses/${from.hex}/tokens?type=ERC-20',
-      ),
-      headers: {'accept': 'application/json'},
-    );
+  // @override
+  // Future<WannseeTokensBalanceModel?> getTokensBalance(
+  //     EthereumAddress from) async {
+  //   final response = await _restClient.client.get(
+  //     Uri.parse(
+  //       'https://wannsee-explorer-v1.mxc.com/api/v2/addresses/${from.hex}/tokens?type=ERC-20',
+  //     ),
+  //     headers: {'accept': 'application/json'},
+  //   );
 
-    if (response.statusCode == 200) {
-      final txList = WannseeTokensBalanceModel.fromJson(response.body);
-      return txList;
-    }
-    if (response.statusCode == 404) {
-      // new wallet and nothing is returned
-      const txList = WannseeTokensBalanceModel(
-        items: [],
-      );
-      return txList;
-    } else {
-      return null;
-    }
-  }
+  //   if (response.statusCode == 200) {
+  //     final txList = WannseeTokensBalanceModel.fromJson(response.body);
+  //     return txList;
+  //   }
+  //   if (response.statusCode == 404) {
+  //     // new wallet and nothing is returned
+  //     const txList = WannseeTokensBalanceModel(
+  //       items: [],
+  //     );
+  //     return txList;
+  //   } else {
+  //     return null;
+  //   }
+  // }
 
   @override
   StreamSubscription<FilterEvent> listenTransfer(TransferEvent onTransfer,
@@ -288,6 +289,22 @@ class ContractService implements IContractService {
     } else {
       return null;
     }
+  }
+
+  @override
+  Future<List<Token>> getTokensBalance(List<Token> tokens) async {
+    for (int i = 0; i < tokens.length; i++) {
+      final token = tokens[i];
+      final data = EthereumAddress.fromHex(token.address!);
+      final ensToken = EnsToken(client: _web3Client, address: data);
+
+      final tokenBalanceResponse = await ensToken.balanceOf(data);
+      // if (tokenBalanceResponse != null){
+      token.copyWith(balance: tokenBalanceResponse.toDouble());
+      // }
+    }
+
+    return tokens;
   }
 
   @override
