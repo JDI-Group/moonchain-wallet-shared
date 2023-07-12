@@ -38,7 +38,8 @@ abstract class IContractService {
   );
   // Future<WannseeTokensBalanceModel?> getTokensBalance(EthereumAddress from);
   Future<Token?> getToken(String address);
-  Future<List<Token>> getTokensBalance(List<Token> tokens);
+  Future<List<Token>> getTokensBalance(
+      List<Token> tokens, EthereumAddress walletAddress);
   Future<String> getName(String address);
 }
 
@@ -291,18 +292,17 @@ class ContractService implements IContractService {
   }
 
   @override
-  Future<List<Token>> getTokensBalance(List<Token> tokens) async {
+  Future<List<Token>> getTokensBalance(
+      List<Token> tokens, EthereumAddress walletAddress,) async {
+    List<Token> finalList = [];
     for (int i = 0; i < tokens.length; i++) {
       final token = tokens[i];
       final data = EthereumAddress.fromHex(token.address!);
       final ensToken = EnsToken(client: _web3Client, address: data);
 
-      final tokenBalanceResponse = await ensToken.balanceOf(data);
-      // if (tokenBalanceResponse != null){
-      token.copyWith(balance: tokenBalanceResponse.toDouble());
-      // }
+      final tokenBalanceResponse = await ensToken.balanceOf(walletAddress);
+      tokens[i] = token.copyWith(balance: tokenBalanceResponse.toDouble());
     }
-
     return tokens;
   }
 
