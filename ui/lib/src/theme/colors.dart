@@ -48,6 +48,8 @@ class ColorsTheme {
 
   final greenMain = const Color(0xFF30A78B);
 
+  final white400 = const Color(0x52FFFFFF);
+
   // shadow
   Color get shadow => purple200;
 
@@ -140,6 +142,9 @@ class ColorsThemeDark implements ColorsTheme {
 
   @override
   Color get greenMain => const Color(0xFF30A78B);
+
+  @override
+  final white400 = const Color(0x52FFFFFF);
 
   @override
   Color get shadow => purple200;
