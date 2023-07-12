@@ -48,6 +48,7 @@ class MxcChipButton extends StatelessWidget {
             ? Text(
                 title,
                 style: titleStyle,
+                textAlign: TextAlign.center,
               )
             : Row(
                 children: alignIconStart == true

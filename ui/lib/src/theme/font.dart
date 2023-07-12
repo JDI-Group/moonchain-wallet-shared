@@ -65,7 +65,8 @@ class TextStylePack {
 
   TextStyle call() => _primary;
 
-  DecoratableTextStyle get primary => DecoratableTextStyle(_primary);
+  DecoratableTextStyle get primary =>
+      DecoratableTextStyle(_primary.copyWith(color: colorsTheme.primaryText));
 
   DecoratableTextStyle get secondary =>
       DecoratableTextStyle(_primary.copyWith(color: colorsTheme.secondaryText));

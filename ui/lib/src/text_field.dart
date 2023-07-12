@@ -449,7 +449,10 @@ class _MxcNonFormTextFieldState extends State<_MxcNonFormTextField> {
                           Icons.cancel_rounded,
                           color: ColorsTheme.of(context).primaryButton,
                         ),
-                        onTap: () => controller.clear(),
+                        onTap: () {
+                          controller.clear();
+                          if (widget.onChanged != null) widget.onChanged!('');
+                        },
                       ),
                     if (widget.button != null)
                       MxcScopedTheme(
