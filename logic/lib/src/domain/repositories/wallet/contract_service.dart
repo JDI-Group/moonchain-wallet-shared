@@ -216,7 +216,7 @@ class ContractService implements IContractService {
   ) async {
     final response = await _restClient.client.get(
       Uri.parse(
-          'https://wannsee-explorer-v1.mxc.com/api/v2/addresses/$address/token-transfers?type='),
+          'https://wannsee-explorer-v1.mxc.com/api/v2/addresses/$address/token-transfers?type=',),
       headers: {'accept': 'application/json'},
     );
     if (response.statusCode == 200) {
