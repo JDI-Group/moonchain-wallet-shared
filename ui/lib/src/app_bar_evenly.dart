@@ -58,6 +58,49 @@ class MxcAppBarEvenly extends StatelessWidget {
             : const SizedBox(),
         super(key: key);
 
+  MxcAppBarEvenly.back({
+    Key? key,
+    required String titleText,
+    String? leadingText,
+    String? actionText,
+    this.padding,
+    Function()? onActionTap,
+    bool isActionTap = true,
+  })  : title = Builder(
+          builder: (context) => Text(
+            titleText,
+            style: FontTheme.of(context).body2(),
+            textAlign: TextAlign.center,
+            softWrap: true,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+        leading = Builder(
+          builder: (context) => InkWell(
+            onTap: () => Navigator.of(context).pop(),
+            child: Container(
+                alignment: Alignment.centerLeft,
+                child: const Icon(Icons.arrow_back_rounded)),
+          ),
+        ),
+        action = actionText != null
+            ? Builder(
+                builder: (context) => InkWell(
+                  onTap: isActionTap ? onActionTap : null,
+                  child: Text(
+                    actionText,
+                    style: isActionTap
+                        ? FontTheme.of(context).body2()
+                        : FontTheme.of(context).body2.secondary(),
+                    textAlign: TextAlign.right,
+                    softWrap: true,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              )
+            : const SizedBox(),
+        super(key: key);
+
   final Widget title;
   final EdgeInsetsGeometry? padding;
   final Widget? action;

@@ -50,6 +50,7 @@ class ColorsTheme {
 
   final grey1 = const Color(0xFF8E8E93);
 
+  final white100 = const Color(0xFFFFFFFF);
   final white400 = const Color(0x52FFFFFF);
 
   final black100 = const Color(0xFF25282B);
@@ -152,6 +153,9 @@ class ColorsThemeDark implements ColorsTheme {
 
   @override
   final grey1 = const Color(0xFF8E8E93);
+
+  @override
+  final white100 = const Color(0xFFFFFFFF);
 
   @override
   final white400 = const Color(0x52FFFFFF);
