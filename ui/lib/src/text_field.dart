@@ -11,7 +11,7 @@ class MxcTextField extends FormField<String> {
     FormFieldValidator<String>? validator,
     TextInputAction? action,
     bool readOnly = false,
-    MxcTextFieldButton? button,
+    MxcTextFieldButton? suffixButton,
     double width = double.infinity,
     FocusNode? focusNode,
     TextInputType? keyboardType,
@@ -32,7 +32,7 @@ class MxcTextField extends FormField<String> {
               label: label,
               controller: controller,
               action: action,
-              button: button,
+              suffixButton: suffixButton,
               focusNode: focusNode,
               hint: hint,
               keyboardType: keyboardType,
@@ -53,7 +53,7 @@ class MxcTextField extends FormField<String> {
     required String text,
     String? hint,
     TextInputAction? action,
-    MxcTextFieldButton? button,
+    MxcTextFieldButton? suffixButton,
     double width = double.infinity,
     FocusNode? focusNode,
     TextInputType? keyboardType,
@@ -67,7 +67,7 @@ class MxcTextField extends FormField<String> {
             label: label,
             text: text,
             action: action,
-            button: button,
+            suffixButton: suffixButton,
             focusNode: focusNode,
             hint: hint,
             keyboardType: keyboardType,
@@ -83,7 +83,7 @@ class MxcTextField extends FormField<String> {
     String? label,
     required String text,
     String? hint,
-    MxcTextFieldButton? button,
+    MxcTextFieldButton? suffixButton,
     double width = double.infinity,
     FocusNode? focusNode,
     String? suffixText,
@@ -95,7 +95,7 @@ class MxcTextField extends FormField<String> {
             disabled: true,
             label: label,
             text: text,
-            button: button,
+            suffixButton: suffixButton,
             focusNode: focusNode,
             hint: hint,
             obscure: obscure,
@@ -214,7 +214,7 @@ class _MxcNonFormTextField extends StatefulWidget {
     this.hint,
     this.action,
     this.readOnly = false,
-    this.button,
+    this.suffixButton,
     this.width = double.infinity,
     this.maxLines = 1,
     this.focusNode,
@@ -241,7 +241,7 @@ class _MxcNonFormTextField extends StatefulWidget {
     required String text,
     this.hint,
     this.action,
-    this.button,
+    this.suffixButton,
     this.width = double.infinity,
     this.focusNode,
     this.keyboardType,
@@ -271,7 +271,7 @@ class _MxcNonFormTextField extends StatefulWidget {
   final double width;
   final int maxLines;
   final FocusNode? focusNode;
-  final MxcTextFieldButton? button;
+  final MxcTextFieldButton? suffixButton;
   final String? suffixText;
   final bool disabled;
 
@@ -438,7 +438,6 @@ class _MxcNonFormTextFieldState extends State<_MxcNonFormTextField> {
                             errorBorder: InputBorder.none,
                             focusedErrorBorder: InputBorder.none,
                             disabledBorder: InputBorder.none,
-                            suffixText: widget.suffixText,
                           ),
                         ),
                       ),
@@ -454,7 +453,17 @@ class _MxcNonFormTextFieldState extends State<_MxcNonFormTextField> {
                           if (widget.onChanged != null) widget.onChanged!('');
                         },
                       ),
-                    if (widget.button != null)
+                    if (widget.suffixText != null)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 4),
+                        child: Text(
+                          widget.suffixText!,
+                          style: FontTheme.of(context).body1().copyWith(
+                                color: ColorsTheme.of(context).grey1,
+                              ),
+                        ),
+                      ),
+                    if (widget.suffixButton != null)
                       MxcScopedTheme(
                         data: MxcScopedThemeData(
                           primaryColor: widget.disabled
@@ -463,7 +472,7 @@ class _MxcNonFormTextFieldState extends State<_MxcNonFormTextField> {
                                   ? MxcScopedTheme.of(context).primaryColor
                                   : ColorsTheme.of(context).primaryText,
                         ),
-                        child: widget.button!,
+                        child: widget.suffixButton!,
                       ),
                   ],
                 ),
@@ -485,7 +494,6 @@ class _MxcNonFormTextFieldState extends State<_MxcNonFormTextField> {
             const SizedBox(height: 4),
             Row(
               children: [
-                // SvgPicture.asset('assets/svg/ic_alert.svg'),
                 Icon(
                   Icons.error_rounded,
                   color: ColorsTheme.of(context).errorText,
@@ -538,6 +546,20 @@ abstract class MxcTextFieldButton extends StatelessWidget {
     Color? color,
   }) = _MxcTextFieldImageButton;
 
+  const factory MxcTextFieldButton.svg({
+    Key? key,
+    required String svg,
+    required VoidCallback? onTap,
+    Color? color,
+  }) = _MxcTextFieldSvgButton;
+
+  const factory MxcTextFieldButton.text({
+    Key? key,
+    required String text,
+    required VoidCallback? onTap,
+    Color? color,
+  }) = _MxcTextFieldSTextButton;
+
   final VoidCallback? onTap;
   final Color? color;
 
@@ -548,7 +570,7 @@ abstract class MxcTextFieldButton extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Padding(
-        padding: const EdgeInsets.only(left: 5, right: 5, bottom: 6),
+        padding: const EdgeInsets.all(5),
         child: buildChild(context),
       ),
     );
@@ -584,7 +606,7 @@ class _MxcTextFieldIconButton extends MxcTextFieldButton {
   @override
   Widget buildChild(BuildContext context) => Icon(
         icon,
-        size: size ?? 16,
+        size: size ?? 24,
         color: color ?? MxcScopedTheme.of(context).primaryColor,
       );
 }
@@ -605,6 +627,47 @@ class _MxcTextFieldImageButton extends MxcTextFieldButton {
         width: 16,
         height: 16,
         color: color ?? MxcScopedTheme.of(context).primaryColor,
+      );
+}
+
+class _MxcTextFieldSvgButton extends MxcTextFieldButton {
+  const _MxcTextFieldSvgButton({
+    Key? key,
+    required this.svg,
+    required VoidCallback? onTap,
+    Color? color,
+  }) : super._(key: key, onTap: onTap, color: color);
+
+  final String svg;
+
+  @override
+  Widget buildChild(BuildContext context) => SvgPicture.asset(
+        svg,
+        width: 24,
+        height: 24,
+        colorFilter: ColorFilter.mode(
+          color ?? MxcScopedTheme.of(context).primaryColor,
+          BlendMode.srcIn,
+        ),
+      );
+}
+
+class _MxcTextFieldSTextButton extends MxcTextFieldButton {
+  const _MxcTextFieldSTextButton({
+    Key? key,
+    required this.text,
+    required VoidCallback? onTap,
+    Color? color,
+  }) : super._(key: key, onTap: onTap, color: color);
+
+  final String text;
+
+  @override
+  Widget buildChild(BuildContext context) => Text(
+        text,
+        style: FontTheme.of(context).body2.primary().copyWith(
+              color: color,
+            ),
       );
 }
 
