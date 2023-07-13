@@ -21,6 +21,8 @@ class MxcTextField extends FormField<String> {
     String? followText,
     String? errorText,
     ValueChanged<String>? onChanged,
+    final ValueChanged<bool>? onFocused,
+    Function(PointerDownEvent)? onTapOutside,
   }) : super(
           key: key,
           initialValue: controller.text,
@@ -43,6 +45,8 @@ class MxcTextField extends FormField<String> {
               errorText: field.errorText ?? errorText,
               followText: followText,
               onChanged: onChanged,
+              onFocused: onFocused,
+              onTapOutside: onTapOutside,
             );
           },
         );
@@ -230,6 +234,8 @@ class _MxcNonFormTextField extends StatefulWidget {
     this.padding,
     this.borderRadius,
     this.prefix,
+    this.onFocused,
+    this.onTapOutside,
   })  : _controller = controller,
         _initialValue = null,
         disabled = false,
@@ -255,6 +261,8 @@ class _MxcNonFormTextField extends StatefulWidget {
     this.padding,
     this.borderRadius,
     this.prefix,
+    this.onFocused,
+    this.onTapOutside,
   })  : _initialValue = text,
         readOnly = true,
         _controller = null,
@@ -280,6 +288,8 @@ class _MxcNonFormTextField extends StatefulWidget {
   final String? _initialValue;
   final String? errorText;
   final ValueChanged<String>? onChanged;
+  final ValueChanged<bool>? onFocused;
+  final Function(PointerDownEvent)? onTapOutside;
 
   final String? followText;
 
@@ -376,6 +386,7 @@ class _MxcNonFormTextFieldState extends State<_MxcNonFormTextField> {
   void _focusNodeListener() {
     if (focusNode.hasFocus != focused) {
       setState(() => focused = focusNode.hasFocus);
+      if (widget.onFocused != null) widget.onFocused!(focused);
     }
   }
 
@@ -427,6 +438,7 @@ class _MxcNonFormTextFieldState extends State<_MxcNonFormTextField> {
                               : FontTheme.of(context).body1(),
                           obscureText: widget.obscure,
                           onChanged: widget.onChanged,
+                          onTapOutside: widget.onTapOutside,
                           decoration: InputDecoration(
                             isDense: true,
                             floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -446,6 +458,7 @@ class _MxcNonFormTextFieldState extends State<_MxcNonFormTextField> {
                       InkWell(
                         child: Icon(
                           Icons.cancel_rounded,
+                          size: 20,
                           color: ColorsTheme.of(context).primaryButton,
                         ),
                         onTap: () {
@@ -494,9 +507,13 @@ class _MxcNonFormTextFieldState extends State<_MxcNonFormTextField> {
             const SizedBox(height: 4),
             Row(
               children: [
-                Icon(
-                  Icons.error_rounded,
-                  color: ColorsTheme.of(context).errorText,
+                Padding(
+                  padding: const EdgeInsets.only(left: 8),
+                  child: Icon(
+                    Icons.error_rounded,
+                    size: 16,
+                    color: ColorsTheme.of(context).errorText,
+                  ),
                 ),
                 const SizedBox(width: 5),
                 Expanded(

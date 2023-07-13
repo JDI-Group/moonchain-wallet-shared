@@ -52,6 +52,11 @@ class ColorsTheme {
 
   final white400 = const Color(0x52FFFFFF);
 
+  final black100 = const Color(0xFF25282B);
+
+  // chip
+  Color get chipTextBlack => black100;
+
   // shadow
   Color get shadow => purple200;
 
@@ -150,6 +155,12 @@ class ColorsThemeDark implements ColorsTheme {
 
   @override
   final white400 = const Color(0x52FFFFFF);
+
+  @override
+  final black100 = const Color(0xFF25282B);
+
+  @override
+  Color get chipTextBlack => black100;
 
   @override
   Color get shadow => purple200;
