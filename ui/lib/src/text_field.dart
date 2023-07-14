@@ -481,9 +481,7 @@ class _MxcNonFormTextFieldState extends State<_MxcNonFormTextField> {
                         data: MxcScopedThemeData(
                           primaryColor: widget.disabled
                               ? ColorsTheme.of(context).disabledButton
-                              : focused
-                                  ? MxcScopedTheme.of(context).primaryColor
-                                  : ColorsTheme.of(context).primaryText,
+                              : ColorsTheme.of(context).white,
                         ),
                         child: widget.suffixButton!,
                       ),

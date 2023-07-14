@@ -6,13 +6,13 @@ import 'package:web_socket_channel/io.dart';
 import 'package:ens_dart/ens_dart.dart';
 
 import 'app_config.dart';
-import 'contract_service.dart';
+import 'contract.dart';
 
 class ContractLocator {
   ContractLocator._();
 
-  static Map<NetworkType, ContractService> instance =
-      <NetworkType, ContractService>{};
+  static Map<NetworkType, ContractRepository> instance =
+      <NetworkType, ContractRepository>{};
 
   static ContractLocator setup() {
     for (final network in NetworkType.enabledValues) {
@@ -22,11 +22,11 @@ class ContractLocator {
     return ContractLocator._();
   }
 
-  ContractService getInstance(NetworkType network) {
+  ContractRepository getInstance(NetworkType network) {
     return instance[network]!;
   }
 
-  static ContractService createInstance(AppConfigParams networkConfig) {
+  static ContractRepository createInstance(AppConfigParams networkConfig) {
     final rpcWSAddress = networkConfig.web3RpcWebsocketUrl;
     final web3client = Web3Client(
       networkConfig.web3RpcHttpUrl,
@@ -41,6 +41,6 @@ class ContractLocator {
     // final contract = await ContractParser.fromAssets(
     //     'TargaryenCoin.json', networkConfig.contractAddress);
   
-    return ContractService(web3client, RestClient(), contract: null);
+    return ContractRepository(web3client, RestClient(), contract: null);
   }
 }

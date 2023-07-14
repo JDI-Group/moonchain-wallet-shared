@@ -16,16 +16,16 @@ abstract class IContractService {
   Future<String?> send(
     String privateKey,
     WalletTransferType type,
-    EthereumAddress receiver,
+    String receiver,
     EtherAmount amount, {
     TransferEvent? onTransfer,
     Function(Object exeception)? onError,
   });
-  Future<BigInt> getTokenBalance(EthereumAddress from);
-  Future<EtherAmount> getEthBalance(EthereumAddress from);
+  Future<BigInt> getTokenBalance(String from);
+  Future<EtherAmount> getEthBalance(String from);
   Future<void> dispose();
   StreamSubscription<FilterEvent> listenTransfer(TransferEvent onTransfer);
-  Future<dynamic> getTransactionsByAddress(EthereumAddress address);
+  Future<dynamic> getTransactionsByAddress(String address);
   Future<WannseeTransactionModel?> getTransactionByHash(String hash);
   Future<bool> checkConnectionToNetwork();
   Future<bool> subscribeToBalanceEvent(
@@ -34,17 +34,17 @@ abstract class IContractService {
   );
   Future<DefaultTokens?> getDefaultTokens();
   Future<WannseeTokenTransfersModel?> getTokenTransfersByAddress(
-    EthereumAddress address,
+    String address,
   );
   // Future<WannseeTokensBalanceModel?> getTokensBalance(EthereumAddress from);
   Future<Token?> getToken(String address);
   Future<List<Token>> getTokensBalance(
-      List<Token> tokens, EthereumAddress walletAddress);
+      List<Token> tokens, String walletAddress);
   Future<String> getName(String address);
 }
 
-class ContractService implements IContractService {
-  ContractService(this._web3Client, this._restClient, {this.contract});
+class ContractRepository implements IContractService {
+  ContractRepository(this._web3Client, this._restClient, {this.contract});
 
   final Web3Client _web3Client;
   final RestClient _restClient;
@@ -62,27 +62,28 @@ class ContractService implements IContractService {
   Future<String?> send(
     String privateKey,
     WalletTransferType type,
-    EthereumAddress receiver,
+    String receiver,
     EtherAmount amount, {
     TransferEvent? onTransfer,
     Function(Object exeception)? onError,
   }) async {
     final credentials = getCredentials(privateKey);
     final from = credentials.address;
+    final to = EthereumAddress.fromHex(receiver);
     final networkId = await _web3Client.getNetworkId();
 
     final gasPrice = await _web3Client.getGasPrice();
     final transaction = type == WalletTransferType.ether
         ? Transaction(
             from: from,
-            to: receiver,
+            to: to,
             gasPrice: gasPrice,
             value: amount,
           )
         : Transaction.callContract(
             contract: contract!,
             function: _sendFunction(),
-            parameters: <dynamic>[receiver, amount.getInWei],
+            parameters: <dynamic>[to, amount.getInWei],
             gasPrice: gasPrice,
             from: from,
           );
@@ -100,7 +101,7 @@ class ContractService implements IContractService {
 
         if (receipt?.status ?? false) {
           if (onTransfer != null) {
-            onTransfer(from, receiver, amount.getInEther);
+            onTransfer(from, to, amount.getInEther);
           }
 
           timer.cancel();
@@ -117,16 +118,18 @@ class ContractService implements IContractService {
   }
 
   @override
-  Future<EtherAmount> getEthBalance(EthereumAddress from) async {
-    return _web3Client.getBalance(from);
+  Future<EtherAmount> getEthBalance(String from) async {
+    final data = EthereumAddress.fromHex(from);
+    return _web3Client.getBalance(data);
   }
 
   @override
-  Future<BigInt> getTokenBalance(EthereumAddress from) async {
+  Future<BigInt> getTokenBalance(String from) async {
+    final data = EthereumAddress.fromHex(from);
     final response = await _web3Client.call(
       contract: contract!,
       function: _balanceFunction(),
-      params: <EthereumAddress>[from],
+      params: <EthereumAddress>[data],
     );
 
     return response.first as BigInt;
@@ -188,7 +191,7 @@ class ContractService implements IContractService {
   // Reza wallet -> Token  Contract address -> Adam wallet confirmed
   @override
   Future<WannseeTransactionsModel?> getTransactionsByAddress(
-    EthereumAddress address,
+    String address,
   ) async {
     final response = await _restClient.client.get(
         Uri.parse(
@@ -212,11 +215,12 @@ class ContractService implements IContractService {
 
   @override
   Future<WannseeTokenTransfersModel?> getTokenTransfersByAddress(
-    EthereumAddress address,
+    String address,
   ) async {
     final response = await _restClient.client.get(
       Uri.parse(
-          'https://wannsee-explorer-v1.mxc.com/api/v2/addresses/$address/token-transfers?type=',),
+        'https://wannsee-explorer-v1.mxc.com/api/v2/addresses/$address/token-transfers?type=',
+      ),
       headers: {'accept': 'application/json'},
     );
     if (response.statusCode == 200) {
@@ -293,14 +297,18 @@ class ContractService implements IContractService {
 
   @override
   Future<List<Token>> getTokensBalance(
-      List<Token> tokens, EthereumAddress walletAddress,) async {
+    List<Token> tokens,
+    String walletAddress,
+  ) async {
     List<Token> finalList = [];
+    final address = EthereumAddress.fromHex(walletAddress);
+
     for (int i = 0; i < tokens.length; i++) {
       final token = tokens[i];
       final data = EthereumAddress.fromHex(token.address!);
       final ensToken = EnsToken(client: _web3Client, address: data);
 
-      final tokenBalanceResponse = await ensToken.balanceOf(walletAddress);
+      final tokenBalanceResponse = await ensToken.balanceOf(address);
       tokens[i] = token.copyWith(balance: tokenBalanceResponse.toDouble());
     }
     return tokens;
