@@ -79,13 +79,13 @@ class MxcChipButton extends StatelessWidget {
         case ChipButtonStates.inactiveState:
           return Icon(
             iconData,
-            color: ColorsTheme.of(context).primaryIcon,
+            color: ColorsTheme.of(context).iconPrimary,
             size: 20,
           );
         case ChipButtonStates.defaultState:
           return Icon(
             iconData,
-            color: ColorsTheme.of(context).primaryIcon,
+            color: ColorsTheme.of(context).iconPrimary,
             size: 20,
           );
       }

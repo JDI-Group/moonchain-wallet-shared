@@ -22,11 +22,9 @@ class ColorsTheme {
 
   final screenBackground = const Color(0xFFF1F2F4);
 
-
-
   // background
   final primaryBackground = const Color(0xFFEBEFF2);
-  final secondaryBackground = Colors.white;
+  // final secondaryBackground = Colors.white;
   final white = Colors.white;
   final box = Colors.white;
 
@@ -49,6 +47,8 @@ class ColorsTheme {
   final mxcPurple300 = const Color(0xFFBF97FD);
   final mxcPurple200 = const Color(0xFFDECAFD);
   final mxcPurple100 = const Color(0xFFF4EFFC);
+
+  final btcOrange = const Color(0xFFF7931A);
 
   final greenMain = const Color(0xFF30A78B);
 
@@ -78,22 +78,35 @@ class ColorsTheme {
   // layerSheet
   Color get layerSheetBackground => white100;
 
-  // border 
+  // border
   Color get borderWhiteInverted => whiteInverted;
 
-  Color get borderGrey3 => grey3;  
+  Color get borderGrey3 => grey3;
 
   // chip
-  Color get chipActiveBackground=> whiteInverted;
+  Color get chipActiveBackground => whiteInverted;
   Color get chipTextBlack => blackInverted;
-  Color get chipIconBlack=> blackInverted;
+  Color get chipIconBlack => blackInverted;
 
-  Color get chipDefaultBackground=> grey4;
+  Color get chipDefaultBackground => grey4;
 
-  Color get chipBorder=> whiteInverted;
+  Color get chipBorder => whiteInverted;
 
   // icon
-  Color get primaryIcon => black100;
+  Color get iconPrimary => black100;
+  Color get iconSecondary => secondaryText;
+  Color get iconWhite => white100;
+  Color get iconWhite32 => iconSecondary;
+  Color get iconWhite16 => iconSecondary;
+  Color get iconPurpleMain => purpleMain;
+  Color get iconBlack200 => blackDeep;
+  Color get iconBlack100 => black100;
+  Color get iconWhiteInverted => whiteInverted;
+  Color get iconBlackInverted => blackInverted;
+  Color get iconGrey4 => grey4;
+  Color get iconGrey3 => grey3;
+  Color get iconGrey1 => grey1;
+  Color get iconCritical => mainRed;
 
   // shadow
   Color get shadow => purple200;
@@ -109,6 +122,23 @@ class ColorsTheme {
   final secondaryButtonText = const Color(0xFFFFFFFF);
   final disabledButtonText = const Color(0xFF5F6366);
   final orangeText = const Color(0xFFB1742A);
+
+  Color get textError => const Color(0xFFD22D2D);
+  Color get textSecondary => const Color(0xFF74767B);
+  Color get textPrimary => black100;
+  Color get textWhite => white100;
+  Color get textWhite50 => textSecondary;
+  Color get textWhite100 => textSecondary;
+  Color get textBlack200 => blackDeep;
+  Color get textBlack100 => black100;
+  Color get textOrange => btcOrange;
+  Color get textPurple500 => purple500;
+  Color get snackbarText => const Color(0xFF000000);
+  Color get textGrey1 => grey1;
+  Color get textGrey2 => grey2;
+  Color get textWhiteInverted => whiteInverted;
+  Color get textBlackInverted => blackInverted;
+  Color get textCritical => mainRed;
 
   // button
   final disabledButton = const Color(0xFF323233);
@@ -190,6 +220,9 @@ class ColorsThemeDark implements ColorsTheme {
   final mxcPurple100 = const Color(0xFF242228);
 
   @override
+  final btcOrange = const Color(0xFFF7931A);
+
+  @override
   Color get greenMain => const Color(0xFF30A78B);
 
   @override
@@ -247,32 +280,71 @@ class ColorsThemeDark implements ColorsTheme {
   @override
   Color get layerSheetBackground => const Color(0xFF2C2C2E);
 
-  // border 
+  // border
   @override
   Color get borderWhiteInverted => black100;
-  
+
   @override
   Color get borderGrey3 => grey3;
 
   // chip
   @override
-  Color get chipActiveBackground=> whiteInverted;
+  Color get chipActiveBackground => whiteInverted;
 
   @override
   Color get chipTextBlack => blackInverted;
 
   @override
-  Color get chipIconBlack=> blackInverted;
+  Color get chipIconBlack => blackInverted;
 
   @override
-  Color get chipDefaultBackground=> grey4;
+  Color get chipDefaultBackground => grey4;
 
   @override
-  Color get chipBorder=> whiteInverted;
+  Color get chipBorder => whiteInverted;
 
-  // icon 
+  // icon
   @override
-  Color get primaryIcon=> white100;
+  Color get iconPrimary => white100;
+
+  @override
+  Color get iconSecondary => secondaryText;
+
+  @override
+  Color get iconWhite => white100;
+
+  @override
+  Color get iconWhite32 => white400;
+
+  @override
+  Color get iconWhite16 => white500;
+
+  @override
+  Color get iconPurpleMain => purpleMain;
+
+  @override
+  Color get iconBlack200 => blackDeep;
+
+  @override
+  Color get iconBlack100 => textBlack100;
+
+  @override
+  Color get iconWhiteInverted => whiteInverted;
+
+  @override
+  Color get iconBlackInverted => blackInverted;
+
+  @override
+  Color get iconGrey4 => grey4;
+
+  @override
+  Color get iconGrey3 => grey3;
+
+  @override
+  Color get iconGrey1 => grey1;
+
+  @override
+  Color get iconCritical => mainRed;
 
   @override
   Color get shadow => purple200;
@@ -301,6 +373,54 @@ class ColorsThemeDark implements ColorsTheme {
 
   @override
   Color get orangeText => const Color(0xFFB1742A);
+
+  @override
+  Color get textError => const Color(0xFFFC8383);
+
+  @override
+  Color get textSecondary => const Color(0xFFA5A6AC);
+
+  @override
+  Color get textPrimary => white100;
+
+  @override
+  Color get textWhite => white100;
+
+  @override
+  Color get textWhite50 => white300;
+
+  @override
+  Color get textWhite100 => white400;
+
+  @override
+  Color get textBlack200 => blackDeep;
+
+  @override
+  Color get textBlack100 => const Color(0xFF25282B);
+
+  @override
+  Color get textOrange => btcOrange;
+
+  @override
+  Color get textPurple500 => purple500;
+
+  @override
+  Color get snackbarText => const Color(0xFF000000);
+
+  @override
+  Color get textGrey1 => grey1;
+
+  @override
+  Color get textGrey2 => grey2;
+
+  @override
+  Color get textWhiteInverted => whiteInverted;
+
+  @override
+  Color get textBlackInverted => blackInverted;
+
+  @override
+  Color get textCritical => mainRed;
 
   // button
   @override

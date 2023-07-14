@@ -83,7 +83,7 @@ extension MxcThemeDataExtension on MxcThemeData {
         bottomAppBarTheme: BottomAppBarTheme(
           color: colors.box,
         ),
-        scaffoldBackgroundColor: colors.primaryBackground,
+        scaffoldBackgroundColor: colors.screenBackground,
         textTheme: TextTheme(
           bodyLarge: fonts.body1(),
           bodyMedium: fonts.body2(),
