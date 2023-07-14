@@ -20,6 +20,10 @@ class ColorsTheme {
     return Provider.of<ColorsTheme>(context, listen: listen);
   }
 
+  final screenBackground = const Color(0xFFF1F2F4);
+
+
+
   // background
   final primaryBackground = const Color(0xFFEBEFF2);
   final secondaryBackground = Colors.white;
@@ -49,13 +53,47 @@ class ColorsTheme {
   final greenMain = const Color(0xFF30A78B);
 
   final grey1 = const Color(0xFF8E8E93);
+  final grey2 = const Color(0xFFAEAEB2);
+  final grey3 = const Color(0xFFC7C7CC);
+  final grey4 = const Color(0xFFD1D1D6);
+  final grey5 = const Color(0xFFE5E5EA);
+  final grey6 = const Color(0xFFF2F2F7);
 
+  Color get white500 => white100;
   final white400 = const Color(0x52FFFFFF);
+  final white300 = const Color(0xFFD7D8D9);
+  final white200 = const Color(0x99FFFFFF);
+  final white100 = const Color(0xFFFFFFFF);
+
+  Color get whiteInverted => black100;
 
   final black100 = const Color(0xFF25282B);
+  final black200 = const Color(0x4025282B);
+  final black300 = const Color(0x8025282B);
+
+  final blackDeep = const Color(0xFF000000);
+
+  Color get blackInverted => white100;
+
+  // layerSheet
+  Color get layerSheetBackground => white100;
+
+  // border 
+  Color get borderWhiteInverted => whiteInverted;
+
+  Color get borderGrey3 => grey3;  
 
   // chip
-  Color get chipTextBlack => black100;
+  Color get chipActiveBackground=> whiteInverted;
+  Color get chipTextBlack => blackInverted;
+  Color get chipIconBlack=> blackInverted;
+
+  Color get chipDefaultBackground=> grey4;
+
+  Color get chipBorder=> whiteInverted;
+
+  // icon
+  Color get primaryIcon => black100;
 
   // shadow
   Color get shadow => purple200;
@@ -87,6 +125,10 @@ class ColorsTheme {
 
 class ColorsThemeDark implements ColorsTheme {
   ColorsThemeDark._();
+
+  // background
+  @override
+  final screenBackground = const Color(0xFF1C1C1E);
 
   // background
   @override
@@ -154,13 +196,83 @@ class ColorsThemeDark implements ColorsTheme {
   final grey1 = const Color(0xFF8E8E93);
 
   @override
+  final grey2 = const Color(0xFF636366);
+
+  @override
+  final grey3 = const Color(0xFF48484A);
+
+  @override
+  final grey4 = const Color(0xFF3A3A3C);
+
+  @override
+  final grey5 = const Color(0xFF2C2C2E);
+
+  @override
+  final grey6 = const Color(0xFF1C1C1E);
+
+  @override
+  final white500 = const Color(0x29FFFFFF);
+
+  @override
   final white400 = const Color(0x52FFFFFF);
+
+  @override
+  final white300 = const Color(0x80FFFFFF);
+
+  @override
+  final white200 = const Color(0x99FFFFFF);
+
+  @override
+  final white100 = const Color(0xFFFFFFFF);
+
+  @override
+  Color get whiteInverted => white100;
 
   @override
   final black100 = const Color(0xFF25282B);
 
   @override
-  Color get chipTextBlack => black100;
+  final black200 = const Color(0x4025282B);
+
+  @override
+  final black300 = const Color(0x8025282B);
+
+  @override
+  final blackDeep = const Color(0xFF000000);
+
+  @override
+  Color get blackInverted => black100;
+
+  // layer sheet
+  @override
+  Color get layerSheetBackground => const Color(0xFF2C2C2E);
+
+  // border 
+  @override
+  Color get borderWhiteInverted => black100;
+  
+  @override
+  Color get borderGrey3 => grey3;
+
+  // chip
+  @override
+  Color get chipActiveBackground=> whiteInverted;
+
+  @override
+  Color get chipTextBlack => blackInverted;
+
+  @override
+  Color get chipIconBlack=> blackInverted;
+
+  @override
+  Color get chipDefaultBackground=> grey4;
+
+  @override
+  Color get chipBorder=> whiteInverted;
+
+  // icon 
+  @override
+  Color get primaryIcon=> white100;
 
   @override
   Color get shadow => purple200;
