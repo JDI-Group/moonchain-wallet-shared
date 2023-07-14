@@ -344,8 +344,8 @@ class _MxcNonFormTextFieldState extends State<_MxcNonFormTextField> {
           borderRadius: const BorderRadius.all(Radius.circular(12)),
           border: Border.all(
             color: focused
-                ? ColorsTheme.of(context).primaryText
-                : ColorsTheme.of(context).primaryText.withOpacity(0.32),
+                ? ColorsTheme.of(context).textPrimary
+                : ColorsTheme.of(context).textPrimary.withOpacity(0.32),
           ),
         ),
         child: child,
@@ -429,7 +429,7 @@ class _MxcNonFormTextFieldState extends State<_MxcNonFormTextField> {
                           maxLines: widget.maxLines,
                           textInputAction: widget.action,
                           controller: controller,
-                          cursorColor: ColorsTheme.of(context).primaryText,
+                          cursorColor: ColorsTheme.of(context).textPrimary,
                           style: (widget.disabled)
                               ? FontTheme.of(context).body1().copyWith(
                                     color:
@@ -481,7 +481,7 @@ class _MxcNonFormTextFieldState extends State<_MxcNonFormTextField> {
                         data: MxcScopedThemeData(
                           primaryColor: widget.disabled
                               ? ColorsTheme.of(context).disabledButton
-                              : ColorsTheme.of(context).white,
+                              : ColorsTheme.of(context).textPrimary,
                         ),
                         child: widget.suffixButton!,
                       ),
@@ -510,7 +510,7 @@ class _MxcNonFormTextFieldState extends State<_MxcNonFormTextField> {
                   child: Icon(
                     Icons.error_rounded,
                     size: 16,
-                    color: ColorsTheme.of(context).errorText,
+                    color: ColorsTheme.of(context).textError,
                   ),
                 ),
                 const SizedBox(width: 5),
@@ -519,7 +519,7 @@ class _MxcNonFormTextFieldState extends State<_MxcNonFormTextField> {
                     widget.errorText!,
                     style: FontTheme.of(context)
                         .subtitle1()
-                        .copyWith(color: ColorsTheme.of(context).errorText),
+                        .copyWith(color: ColorsTheme.of(context).textError),
                   ),
                 )
               ],
@@ -782,14 +782,14 @@ class _MxcMiniNonFormTextFieldState extends State<_MxcMiniNonFormTextField> {
       return ColorsTheme.of(context).primaryBackground;
     }
     if (focused) return ColorsTheme.of(context).purpleMain;
-    return ColorsTheme.of(context).secondaryText;
+    return ColorsTheme.of(context).textSecondary;
   }
 
   Color getColorFont() {
     if (widget.disabled) return ColorsTheme.of(context).fullRoundButton;
     if (widget.error) return ColorsTheme.of(context).mainRed;
     if (focused) return ColorsTheme.of(context).purpleMain;
-    return ColorsTheme.of(context).primaryText;
+    return ColorsTheme.of(context).textPrimary;
   }
 
   bool isThickBorder() => (focused || widget.error);

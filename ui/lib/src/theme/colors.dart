@@ -94,7 +94,7 @@ class ColorsTheme {
 
   // icon
   Color get iconPrimary => black100;
-  Color get iconSecondary => secondaryText;
+  Color get iconSecondary => textSecondary;
   Color get iconWhite => white100;
   Color get iconWhite32 => iconSecondary;
   Color get iconWhite16 => iconSecondary;
@@ -115,13 +115,9 @@ class ColorsTheme {
   Color get dialogOverlay => const Color(0xFF000000).withOpacity(0.35);
 
   // text
-  final primaryText = const Color(0xFF25282B);
-  final secondaryText = const Color(0xFF74767B);
-  final errorText = const Color(0xFFD22D2D);
   final primaryButtonText = const Color(0xFF25282B);
   final secondaryButtonText = const Color(0xFFFFFFFF);
   final disabledButtonText = const Color(0xFF5F6366);
-  final orangeText = const Color(0xFFB1742A);
 
   Color get textError => const Color(0xFFD22D2D);
   Color get textSecondary => const Color(0xFF74767B);
@@ -370,9 +366,6 @@ class ColorsThemeDark implements ColorsTheme {
 
   @override
   Color get disabledButtonText => const Color(0xFF5F6366);
-
-  @override
-  Color get orangeText => const Color(0xFFB1742A);
 
   @override
   Color get textError => const Color(0xFFFC8383);

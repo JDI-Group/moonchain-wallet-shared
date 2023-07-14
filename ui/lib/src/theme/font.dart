@@ -13,7 +13,7 @@ class FontTheme {
 
   TextStyle get _baseTextStyle => TextStyle(
         package: mxcUiPackageName,
-        color: _colorsTheme.primaryText,
+        color: _colorsTheme.textPrimary,
         fontFamily: 'Roboto',
         fontWeight: FontWeight.w400,
         height: 1.33333,
@@ -66,16 +66,16 @@ class TextStylePack {
   TextStyle call() => _primary;
 
   DecoratableTextStyle get primary =>
-      DecoratableTextStyle(_primary.copyWith(color: colorsTheme.primaryText));
+      DecoratableTextStyle(_primary.copyWith(color: colorsTheme.textPrimary));
 
   DecoratableTextStyle get secondary =>
-      DecoratableTextStyle(_primary.copyWith(color: colorsTheme.secondaryText));
+      DecoratableTextStyle(_primary.copyWith(color: colorsTheme.textSecondary));
 
   DecoratableTextStyle get alert =>
       DecoratableTextStyle(_primary.copyWith(color: colorsTheme.mainRed));
 
   DecoratableTextStyle get error =>
-      DecoratableTextStyle(_primary.copyWith(color: colorsTheme.errorText));
+      DecoratableTextStyle(_primary.copyWith(color: colorsTheme.textError));
 
   DecoratableTextStyle get primaryButton => DecoratableTextStyle(
         _primary.copyWith(color: colorsTheme.primaryButtonText),

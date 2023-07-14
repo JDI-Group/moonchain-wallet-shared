@@ -35,7 +35,7 @@ class _MXCDropDownState<T> extends State<MXCDropDown<T>> {
       elevation: 16,
       isDense: true,
       borderRadius: widget.borderRadius,
-      style: TextStyle(color: ColorsTheme.of(context).primaryText),
+      style: TextStyle(color: ColorsTheme.of(context).textPrimary),
       onChanged: widget.onChanged,
       items: widget.itemList
           .map((item) => DropdownMenuItem<T>(

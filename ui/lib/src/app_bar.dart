@@ -61,7 +61,7 @@ class MxcAppBar extends StatelessWidget {
     this.leading,
     this.centerTitle = true,
   }) : super(key: key);
-  
+
   MxcAppBar.splashBack({
     Key? key,
     required String text,
@@ -73,7 +73,7 @@ class MxcAppBar extends StatelessWidget {
           builder: (context) => MxcAppBarTextTitle(
             text,
             centerTitle: centerTitle,
-            color: ColorsTheme.of(context).primaryText,
+            color: ColorsTheme.of(context).textPrimary,
             subtitle: subtitle,
           ),
         ),
@@ -81,7 +81,7 @@ class MxcAppBar extends StatelessWidget {
           builder: (context) => MxcAppBarButton.icon(
             Icons.arrow_back,
             key: const ValueKey('nav_back'),
-            color: ColorsTheme.of(context).primaryText,
+            color: ColorsTheme.of(context).textPrimary,
             onTap: appBarPopHandlerBuilder(context),
           ),
         ),
@@ -230,11 +230,11 @@ class MxcAppBarButton extends StatelessWidget {
           builder: (context) => icon.fontPackage == 'font_awesome_flutter'
               ? FaIcon(
                   icon,
-                  color: color ?? ColorsTheme.of(context).primaryText,
+                  color: color ?? ColorsTheme.of(context).textPrimary,
                 )
               : Icon(
                   icon,
-                  color: color ?? ColorsTheme.of(context).primaryText,
+                  color: color ?? ColorsTheme.of(context).textPrimary,
                 ),
         ),
         super(key: key);
@@ -251,7 +251,7 @@ class MxcAppBarButton extends StatelessWidget {
             height: height,
             width: width,
             image: image,
-            color: color ?? ColorsTheme.of(context).primaryText,
+            color: color ?? ColorsTheme.of(context).textPrimary,
           ),
         ),
         super(key: key);
