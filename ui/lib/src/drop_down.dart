@@ -30,7 +30,7 @@ class _MXCDropDownState<T> extends State<MXCDropDown<T>> {
       value: widget.selectedItem,
       icon: widget.icon ?? Container(),
       underline: Container(),
-      focusColor: ColorsTheme.of(context).secondaryBackground,
+      focusColor: ColorsTheme.of(context).screenBackground,
       dropdownColor: ColorsTheme.of(context).box,
       elevation: 16,
       isDense: true,
