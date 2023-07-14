@@ -94,10 +94,10 @@ extension MxcThemeDataExtension on MxcThemeData {
         bottomNavigationBarTheme: BottomNavigationBarThemeData(
           backgroundColor: colors.box,
           selectedItemColor: colors.purpleMain,
-          unselectedItemColor: colors.secondaryText,
+          unselectedItemColor: colors.textSecondary,
         ),
         iconTheme: IconThemeData(
-          color: colors.primaryText,
+          color: colors.textPrimary,
         ),
       );
 }
