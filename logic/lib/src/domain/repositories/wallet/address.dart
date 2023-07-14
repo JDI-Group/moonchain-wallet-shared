@@ -46,17 +46,16 @@ class AddressService {
     return true;
   }
 
-  @override
   void reset() {
     _authStorageRepository.saveMnemonic(null);
     _authStorageRepository.savePrivateKey(null);
     _authStorageRepository.savePublicAddress(null);
   }
 
-  @override
   bool validateMnemonic(String mnemonic) => bip39.validateMnemonic(mnemonic);
 
   String? getLocalstoragePrivateKey() => _authStorageRepository.privateKey;
+
   EthereumAddress? getLocalstoragePublicAddress() =>
       EthereumAddress.fromHex(_authStorageRepository.publicAddress!);
 }
