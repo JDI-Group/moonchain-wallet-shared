@@ -116,7 +116,7 @@ class _MxcButtonState extends State<MxcButton> with TickerProviderStateMixin {
 
   void initAnimation() {
     _animationController = AnimationController(
-        duration: const Duration(milliseconds: 300), vsync: this);
+        duration: const Duration(milliseconds: 200), vsync: this);
 
     _scaleAnimate = Tween<double>(
       begin: 0.9,
