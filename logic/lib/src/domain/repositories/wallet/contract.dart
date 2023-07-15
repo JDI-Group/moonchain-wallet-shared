@@ -341,7 +341,7 @@ class ContractRepository implements IContractService {
 
       return name;
     } catch (e) {
-      return Future.value(address);
+      throw e.toString();
     }
   }
 

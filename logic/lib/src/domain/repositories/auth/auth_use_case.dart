@@ -21,18 +21,15 @@ class AuthUseCase {
 
   void createWallet(String mnemonic) async {
     final privateKey = walletAddressRepoistory.getPrivateKey(mnemonic);
-    final publicKey = walletAddressRepoistory.getPublicAddress(privateKey);
+    final publicAddress = walletAddressRepoistory.getPublicAddress(privateKey);
 
     authStorageRepository.setPrivateKey(privateKey);
-    authStorageRepository.setPublicAddress(publicKey);
+    authStorageRepository.setPublicAddress(publicAddress);
 
-    await authCacheRepository?.loadCache(publicKey);
+    await authCacheRepository?.loadCache(publicAddress);
   }
 
   bool get loggedIn => authStorageRepository.loggedIn;
 
-  void resetWallet() {
-    authStorageRepository.setPrivateKey(null);
-    authStorageRepository.setPublicAddress(null);
-  }
+  void resetWallet() => authStorageRepository.cleanCache();
 }
