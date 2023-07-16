@@ -101,10 +101,29 @@ class MxcAppBarEvenly extends StatelessWidget {
             : const SizedBox(),
         super(key: key);
 
+  MxcAppBarEvenly.title({
+    Key? key,
+    required String titleText,
+    Widget? leading,
+    Widget? action,
+    this.padding,
+  })  : title = Builder(
+          builder: (context) => Text(
+            titleText,
+            style: FontTheme.of(context).body2(),
+            textAlign: TextAlign.center,
+            softWrap: true,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+        leading = leading ?? const SizedBox(),
+        action = action ?? const SizedBox(),
+        super(key: key);
+
   final Widget title;
   final EdgeInsetsGeometry? padding;
-  final Widget? action;
   final Widget? leading;
+  final Widget? action;
 
   @override
   Widget build(BuildContext context) {
