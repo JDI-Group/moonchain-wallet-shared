@@ -104,6 +104,10 @@ class _MxcButtonState extends State<MxcButton> with TickerProviderStateMixin {
       return ColorsTheme.of(context).primaryButton;
     }
 
+    if (widget.buttonType == MxcButtonType.secondary) {
+      return ColorsTheme.of(context).borderWhiteInverted;
+    }
+
     return Colors.transparent;
   }
 
@@ -193,6 +197,11 @@ class _MxcButtonState extends State<MxcButton> with TickerProviderStateMixin {
                     padding: const EdgeInsets.only(right: 10),
                     child: SvgPicture.asset(
                       widget.icon!,
+                      colorFilter: ColorFilter.mode(
+                          widget.buttonType == MxcButtonType.primary
+                              ? ColorsTheme.of(context).buttonBlackInverted
+                              : ColorsTheme.of(context).iconPrimary,
+                          BlendMode.srcIn),
                     ),
                   ),
                 Text(
@@ -201,9 +210,11 @@ class _MxcButtonState extends State<MxcButton> with TickerProviderStateMixin {
                   style: widget.onTap != null
                       ? FontTheme.of(context).body2().copyWith(
                             color: widget.buttonType == MxcButtonType.primary
-                                ? widget.titleColor ??
-                                    ColorsTheme.of(context).primaryButtonText
-                                : ColorsTheme.of(context).secondaryButtonText,
+                                ? ColorsTheme.of(context).buttonBlackInverted
+                                : widget.buttonType == MxcButtonType.secondary
+                                    ? ColorsTheme.of(context).textPrimary
+                                    : ColorsTheme.of(context)
+                                        .secondaryButtonText,
                           )
                       : FontTheme.of(context).body2().copyWith(
                             color: ColorsTheme.of(context).disabledButtonText,
