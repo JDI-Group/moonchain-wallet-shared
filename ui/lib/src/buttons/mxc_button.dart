@@ -104,7 +104,7 @@ class _MxcButtonState extends State<MxcButton> with TickerProviderStateMixin {
     }
 
     if (widget.onTap == null) {
-      return ColorsTheme.of(context).disabledButton;
+      return ColorsTheme.of(context).backgroundDisabled;
     }
 
     return widget.color ?? ColorsTheme.of(context).primaryButton;
@@ -116,7 +116,7 @@ class _MxcButtonState extends State<MxcButton> with TickerProviderStateMixin {
     }
 
     if (widget.onTap == null) {
-      return ColorsTheme.of(context).disabledButton;
+      return ColorsTheme.of(context).backgroundDisabled;
     }
 
     if (widget.buttonType == MxcButtonType.primary ||
@@ -241,7 +241,7 @@ class _MxcButtonState extends State<MxcButton> with TickerProviderStateMixin {
                                         .secondaryButtonText,
                           )
                       : FontTheme.of(context).body2().copyWith(
-                            color: ColorsTheme.of(context).disabledButtonText,
+                            color: ColorsTheme.of(context).textDisabled,
                           ),
                 ),
               ],

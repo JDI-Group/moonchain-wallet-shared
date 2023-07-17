@@ -117,7 +117,7 @@ class ColorsTheme {
   // text
   final primaryButtonText = const Color(0xFF25282B);
   final secondaryButtonText = const Color(0xFFFFFFFF);
-  final disabledButtonText = const Color(0xFF5F6366);
+  final textDisabled = const Color(0xFFA4A7AD);
 
   Color get textError => const Color(0xFFD22D2D);
   Color get textSecondary => const Color(0xFF74767B);
@@ -137,7 +137,7 @@ class ColorsTheme {
   Color get textCritical => mainRed;
 
   // button
-  final disabledButton = const Color(0xFF323233);
+  final backgroundDisabled = const Color(0xFFE3E3E5);
   final fullRoundButton = const Color(0xFF292929);
   final focusButton = const Color(0xFF32D8A1);
   final primaryButton = const Color(0xFFFFFFFF);
@@ -370,7 +370,7 @@ class ColorsThemeDark implements ColorsTheme {
   Color get secondaryButtonText => const Color(0xFFFFFFFF);
 
   @override
-  Color get disabledButtonText => const Color(0xFF5F6366);
+  Color get textDisabled => const Color(0xFF5F6366);
 
   @override
   Color get textError => const Color(0xFFFC8383);
@@ -422,7 +422,7 @@ class ColorsThemeDark implements ColorsTheme {
 
   // button
   @override
-  Color get disabledButton => const Color(0xFF323233);
+  Color get backgroundDisabled => const Color(0xFF323233);
 
   @override
   Color get fullRoundButton => const Color(0xFF484A4D);

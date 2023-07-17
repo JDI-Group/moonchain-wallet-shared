@@ -300,7 +300,6 @@ class ContractRepository implements IContractService {
     List<Token> tokens,
     String walletAddress,
   ) async {
-    List<Token> finalList = [];
     final address = EthereumAddress.fromHex(walletAddress);
 
     for (int i = 0; i < tokens.length; i++) {
