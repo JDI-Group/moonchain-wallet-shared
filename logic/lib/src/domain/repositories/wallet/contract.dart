@@ -39,8 +39,11 @@ abstract class IContractService {
   // Future<WannseeTokensBalanceModel?> getTokensBalance(EthereumAddress from);
   Future<Token?> getToken(String address);
   Future<List<Token>> getTokensBalance(
-      List<Token> tokens, String walletAddress);
+    List<Token> tokens,
+    String walletAddress,
+  );
   Future<String> getName(String address);
+  Future<String> getAddress(String? name);
 }
 
 class ContractRepository implements IContractService {
@@ -304,11 +307,13 @@ class ContractRepository implements IContractService {
 
     for (int i = 0; i < tokens.length; i++) {
       final token = tokens[i];
-      final data = EthereumAddress.fromHex(token.address!);
-      final ensToken = EnsToken(client: _web3Client, address: data);
+      if (token.address != null) {
+        final data = EthereumAddress.fromHex(token.address!);
+        final ensToken = EnsToken(client: _web3Client, address: data);
 
-      final tokenBalanceResponse = await ensToken.balanceOf(address);
-      tokens[i] = token.copyWith(balance: tokenBalanceResponse.toDouble());
+        final tokenBalanceResponse = await ensToken.balanceOf(address);
+        tokens[i] = token.copyWith(balance: tokenBalanceResponse.toDouble());
+      }
     }
     return tokens;
   }
@@ -339,6 +344,18 @@ class ContractRepository implements IContractService {
       final name = await ens.getName();
 
       return name;
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
+  @override
+  Future<String> getAddress(String? name) async {
+    try {
+      final ens = Ens(client: _web3Client).withName(name);
+      final address = await ens.getAddress();
+
+      return address.hex;
     } catch (e) {
       throw e.toString();
     }
