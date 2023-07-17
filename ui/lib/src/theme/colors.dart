@@ -65,7 +65,7 @@ class ColorsTheme {
   final white200 = const Color(0x99FFFFFF);
   final white100 = const Color(0xFFFFFFFF);
 
-  Color get whiteInverted => black100;
+  Color get whiteInverted => white100;
 
   final black100 = const Color(0xFF25282B);
   final black200 = const Color(0x4025282B);
@@ -283,7 +283,7 @@ class ColorsThemeDark implements ColorsTheme {
 
   // border
   @override
-  Color get borderWhiteInverted => black100;
+  Color get borderWhiteInverted => white100;
 
   @override
   Color get borderGrey3 => grey3;
