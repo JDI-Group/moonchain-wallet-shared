@@ -300,16 +300,17 @@ class ContractRepository implements IContractService {
     List<Token> tokens,
     String walletAddress,
   ) async {
-    List<Token> finalList = [];
     final address = EthereumAddress.fromHex(walletAddress);
 
     for (int i = 0; i < tokens.length; i++) {
       final token = tokens[i];
-      final data = EthereumAddress.fromHex(token.address!);
-      final ensToken = EnsToken(client: _web3Client, address: data);
+      if (token.address != null) {
+        final data = EthereumAddress.fromHex(token.address!);
+        final ensToken = EnsToken(client: _web3Client, address: data);
 
-      final tokenBalanceResponse = await ensToken.balanceOf(address);
-      tokens[i] = token.copyWith(balance: tokenBalanceResponse.toDouble());
+        final tokenBalanceResponse = await ensToken.balanceOf(address);
+        tokens[i] = token.copyWith(balance: tokenBalanceResponse.toDouble());
+      }
     }
     return tokens;
   }
