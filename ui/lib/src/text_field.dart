@@ -344,8 +344,8 @@ class _MxcNonFormTextFieldState extends State<_MxcNonFormTextField> {
           borderRadius: const BorderRadius.all(Radius.circular(12)),
           border: Border.all(
             color: focused
-                ? ColorsTheme.of(context).textPrimary
-                : ColorsTheme.of(context).textPrimary.withOpacity(0.32),
+                ? ColorsTheme.of(context).whiteInverted
+                : ColorsTheme.of(context).grey3,
           ),
         ),
         child: child,
@@ -443,8 +443,9 @@ class _MxcNonFormTextFieldState extends State<_MxcNonFormTextField> {
                             isDense: true,
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                             hintText: widget.hint,
-                            hintStyle:
-                                FontTheme.of(context).subtitle1.secondary(),
+                            hintStyle: FontTheme.of(context)
+                                .subtitle1()
+                                .copyWith(color: ColorsTheme.of(context).grey1),
                             enabledBorder: InputBorder.none,
                             focusedBorder: InputBorder.none,
                             errorBorder: InputBorder.none,

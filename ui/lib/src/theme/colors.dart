@@ -144,10 +144,14 @@ class ColorsTheme {
   final chipDefaultBg = const Color(0xFFE5E5EA);
   Color get buttonCritical => mainRed;
 
+  Color get buttonWhiteInverted => const Color(0xFFFFFFFF);
+  Color get buttonBlackInverted => const Color(0xFF25282B);
+
   // tip
   final mainGreen = const Color(0xFF10C469);
   final mainRed = const Color(0xFFD22D2D);
   final systemStatusActive = const Color(0xFF63C174);
+  final systemStatusInActive = const Color(0xFFEC5E41);
 }
 
 class ColorsThemeDark implements ColorsTheme {
@@ -435,6 +439,12 @@ class ColorsThemeDark implements ColorsTheme {
   @override
   Color get buttonCritical => mainRed;
 
+  @override
+  Color get buttonWhiteInverted => const Color(0xFFFFFFFF);
+
+  @override
+  Color get buttonBlackInverted => const Color(0xFF25282B);
+
   // tip
   @override
   Color get mainGreen => const Color(0xFF30A78B);
@@ -444,4 +454,7 @@ class ColorsThemeDark implements ColorsTheme {
 
   @override
   Color get systemStatusActive => const Color(0xFF63C174);
+
+  @override
+  final systemStatusInActive = const Color(0xFFEC5E41);
 }
