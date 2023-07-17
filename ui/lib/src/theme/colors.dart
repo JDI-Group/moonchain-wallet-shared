@@ -142,6 +142,7 @@ class ColorsTheme {
   final focusButton = const Color(0xFF32D8A1);
   final primaryButton = const Color(0xFFFFFFFF);
   final chipDefaultBg = const Color(0xFFE5E5EA);
+  Color get buttonCritical => mainRed;
 
   // tip
   final mainGreen = const Color(0xFF10C469);
@@ -430,6 +431,9 @@ class ColorsThemeDark implements ColorsTheme {
 
   @override
   Color get chipDefaultBg => const Color(0xFF3A3A3C);
+
+  @override
+  Color get buttonCritical => mainRed;
 
   // tip
   @override

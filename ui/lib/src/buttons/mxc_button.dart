@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mxc_ui/mxc_ui.dart';
 
-enum MxcButtonType { primary, secondary, plain }
+enum MxcButtonType { primary, secondary, plain, sucess, failure }
 
 enum MxcButtonSize { xl, xxl }
 
@@ -60,6 +60,19 @@ class MxcButton extends StatefulWidget {
     this.icon,
   }) : super(key: key);
 
+  const MxcButton.primarySuccess({
+    required Key? key,
+    required this.title,
+    required this.onTap,
+    this.buttonType = MxcButtonType.sucess,
+    this.buttonSize = MxcButtonSize.xxl,
+    this.fillWidth = true,
+    this.titleColor,
+    this.color,
+    this.borderColor,
+    this.icon,
+  }) : super(key: key);
+
   final MxcButtonType buttonType;
   final MxcButtonSize buttonSize;
   final String title;
@@ -82,13 +95,19 @@ class _MxcButtonState extends State<MxcButton> with TickerProviderStateMixin {
   double getHeight() => widget.buttonSize == MxcButtonSize.xl ? 44 : 60;
 
   Color getButtonColor() {
-    var buttonColor = widget.color ?? ColorsTheme.of(context).primaryButton;
-
-    if (widget.onTap == null) {
-      buttonColor = ColorsTheme.of(context).disabledButton;
+    if (widget.buttonType == MxcButtonType.sucess) {
+      return ColorsTheme.of(context).systemStatusActive;
     }
 
-    return buttonColor;
+    if (widget.buttonType == MxcButtonType.failure) {
+      return ColorsTheme.of(context).buttonCritical;
+    }
+
+    if (widget.onTap == null) {
+      return ColorsTheme.of(context).disabledButton;
+    }
+
+    return widget.color ?? ColorsTheme.of(context).primaryButton;
   }
 
   Color getBorderColor() {
@@ -100,8 +119,17 @@ class _MxcButtonState extends State<MxcButton> with TickerProviderStateMixin {
       return ColorsTheme.of(context).disabledButton;
     }
 
-    if (widget.buttonType != MxcButtonType.plain) {
+    if (widget.buttonType == MxcButtonType.primary ||
+        widget.buttonType == MxcButtonType.secondary) {
       return ColorsTheme.of(context).primaryButton;
+    }
+
+    if (widget.buttonType == MxcButtonType.sucess) {
+      return ColorsTheme.of(context).systemStatusActive;
+    }
+
+    if (widget.buttonType == MxcButtonType.failure) {
+      return ColorsTheme.of(context).buttonCritical;
     }
 
     return Colors.transparent;
