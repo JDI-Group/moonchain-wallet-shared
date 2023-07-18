@@ -344,7 +344,7 @@ class _MxcNonFormTextFieldState extends State<_MxcNonFormTextField> {
           borderRadius: const BorderRadius.all(Radius.circular(12)),
           border: Border.all(
             color: focused
-                ? ColorsTheme.of(context).whiteInverted
+                ? ColorsTheme.of(context).whiteInvert
                 : ColorsTheme.of(context).grey3,
           ),
         ),
@@ -432,8 +432,8 @@ class _MxcNonFormTextFieldState extends State<_MxcNonFormTextField> {
                           cursorColor: ColorsTheme.of(context).textPrimary,
                           style: (widget.disabled)
                               ? FontTheme.of(context).body1().copyWith(
-                                    color:
-                                        ColorsTheme.of(context).disabledButton,
+                                    color: ColorsTheme.of(context)
+                                        .backgroundDisabled,
                                   )
                               : FontTheme.of(context).body1(),
                           obscureText: widget.obscure,
@@ -481,7 +481,7 @@ class _MxcNonFormTextFieldState extends State<_MxcNonFormTextField> {
                       MxcScopedTheme(
                         data: MxcScopedThemeData(
                           primaryColor: widget.disabled
-                              ? ColorsTheme.of(context).disabledButton
+                              ? ColorsTheme.of(context).backgroundDisabled
                               : ColorsTheme.of(context).textPrimary,
                         ),
                         child: widget.suffixButton!,
@@ -776,7 +776,7 @@ class _MxcMiniNonFormTextFieldState extends State<_MxcMiniNonFormTextField> {
 
   Color getColorBorder() {
     if (widget.disabled) {
-      return ColorsTheme.of(context).disabledButton;
+      return ColorsTheme.of(context).backgroundDisabled;
     }
     if (widget.error) return ColorsTheme.of(context).mainRed;
     if (_internalController != null && _internalController!.text.isEmpty) {

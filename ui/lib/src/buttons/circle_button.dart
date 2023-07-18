@@ -70,7 +70,7 @@ abstract class MxcCircleButton extends StatelessWidget {
   Color _contentColor(BuildContext context) {
     Color color;
     if (onTap == null) {
-      color = ColorsTheme.of(context).disabledButton;
+      color = ColorsTheme.of(context).backgroundDisabled;
     } else if (filled) {
       color = ColorsTheme.of(context).white;
     } else {
@@ -85,7 +85,7 @@ abstract class MxcCircleButton extends StatelessWidget {
   Widget build(BuildContext context) {
     Color fillColor;
     if (onTap == null) {
-      fillColor = ColorsTheme.of(context).disabledButton;
+      fillColor = ColorsTheme.of(context).backgroundDisabled;
     } else if (iconFillColor != null) {
       fillColor = iconFillColor!;
     } else if (filled) {

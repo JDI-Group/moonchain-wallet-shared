@@ -65,7 +65,7 @@ class ColorsTheme {
   final white200 = const Color(0x99FFFFFF);
   final white100 = const Color(0xFFFFFFFF);
 
-  Color get whiteInverted => white100;
+  Color get whiteInvert => white100;
 
   final black100 = const Color(0xFF25282B);
   final black200 = const Color(0x4025282B);
@@ -73,24 +73,24 @@ class ColorsTheme {
 
   final blackDeep = const Color(0xFF000000);
 
-  Color get blackInverted => white100;
+  Color get blackInvert => white100;
 
   // layerSheet
   Color get layerSheetBackground => white100;
 
   // border
-  Color get borderWhiteInverted => whiteInverted;
+  Color get borderWhiteInvert => whiteInvert;
 
   Color get borderGrey3 => grey3;
 
   // chip
-  Color get chipActiveBackground => whiteInverted;
-  Color get chipTextBlack => blackInverted;
-  Color get chipIconBlack => blackInverted;
+  Color get chipActiveBackground => whiteInvert;
+  Color get chipTextBlack => blackInvert;
+  Color get chipIconBlack => blackInvert;
 
   Color get chipDefaultBackground => grey4;
 
-  Color get chipBorder => whiteInverted;
+  Color get chipBorder => whiteInvert;
 
   // icon
   Color get iconPrimary => black100;
@@ -101,8 +101,8 @@ class ColorsTheme {
   Color get iconPurpleMain => purpleMain;
   Color get iconBlack200 => blackDeep;
   Color get iconBlack100 => black100;
-  Color get iconWhiteInverted => whiteInverted;
-  Color get iconBlackInverted => blackInverted;
+  Color get iconWhiteInvert => whiteInvert;
+  Color get iconBlackInvert => blackInvert;
   Color get iconGrey4 => grey4;
   Color get iconGrey3 => grey3;
   Color get iconGrey1 => grey1;
@@ -117,7 +117,7 @@ class ColorsTheme {
   // text
   final primaryButtonText = const Color(0xFF25282B);
   final secondaryButtonText = const Color(0xFFFFFFFF);
-  final disabledButtonText = const Color(0xFF5F6366);
+  final textDisabled = const Color(0xFFA4A7AD);
 
   Color get textError => const Color(0xFFD22D2D);
   Color get textSecondary => const Color(0xFF74767B);
@@ -132,20 +132,20 @@ class ColorsTheme {
   Color get snackbarText => const Color(0xFF000000);
   Color get textGrey1 => grey1;
   Color get textGrey2 => grey2;
-  Color get textWhiteInverted => whiteInverted;
-  Color get textBlackInverted => blackInverted;
+  Color get textWhiteInvert => whiteInvert;
+  Color get textBlackInvert => blackInvert;
   Color get textCritical => mainRed;
 
   // button
-  final disabledButton = const Color(0xFF323233);
+  final backgroundDisabled = const Color(0xFFE3E3E5);
   final fullRoundButton = const Color(0xFF292929);
   final focusButton = const Color(0xFF32D8A1);
   final primaryButton = const Color(0xFFFFFFFF);
   final chipDefaultBg = const Color(0xFFE5E5EA);
   Color get buttonCritical => mainRed;
 
-  Color get buttonWhiteInverted => const Color(0xFFFFFFFF);
-  Color get buttonBlackInverted => const Color(0xFF25282B);
+  Color get buttonWhiteInvert => whiteInvert;
+  Color get buttonBlackInvert => blackInvert;
 
   // tip
   final mainGreen = const Color(0xFF10C469);
@@ -164,9 +164,6 @@ class ColorsThemeDark implements ColorsTheme {
   // background
   @override
   final primaryBackground = const Color(0xFF111111);
-
-  @override
-  final secondaryBackground = const Color(0xFF1C1C1E);
 
   @override
   final onTertiary = const Color(0xFFBFBFBF);
@@ -260,7 +257,7 @@ class ColorsThemeDark implements ColorsTheme {
   final white100 = const Color(0xFFFFFFFF);
 
   @override
-  Color get whiteInverted => white100;
+  Color get whiteInvert => white100;
 
   @override
   final black100 = const Color(0xFF25282B);
@@ -275,7 +272,7 @@ class ColorsThemeDark implements ColorsTheme {
   final blackDeep = const Color(0xFF000000);
 
   @override
-  Color get blackInverted => black100;
+  Color get blackInvert => black100;
 
   // layer sheet
   @override
@@ -283,26 +280,26 @@ class ColorsThemeDark implements ColorsTheme {
 
   // border
   @override
-  Color get borderWhiteInverted => white100;
+  Color get borderWhiteInvert => white100;
 
   @override
   Color get borderGrey3 => grey3;
 
   // chip
   @override
-  Color get chipActiveBackground => whiteInverted;
+  Color get chipActiveBackground => whiteInvert;
 
   @override
-  Color get chipTextBlack => blackInverted;
+  Color get chipTextBlack => blackInvert;
 
   @override
-  Color get chipIconBlack => blackInverted;
+  Color get chipIconBlack => blackInvert;
 
   @override
   Color get chipDefaultBackground => grey4;
 
   @override
-  Color get chipBorder => whiteInverted;
+  Color get chipBorder => whiteInvert;
 
   // icon
   @override
@@ -330,10 +327,10 @@ class ColorsThemeDark implements ColorsTheme {
   Color get iconBlack100 => textBlack100;
 
   @override
-  Color get iconWhiteInverted => whiteInverted;
+  Color get iconWhiteInvert => whiteInvert;
 
   @override
-  Color get iconBlackInverted => blackInverted;
+  Color get iconBlackInvert => blackInvert;
 
   @override
   Color get iconGrey4 => grey4;
@@ -370,7 +367,7 @@ class ColorsThemeDark implements ColorsTheme {
   Color get secondaryButtonText => const Color(0xFFFFFFFF);
 
   @override
-  Color get disabledButtonText => const Color(0xFF5F6366);
+  Color get textDisabled => const Color(0xFF5F6366);
 
   @override
   Color get textError => const Color(0xFFFC8383);
@@ -412,17 +409,17 @@ class ColorsThemeDark implements ColorsTheme {
   Color get textGrey2 => grey2;
 
   @override
-  Color get textWhiteInverted => whiteInverted;
+  Color get textWhiteInvert => whiteInvert;
 
   @override
-  Color get textBlackInverted => blackInverted;
+  Color get textBlackInvert => blackInvert;
 
   @override
   Color get textCritical => mainRed;
 
   // button
   @override
-  Color get disabledButton => const Color(0xFF323233);
+  Color get backgroundDisabled => const Color(0xFF323233);
 
   @override
   Color get fullRoundButton => const Color(0xFF484A4D);
@@ -440,10 +437,10 @@ class ColorsThemeDark implements ColorsTheme {
   Color get buttonCritical => mainRed;
 
   @override
-  Color get buttonWhiteInverted => const Color(0xFFFFFFFF);
+  Color get buttonWhiteInvert => const Color(0xFFFFFFFF);
 
   @override
-  Color get buttonBlackInverted => const Color(0xFF25282B);
+  Color get buttonBlackInvert => const Color(0xFF25282B);
 
   // tip
   @override

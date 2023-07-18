@@ -104,7 +104,7 @@ class _MxcButtonState extends State<MxcButton> with TickerProviderStateMixin {
     }
 
     if (widget.onTap == null) {
-      return ColorsTheme.of(context).disabledButton;
+      return ColorsTheme.of(context).backgroundDisabled;
     }
 
     return widget.color ?? ColorsTheme.of(context).primaryButton;
@@ -116,12 +116,12 @@ class _MxcButtonState extends State<MxcButton> with TickerProviderStateMixin {
     }
 
     if (widget.onTap == null) {
-      return ColorsTheme.of(context).disabledButton;
+      return ColorsTheme.of(context).backgroundDisabled;
     }
 
     if (widget.buttonType == MxcButtonType.primary ||
         widget.buttonType == MxcButtonType.secondary) {
-      return ColorsTheme.of(context).borderWhiteInverted;
+      return ColorsTheme.of(context).borderWhiteInvert;
     }
 
     if (widget.buttonType == MxcButtonType.sucess) {
@@ -222,7 +222,7 @@ class _MxcButtonState extends State<MxcButton> with TickerProviderStateMixin {
                       widget.icon!,
                       colorFilter: ColorFilter.mode(
                           widget.buttonType == MxcButtonType.primary
-                              ? ColorsTheme.of(context).buttonBlackInverted
+                              ? ColorsTheme.of(context).buttonBlackInvert
                               : ColorsTheme.of(context).iconPrimary,
                           BlendMode.srcIn),
                     ),
@@ -233,14 +233,14 @@ class _MxcButtonState extends State<MxcButton> with TickerProviderStateMixin {
                   style: widget.onTap != null
                       ? FontTheme.of(context).body2().copyWith(
                             color: widget.buttonType == MxcButtonType.primary
-                                ? ColorsTheme.of(context).buttonBlackInverted
+                                ? ColorsTheme.of(context).buttonBlackInvert
                                 : widget.buttonType == MxcButtonType.secondary
                                     ? ColorsTheme.of(context).textPrimary
                                     : ColorsTheme.of(context)
                                         .secondaryButtonText,
                           )
                       : FontTheme.of(context).body2().copyWith(
-                            color: ColorsTheme.of(context).disabledButtonText,
+                            color: ColorsTheme.of(context).textDisabled,
                           ),
                 ),
               ],
