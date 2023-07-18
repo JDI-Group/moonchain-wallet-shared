@@ -344,7 +344,7 @@ class _MxcNonFormTextFieldState extends State<_MxcNonFormTextField> {
           borderRadius: const BorderRadius.all(Radius.circular(12)),
           border: Border.all(
             color: focused
-                ? ColorsTheme.of(context).whiteInverted
+                ? ColorsTheme.of(context).whiteInvert
                 : ColorsTheme.of(context).grey3,
           ),
         ),
