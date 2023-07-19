@@ -44,7 +44,8 @@ class _MXCDropDownState<T> extends State<MXCDropDown<T>> {
                   children: [
                     widget.leadingIcon ?? Container(),
                     Text(item.toString(),
-                        style: widget.textStyle ?? FontTheme.of(context).h7()),
+                        style: widget.textStyle ??
+                            FontTheme.of(context).subtitle2.primary()),
                   ],
                 ),
               ))
