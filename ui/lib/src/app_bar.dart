@@ -79,7 +79,7 @@ class MxcAppBar extends StatelessWidget {
         ),
         leading = Builder(
           builder: (context) => MxcAppBarButton.icon(
-            Icons.arrow_back,
+            Icons.arrow_back_rounded,
             key: const ValueKey('nav_back'),
             color: ColorsTheme.of(context).textPrimary,
             onTap: appBarPopHandlerBuilder(context),
