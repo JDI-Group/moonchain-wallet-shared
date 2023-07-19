@@ -4,6 +4,9 @@ import 'package:mxc_logic/src/data/api/client/rest_client.dart';
 import 'package:mxc_logic/mxc_logic.dart';
 import 'package:mxc_logic/src/data/socket/mxc_socket_client.dart';
 import 'package:web3dart/web3dart.dart';
+import '../extensions/extensions.dart';
+
+import 'app_config.dart';
 
 typedef TransferEvent = void Function(
   EthereumAddress from,
@@ -44,14 +47,30 @@ abstract class IContractService {
   );
   Future<String> getName(String address);
   Future<String> getAddress(String? name);
+  Future<EstimatedGasFee> estimateGesFee({
+    required String from,
+    required String to,
+  });
+  Future<String> sendTransaction({
+    required String privateKey,
+    required String to,
+    required String amount,
+    EstimatedGasFee? estimatedGasFee,
+  });
 }
 
 class ContractRepository implements IContractService {
-  ContractRepository(this._web3Client, this._restClient, {this.contract});
+  ContractRepository(
+    this._web3Client,
+    this._restClient, {
+    required this.networkConfig,
+    this.contract,
+  });
 
   final Web3Client _web3Client;
   final RestClient _restClient;
   final DeployedContract? contract;
+  final AppConfigParams networkConfig;
 
   ContractEvent _transferEvent() => contract!.event('Transfer');
   ContractFunction _balanceFunction() => contract!.function('balanceOf');
@@ -356,6 +375,65 @@ class ContractRepository implements IContractService {
       final address = await ens.getAddress();
 
       return address.hex;
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
+  @override
+  Future<EstimatedGasFee> estimateGesFee({
+    required String from,
+    required String to,
+  }) async {
+    try {
+      final sender = EthereumAddress.fromHex(from);
+      final toAddress = EthereumAddress.fromHex(to);
+
+      final gasPrice = await _web3Client.getGasPrice();
+
+      final gas = await _web3Client.estimateGas(
+        sender: sender,
+        to: toAddress,
+      );
+
+      final fee = gasPrice.getInWei * gas;
+      final gasFee = EtherAmount.fromBigInt(EtherUnit.wei, fee);
+
+      return EstimatedGasFee(
+        gasPrice: gasPrice,
+        gas: gas,
+        gasFee: MxcAmount.toDoubleByEther(gasFee.getInWei.toString()),
+      );
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
+  @override
+  Future<String> sendTransaction({
+    required String privateKey,
+    required String to,
+    required String amount,
+    EstimatedGasFee? estimatedGasFee,
+  }) async {
+    try {
+      final toAddress = EthereumAddress.fromHex(to);
+      final cred = EthPrivateKey.fromHex(privateKey);
+      final amountFromDouble = double.parse(amount);
+      final amountValue = MxcAmount.fromDoubleByEther(amountFromDouble);
+
+      final result = await _web3Client.sendTransaction(
+        cred,
+        Transaction(
+          to: toAddress,
+          value: amountValue,
+          gasPrice: estimatedGasFee?.gasPrice,
+        ),
+        fetchChainIdFromNetworkId: true,
+        chainId: null,
+      );
+
+      return result;
     } catch (e) {
       throw e.toString();
     }

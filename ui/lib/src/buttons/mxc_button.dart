@@ -199,9 +199,8 @@ class _MxcButtonState extends State<MxcButton> with TickerProviderStateMixin {
         child: GestureDetector(
           onTap: widget.onTap,
           onTapDown: (_) => startAnimate(),
-          // onLongPressDown: (_) => startAnimate(),
+          onTapCancel: () => endAnimate(),
           onTapUp: (_) => endAnimate(),
-          // onLongPressUp: () => endAnimate(),
           child: Container(
             width: widget.fillWidth ? double.infinity : null,
             height: getHeight(),
