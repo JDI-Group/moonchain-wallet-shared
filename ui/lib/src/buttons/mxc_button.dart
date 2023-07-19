@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mxc_ui/mxc_ui.dart';
 
-enum MxcButtonType { primary, secondary, plain, sucess, failure }
+enum MxcButtonType { primary, secondary, plain, success, failure }
 
 enum MxcButtonSize { xl, xxl }
 
@@ -64,7 +64,7 @@ class MxcButton extends StatefulWidget {
     required Key? key,
     required this.title,
     required this.onTap,
-    this.buttonType = MxcButtonType.sucess,
+    this.buttonType = MxcButtonType.success,
     this.buttonSize = MxcButtonSize.xxl,
     this.fillWidth = true,
     this.titleColor,
@@ -95,7 +95,7 @@ class _MxcButtonState extends State<MxcButton> with TickerProviderStateMixin {
   double getHeight() => widget.buttonSize == MxcButtonSize.xl ? 44 : 60;
 
   Color getButtonColor() {
-    if (widget.buttonType == MxcButtonType.sucess) {
+    if (widget.buttonType == MxcButtonType.success) {
       return ColorsTheme.of(context).systemStatusActive;
     }
 
@@ -124,7 +124,7 @@ class _MxcButtonState extends State<MxcButton> with TickerProviderStateMixin {
       return ColorsTheme.of(context).borderWhiteInvert;
     }
 
-    if (widget.buttonType == MxcButtonType.sucess) {
+    if (widget.buttonType == MxcButtonType.success) {
       return ColorsTheme.of(context).systemStatusActive;
     }
 
