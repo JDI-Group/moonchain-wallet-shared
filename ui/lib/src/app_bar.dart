@@ -291,7 +291,8 @@ class MxcAppBarTextTitle extends StatelessWidget {
     final titleWidget = Text(
       text,
       textAlign: centerTitle ? TextAlign.center : TextAlign.left,
-      style: FontTheme.of(context).body2().copyWith(
+      style: FontTheme.of(context).body1().copyWith(
+            fontWeight: FontWeight.w500,
             color: color,
           ),
       softWrap: true,

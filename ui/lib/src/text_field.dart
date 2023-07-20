@@ -681,7 +681,8 @@ class _MxcTextFieldSTextButton extends MxcTextFieldButton {
   @override
   Widget buildChild(BuildContext context) => Text(
         text,
-        style: FontTheme.of(context).body2.primary().copyWith(
+        style: FontTheme.of(context).body1.primary().copyWith(
+              fontWeight: FontWeight.w500,
               color: color,
             ),
       );
