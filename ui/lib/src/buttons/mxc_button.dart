@@ -231,7 +231,8 @@ class _MxcButtonState extends State<MxcButton> with TickerProviderStateMixin {
                   widget.title,
                   textAlign: TextAlign.center,
                   style: widget.onTap != null
-                      ? FontTheme.of(context).body2().copyWith(
+                      ? FontTheme.of(context).body1().copyWith(
+                            fontWeight: FontWeight.w500,
                             color: widget.buttonType == MxcButtonType.primary
                                 ? ColorsTheme.of(context).buttonBlackInvert
                                 : widget.buttonType == MxcButtonType.secondary
@@ -239,7 +240,8 @@ class _MxcButtonState extends State<MxcButton> with TickerProviderStateMixin {
                                     : ColorsTheme.of(context)
                                         .secondaryButtonText,
                           )
-                      : FontTheme.of(context).body2().copyWith(
+                      : FontTheme.of(context).body1().copyWith(
+                            fontWeight: FontWeight.w500,
                             color: ColorsTheme.of(context).textDisabled,
                           ),
                 ),

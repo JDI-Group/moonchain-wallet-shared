@@ -33,7 +33,8 @@ class FontTheme {
   TextStylePack get body1 =>
       TextStylePack(_colorsTheme, _baseTextStyle.copyWith(fontSize: 16));
   TextStylePack get body2 => TextStylePack(_colorsTheme,
-      _baseTextStyle.copyWith(fontWeight: FontWeight.w500, fontSize: 16));
+      _baseTextStyle.copyWith(fontWeight: FontWeight.w400, fontSize: 18));
+  
 
   TextStylePack get h2 => TextStylePack(_colorsTheme,
       _baseTextStyle.copyWith(fontSize: 60, fontWeight: FontWeight.w300));

@@ -22,7 +22,9 @@ class MxcAppBarEvenly extends StatelessWidget {
   })  : title = Builder(
           builder: (context) => Text(
             titleText,
-            style: FontTheme.of(context).body2(),
+            style: FontTheme.of(context).body1().copyWith(
+                  fontWeight: FontWeight.w500,
+                ),
             textAlign: TextAlign.center,
             softWrap: true,
             overflow: TextOverflow.ellipsis,
@@ -47,8 +49,12 @@ class MxcAppBarEvenly extends StatelessWidget {
                   child: Text(
                     actionText,
                     style: isActionTap
-                        ? FontTheme.of(context).body2()
-                        : FontTheme.of(context).body2.secondary(),
+                        ? FontTheme.of(context).body1().copyWith(
+                              fontWeight: FontWeight.w500,
+                            )
+                        : FontTheme.of(context).body1.secondary().copyWith(
+                              fontWeight: FontWeight.w500,
+                            ),
                     textAlign: TextAlign.right,
                     softWrap: true,
                     overflow: TextOverflow.ellipsis,
@@ -69,7 +75,9 @@ class MxcAppBarEvenly extends StatelessWidget {
   })  : title = Builder(
           builder: (context) => Text(
             titleText,
-            style: FontTheme.of(context).body2(),
+            style: FontTheme.of(context).body1().copyWith(
+                  fontWeight: FontWeight.w500,
+                ),
             textAlign: TextAlign.center,
             softWrap: true,
             overflow: TextOverflow.ellipsis,
@@ -90,8 +98,12 @@ class MxcAppBarEvenly extends StatelessWidget {
                   child: Text(
                     actionText,
                     style: isActionTap
-                        ? FontTheme.of(context).body2()
-                        : FontTheme.of(context).body2.secondary(),
+                        ? FontTheme.of(context).body1().copyWith(
+                              fontWeight: FontWeight.w500,
+                            )
+                        : FontTheme.of(context).body1.secondary().copyWith(
+                              fontWeight: FontWeight.w500,
+                            ),
                     textAlign: TextAlign.right,
                     softWrap: true,
                     overflow: TextOverflow.ellipsis,
@@ -110,7 +122,9 @@ class MxcAppBarEvenly extends StatelessWidget {
   })  : title = Builder(
           builder: (context) => Text(
             titleText,
-            style: FontTheme.of(context).body2(),
+            style: FontTheme.of(context).body1().copyWith(
+                  fontWeight: FontWeight.w500,
+                ),
             textAlign: TextAlign.center,
             softWrap: true,
             overflow: TextOverflow.ellipsis,
