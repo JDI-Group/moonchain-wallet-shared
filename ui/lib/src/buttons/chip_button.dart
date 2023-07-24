@@ -18,7 +18,8 @@ class MxcChipButton extends StatelessWidget {
       this.width,
       this.alignIconStart,
       this.contentPadding,
-      this.iconData,this.iconSize})
+      this.iconData,
+      this.iconSize})
       : super(key: key);
 
   final ChipButtonStates buttonState;
@@ -42,7 +43,8 @@ class MxcChipButton extends StatelessWidget {
       switch (buttonState) {
         case ChipButtonStates.activeState:
           return BoxDecoration(
-            color: backgroundColor ?? ColorsTheme.of(context).chipActiveBackground,
+            color:
+                backgroundColor ?? ColorsTheme.of(context).chipActiveBackground,
             borderRadius: BorderRadius.circular(40),
           );
         case ChipButtonStates.inactiveState:
@@ -52,14 +54,15 @@ class MxcChipButton extends StatelessWidget {
               border: Border.all(color: ColorsTheme.of(context).chipBorder));
         case ChipButtonStates.defaultState:
           return BoxDecoration(
-            color: backgroundColor ?? ColorsTheme.of(context).chipDefaultBackground,
+            color: backgroundColor ??
+                ColorsTheme.of(context).chipDefaultBackground,
             borderRadius: BorderRadius.circular(40),
           );
       }
     }
 
     TextStyle resolveTextStyle(ChipButtonStates buttonState) {
-      if (textStyle != null){
+      if (textStyle != null) {
         return textStyle!;
       }
       switch (buttonState) {

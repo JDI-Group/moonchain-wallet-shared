@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'package:ens_dart/ens_dart.dart';
+import 'package:mxc_logic/contracts/Nft.g.dart';
 import 'package:mxc_logic/src/data/api/client/rest_client.dart';
 import 'package:mxc_logic/mxc_logic.dart';
 import 'package:mxc_logic/src/data/socket/mxc_socket_client.dart';
 import 'package:web3dart/web3dart.dart';
+
 import '../extensions/extensions.dart';
 
 import 'app_config.dart';
@@ -57,6 +59,18 @@ abstract class IContractService {
     required String amount,
     EstimatedGasFee? estimatedGasFee,
   });
+
+  Future<WannseeTokenMetaData?> getTokenInfo(
+    EthereumAddress collectionAddress,
+    int tokenId,
+    EthereumAddress userAddress,
+  );
+
+  Future<bool?> checkTokenOwnership(
+    EthereumAddress collectionAddress,
+    int tokenId,
+    EthereumAddress userAddress,
+  );
 }
 
 class ContractRepository implements IContractService {
@@ -251,7 +265,7 @@ class ContractRepository implements IContractService {
     }
     if (response.statusCode == 404) {
       // new wallet and nothing is returned
-      final txList = WannseeTokenTransfersModel(
+      const txList = WannseeTokenTransfersModel(
         items: [],
       );
       return txList;
@@ -314,6 +328,59 @@ class ContractRepository implements IContractService {
       return defaultTokens;
     } else {
       return null;
+    }
+  }
+
+  @override
+  Future<WannseeTokenMetaData?> getTokenInfo(
+    EthereumAddress collectionAddress,
+    int tokenId,
+    EthereumAddress userAddress,
+  ) async {
+    final collectionContract =
+        Nft(address: collectionAddress, client: _web3Client);
+
+    try {
+      // Uri is something like ipfs://<CID>
+      final tokenMetaDataUri =
+          await collectionContract.tokenURI(BigInt.from(tokenId));
+
+      RegExp regExp = RegExp(r'ipfs://(.+)');
+      Match? match = regExp.firstMatch(tokenMetaDataUri);
+
+      if (match != null) {
+        String hash = match.group(1)!;
+        final metaDataResponse = await _restClient.client
+            .get(Uri.parse('https://ipfs.io/ipfs/$hash'));
+
+        if (metaDataResponse.statusCode == 200) {
+          return WannseeTokenMetaData.fromJson(metaDataResponse.body);
+        } else {
+          return null;
+        }
+      } else {
+        return null;
+      }
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  @override
+  Future<bool?> checkTokenOwnership(
+    EthereumAddress collectionAddress,
+    int tokenId,
+    EthereumAddress userAddress,
+  ) async {
+    try {
+      final collectionContract =
+          Nft(address: collectionAddress, client: _web3Client);
+
+      final owner = await collectionContract.ownerOf(BigInt.from(tokenId));
+
+      return owner == userAddress;
+    } catch (e) {
+      throw Exception(e.toString());
     }
   }
 

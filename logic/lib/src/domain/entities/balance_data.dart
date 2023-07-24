@@ -8,9 +8,6 @@ class BalanceData extends Equatable {
 
   @override
   List<Object?> get props {
-    return [
-      timeStamp,
-      balance
-    ];
+    return [timeStamp, balance];
   }
 }
