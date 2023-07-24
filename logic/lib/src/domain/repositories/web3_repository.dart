@@ -12,5 +12,6 @@ class Web3Repository {
 
   WalletAddressRepoistory get walletAddress => const WalletAddressRepoistory();
 
-  ContractRepository get contract => _constracts.getInstance(NetworkType.Wannsee);
+  ContractRepository get contract =>
+      _constracts.getInstance(NetworkType.Wannsee);
 }
