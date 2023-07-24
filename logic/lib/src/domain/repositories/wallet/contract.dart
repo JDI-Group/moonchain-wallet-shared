@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:ens_dart/ens_dart.dart';
-import 'package:mxc_logic/contracts/Nft.g.dart';
 import 'package:mxc_logic/src/data/api/client/rest_client.dart';
 import 'package:mxc_logic/mxc_logic.dart';
 import 'package:mxc_logic/src/data/socket/mxc_socket_client.dart';
@@ -60,17 +59,33 @@ abstract class IContractService {
     EstimatedGasFee? estimatedGasFee,
   });
 
-  Future<WannseeTokenMetaData?> getTokenInfo(
-    EthereumAddress collectionAddress,
-    int tokenId,
-    EthereumAddress userAddress,
-  );
+  // Future<WannseeTokenMetaData?> getTokenInfo(
+  //   EthereumAddress collectionAddress,
+  //   int tokenId,
+  //   EthereumAddress userAddress,
+  // );
 
-  Future<bool?> checkTokenOwnership(
-    EthereumAddress collectionAddress,
-    int tokenId,
-    EthereumAddress userAddress,
-  );
+  // Future<bool?> checkTokenOwnership(
+  //   EthereumAddress collectionAddress,
+  //   int tokenId,
+  //   EthereumAddress userAddress,
+  // );
+
+  Future<String> getOwnerOfNft({
+    required String address,
+    required int tokenId,
+  });
+  Future<Nft> getNft({
+    required String address,
+    required int tokenId,
+  });
+  Future<String> sendTransactionOfNft({
+    required String address,
+    required int tokenId,
+    required String privateKey,
+    required String to,
+    EstimatedGasFee? estimatedGasFee,
+  });
 }
 
 class ContractRepository implements IContractService {
@@ -331,58 +346,58 @@ class ContractRepository implements IContractService {
     }
   }
 
-  @override
-  Future<WannseeTokenMetaData?> getTokenInfo(
-    EthereumAddress collectionAddress,
-    int tokenId,
-    EthereumAddress userAddress,
-  ) async {
-    final collectionContract =
-        Nft(address: collectionAddress, client: _web3Client);
+  // @override
+  // Future<WannseeTokenMetaData?> getTokenInfo(
+  //   EthereumAddress collectionAddress,
+  //   int tokenId,
+  //   EthereumAddress userAddress,
+  // ) async {
+  //   final collectionContract =
+  //       Nft(address: collectionAddress, client: _web3Client);
 
-    try {
-      // Uri is something like ipfs://<CID>
-      final tokenMetaDataUri =
-          await collectionContract.tokenURI(BigInt.from(tokenId));
+  //   try {
+  //     // Uri is something like ipfs://<CID>
+  //     final tokenMetaDataUri =
+  //         await collectionContract.tokenURI(BigInt.from(tokenId));
 
-      RegExp regExp = RegExp(r'ipfs://(.+)');
-      Match? match = regExp.firstMatch(tokenMetaDataUri);
+  //     RegExp regExp = RegExp(r'ipfs://(.+)');
+  //     Match? match = regExp.firstMatch(tokenMetaDataUri);
 
-      if (match != null) {
-        String hash = match.group(1)!;
-        final metaDataResponse = await _restClient.client
-            .get(Uri.parse('https://ipfs.io/ipfs/$hash'));
+  //     if (match != null) {
+  //       String hash = match.group(1)!;
+  //       final metaDataResponse = await _restClient.client
+  //           .get(Uri.parse('https://ipfs.io/ipfs/$hash'));
 
-        if (metaDataResponse.statusCode == 200) {
-          return WannseeTokenMetaData.fromJson(metaDataResponse.body);
-        } else {
-          return null;
-        }
-      } else {
-        return null;
-      }
-    } catch (e) {
-      throw Exception(e.toString());
-    }
-  }
+  //       if (metaDataResponse.statusCode == 200) {
+  //         return WannseeTokenMetaData.fromJson(metaDataResponse.body);
+  //       } else {
+  //         return null;
+  //       }
+  //     } else {
+  //       return null;
+  //     }
+  //   } catch (e) {
+  //     throw Exception(e.toString());
+  //   }
+  // }
 
-  @override
-  Future<bool?> checkTokenOwnership(
-    EthereumAddress collectionAddress,
-    int tokenId,
-    EthereumAddress userAddress,
-  ) async {
-    try {
-      final collectionContract =
-          Nft(address: collectionAddress, client: _web3Client);
+  // @override
+  // Future<bool?> checkTokenOwnership(
+  //   EthereumAddress collectionAddress,
+  //   int tokenId,
+  //   EthereumAddress userAddress,
+  // ) async {
+  //   try {
+  //     final collectionContract =
+  //         Nft(address: collectionAddress, client: _web3Client);
 
-      final owner = await collectionContract.ownerOf(BigInt.from(tokenId));
+  //     final owner = await collectionContract.ownerOf(BigInt.from(tokenId));
 
-      return owner == userAddress;
-    } catch (e) {
-      throw Exception(e.toString());
-    }
-  }
+  //     return owner == userAddress;
+  //   } catch (e) {
+  //     throw Exception(e.toString());
+  //   }
+  // }
 
   @override
   Future<List<Token>> getTokensBalance(
@@ -498,6 +513,82 @@ class ContractRepository implements IContractService {
         ),
         fetchChainIdFromNetworkId: true,
         chainId: null,
+      );
+
+      return result;
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
+  @override
+  Future<String> getOwnerOfNft({
+    required String address,
+    required int tokenId,
+  }) async {
+    try {
+      final addressValue = EthereumAddress.fromHex(address);
+      final tokenIdValue = BigInt.from(tokenId);
+
+      final ensNft = EnsNft(address: addressValue, client: _web3Client);
+      final result = await ensNft.ownerOf(tokenIdValue);
+
+      return result.hex;
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
+  @override
+  Future<Nft> getNft({
+    required String address,
+    required int tokenId,
+  }) async {
+    try {
+      final addressValue = EthereumAddress.fromHex(address);
+      final tokenIdValue = BigInt.from(tokenId);
+
+      final ensNft = EnsNft(address: addressValue, client: _web3Client);
+      final image = await ensNft.tokenURI(tokenIdValue);
+      final name = await ensNft.name();
+
+      print(image);
+
+      return Nft(
+        address: address,
+        tokenId: tokenId,
+        image: image,
+        name: name,
+      );
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
+  @override
+  Future<String> sendTransactionOfNft({
+    required String address,
+    required int tokenId,
+    required String privateKey,
+    // required String from,
+    required String to,
+    // required String amount,
+    EstimatedGasFee? estimatedGasFee,
+  }) async {
+    try {
+      final addressValue = EthereumAddress.fromHex(address);
+      final tokenIdValue = BigInt.from(tokenId);
+
+      final ensNft = EnsNft(address: addressValue, client: _web3Client);
+
+      final toAddress = EthereumAddress.fromHex(to);
+      final cred = EthPrivateKey.fromHex(privateKey);
+
+      final result = await ensNft.transferFrom(
+        addressValue,
+        toAddress,
+        tokenIdValue,
+        credentials: cred,
       );
 
       return result;
