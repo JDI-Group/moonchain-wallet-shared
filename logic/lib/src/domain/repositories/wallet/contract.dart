@@ -346,59 +346,6 @@ class ContractRepository implements IContractService {
     }
   }
 
-  // @override
-  // Future<WannseeTokenMetaData?> getTokenInfo(
-  //   EthereumAddress collectionAddress,
-  //   int tokenId,
-  //   EthereumAddress userAddress,
-  // ) async {
-  //   final collectionContract =
-  //       Nft(address: collectionAddress, client: _web3Client);
-
-  //   try {
-  //     // Uri is something like ipfs://<CID>
-  //     final tokenMetaDataUri =
-  //         await collectionContract.tokenURI(BigInt.from(tokenId));
-
-  //     RegExp regExp = RegExp(r'ipfs://(.+)');
-  //     Match? match = regExp.firstMatch(tokenMetaDataUri);
-
-  //     if (match != null) {
-  //       String hash = match.group(1)!;
-  //       final metaDataResponse = await _restClient.client
-  //           .get(Uri.parse('https://ipfs.io/ipfs/$hash'));
-
-  //       if (metaDataResponse.statusCode == 200) {
-  //         return WannseeTokenMetaData.fromJson(metaDataResponse.body);
-  //       } else {
-  //         return null;
-  //       }
-  //     } else {
-  //       return null;
-  //     }
-  //   } catch (e) {
-  //     throw Exception(e.toString());
-  //   }
-  // }
-
-  // @override
-  // Future<bool?> checkTokenOwnership(
-  //   EthereumAddress collectionAddress,
-  //   int tokenId,
-  //   EthereumAddress userAddress,
-  // ) async {
-  //   try {
-  //     final collectionContract =
-  //         Nft(address: collectionAddress, client: _web3Client);
-
-  //     final owner = await collectionContract.ownerOf(BigInt.from(tokenId));
-
-  //     return owner == userAddress;
-  //   } catch (e) {
-  //     throw Exception(e.toString());
-  //   }
-  // }
-
   @override
   Future<List<Token>> getTokensBalance(
     List<Token> tokens,
@@ -549,17 +496,34 @@ class ContractRepository implements IContractService {
       final tokenIdValue = BigInt.from(tokenId);
 
       final ensNft = EnsNft(address: addressValue, client: _web3Client);
-      final image = await ensNft.tokenURI(tokenIdValue);
-      final name = await ensNft.name();
+      final tokenMetaDataUri = await ensNft.tokenURI(tokenIdValue);
 
-      print(image);
+      RegExp regExp = RegExp(r'ipfs://(.+)');
+      Match? match = regExp.firstMatch(tokenMetaDataUri);
 
-      return Nft(
-        address: address,
-        tokenId: tokenId,
-        image: image,
-        name: name,
-      );
+      if (match != null) {
+        String hash = match.group(1)!;
+        final metaDataResponse = await _restClient.client
+            .get(Uri.parse('https://ipfs.io/ipfs/$hash'));
+
+        if (metaDataResponse.statusCode == 200) {
+          final tokenMetaData =
+              WannseeTokenMetaData.fromJson(metaDataResponse.body);
+              
+          final name = await ensNft.name();
+
+          return Nft(
+            address: address,
+            tokenId: tokenId,
+            image: tokenMetaData.image ?? '',
+            name: name,
+          );
+        } else {
+          throw Exception('Image Meta Data fetch error.');
+        }
+      } else {
+        throw Exception('Image Meta Data fetch error.');
+      }
     } catch (e) {
       throw e.toString();
     }
