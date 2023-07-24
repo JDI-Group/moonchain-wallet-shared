@@ -57,6 +57,21 @@ abstract class IContractService {
     required String amount,
     EstimatedGasFee? estimatedGasFee,
   });
+  Future<String> getOwnerOfNft({
+    required String address,
+    required int tokenId,
+  });
+  Future<Nft> getNft({
+    required String address,
+    required int tokenId,
+  });
+  Future<String> sendTransactionOfNft({
+    required String address,
+    required int tokenId,
+    required String privateKey,
+    required String to,
+    EstimatedGasFee? estimatedGasFee,
+  });
 }
 
 class ContractRepository implements IContractService {
@@ -431,6 +446,80 @@ class ContractRepository implements IContractService {
         ),
         fetchChainIdFromNetworkId: true,
         chainId: null,
+      );
+
+      return result;
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
+  @override
+  Future<String> getOwnerOfNft({
+    required String address,
+    required int tokenId,
+  }) async {
+    try {
+      final addressValue = EthereumAddress.fromHex(address);
+      final tokenIdValue = BigInt.from(tokenId);
+
+      final ensNft = EnsNft(address: addressValue, client: _web3Client);
+      final result = await ensNft.ownerOf(tokenIdValue);
+
+      return result.hex;
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
+  @override
+  Future<Nft> getNft({
+    required String address,
+    required int tokenId,
+  }) async {
+    try {
+      final addressValue = EthereumAddress.fromHex(address);
+      final tokenIdValue = BigInt.from(tokenId);
+
+      final ensNft = EnsNft(address: addressValue, client: _web3Client);
+      final image = await ensNft.tokenURI(tokenIdValue);
+      final name = await ensNft.name();
+
+      return Nft(
+        address: address,
+        tokenId: tokenId,
+        image: image,
+        name: name,
+      );
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
+  @override
+  Future<String> sendTransactionOfNft({
+    required String address,
+    required int tokenId,
+    required String privateKey,
+    // required String from,
+    required String to,
+    // required String amount,
+    EstimatedGasFee? estimatedGasFee,
+  }) async {
+    try {
+      final addressValue = EthereumAddress.fromHex(address);
+      final tokenIdValue = BigInt.from(tokenId);
+
+      final ensNft = EnsNft(address: addressValue, client: _web3Client);
+
+      final toAddress = EthereumAddress.fromHex(to);
+      final cred = EthPrivateKey.fromHex(privateKey);
+
+      final result = await ensNft.transferFrom(
+        addressValue,
+        toAddress,
+        tokenIdValue,
+        credentials: cred,
       );
 
       return result;
