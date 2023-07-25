@@ -501,9 +501,7 @@ class ContractRepository implements IContractService {
     required String address,
     required int tokenId,
     required String privateKey,
-    // required String from,
     required String to,
-    // required String amount,
     EstimatedGasFee? estimatedGasFee,
   }) async {
     try {
