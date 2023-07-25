@@ -547,7 +547,7 @@ class ContractRepository implements IContractService {
       final cred = EthPrivateKey.fromHex(privateKey);
 
       final result = await ensNft.transferFrom(
-        addressValue,
+        cred.address,
         toAddress,
         tokenIdValue,
         credentials: cred,
