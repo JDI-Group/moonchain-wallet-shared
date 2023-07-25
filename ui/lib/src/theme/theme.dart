@@ -6,6 +6,7 @@ export 'colors.dart';
 export 'font.dart';
 export 'images.dart';
 export 'scoped.dart';
+export 'sizes.dart';
 
 enum MxcThemeOption { day, night }
 
