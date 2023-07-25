@@ -573,20 +573,20 @@ class ContractRepository implements IContractService {
       );
 
       if (response.statusCode == 200) {
-        final txList = WannseeAddressTokensList.fromJson(response.body);
+        final addressTokens = WannseeAddressTokensList.fromJson(response.body);
 
-        for (int i = 0; i < txList.items!.length; i++) {
+        for (int i = 0; i < addressTokens.items!.length; i++) {
           final response = await _restClient.client.get(
             Uri.parse(
-              'https://wannsee-explorer-v1.mxc.com/api/v2/tokens/${txList.items![i].token!.address!}/instances',
+              'https://wannsee-explorer-v1.mxc.com/api/v2/tokens/${addressTokens.items![i].token!.address!}/instances',
             ),
             headers: {'accept': 'application/json'},
           );
 
           if (response.statusCode == 200) {
-            final holdersList =
+            final collectionDetail =
                 WannseeNftCollectionDetail.fromJson(response.body);
-            final addressTokens = holdersList.items!
+            final addressTokens = collectionDetail.items!
                 .where(
                     (element) => element.owner!.hash!.toLowerCase() == address)
                 .toList();
@@ -594,7 +594,7 @@ class ContractRepository implements IContractService {
             final List<Nft> finalList = [];
 
             for (int i = 0; i < addressTokens.length; i++) {
-              final tokenInstance = addressTokens[0];
+              final tokenInstance = addressTokens[i];
 
               if (tokenInstance.token == null ||
                   tokenInstance.token!.address == null ||
@@ -606,7 +606,7 @@ class ContractRepository implements IContractService {
 
               final collectionAddress = tokenInstance.token!.address!;
               final tokenId = int.parse(tokenInstance.id!);
-              final image = 'https://ipfs.io/ipfs/${tokenInstance.imageUrl}';
+              final image = tokenInstance.imageUrl!;
               final name = tokenInstance.token!.name!;
 
               final nft = Nft(
