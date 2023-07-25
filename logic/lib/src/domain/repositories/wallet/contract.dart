@@ -565,6 +565,8 @@ class ContractRepository implements IContractService {
     String address,
   ) async {
     try {
+      final List<Nft> finalList = [];
+
       final response = await _restClient.client.get(
         Uri.parse(
           'https://wannsee-explorer-v1.mxc.com/api/v2/addresses/$address/tokens?type=ERC-721',
@@ -573,12 +575,12 @@ class ContractRepository implements IContractService {
       );
 
       if (response.statusCode == 200) {
-        final addressTokens = WannseeAddressTokensList.fromJson(response.body);
+        final addressCollections = WannseeAddressTokensList.fromJson(response.body);
 
-        for (int i = 0; i < addressTokens.items!.length; i++) {
+        for (int i = 0; i < addressCollections.items!.length; i++) {
           final response = await _restClient.client.get(
             Uri.parse(
-              'https://wannsee-explorer-v1.mxc.com/api/v2/tokens/${addressTokens.items![i].token!.address!}/instances',
+              'https://wannsee-explorer-v1.mxc.com/api/v2/tokens/${addressCollections.items![i].token!.address!}/instances',
             ),
             headers: {'accept': 'application/json'},
           );
@@ -586,15 +588,13 @@ class ContractRepository implements IContractService {
           if (response.statusCode == 200) {
             final collectionDetail =
                 WannseeNftCollectionDetail.fromJson(response.body);
-            final addressTokens = collectionDetail.items!
+            final currentCollectionNfts = collectionDetail.items!
                 .where(
                     (element) => element.owner!.hash!.toLowerCase() == address)
                 .toList();
 
-            final List<Nft> finalList = [];
-
-            for (int i = 0; i < addressTokens.length; i++) {
-              final tokenInstance = addressTokens[i];
+            for (int i = 0; i < currentCollectionNfts.length; i++) {
+              final tokenInstance = currentCollectionNfts[i];
 
               if (tokenInstance.token == null ||
                   tokenInstance.token!.address == null ||
@@ -617,11 +617,12 @@ class ContractRepository implements IContractService {
 
               finalList.add(nft);
             }
-            return finalList;
+
           } else {
             return null;
           }
         }
+        return finalList;
       }
 
       if (response.statusCode == 404) {
