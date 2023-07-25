@@ -4,6 +4,7 @@ import 'package:mxc_logic/src/data/api/client/rest_client.dart';
 import 'package:mxc_logic/mxc_logic.dart';
 import 'package:mxc_logic/src/data/socket/mxc_socket_client.dart';
 import 'package:web3dart/web3dart.dart';
+
 import '../extensions/extensions.dart';
 
 import 'app_config.dart';
@@ -57,6 +58,19 @@ abstract class IContractService {
     required String amount,
     EstimatedGasFee? estimatedGasFee,
   });
+
+  // Future<WannseeTokenMetaData?> getTokenInfo(
+  //   EthereumAddress collectionAddress,
+  //   int tokenId,
+  //   EthereumAddress userAddress,
+  // );
+
+  // Future<bool?> checkTokenOwnership(
+  //   EthereumAddress collectionAddress,
+  //   int tokenId,
+  //   EthereumAddress userAddress,
+  // );
+
   Future<String> getOwnerOfNft({
     required String address,
     required int tokenId,
@@ -266,7 +280,7 @@ class ContractRepository implements IContractService {
     }
     if (response.statusCode == 404) {
       // new wallet and nothing is returned
-      final txList = WannseeTokenTransfersModel(
+      const txList = WannseeTokenTransfersModel(
         items: [],
       );
       return txList;
@@ -482,15 +496,34 @@ class ContractRepository implements IContractService {
       final tokenIdValue = BigInt.from(tokenId);
 
       final ensNft = EnsNft(address: addressValue, client: _web3Client);
-      final image = await ensNft.tokenURI(tokenIdValue);
-      final name = await ensNft.name();
+      final tokenMetaDataUri = await ensNft.tokenURI(tokenIdValue);
 
-      return Nft(
-        address: address,
-        tokenId: tokenId,
-        image: image,
-        name: name,
-      );
+      RegExp regExp = RegExp(r'ipfs://(.+)');
+      Match? match = regExp.firstMatch(tokenMetaDataUri);
+
+      if (match != null) {
+        String hash = match.group(1)!;
+        final metaDataResponse = await _restClient.client
+            .get(Uri.parse('https://ipfs.io/ipfs/$hash'));
+
+        if (metaDataResponse.statusCode == 200) {
+          final tokenMetaData =
+              WannseeTokenMetaData.fromJson(metaDataResponse.body);
+
+          final name = await ensNft.name();
+
+          return Nft(
+            address: address,
+            tokenId: tokenId,
+            image: tokenMetaData.image ?? '',
+            name: name,
+          );
+        } else {
+          throw Exception('Image Meta Data fetch error.');
+        }
+      } else {
+        throw Exception('Image Meta Data fetch error.');
+      }
     } catch (e) {
       throw e.toString();
     }
@@ -521,6 +554,81 @@ class ContractRepository implements IContractService {
       );
 
       return result;
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
+  Future<List<Nft>?> getNftsByAddress(
+    String address,
+  ) async {
+    try {
+      final List<Nft> finalList = [];
+
+      final response = await _restClient.client.get(
+        Uri.parse(
+          'https://wannsee-explorer-v1.mxc.com/api/v2/addresses/$address/tokens?type=ERC-721',
+        ),
+        headers: {'accept': 'application/json'},
+      );
+
+      if (response.statusCode == 200) {
+        final addressCollections = WannseeAddressTokensList.fromJson(response.body);
+
+        for (int i = 0; i < addressCollections.items!.length; i++) {
+          final response = await _restClient.client.get(
+            Uri.parse(
+              'https://wannsee-explorer-v1.mxc.com/api/v2/tokens/${addressCollections.items![i].token!.address!}/instances',
+            ),
+            headers: {'accept': 'application/json'},
+          );
+
+          if (response.statusCode == 200) {
+            final collectionDetail =
+                WannseeNftCollectionDetail.fromJson(response.body);
+            final currentCollectionNfts = collectionDetail.items!
+                .where(
+                    (element) => element.owner!.hash!.toLowerCase() == address)
+                .toList();
+
+            for (int i = 0; i < currentCollectionNfts.length; i++) {
+              final tokenInstance = currentCollectionNfts[i];
+
+              if (tokenInstance.token == null ||
+                  tokenInstance.token!.address == null ||
+                  tokenInstance.imageUrl == null ||
+                  tokenInstance.id == null ||
+                  tokenInstance.token!.name == null) {
+                throw Exception('NFT Data fetch error.');
+              }
+
+              final collectionAddress = tokenInstance.token!.address!;
+              final tokenId = int.parse(tokenInstance.id!);
+              final image = tokenInstance.imageUrl!;
+              final name = tokenInstance.token!.name!;
+
+              final nft = Nft(
+                  address: collectionAddress,
+                  tokenId: tokenId,
+                  image: image,
+                  name: name,);
+
+              finalList.add(nft);
+            }
+
+          } else {
+            return null;
+          }
+        }
+        return finalList;
+      }
+
+      if (response.statusCode == 404) {
+        // new wallet
+        return [];
+      } else {
+        return null;
+      }
     } catch (e) {
       throw e.toString();
     }

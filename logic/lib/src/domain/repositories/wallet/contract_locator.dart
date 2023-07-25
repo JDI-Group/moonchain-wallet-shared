@@ -5,6 +5,7 @@ import 'package:web3dart/web3dart.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:ens_dart/ens_dart.dart';
 
+import '../../utils/contract_parser.dart';
 import 'app_config.dart';
 import 'contract.dart';
 
@@ -37,9 +38,6 @@ class ContractLocator {
             }
           : null,
     );
-    // every contract has a address to interact & also has an ABI
-    // final contract = await ContractParser.fromAssets(
-    //     'TargaryenCoin.json', networkConfig.contractAddress);
 
     return ContractRepository(
       web3client,
