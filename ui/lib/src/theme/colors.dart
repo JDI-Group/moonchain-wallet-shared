@@ -21,6 +21,8 @@ class ColorsTheme {
   }
 
   final screenBackground = const Color(0xFFF1F2F4);
+  Color get secondaryBackground => white100;
+  Color get backgroundGrey6 => grey6;
 
   // background
   final primaryBackground = const Color(0xFFEBEFF2);
@@ -159,7 +161,13 @@ class ColorsThemeDark implements ColorsTheme {
 
   // background
   @override
-  final screenBackground = const Color(0xFF1C1C1E);
+  Color get screenBackground => grey6;
+
+  @override
+  Color get secondaryBackground => grey6;
+
+  @override
+  Color get backgroundGrey6 => grey6;
 
   // background
   @override
