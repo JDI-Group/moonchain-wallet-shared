@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mxc_ui/mxc_ui.dart';
 
-enum MxcButtonType { primary, secondary, plain, success, failure }
+enum MxcButtonType { primary, secondary, plain, pass, warning }
 
 enum MxcButtonSize { xl, xxl }
 
@@ -12,9 +12,9 @@ class MxcButton extends StatefulWidget {
     required Key? key,
     required this.title,
     required this.onTap,
-    this.buttonType = MxcButtonType.primary,
-    this.buttonSize = MxcButtonSize.xxl,
-    this.fillWidth = true,
+    this.type = MxcButtonType.primary,
+    this.size = MxcButtonSize.xxl,
+    this.width,
     this.titleColor,
     this.color,
     this.borderColor,
@@ -25,9 +25,9 @@ class MxcButton extends StatefulWidget {
     required Key? key,
     required this.title,
     required this.onTap,
-    this.buttonType = MxcButtonType.primary,
-    this.buttonSize = MxcButtonSize.xxl,
-    this.fillWidth = true,
+    this.type = MxcButtonType.primary,
+    this.size = MxcButtonSize.xxl,
+    this.width,
     this.titleColor,
     this.color,
     this.borderColor,
@@ -38,9 +38,9 @@ class MxcButton extends StatefulWidget {
     required Key? key,
     required this.title,
     required this.onTap,
-    this.buttonType = MxcButtonType.secondary,
-    this.buttonSize = MxcButtonSize.xxl,
-    this.fillWidth = true,
+    this.type = MxcButtonType.secondary,
+    this.size = MxcButtonSize.xxl,
+    this.width,
     this.titleColor,
     this.color = Colors.transparent,
     this.borderColor,
@@ -51,36 +51,49 @@ class MxcButton extends StatefulWidget {
     required Key? key,
     required this.title,
     required this.onTap,
-    this.buttonType = MxcButtonType.plain,
-    this.buttonSize = MxcButtonSize.xxl,
-    this.fillWidth = true,
+    this.type = MxcButtonType.plain,
+    this.size = MxcButtonSize.xxl,
+    this.width,
     this.titleColor,
     this.color = Colors.transparent,
     this.borderColor,
     this.icon,
   }) : super(key: key);
 
-  const MxcButton.primarySuccess({
+  const MxcButton.primaryPass({
     required Key? key,
     required this.title,
     required this.onTap,
-    this.buttonType = MxcButtonType.success,
-    this.buttonSize = MxcButtonSize.xxl,
-    this.fillWidth = true,
+    this.type = MxcButtonType.pass,
+    this.size = MxcButtonSize.xxl,
+    this.width,
     this.titleColor,
     this.color,
     this.borderColor,
     this.icon,
   }) : super(key: key);
 
-  final MxcButtonType buttonType;
-  final MxcButtonSize buttonSize;
+  const MxcButton.primaryWarning({
+    required Key? key,
+    required this.title,
+    required this.onTap,
+    this.type = MxcButtonType.warning,
+    this.size = MxcButtonSize.xxl,
+    this.width,
+    this.titleColor,
+    this.color,
+    this.borderColor,
+    this.icon,
+  }) : super(key: key);
+
+  final MxcButtonType type;
+  final MxcButtonSize size;
   final String title;
   final Color? titleColor;
   final Color? color;
   final Color? borderColor;
   final VoidCallback? onTap;
-  final bool fillWidth;
+  final double? width;
   final String? icon;
 
   @override
@@ -92,14 +105,14 @@ class _MxcButtonState extends State<MxcButton> with TickerProviderStateMixin {
   late Animation<double> _scaleAnimate;
   bool _isTappedDown = false;
 
-  double getHeight() => widget.buttonSize == MxcButtonSize.xl ? 44 : 60;
+  double getHeight() => widget.size == MxcButtonSize.xl ? 44 : 60;
 
   Color getButtonColor() {
-    if (widget.buttonType == MxcButtonType.success) {
+    if (widget.type == MxcButtonType.pass) {
       return ColorsTheme.of(context).systemStatusActive;
     }
 
-    if (widget.buttonType == MxcButtonType.failure) {
+    if (widget.type == MxcButtonType.warning) {
       return ColorsTheme.of(context).buttonCritical;
     }
 
@@ -119,16 +132,16 @@ class _MxcButtonState extends State<MxcButton> with TickerProviderStateMixin {
       return ColorsTheme.of(context).backgroundDisabled;
     }
 
-    if (widget.buttonType == MxcButtonType.primary ||
-        widget.buttonType == MxcButtonType.secondary) {
+    if (widget.type == MxcButtonType.primary ||
+        widget.type == MxcButtonType.secondary) {
       return ColorsTheme.of(context).borderWhiteInvert;
     }
 
-    if (widget.buttonType == MxcButtonType.success) {
+    if (widget.type == MxcButtonType.pass) {
       return ColorsTheme.of(context).systemStatusActive;
     }
 
-    if (widget.buttonType == MxcButtonType.failure) {
+    if (widget.type == MxcButtonType.warning) {
       return ColorsTheme.of(context).buttonCritical;
     }
 
@@ -202,7 +215,7 @@ class _MxcButtonState extends State<MxcButton> with TickerProviderStateMixin {
           onTapCancel: () => endAnimate(),
           onTapUp: (_) => endAnimate(),
           child: Container(
-            width: widget.fillWidth ? double.infinity : null,
+            width: widget.width,
             height: getHeight(),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(40),
@@ -221,7 +234,7 @@ class _MxcButtonState extends State<MxcButton> with TickerProviderStateMixin {
                     child: SvgPicture.asset(
                       widget.icon!,
                       colorFilter: ColorFilter.mode(
-                          widget.buttonType == MxcButtonType.primary
+                          widget.type == MxcButtonType.primary
                               ? ColorsTheme.of(context).buttonBlackInvert
                               : ColorsTheme.of(context).iconPrimary,
                           BlendMode.srcIn),
@@ -233,12 +246,13 @@ class _MxcButtonState extends State<MxcButton> with TickerProviderStateMixin {
                   style: widget.onTap != null
                       ? FontTheme.of(context).body1().copyWith(
                             fontWeight: FontWeight.w500,
-                            color: widget.buttonType == MxcButtonType.primary
-                                ? ColorsTheme.of(context).buttonBlackInvert
-                                : widget.buttonType == MxcButtonType.secondary
-                                    ? ColorsTheme.of(context).textPrimary
-                                    : ColorsTheme.of(context)
-                                        .secondaryButtonText,
+                            color: widget.titleColor ??
+                                (widget.type == MxcButtonType.primary
+                                    ? ColorsTheme.of(context).buttonBlackInvert
+                                    : widget.type == MxcButtonType.secondary
+                                        ? ColorsTheme.of(context).textPrimary
+                                        : ColorsTheme.of(context)
+                                            .secondaryButtonText),
                           )
                       : FontTheme.of(context).body1().copyWith(
                             fontWeight: FontWeight.w500,
