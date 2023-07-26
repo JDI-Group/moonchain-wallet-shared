@@ -44,7 +44,7 @@ abstract class MxcCircleButton extends StatelessWidget {
     double? iconSize,
     double? textSpace,
     double? shadowRadius,
-    Color iconFillColor,
+    Color? iconFillColor,
   }) = _MxcCircleIconButton;
 
   const factory MxcCircleButton.svg({
@@ -72,9 +72,9 @@ abstract class MxcCircleButton extends StatelessWidget {
     if (onTap == null) {
       color = ColorsTheme.of(context).backgroundDisabled;
     } else if (filled) {
-      color = ColorsTheme.of(context).white;
+      color = ColorsTheme.of(context).iconWhite;
     } else {
-      color = this.color ?? MxcScopedTheme.of(context).primaryColor;
+      color = this.color ?? ColorsTheme.of(context).iconBlack100;
     }
     return color;
   }
@@ -86,12 +86,10 @@ abstract class MxcCircleButton extends StatelessWidget {
     Color fillColor;
     if (onTap == null) {
       fillColor = ColorsTheme.of(context).backgroundDisabled;
-    } else if (iconFillColor != null) {
-      fillColor = iconFillColor!;
     } else if (filled) {
-      fillColor = color ?? MxcScopedTheme.of(context).primaryColor;
+      fillColor = ColorsTheme.of(context).iconWhite;
     } else {
-      fillColor = ColorsTheme.of(context).box;
+      fillColor = iconFillColor ?? ColorsTheme.of(context).iconWhite;
     }
     Widget widget = Material(
       color: fillColor,
@@ -102,15 +100,6 @@ abstract class MxcCircleButton extends StatelessWidget {
         child: Container(
           alignment: Alignment.center,
           decoration: buttonDecoration,
-          // decoration: BoxDecoration(
-          //   shape: BoxShape.circle,
-          //   boxShadow: [
-          //     if (onTap != null)
-          //       MxcBoxShadow(
-          //         color: ColorsTheme.of(context).shadow,
-          //       ),
-          //   ],
-          // ),
           width: shadowRadius ?? 52,
           height: shadowRadius ?? 52,
           child: buildChild(context),

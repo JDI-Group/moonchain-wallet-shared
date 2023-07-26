@@ -9,8 +9,7 @@ class ColorsTheme {
   factory ColorsTheme.fromOption(MxcThemeOption option) {
     switch (option) {
       case MxcThemeOption.day:
-        return ColorsThemeDark._();
-      // return ColorsTheme._();
+        return ColorsTheme._();
       case MxcThemeOption.night:
         return ColorsThemeDark._();
     }
@@ -75,7 +74,7 @@ class ColorsTheme {
 
   final blackDeep = const Color(0xFF000000);
 
-  Color get blackInvert => white100;
+  Color get blackInvert => black100;
 
   // layerSheet
   Color get layerSheetBackground => white100;
