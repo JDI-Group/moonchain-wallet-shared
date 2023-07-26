@@ -106,7 +106,8 @@ class MxcChipButton extends StatelessWidget {
       child: Container(
         height: height,
         width: width,
-        padding: contentPadding,
+        padding: contentPadding ??
+            const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: resolveButtonDecoration(buttonState),
         child: iconData == null
             ? Text(
@@ -115,6 +116,7 @@ class MxcChipButton extends StatelessWidget {
                 textAlign: TextAlign.center,
               )
             : Row(
+                mainAxisSize: MainAxisSize.min,
                 children: alignIconStart == true
                     ? [
                         resolveIcon(),
