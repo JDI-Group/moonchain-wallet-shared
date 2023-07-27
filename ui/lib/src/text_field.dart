@@ -338,7 +338,7 @@ class _MxcNonFormTextFieldState extends State<_MxcNonFormTextField> {
     if (useAnimation) {
       return AnimatedContainer(
         duration: const Duration(milliseconds: 200),
-        margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+        margin: const EdgeInsets.symmetric(vertical: 4),
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         decoration: BoxDecoration(
           borderRadius: const BorderRadius.all(Radius.circular(12)),
@@ -506,13 +506,10 @@ class _MxcNonFormTextFieldState extends State<_MxcNonFormTextField> {
             const SizedBox(height: 4),
             Row(
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 8),
-                  child: Icon(
-                    Icons.error_rounded,
-                    size: 16,
-                    color: ColorsTheme.of(context).textError,
-                  ),
+                Icon(
+                  Icons.error_rounded,
+                  size: 16,
+                  color: ColorsTheme.of(context).textError,
                 ),
                 const SizedBox(width: 5),
                 Expanded(
