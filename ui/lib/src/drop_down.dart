@@ -28,10 +28,15 @@ class MXCDropDown extends StatelessWidget {
             border: Border.all(color: ColorsTheme.of(context).borderGrey3),
             borderRadius: const BorderRadius.all(Radius.circular(10))),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              selectedItem,
-              style: FontTheme.of(context).body1.primary(),
+            Flexible(
+              child: Text(
+                selectedItem,
+                style: FontTheme.of(context).body1.primary(),
+                softWrap: false,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
             const SizedBox(
               width: Sizes.spaceXSmall,
@@ -44,14 +49,17 @@ class MXCDropDown extends StatelessWidget {
                         .copyWith(color: ColorsTheme.of(context).textWhite100),
                   )
                 : Container(),
-            const Spacer(),
-            const SizedBox(
-              width: Sizes.spaceNormal,
-            ),
-            Icon(
-              Icons.arrow_drop_down_rounded,
-              size: 24,
-              color: ColorsTheme.of(context).iconPrimary,
+            Align(
+              alignment: AlignmentDirectional.centerEnd,
+              child: Padding(
+                padding:
+                    const EdgeInsetsDirectional.only(start: Sizes.spaceNormal),
+                child: Icon(
+                  Icons.arrow_drop_down_rounded,
+                  size: 24,
+                  color: ColorsTheme.of(context).iconPrimary,
+                ),
+              ),
             )
           ],
         ),
