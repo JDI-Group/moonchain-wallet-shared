@@ -148,6 +148,31 @@ class _MxcButtonState extends State<MxcButton> with TickerProviderStateMixin {
     return Colors.transparent;
   }
 
+  Color getTitleColor() {
+    if (widget.onTap == null) {
+      return ColorsTheme.of(context).textDisabled;
+    }
+
+    if (widget.titleColor != null) {
+      return widget.titleColor!;
+    }
+
+    if (widget.type == MxcButtonType.primary) {
+      return ColorsTheme.of(context).buttonBlackInvert;
+    }
+
+    if (widget.type == MxcButtonType.secondary) {
+      return ColorsTheme.of(context).textPrimary;
+    }
+
+    if (widget.type == MxcButtonType.pass ||
+        widget.type == MxcButtonType.warning) {
+      return ColorsTheme.of(context).textBlack200;
+    }
+
+    return ColorsTheme.of(context).secondaryButtonText;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -243,21 +268,10 @@ class _MxcButtonState extends State<MxcButton> with TickerProviderStateMixin {
                 Text(
                   widget.title,
                   textAlign: TextAlign.center,
-                  style: widget.onTap != null
-                      ? FontTheme.of(context).body1().copyWith(
-                            fontWeight: FontWeight.w500,
-                            color: widget.titleColor ??
-                                (widget.type == MxcButtonType.primary
-                                    ? ColorsTheme.of(context).buttonBlackInvert
-                                    : widget.type == MxcButtonType.secondary
-                                        ? ColorsTheme.of(context).textPrimary
-                                        : ColorsTheme.of(context)
-                                            .secondaryButtonText),
-                          )
-                      : FontTheme.of(context).body1().copyWith(
-                            fontWeight: FontWeight.w500,
-                            color: ColorsTheme.of(context).textDisabled,
-                          ),
+                  style: FontTheme.of(context).body1().copyWith(
+                        fontWeight: FontWeight.w500,
+                        color: getTitleColor(),
+                      ),
                 ),
               ],
             ),
