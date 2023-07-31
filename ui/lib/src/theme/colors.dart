@@ -118,6 +118,7 @@ class ColorsTheme {
   // text
   final primaryButtonText = const Color(0xFF25282B);
   final secondaryButtonText = const Color(0xFFFFFFFF);
+  final disabledButtonText = const Color(0xFF5F6366);
   final textDisabled = const Color(0xFFA4A7AD);
 
   Color get textError => const Color(0xFFD22D2D);
@@ -143,6 +144,7 @@ class ColorsTheme {
   final focusButton = const Color(0xFF32D8A1);
   final primaryButton = const Color(0xFFFFFFFF);
   final chipDefaultBg = const Color(0xFFE5E5EA);
+  final disabledButton = const Color(0xFF323233);
   Color get buttonCritical => mainRed;
 
   Color get buttonWhiteInvert => whiteInvert;
@@ -374,6 +376,9 @@ class ColorsThemeDark implements ColorsTheme {
   Color get secondaryButtonText => const Color(0xFFFFFFFF);
 
   @override
+  final disabledButtonText = const Color(0xFF5F6366);
+
+  @override
   Color get textDisabled => const Color(0xFF5F6366);
 
   @override
@@ -439,6 +444,9 @@ class ColorsThemeDark implements ColorsTheme {
 
   @override
   Color get chipDefaultBg => const Color(0xFF3A3A3C);
+
+  @override
+  final disabledButton = const Color(0xFF323233);
 
   @override
   Color get buttonCritical => mainRed;
