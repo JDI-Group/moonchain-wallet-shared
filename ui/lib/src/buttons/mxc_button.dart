@@ -157,8 +157,11 @@ class _MxcButtonState extends State<MxcButton> with TickerProviderStateMixin {
       return widget.titleColor!;
     }
 
-    if (widget.type == MxcButtonType.primary ||
-        widget.type == MxcButtonType.secondary) {
+    if (widget.type == MxcButtonType.primary) {
+      return ColorsTheme.of(context).blackInvert;
+    }
+
+    if (widget.type == MxcButtonType.secondary) {
       return ColorsTheme.of(context).whiteInvert;
     }
 
