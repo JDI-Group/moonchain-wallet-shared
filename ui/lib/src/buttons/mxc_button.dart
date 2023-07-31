@@ -134,7 +134,7 @@ class _MxcButtonState extends State<MxcButton> with TickerProviderStateMixin {
 
     if (widget.type == MxcButtonType.primary ||
         widget.type == MxcButtonType.secondary) {
-      return ColorsTheme.of(context).borderWhiteInvert;
+      return ColorsTheme.of(context).whiteInvert;
     }
 
     if (widget.type == MxcButtonType.pass) {
@@ -157,12 +157,9 @@ class _MxcButtonState extends State<MxcButton> with TickerProviderStateMixin {
       return widget.titleColor!;
     }
 
-    if (widget.type == MxcButtonType.primary) {
-      return ColorsTheme.of(context).buttonBlackInvert;
-    }
-
-    if (widget.type == MxcButtonType.secondary) {
-      return ColorsTheme.of(context).textPrimary;
+    if (widget.type == MxcButtonType.primary ||
+        widget.type == MxcButtonType.secondary) {
+      return ColorsTheme.of(context).whiteInvert;
     }
 
     if (widget.type == MxcButtonType.pass ||
@@ -258,11 +255,8 @@ class _MxcButtonState extends State<MxcButton> with TickerProviderStateMixin {
                     padding: const EdgeInsets.only(right: 10),
                     child: SvgPicture.asset(
                       widget.icon!,
-                      colorFilter: ColorFilter.mode(
-                          widget.type == MxcButtonType.primary
-                              ? ColorsTheme.of(context).buttonBlackInvert
-                              : ColorsTheme.of(context).iconPrimary,
-                          BlendMode.srcIn),
+                      colorFilter:
+                          ColorFilter.mode(getTitleColor(), BlendMode.srcIn),
                     ),
                   ),
                 Text(

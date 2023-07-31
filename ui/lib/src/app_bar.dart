@@ -73,7 +73,7 @@ class MxcAppBar extends StatelessWidget {
           builder: (context) => MxcAppBarTextTitle(
             text,
             centerTitle: centerTitle,
-            color: ColorsTheme.of(context).textPrimary,
+            color: ColorsTheme.of(context).white100,
             subtitle: subtitle,
           ),
         ),
@@ -81,7 +81,7 @@ class MxcAppBar extends StatelessWidget {
           builder: (context) => MxcAppBarButton.icon(
             Icons.arrow_back_rounded,
             key: const ValueKey('nav_back'),
-            color: ColorsTheme.of(context).textPrimary,
+            color: ColorsTheme.of(context).white100,
             onTap: appBarPopHandlerBuilder(context),
           ),
         ),
