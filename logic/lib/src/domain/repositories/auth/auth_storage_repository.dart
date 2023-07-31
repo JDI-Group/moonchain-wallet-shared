@@ -5,6 +5,9 @@ class AuthenticationStorageRepository {
 
   final DatadashSetupStore _datadashSetupStore;
 
+  String? get mnemonic => _datadashSetupStore.mnemonic;
+  void setMnemonic(String? value) => _datadashSetupStore.mnemonic = value;
+
   String? get privateKey => _datadashSetupStore.privateKey;
   void setPrivateKey(String? value) => _datadashSetupStore.privateKey = value;
 
@@ -16,5 +19,5 @@ class AuthenticationStorageRepository {
       _datadashSetupStore.publicAddress != null &&
       _datadashSetupStore.privateKey != null;
 
-  void cleanCache() => _datadashSetupStore.clean(); 
+  void cleanCache() => _datadashSetupStore.clean();
 }
