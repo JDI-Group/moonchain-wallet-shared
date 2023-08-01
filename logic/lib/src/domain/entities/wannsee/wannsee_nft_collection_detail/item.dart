@@ -17,7 +17,7 @@ class Item extends Equatable {
     this.owner,
     this.token,
   });
-  
+
   final dynamic animationUrl;
   final dynamic externalAppUrl;
   final String? id;
@@ -26,7 +26,6 @@ class Item extends Equatable {
   final Metadata? metadata;
   final Owner? owner;
   final Token? token;
-
 
   factory Item.fromMap(Map<String, dynamic> data) => Item(
         animationUrl: data['animation_url'] as dynamic,
