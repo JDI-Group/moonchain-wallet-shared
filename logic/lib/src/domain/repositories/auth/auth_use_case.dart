@@ -23,6 +23,7 @@ class AuthUseCase {
     final privateKey = walletAddressRepoistory.getPrivateKey(mnemonic);
     final publicAddress = walletAddressRepoistory.getPublicAddress(privateKey);
 
+    authStorageRepository.setMnemonic(mnemonic);
     authStorageRepository.setPrivateKey(privateKey);
     authStorageRepository.setPublicAddress(publicAddress);
 

@@ -66,7 +66,7 @@ class ColorsTheme {
   final white200 = const Color(0x99FFFFFF);
   final white100 = const Color(0xFFFFFFFF);
 
-  Color get whiteInvert => white100;
+  Color get whiteInvert => black100;
 
   final black100 = const Color(0xFF25282B);
   final black200 = const Color(0x4025282B);
@@ -74,7 +74,7 @@ class ColorsTheme {
 
   final blackDeep = const Color(0xFF000000);
 
-  Color get blackInvert => black100;
+  Color get blackInvert => white100;
 
   // layerSheet
   Color get layerSheetBackground => white100;

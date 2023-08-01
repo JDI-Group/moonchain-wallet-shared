@@ -12,17 +12,17 @@ class MxcAppBarEvenly extends StatelessWidget {
     this.useContentPadding = false,
   });
 
-  MxcAppBarEvenly.text({
-    Key? key,
-    required String titleText,
-    String? leadingText,
-    String? actionText,
-    this.padding,
-    Function()? onActionTap,
-    bool isActionTap = false,
-    this.useContentPadding = false,
-    bool showCancel = true
-  })  : title = Builder(
+  MxcAppBarEvenly.text(
+      {Key? key,
+      required String titleText,
+      String? leadingText,
+      String? actionText,
+      this.padding,
+      Function()? onActionTap,
+      bool isActionTap = false,
+      this.useContentPadding = false,
+      bool showCancel = true})
+      : title = Builder(
           builder: (context) => Text(
             titleText,
             style: FontTheme.of(context).body1().copyWith(
@@ -35,15 +35,16 @@ class MxcAppBarEvenly extends StatelessWidget {
         ),
         leading = Builder(
           builder: (context) => InkWell(
-            onTap: appBarCloseHandlerBuilder(context),
-            child: showCancel ? Text(
-              leadingText ?? FlutterI18n.translate(context, 'cancel'),
-              style: FontTheme.of(context).body1(),
-              textAlign: TextAlign.left,
-              softWrap: true,
-              overflow: TextOverflow.ellipsis,
-            ) : Container()
-          ),
+              onTap: appBarCloseHandlerBuilder(context),
+              child: showCancel
+                  ? Text(
+                      leadingText ?? FlutterI18n.translate(context, 'cancel'),
+                      style: FontTheme.of(context).body1(),
+                      textAlign: TextAlign.left,
+                      softWrap: true,
+                      overflow: TextOverflow.ellipsis,
+                    )
+                  : Container()),
         ),
         action = actionText != null
             ? Builder(
