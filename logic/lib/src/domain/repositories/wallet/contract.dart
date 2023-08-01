@@ -86,6 +86,8 @@ abstract class IContractService {
     required String to,
     EstimatedGasFee? estimatedGasFee,
   });
+
+  Future<int> getChainId(String rpcUrl);
 }
 
 class ContractRepository implements IContractService {
@@ -573,7 +575,8 @@ class ContractRepository implements IContractService {
       );
 
       if (response.statusCode == 200) {
-        final addressCollections = WannseeAddressTokensList.fromJson(response.body);
+        final addressCollections =
+            WannseeAddressTokensList.fromJson(response.body);
 
         for (int i = 0; i < addressCollections.items!.length; i++) {
           final response = await _restClient.client.get(
@@ -608,14 +611,14 @@ class ContractRepository implements IContractService {
               final name = tokenInstance.token!.name!;
 
               final nft = Nft(
-                  address: collectionAddress,
-                  tokenId: tokenId,
-                  image: image,
-                  name: name,);
+                address: collectionAddress,
+                tokenId: tokenId,
+                image: image,
+                name: name,
+              );
 
               finalList.add(nft);
             }
-
           } else {
             return null;
           }
@@ -629,6 +632,20 @@ class ContractRepository implements IContractService {
       } else {
         return null;
       }
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
+  @override
+  Future<int> getChainId(String rpcUrl) async {
+    try {
+      final client = _restClient.client;
+      final chainId = await Web3Client(
+        rpcUrl,
+        client,
+      ).getChainId();
+      return chainId.toInt();
     } catch (e) {
       throw e.toString();
     }

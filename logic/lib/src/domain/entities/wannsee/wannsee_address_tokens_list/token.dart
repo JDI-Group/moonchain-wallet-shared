@@ -15,7 +15,7 @@ class Token extends Equatable {
     this.totalSupply,
     this.type,
   });
-  
+
   final String? address;
   final dynamic circulatingMarketCap;
   final String? decimals;
@@ -26,7 +26,6 @@ class Token extends Equatable {
   final String? symbol;
   final String? totalSupply;
   final String? type;
-
 
   factory Token.fromMap(Map<String, dynamic> data) => Token(
         address: data['address'] as String?,
