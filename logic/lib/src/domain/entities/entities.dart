@@ -6,3 +6,4 @@ export 'default_tokens/default_tokens.dart';
 export 'default_tokens/token.dart';
 export 'estimated_gas_fee.dart';
 export 'nft.dart';
+export 'account.dart';

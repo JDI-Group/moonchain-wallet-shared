@@ -16,12 +16,12 @@ class WalletAddressRepoistory {
     return bip39.entropyToMnemonic(entropyMnemonic);
   }
 
-  String getPrivateKey(String mnemonic) {
+  String getPrivateKey(String mnemonic, [int index = 0]) {
     final seed = bip39.mnemonicToSeedHex(mnemonic);
 
     final bip32.BIP32 root =
         bip32.BIP32.fromSeed(HEX.decode(seed) as Uint8List);
-    final bip32.BIP32 child = root.derivePath("m/44'/60'/0'/0/0");
+    final bip32.BIP32 child = root.derivePath("m/44'/60'/0'/0/$index");
 
     return HEX.encode(child.privateKey as List<int>);
   }
