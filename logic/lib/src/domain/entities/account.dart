@@ -1,11 +1,11 @@
 class Account {
-  const Account({
+  Account({
     required this.name,
-    required this.mns,
     required this.address,
+    this.mns,
   });
 
-  final String name;
-  final String mns;
-  final String address;
+  String name;
+  String address;
+  String? mns;
 }
