@@ -37,6 +37,7 @@ abstract class IContractService {
     void Function(dynamic) listeningCallBack,
   );
   Future<DefaultTokens?> getDefaultTokens();
+  Future<DefaultIpfsGateways?> getDefaultIpfsGateways();
   Future<WannseeTokenTransfersModel?> getTokenTransfersByAddress(
     String address,
   );
@@ -58,18 +59,6 @@ abstract class IContractService {
     required String amount,
     EstimatedGasFee? estimatedGasFee,
   });
-
-  // Future<WannseeTokenMetaData?> getTokenInfo(
-  //   EthereumAddress collectionAddress,
-  //   int tokenId,
-  //   EthereumAddress userAddress,
-  // );
-
-  // Future<bool?> checkTokenOwnership(
-  //   EthereumAddress collectionAddress,
-  //   int tokenId,
-  //   EthereumAddress userAddress,
-  // );
 
   Future<String> getOwnerOfNft({
     required String address,
@@ -187,31 +176,6 @@ class ContractRepository implements IContractService {
 
     return response.first as BigInt;
   }
-
-  // @override
-  // Future<WannseeTokensBalanceModel?> getTokensBalance(
-  //     EthereumAddress from) async {
-  //   final response = await _restClient.client.get(
-  //     Uri.parse(
-  //       'https://wannsee-explorer-v1.mxc.com/api/v2/addresses/${from.hex}/tokens?type=ERC-20',
-  //     ),
-  //     headers: {'accept': 'application/json'},
-  //   );
-
-  //   if (response.statusCode == 200) {
-  //     final txList = WannseeTokensBalanceModel.fromJson(response.body);
-  //     return txList;
-  //   }
-  //   if (response.statusCode == 404) {
-  //     // new wallet and nothing is returned
-  //     const txList = WannseeTokensBalanceModel(
-  //       items: [],
-  //     );
-  //     return txList;
-  //   } else {
-  //     return null;
-  //   }
-  // }
 
   @override
   StreamSubscription<FilterEvent> listenTransfer(TransferEvent onTransfer,
@@ -343,6 +307,23 @@ class ContractRepository implements IContractService {
     if (response.statusCode == 200) {
       final defaultTokens = DefaultTokens.fromJson(response.body);
       return defaultTokens;
+    } else {
+      return null;
+    }
+  }
+
+  @override
+  Future<DefaultIpfsGateways?> getDefaultIpfsGateways() async {
+    final response = await _restClient.client.get(
+      Uri.parse(
+        'https://raw.githubusercontent.com/MXCzkEVM/ipfs-gateway-list/main/ipfs_gateway_list.json',
+      ),
+      headers: {'accept': 'application/json'},
+    );
+
+    if (response.statusCode == 200) {
+      final defaultIpfsGateways = DefaultIpfsGateways.fromJson(response.body);
+      return defaultIpfsGateways;
     } else {
       return null;
     }

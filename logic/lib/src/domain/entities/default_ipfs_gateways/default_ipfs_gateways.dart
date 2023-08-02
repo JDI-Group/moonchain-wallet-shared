@@ -10,7 +10,9 @@ class DefaultIpfsGateways extends Equatable {
   factory DefaultIpfsGateways.fromMap(Map<String, dynamic> data) {
     return DefaultIpfsGateways(
       name: data['name'] as String?,
-      gateways: data['gateways'] as List<String>?,
+      gateways: (data['gateways'] as List<dynamic>?)
+          ?.map((dynamic e) => e as String)
+          .toList(),
       version: data['version'] == null
           ? null
           : Version.fromMap(data['version'] as Map<String, dynamic>),
@@ -31,7 +33,7 @@ class DefaultIpfsGateways extends Equatable {
 
   Map<String, dynamic> toMap() => <String, dynamic>{
         'name': name,
-        'gateways': gateways,
+        'gateways': gateways ,
         'version': version?.toMap(),
       };
 
