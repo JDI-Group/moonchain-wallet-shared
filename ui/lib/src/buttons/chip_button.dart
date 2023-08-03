@@ -60,7 +60,7 @@ class MxcChipButton extends StatelessWidget {
           );
         case ChipButtonStates.disabled:
           return BoxDecoration(
-            color: backgroundColor ?? ColorsTheme.of(context).disabledButton,
+            color: backgroundColor ?? ColorsTheme.of(context).backgroundDisabled,
             borderRadius: BorderRadius.circular(40),
           );
       }
@@ -82,7 +82,7 @@ class MxcChipButton extends StatelessWidget {
         case ChipButtonStates.disabled:
           return FontTheme.of(context)
               .subtitle1()
-              .copyWith(color: ColorsTheme.of(context).disabledButtonText);
+              .copyWith(color: ColorsTheme.of(context).textDisabled);
       }
     }
 
@@ -109,7 +109,7 @@ class MxcChipButton extends StatelessWidget {
         case ChipButtonStates.disabled:
           return Icon(
             iconData,
-            color: iconColor ?? ColorsTheme.of(context).disabledButtonText,
+            color: iconColor ?? ColorsTheme.of(context).textDisabled,
             size: iconSize ?? 20,
           );
       }
