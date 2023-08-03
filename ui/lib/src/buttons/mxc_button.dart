@@ -86,6 +86,19 @@ class MxcButton extends StatefulWidget {
     this.icon,
   }) : super(key: key);
 
+  const MxcButton.secondaryWarning({
+    required Key? key,
+    required this.title,
+    required this.onTap,
+    this.type = MxcButtonType.warning,
+    this.size = MxcButtonSize.xxl,
+    this.width,
+    this.titleColor,
+    this.color = Colors.transparent,
+    this.borderColor,
+    this.icon,
+  }) : super(key: key);
+
   final MxcButtonType type;
   final MxcButtonSize size;
   final String title;
@@ -112,7 +125,7 @@ class _MxcButtonState extends State<MxcButton> with TickerProviderStateMixin {
       return ColorsTheme.of(context).systemStatusActive;
     }
 
-    if (widget.type == MxcButtonType.warning) {
+    if (widget.type == MxcButtonType.warning && widget.color == null) {
       return ColorsTheme.of(context).buttonCritical;
     }
 
@@ -163,6 +176,10 @@ class _MxcButtonState extends State<MxcButton> with TickerProviderStateMixin {
 
     if (widget.type == MxcButtonType.secondary) {
       return ColorsTheme.of(context).whiteInvert;
+    }
+
+    if (widget.type == MxcButtonType.warning && widget.color != null) {
+      return ColorsTheme.of(context).mainRed;
     }
 
     if (widget.type == MxcButtonType.pass ||
