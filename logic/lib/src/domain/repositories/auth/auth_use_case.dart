@@ -32,6 +32,11 @@ class AuthUseCase {
     await authCacheRepository?.loadCache(mnemonic.split(' ').join());
   }
 
+  void resetNetwork(Network network) {
+    authStorageRepository.setWeb3RpcHttpUrl(network.web3RpcHttpUrl);
+    authStorageRepository.setWeb3RpcWebsocketUrl(network.web3RpcWebsocketUrl);
+  }
+
   Account addNewAccount(int index) {
     final mnemoic = authStorageRepository.mnemonic;
 

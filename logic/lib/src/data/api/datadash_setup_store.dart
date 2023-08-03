@@ -11,6 +11,10 @@ class DatadashSetupStore extends GlobalCacheStore {
   late final Field<String?> _privateKey = field('private-key');
   late final Field<String?> _publicAddress = field('public-address');
 
+  late final Field<String?> _web3RpcHttpUrl = field('web3-rpc-http-urlb');
+  late final Field<String?> _web3RpcWebsocketUrl =
+      field('web3-rpc-websocket-url');
+
   String? get mnemonic => _mnemonic.value;
   set mnemonic(String? value) => _mnemonic.value = value;
 
@@ -19,6 +23,12 @@ class DatadashSetupStore extends GlobalCacheStore {
 
   String? get publicAddress => _publicAddress.value;
   set publicAddress(String? value) => _publicAddress.value = value;
+
+  String? get web3RpcHttpUrl => _web3RpcHttpUrl.value;
+  set web3RpcHttpUrl(String? value) => _web3RpcHttpUrl.value = value;
+
+  String? get web3RpcWebsocketUrl => _web3RpcWebsocketUrl.value;
+  set web3RpcWebsocketUrl(String? value) => _web3RpcWebsocketUrl.value = value;
 
   Future<void> clean() => cleanFields([
         _mnemonic,

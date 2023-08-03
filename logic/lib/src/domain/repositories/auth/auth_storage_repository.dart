@@ -1,3 +1,4 @@
+import 'package:mxc_logic/mxc_logic.dart';
 import 'package:mxc_logic/src/data/data.dart';
 
 class AuthenticationStorageRepository {
@@ -14,6 +15,14 @@ class AuthenticationStorageRepository {
   String? get publicAddress => _datadashSetupStore.publicAddress;
   void setPublicAddress(String? value) =>
       _datadashSetupStore.publicAddress = value;
+
+  String? get web3RpcHttpUrl => _datadashSetupStore.web3RpcHttpUrl;
+  void setWeb3RpcHttpUrl(String? value) =>
+      _datadashSetupStore.web3RpcHttpUrl = value;
+
+  String? get web3RpcWebsocketUrl => _datadashSetupStore.web3RpcWebsocketUrl;
+  void setWeb3RpcWebsocketUrl(String? value) =>
+      _datadashSetupStore.web3RpcWebsocketUrl = value;
 
   bool get loggedIn =>
       _datadashSetupStore.publicAddress != null &&

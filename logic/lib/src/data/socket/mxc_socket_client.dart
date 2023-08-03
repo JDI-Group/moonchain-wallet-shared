@@ -1,6 +1,5 @@
+import 'package:mxc_logic/mxc_logic.dart';
 import 'package:mxc_logic/src/data/socket/phoenix/phoenix_client.dart';
-import 'package:mxc_logic/src/domain/entities/network_type.dart';
-import 'package:mxc_logic/src/domain/repositories/wallet/app_config.dart';
 
 abstract class IMXCSocketClient {
   Future<bool> connect(String url);
@@ -34,10 +33,8 @@ class MXCSocketClient {
     return _socketClient!.isConnected();
   }
 
-  Future<bool> connect() async {
-    print('_networkType!.name' + _networkType.toString());
-    return _socketClient!
-        .connect((AppConfig.networks[_networkType])!.web3WebSocketUrl);
+  Future<bool> connect(String web3WebSocketUrl) async {
+    return _socketClient!.connect(web3WebSocketUrl);
   }
 
   void disconnect() async {
@@ -54,7 +51,7 @@ class MXCSocketClient {
   // This will return the corresponding websocket client
   void updateClient() {
     switch (_networkType) {
-      case NetworkType.Wannsee:
+      case NetworkType.mainnet:
         _socketClient = PhoenixClient();
         break;
       default:
