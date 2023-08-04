@@ -81,6 +81,7 @@ class ColorsTheme {
 
   // border
   Color get borderWhiteInvert => whiteInvert;
+  Color get borderWhite100 => white100;
 
   Color get borderGrey3 => grey3;
 
@@ -290,6 +291,9 @@ class ColorsThemeDark implements ColorsTheme {
   // border
   @override
   Color get borderWhiteInvert => white100;
+
+  @override
+  Color get borderWhite100 => white100;
 
   @override
   Color get borderGrey3 => grey3;

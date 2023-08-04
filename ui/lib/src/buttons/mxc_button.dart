@@ -147,7 +147,7 @@ class _MxcButtonState extends State<MxcButton> with TickerProviderStateMixin {
 
     if (widget.type == MxcButtonType.primary ||
         widget.type == MxcButtonType.secondary) {
-      return ColorsTheme.of(context).whiteInvert;
+      return ColorsTheme.of(context).borderWhite100;
     }
 
     if (widget.type == MxcButtonType.pass) {
@@ -175,7 +175,7 @@ class _MxcButtonState extends State<MxcButton> with TickerProviderStateMixin {
     }
 
     if (widget.type == MxcButtonType.secondary) {
-      return ColorsTheme.of(context).whiteInvert;
+      return ColorsTheme.of(context).textWhite;
     }
 
     if (widget.type == MxcButtonType.warning && widget.color != null) {
