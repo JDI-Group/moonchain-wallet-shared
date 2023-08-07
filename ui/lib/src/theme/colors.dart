@@ -23,6 +23,47 @@ class ColorsTheme {
   Color get secondaryBackground => white100;
   Color get backgroundGrey6 => grey6;
 
+  //primary
+  final primary = const Color(0xFF0F46F4);
+  final primary40 = const Color(0xFF062588);
+  final primary50 = const Color(0xFF072A9C);
+  final primary60 = const Color(0xFF082FAF);
+  final primary70 = const Color(0xFF0934C3);
+  final primary80 = const Color(0xFF0A3AD6);
+  final primary90 = const Color(0xFF0B3FEA);
+  final primary100 = const Color(0xFF2958F5);
+  final primary200 = const Color(0xFF3C67F6);
+  final primary300 = const Color(0xFF5077F7);
+  final primary400 = const Color(0xFF6386F8);
+  final primary500 = const Color(0xFF7795F9);
+  final primary600 = const Color(0xFF8AA4F9);
+
+  // Border color
+  Color get borderPrimary100 => primary100;
+  Color get borderPrimary200 => primary200;
+
+  // Disabled state
+  final textDisabledDark = const Color(0xFF5F6366);
+  final backgroundDisabledDark = const Color(0xFF323233);
+
+  // Button color
+  Color get btnBgWhite => white100;
+  Color get btnBgBlue => primary;
+  Color get btnTextBlack => textBlack100;
+  Color get btnTextInvert1 => textBlack200;
+  Color get btnTextInvert2 => textWhite;
+  Color get btnIconInvert1 => iconBlack200;
+  Color get btnIconInvert2 => iconWhite;
+  Color get btnSecondaryBlue => primary200;
+
+  // Chip color
+  Color get chipBgActive => primary;
+  Color get chipTextInvertActive => textWhite;
+  Color get chipIconInvertActive => iconWhite;
+  Color get chipBorderInactive => primary200;
+  Color get chipTextInactive => primary200;
+  Color get chipIconInactive => primary200;
+
   // background
   final primaryBackground = const Color(0xFFEBEFF2);
   // final secondaryBackground = Colors.white;
@@ -160,6 +201,104 @@ class ColorsTheme {
 
 class ColorsThemeDark implements ColorsTheme {
   ColorsThemeDark._();
+
+  //primary
+  @override
+  final primary = const Color(0xFF4C74F4);
+
+  @override
+  final primary40 = const Color(0xFF273E88);
+
+  @override
+  final primary50 = const Color(0xFF2D479C);
+
+  @override
+  final primary60 = const Color(0xFF3551AF);
+
+  @override
+  final primary70 = const Color(0xFF3B5AC3);
+
+  @override
+  final primary80 = const Color(0xFF4063D6);
+
+  @override
+  final primary90 = const Color(0xFF466CEA);
+
+  @override
+  final primary100 = const Color(0xFF6788F5);
+
+  @override
+  final primary200 = const Color(0xFF7996F6);
+
+  @override
+  final primary300 = const Color(0xFF8DA6F7);
+
+  @override
+  final primary400 = const Color(0xFFA1B6F8);
+
+  @override
+  final primary500 = const Color(0xFFB6C5F9);
+
+  @override
+  final primary600 = const Color(0xFFC7D3F9);
+
+  // Border color
+  @override
+  Color get borderPrimary100 => primary100;
+
+  @override
+  Color get borderPrimary200 => primary200;
+
+  // Disabled state
+  @override
+  final textDisabledDark = const Color(0xFF5F6366);
+
+  @override
+  final backgroundDisabledDark = const Color(0xFF323233);
+
+  // Button color
+  @override
+  Color get btnBgWhite => white100;
+
+  @override
+  Color get btnBgBlue => primary;
+
+  @override
+  Color get btnTextBlack => textBlack100;
+
+  @override
+  Color get btnTextInvert1 => textWhite;
+
+  @override
+  Color get btnTextInvert2 => textBlack200;
+
+  @override
+  Color get btnIconInvert1 => iconWhite;
+
+  @override
+  Color get btnIconInvert2 => iconBlack200;
+
+  @override
+  Color get btnSecondaryBlue => primary200;
+
+  // Chip color
+  @override
+  Color get chipBgActive => primary;
+
+  @override
+  Color get chipTextInvertActive => textBlack200;
+
+  @override
+  Color get chipIconInvertActive => iconBlack200;
+
+  @override
+  Color get chipBorderInactive => primary200;
+
+  @override
+  Color get chipTextInactive => primary200;
+
+  @override
+  Color get chipIconInactive => primary200;
 
   // background
   @override
