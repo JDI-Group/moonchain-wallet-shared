@@ -277,6 +277,28 @@ class TokenContractRepository {
     }
   }
 
+  Future<bool> checkIpfsGateway(String url) async {
+    const hashToTest =
+        'bafybeic3sv4zcnv62w5wc5zyw6kepivl5hrjnz62z4gt2f7trenarj26ni';
+
+    try {
+      final response = await _restClient.client.get(
+        Uri.parse(
+          url + hashToTest,
+        ),
+        headers: {'accept': 'application/json'},
+      );
+
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      return false;
+    }
+  }
+
   Future<void> dispose() async {
     await _web3Client.dispose();
   }
