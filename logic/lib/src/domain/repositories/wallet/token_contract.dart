@@ -134,22 +134,6 @@ class TokenContractRepository {
     }
   }
 
-  Future<DefaultIpfsGateways?> getDefaultIpfsGateways() async {
-    final response = await _restClient.client.get(
-      Uri.parse(
-        Urls.defaultIpfsGateway,
-      ),
-      headers: {'accept': 'application/json'},
-    );
-
-    if (response.statusCode == 200) {
-      final defaultIpfsGateways = DefaultIpfsGateways.fromJson(response.body);
-      return defaultIpfsGateways;
-    } else {
-      return null;
-    }
-  }
-
   Future<List<Token>> getTokensBalance(
     List<Token> tokens,
     String walletAddress,
@@ -277,25 +261,6 @@ class TokenContractRepository {
       return chainId.toInt();
     } catch (e) {
       throw e.toString();
-    }
-  }
-
-  Future<bool> checkIpfsGateway(String url) async {
-    try {
-      final response = await _restClient.client.get(
-        Uri.parse(
-          url + Const.hashToTest,
-        ),
-        headers: {'accept': 'application/json'},
-      );
-
-      if (response.statusCode == 200) {
-        return true;
-      } else {
-        return false;
-      }
-    } catch (e) {
-      return false;
     }
   }
 
