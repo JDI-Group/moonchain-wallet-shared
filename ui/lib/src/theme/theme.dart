@@ -81,9 +81,6 @@ extension MxcThemeDataExtension on MxcThemeData {
   ThemeData toThemeData() => ThemeData(
         brightness:
             colors is ColorsThemeDark ? Brightness.dark : Brightness.light,
-        bottomAppBarTheme: BottomAppBarTheme(
-          color: colors.box,
-        ),
         scaffoldBackgroundColor: colors.screenBackground,
         textTheme: TextTheme(
           bodyLarge: fonts.body1(),
@@ -93,7 +90,6 @@ extension MxcThemeDataExtension on MxcThemeData {
           hintStyle: fonts.caption1.secondary(),
         ),
         bottomNavigationBarTheme: BottomNavigationBarThemeData(
-          backgroundColor: colors.box,
           selectedItemColor: colors.purpleMain,
           unselectedItemColor: colors.textSecondary,
         ),

@@ -60,7 +60,8 @@ class MxcChipButton extends StatelessWidget {
           );
         case ChipButtonStates.disabled:
           return BoxDecoration(
-            color: backgroundColor ?? ColorsTheme.of(context).backgroundDisabled,
+            color:
+                backgroundColor ?? ColorsTheme.of(context).backgroundDisabled,
             borderRadius: BorderRadius.circular(40),
           );
       }

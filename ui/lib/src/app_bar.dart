@@ -124,6 +124,7 @@ class MxcAppBar extends StatelessWidget {
         action = Builder(
           builder: (context) => MxcAppBarButton.icon(
             Icons.close,
+            color: ColorsTheme.of(context).iconWhite,
             onTap: appBarCloseHandlerBuilder(
               context,
               onTapBeforeClose: onTapBeforeClose,
@@ -216,7 +217,7 @@ class MxcAppBarButton extends StatelessWidget {
   })  : child = Builder(
           builder: (context) => Text(
             text,
-            style: FontTheme.of(context).body1.primary(),
+            style: FontTheme.of(context).body1.white(),
           ),
         ),
         super(key: key);

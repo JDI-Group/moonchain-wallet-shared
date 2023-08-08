@@ -68,7 +68,7 @@ class ColorsTheme {
   final primaryBackground = const Color(0xFFEBEFF2);
   // final secondaryBackground = Colors.white;
   final white = Colors.white;
-  final box = Colors.white;
+  Color get cardBackground => white100;
 
   // indicator
   final onTertiary = const Color(0xFF171717);
@@ -324,7 +324,7 @@ class ColorsThemeDark implements ColorsTheme {
   final white = Colors.white;
 
   @override
-  final box = const Color(0xFF2C2C2E);
+  final cardBackground = const Color(0xFF2C2C2E);
 
   // components
   @override

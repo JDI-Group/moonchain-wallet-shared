@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mxc_ui/mxc_ui.dart';
 
-enum MxcButtonType { primary, secondary, plain, pass, warning }
+enum AxsButtonType {
+  primaryWhite,
+  secondaryWhite,
+  plainWhite,
+  primary,
+  secondary,
+  plain,
+  pass,
+  warning,
+}
 
-enum MxcButtonSize { xl, xxl }
+enum AxsButtonSize { xl, xxl }
 
 class MxcButton extends StatefulWidget {
   /// [key] marked as required, because it's often needed for testing purposes
@@ -12,182 +20,239 @@ class MxcButton extends StatefulWidget {
     required Key? key,
     required this.title,
     required this.onTap,
-    this.type = MxcButtonType.primary,
-    this.size = MxcButtonSize.xxl,
+    this.type = AxsButtonType.primary,
+    this.size = AxsButtonSize.xxl,
     this.width,
     this.titleColor,
     this.color,
     this.borderColor,
     this.icon,
+    this.iconSize,
+  }) : super(key: key);
+
+  const MxcButton.primaryWhite({
+    required Key? key,
+    required this.title,
+    required this.onTap,
+    this.type = AxsButtonType.primaryWhite,
+    this.size = AxsButtonSize.xxl,
+    this.width,
+    this.titleColor,
+    this.color,
+    this.borderColor,
+    this.icon,
+    this.iconSize,
+  }) : super(key: key);
+
+  const MxcButton.secondaryWhite({
+    required Key? key,
+    required this.title,
+    required this.onTap,
+    this.type = AxsButtonType.secondaryWhite,
+    this.size = AxsButtonSize.xxl,
+    this.width,
+    this.titleColor,
+    this.color = Colors.transparent,
+    this.borderColor,
+    this.icon,
+    this.iconSize,
+  }) : super(key: key);
+
+  const MxcButton.plainWhite({
+    required Key? key,
+    required this.title,
+    required this.onTap,
+    this.type = AxsButtonType.plainWhite,
+    this.size = AxsButtonSize.xxl,
+    this.width,
+    this.titleColor,
+    this.color = Colors.transparent,
+    this.borderColor,
+    this.icon,
+    this.iconSize,
   }) : super(key: key);
 
   const MxcButton.primary({
     required Key? key,
     required this.title,
     required this.onTap,
-    this.type = MxcButtonType.primary,
-    this.size = MxcButtonSize.xxl,
+    this.type = AxsButtonType.primary,
+    this.size = AxsButtonSize.xxl,
     this.width,
     this.titleColor,
     this.color,
     this.borderColor,
     this.icon,
+    this.iconSize,
   }) : super(key: key);
 
   const MxcButton.secondary({
     required Key? key,
     required this.title,
     required this.onTap,
-    this.type = MxcButtonType.secondary,
-    this.size = MxcButtonSize.xxl,
+    this.type = AxsButtonType.secondary,
+    this.size = AxsButtonSize.xxl,
     this.width,
     this.titleColor,
     this.color = Colors.transparent,
     this.borderColor,
     this.icon,
+    this.iconSize,
   }) : super(key: key);
 
   const MxcButton.plain({
     required Key? key,
     required this.title,
     required this.onTap,
-    this.type = MxcButtonType.plain,
-    this.size = MxcButtonSize.xxl,
+    this.type = AxsButtonType.plain,
+    this.size = AxsButtonSize.xxl,
     this.width,
     this.titleColor,
     this.color = Colors.transparent,
     this.borderColor,
     this.icon,
+    this.iconSize,
   }) : super(key: key);
 
   const MxcButton.primaryPass({
     required Key? key,
     required this.title,
     required this.onTap,
-    this.type = MxcButtonType.pass,
-    this.size = MxcButtonSize.xxl,
+    this.type = AxsButtonType.pass,
+    this.size = AxsButtonSize.xxl,
     this.width,
     this.titleColor,
     this.color,
     this.borderColor,
     this.icon,
+    this.iconSize,
   }) : super(key: key);
 
   const MxcButton.primaryWarning({
     required Key? key,
     required this.title,
     required this.onTap,
-    this.type = MxcButtonType.warning,
-    this.size = MxcButtonSize.xxl,
+    this.type = AxsButtonType.warning,
+    this.size = AxsButtonSize.xxl,
     this.width,
     this.titleColor,
     this.color,
     this.borderColor,
     this.icon,
+    this.iconSize,
   }) : super(key: key);
 
   const MxcButton.secondaryWarning({
     required Key? key,
     required this.title,
     required this.onTap,
-    this.type = MxcButtonType.warning,
-    this.size = MxcButtonSize.xxl,
+    this.type = AxsButtonType.warning,
+    this.size = AxsButtonSize.xxl,
     this.width,
     this.titleColor,
     this.color = Colors.transparent,
     this.borderColor,
     this.icon,
+    this.iconSize,
   }) : super(key: key);
 
-  final MxcButtonType type;
-  final MxcButtonSize size;
+  final AxsButtonType type;
+  final AxsButtonSize size;
   final String title;
   final Color? titleColor;
   final Color? color;
   final Color? borderColor;
   final VoidCallback? onTap;
   final double? width;
-  final String? icon;
+  final IconData? icon;
+  final double? iconSize;
 
   @override
-  _MxcButtonState createState() => _MxcButtonState();
+  _AxsButtonState createState() => _AxsButtonState();
 }
 
-class _MxcButtonState extends State<MxcButton> with TickerProviderStateMixin {
+class _AxsButtonState extends State<MxcButton> with TickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _scaleAnimate;
   bool _isTappedDown = false;
 
-  double getHeight() => widget.size == MxcButtonSize.xl ? 44 : 60;
+  double getHeight() => widget.size == AxsButtonSize.xl ? 44 : 60;
 
-  Color getButtonColor() {
-    if (widget.type == MxcButtonType.pass) {
-      return ColorsTheme.of(context).systemStatusActive;
-    }
-
-    if (widget.type == MxcButtonType.warning && widget.color == null) {
-      return ColorsTheme.of(context).buttonCritical;
-    }
-
+  Color getButtonBgColor() {
     if (widget.onTap == null) {
-      return ColorsTheme.of(context).backgroundDisabled;
+      return ColorsTheme.of(context).backgroundDisabledDark;
     }
 
-    return widget.color ?? ColorsTheme.of(context).primaryButton;
+    if (widget.color != null) {
+      return widget.color!;
+    }
+
+    switch (widget.type) {
+      case AxsButtonType.primary:
+        return ColorsTheme.of(context).btnBgBlue;
+      case AxsButtonType.primaryWhite:
+        return ColorsTheme.of(context).btnBgWhite;
+      case AxsButtonType.pass:
+        return ColorsTheme.of(context).systemStatusActive;
+      case AxsButtonType.warning:
+        return ColorsTheme.of(context).buttonCritical;
+      default:
+        return Colors.transparent;
+    }
   }
 
   Color getBorderColor() {
-    if (widget.borderColor != null && widget.onTap != null) {
+    if (widget.onTap == null) {
+      return ColorsTheme.of(context).backgroundDisabledDark;
+    }
+
+    if (widget.borderColor != null) {
       return widget.borderColor!;
     }
 
-    if (widget.onTap == null) {
-      return ColorsTheme.of(context).backgroundDisabled;
+    switch (widget.type) {
+      case AxsButtonType.primary:
+        return ColorsTheme.of(context).btnBgBlue;
+      case AxsButtonType.primaryWhite:
+        return ColorsTheme.of(context).btnBgWhite;
+      case AxsButtonType.secondary:
+        return ColorsTheme.of(context).btnSecondaryBlue;
+      case AxsButtonType.secondaryWhite:
+        return ColorsTheme.of(context).borderWhite100;
+      case AxsButtonType.pass:
+        return ColorsTheme.of(context).systemStatusActive;
+      case AxsButtonType.warning:
+        return ColorsTheme.of(context).buttonCritical;
+      default:
+        return Colors.transparent;
     }
-
-    if (widget.type == MxcButtonType.primary ||
-        widget.type == MxcButtonType.secondary) {
-      return ColorsTheme.of(context).borderWhite100;
-    }
-
-    if (widget.type == MxcButtonType.pass) {
-      return ColorsTheme.of(context).systemStatusActive;
-    }
-
-    if (widget.type == MxcButtonType.warning) {
-      return ColorsTheme.of(context).buttonCritical;
-    }
-
-    return Colors.transparent;
   }
 
   Color getTitleColor() {
     if (widget.onTap == null) {
-      return ColorsTheme.of(context).textDisabled;
+      return ColorsTheme.of(context).textDisabledDark;
     }
 
     if (widget.titleColor != null) {
       return widget.titleColor!;
     }
 
-    if (widget.type == MxcButtonType.primary) {
-      return ColorsTheme.of(context).blackInvert;
+    switch (widget.type) {
+      case AxsButtonType.primary:
+        return ColorsTheme.of(context).btnTextInvert2;
+      case AxsButtonType.primaryWhite:
+        return ColorsTheme.of(context).textBlack100;
+      case AxsButtonType.secondary:
+        return ColorsTheme.of(context).btnSecondaryBlue;
+      case AxsButtonType.secondaryWhite:
+      case AxsButtonType.plainWhite:
+        return ColorsTheme.of(context).textWhite;
+      case AxsButtonType.pass:
+      case AxsButtonType.warning:
+        return ColorsTheme.of(context).textBlack200;
+      default:
+        return Colors.transparent;
     }
-
-    if (widget.type == MxcButtonType.secondary) {
-      return ColorsTheme.of(context).textWhite;
-    }
-
-    if (widget.type == MxcButtonType.warning && widget.color != null) {
-      return ColorsTheme.of(context).mainRed;
-    }
-
-    if (widget.type == MxcButtonType.pass ||
-        widget.type == MxcButtonType.warning) {
-      return ColorsTheme.of(context).textBlack200;
-    }
-
-    return ColorsTheme.of(context).secondaryButtonText;
   }
 
   @override
@@ -249,7 +314,7 @@ class _MxcButtonState extends State<MxcButton> with TickerProviderStateMixin {
           ? _scaleAnimate.value
           : 1.0,
       child: Material(
-        color: getButtonColor(),
+        color: getButtonBgColor(),
         borderRadius: BorderRadius.circular(40),
         child: GestureDetector(
           onTap: widget.onTap,
@@ -270,20 +335,19 @@ class _MxcButtonState extends State<MxcButton> with TickerProviderStateMixin {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                if (widget.icon != null)
-                  Padding(
-                    padding: const EdgeInsets.only(right: 10),
-                    child: SvgPicture.asset(
-                      widget.icon!,
-                      colorFilter:
-                          ColorFilter.mode(getTitleColor(), BlendMode.srcIn),
-                    ),
+                if (widget.icon != null) ...[
+                  Icon(
+                    widget.icon!,
+                    size: widget.iconSize,
+                    color: getTitleColor(),
                   ),
+                  const SizedBox(width: 10),
+                ],
                 Text(
                   widget.title,
                   textAlign: TextAlign.center,
                   style: FontTheme.of(context).body1().copyWith(
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.w600,
                         color: getTitleColor(),
                       ),
                 ),
