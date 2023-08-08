@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:ens_dart/ens_dart.dart';
 import 'package:mxc_logic/src/data/api/client/rest_client.dart';
 import 'package:mxc_logic/mxc_logic.dart';
+import 'package:mxc_logic/src/domain/const/const.dart';
 import 'package:web3dart/web3dart.dart';
 
 class NftContractRepository {
@@ -113,7 +114,7 @@ class NftContractRepository {
 
       final response = await _restClient.client.get(
         Uri.parse(
-          'https://wannsee-explorer-v1.mxc.com/api/v2/addresses/$address/tokens?type=ERC-721',
+          Urls.tokens(address, TokenType.erc_721),
         ),
         headers: {'accept': 'application/json'},
       );
@@ -123,9 +124,10 @@ class NftContractRepository {
             WannseeAddressTokensList.fromJson(response.body);
 
         for (int i = 0; i < addressCollections.items!.length; i++) {
+          final tokenAddress = addressCollections.items![i].token!.address!;
           final response = await _restClient.client.get(
             Uri.parse(
-              'https://wannsee-explorer-v1.mxc.com/api/v2/tokens/${addressCollections.items![i].token!.address!}/instances',
+              Urls.tokenInstances(tokenAddress, TokenType.erc_721),
             ),
             headers: {'accept': 'application/json'},
           );

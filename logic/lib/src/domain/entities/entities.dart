@@ -8,3 +8,4 @@ export 'estimated_gas_fee.dart';
 export 'nft.dart';
 export 'account.dart';
 export 'network.dart';
+export 'token_type.dart';

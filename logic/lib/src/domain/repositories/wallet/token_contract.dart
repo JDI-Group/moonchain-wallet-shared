@@ -4,6 +4,7 @@ import 'package:mxc_logic/src/data/api/client/rest_client.dart';
 import 'package:mxc_logic/mxc_logic.dart';
 import 'package:mxc_logic/src/data/api/client/web3_client.dart';
 import 'package:mxc_logic/src/data/socket/mxc_socket_client.dart';
+import 'package:mxc_logic/src/domain/const/const.dart';
 import 'package:web3dart/web3dart.dart';
 
 import '../extensions/extensions.dart';
@@ -34,9 +35,11 @@ class TokenContractRepository {
     String address,
   ) async {
     final response = await _restClient.client.get(
-        Uri.parse(
-            'https://wannsee-explorer-v1.mxc.com/api/v2/addresses/$address/transactions'),
-        headers: {'accept': 'application/json'});
+      Uri.parse(
+        Urls.transactions(address),
+      ),
+      headers: {'accept': 'application/json'},
+    );
 
     if (response.statusCode == 200) {
       final txList = WannseeTransactionsModel.fromJson(response.body);
@@ -58,7 +61,7 @@ class TokenContractRepository {
   ) async {
     final response = await _restClient.client.get(
       Uri.parse(
-        'https://wannsee-explorer-v1.mxc.com/api/v2/addresses/$address/token-transfers?type=',
+        Urls.tokenTransfers(address),
       ),
       headers: {'accept': 'application/json'},
     );
@@ -83,7 +86,7 @@ class TokenContractRepository {
   ) async {
     final response = await _restClient.client.get(
       Uri.parse(
-        'https://wannsee-explorer-v1.mxc.com/api/v2/transactions/$hash',
+        Urls.transaction(hash),
       ),
       headers: {'accept': 'application/json'},
     );
@@ -118,7 +121,7 @@ class TokenContractRepository {
   Future<DefaultTokens?> getDefaultTokens() async {
     final response = await _restClient.client.get(
       Uri.parse(
-        'https://raw.githubusercontent.com/MXCzkEVM/wannseeswap-tokenlist/main/tokenlist.json',
+        Urls.defaultTokenList,
       ),
       headers: {'accept': 'application/json'},
     );
@@ -134,7 +137,7 @@ class TokenContractRepository {
   Future<DefaultIpfsGateways?> getDefaultIpfsGateways() async {
     final response = await _restClient.client.get(
       Uri.parse(
-        'https://raw.githubusercontent.com/MXCzkEVM/ipfs-gateway-list/main/ipfs_gateway_list.json',
+        Urls.defaultIpfsGateway,
       ),
       headers: {'accept': 'application/json'},
     );
@@ -278,13 +281,10 @@ class TokenContractRepository {
   }
 
   Future<bool> checkIpfsGateway(String url) async {
-    const hashToTest =
-        'bafybeic3sv4zcnv62w5wc5zyw6kepivl5hrjnz62z4gt2f7trenarj26ni';
-
     try {
       final response = await _restClient.client.get(
         Uri.parse(
-          url + hashToTest,
+          url + Const.hashToTest,
         ),
         headers: {'accept': 'application/json'},
       );

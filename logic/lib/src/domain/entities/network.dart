@@ -54,6 +54,7 @@ class Network {
   }
 
   // This data will be initialized for the first time
+  // the first two are always mxc chains
   static List<Network> fixedNetworks() {
     return [
       const Network(
