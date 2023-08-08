@@ -43,15 +43,16 @@ class MxcChipButton extends StatelessWidget {
       switch (buttonState) {
         case ChipButtonStates.activeState:
           return BoxDecoration(
-            color:
-                backgroundColor ?? ColorsTheme.of(context).chipActiveBackground,
+            color: backgroundColor ?? ColorsTheme.of(context).chipBgActive,
             borderRadius: BorderRadius.circular(40),
           );
         case ChipButtonStates.inactiveState:
           return BoxDecoration(
               color: backgroundColor ?? Colors.transparent,
               borderRadius: BorderRadius.circular(40),
-              border: Border.all(color: ColorsTheme.of(context).chipBorder));
+              border: Border.all(
+                color: ColorsTheme.of(context).chipBorderInactive,
+              ));
         case ChipButtonStates.defaultState:
           return BoxDecoration(
             color: backgroundColor ??
@@ -73,17 +74,21 @@ class MxcChipButton extends StatelessWidget {
       }
       switch (buttonState) {
         case ChipButtonStates.activeState:
-          return FontTheme.of(context)
-              .subtitle1()
-              .copyWith(color: ColorsTheme.of(context).chipTextBlack);
+          return FontTheme.of(context).subtitle1().copyWith(
+                color: ColorsTheme.of(context).chipTextBlack,
+                fontWeight: FontWeight.w500,
+              );
         case ChipButtonStates.inactiveState:
-          return FontTheme.of(context).subtitle1.primary();
+          return FontTheme.of(context).subtitle2().copyWith(
+                color: ColorsTheme.of(context).chipTextInactive,
+                fontWeight: FontWeight.w500,
+              );
         case ChipButtonStates.defaultState:
-          return FontTheme.of(context).subtitle1.primary();
+          return FontTheme.of(context).subtitle2.primary();
         case ChipButtonStates.disabled:
-          return FontTheme.of(context)
-              .subtitle1()
-              .copyWith(color: ColorsTheme.of(context).textDisabled);
+          return FontTheme.of(context).subtitle2().copyWith(
+                color: ColorsTheme.of(context).textDisabled,
+              );
       }
     }
 
@@ -92,13 +97,13 @@ class MxcChipButton extends StatelessWidget {
         case ChipButtonStates.activeState:
           return Icon(
             iconData,
-            color: iconColor ?? ColorsTheme.of(context).chipIconBlack,
+            color: iconColor ?? ColorsTheme.of(context).chipIconInactive,
             size: iconSize ?? 20,
           );
         case ChipButtonStates.inactiveState:
           return Icon(
             iconData,
-            color: iconColor ?? ColorsTheme.of(context).iconPrimary,
+            color: iconColor ?? ColorsTheme.of(context).chipTextInactive,
             size: iconSize ?? 20,
           );
         case ChipButtonStates.defaultState:
