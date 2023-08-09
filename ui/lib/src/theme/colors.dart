@@ -150,6 +150,8 @@ class ColorsTheme {
   Color get iconGrey3 => grey3;
   Color get iconGrey1 => grey1;
   Color get iconCritical => mainRed;
+  Color get iconButtonBackgroundActive => const Color(0xFF4C74F4);
+  Color get iconButtonInvertActive => const Color(0xFF000000);
 
   // shadow
   Color get shadow => purple200;
@@ -495,6 +497,12 @@ class ColorsThemeDark implements ColorsTheme {
 
   @override
   Color get iconCritical => mainRed;
+
+  @override
+  Color get iconButtonBackgroundActive => const Color(0xFF4C74F4);
+
+  @override
+  Color get iconButtonInvertActive => const Color(0xFF000000);
 
   @override
   Color get shadow => purple200;
