@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:ens_dart/ens_dart.dart';
+import 'package:flutter/services.dart';
 import 'package:mxc_logic/src/data/api/client/rest_client.dart';
 import 'package:mxc_logic/mxc_logic.dart';
 import 'package:mxc_logic/src/data/api/client/web3_client.dart';
@@ -193,27 +194,31 @@ class TokenContractRepository {
     }
   }
 
-  @override
+  Future<EtherAmount> getGasPrice() async => await _web3Client.getGasPrice();
+
   Future<EstimatedGasFee> estimateGesFee({
     required String from,
     required String to,
+    EtherAmount? gasPrice,
+    Uint8List? data,
   }) async {
     try {
       final sender = EthereumAddress.fromHex(from);
       final toAddress = EthereumAddress.fromHex(to);
 
-      final gasPrice = await _web3Client.getGasPrice();
+      final gasPriceData = gasPrice ?? await _web3Client.getGasPrice();
 
       final gas = await _web3Client.estimateGas(
         sender: sender,
         to: toAddress,
+        data: data,
       );
 
-      final fee = gasPrice.getInWei * gas;
+      final fee = gasPriceData.getInWei * gas;
       final gasFee = EtherAmount.fromBigInt(EtherUnit.wei, fee);
 
       return EstimatedGasFee(
-        gasPrice: gasPrice,
+        gasPrice: gasPriceData,
         gas: gas,
         gasFee: MxcAmount.toDoubleByEther(gasFee.getInWei.toString()),
       );
@@ -227,6 +232,7 @@ class TokenContractRepository {
     required String to,
     required String amount,
     EstimatedGasFee? estimatedGasFee,
+    Uint8List? data,
   }) async {
     try {
       final toAddress = EthereumAddress.fromHex(to);
@@ -240,6 +246,7 @@ class TokenContractRepository {
           to: toAddress,
           value: amountValue,
           gasPrice: estimatedGasFee?.gasPrice,
+          data: data,
         ),
         fetchChainIdFromNetworkId: true,
         chainId: null,
