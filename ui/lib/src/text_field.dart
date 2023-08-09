@@ -116,6 +116,7 @@ class MxcTextField extends FormField<String> {
     FormFieldValidator<String>? validator,
     AutovalidateMode? autovalidateMode,
     TextInputAction? action,
+    Color? textColor,
   }) : super(
           key: key,
           initialValue: controller.text,
@@ -133,6 +134,7 @@ class MxcTextField extends FormField<String> {
               maxLines: 7,
               action: action,
               errorText: field.errorText,
+              textColor: textColor,
             );
           },
         );
@@ -236,6 +238,7 @@ class _MxcNonFormTextField extends StatefulWidget {
     this.prefix,
     this.onFocused,
     this.onTapOutside,
+    this.textColor,
   })  : _controller = controller,
         _initialValue = null,
         disabled = false,
@@ -263,6 +266,7 @@ class _MxcNonFormTextField extends StatefulWidget {
     this.prefix,
     this.onFocused,
     this.onTapOutside,
+    this.textColor,
   })  : _initialValue = text,
         readOnly = true,
         _controller = null,
@@ -300,6 +304,8 @@ class _MxcNonFormTextField extends StatefulWidget {
   final BorderRadiusGeometry? borderRadius;
 
   final Widget? prefix;
+
+  final Color? textColor;
 
   @override
   State<_MxcNonFormTextField> createState() => _MxcNonFormTextFieldState();
@@ -435,7 +441,9 @@ class _MxcNonFormTextFieldState extends State<_MxcNonFormTextField> {
                                     color: ColorsTheme.of(context)
                                         .backgroundDisabled,
                                   )
-                              : FontTheme.of(context).body1(),
+                              : FontTheme.of(context)
+                                  .body1()
+                                  .copyWith(color: widget.textColor),
                           obscureText: widget.obscure,
                           onChanged: widget.onChanged,
                           onTapOutside: widget.onTapOutside,
