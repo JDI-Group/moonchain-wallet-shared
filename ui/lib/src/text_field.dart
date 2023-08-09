@@ -468,7 +468,7 @@ class _MxcNonFormTextFieldState extends State<_MxcNonFormTextField> {
                         child: Icon(
                           Icons.cancel_rounded,
                           size: 20,
-                          color: ColorsTheme.of(context).primaryButton,
+                          color: ColorsTheme.of(context).iconWhite,
                         ),
                         onTap: () {
                           controller.clear();
