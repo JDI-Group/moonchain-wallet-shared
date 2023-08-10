@@ -8,8 +8,6 @@ import 'package:mxc_logic/src/data/socket/mxc_socket_client.dart';
 import 'package:mxc_logic/src/domain/const/const.dart';
 import 'package:web3dart/web3dart.dart';
 
-import '../extensions/extensions.dart';
-
 typedef TransferEvent = void Function(
   EthereumAddress from,
   EthereumAddress to,
@@ -276,6 +274,18 @@ class TokenContractRepository {
     } catch (e) {
       throw e.toString();
     }
+  }
+
+  Future<DefaultTweets> getDefaultTweets() async {
+    final response = await _restClient.client.get(
+      Uri.parse(
+        Urls.defaultTweets,
+      ),
+      headers: {'accept': 'application/json'},
+    );
+
+    final defaultTweets = DefaultTweets.fromJson(response.body);
+    return defaultTweets;
   }
 
   Future<void> dispose() async {
