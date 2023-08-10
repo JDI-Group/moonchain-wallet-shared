@@ -11,9 +11,36 @@ class DatadashSetupStore extends GlobalCacheStore {
   late final Field<String?> _privateKey = field('private-key');
   late final Field<String?> _publicAddress = field('public-address');
 
-  late final Field<String?> _web3RpcHttpUrl = field('web3-rpc-http-urlb');
-  late final Field<String?> _web3RpcWebsocketUrl =
-      field('web3-rpc-websocket-url');
+  late final Field<Network?> _network = field<Network>(
+    'network',
+    serializer: (e) => {
+      'logo': e.logo,
+      'web3RpcHttpUrl': e.web3RpcHttpUrl,
+      'web3RpcWebsocketUrl': e.web3RpcWebsocketUrl,
+      'web3WebSocketUrl': e.web3WebSocketUrl,
+      'symbol': e.symbol,
+      'explorerUrl': e.explorerUrl,
+      'enabled': e.enabled,
+      'label': e.label,
+      'chainId': e.chainId,
+      'isAdded': e.isAdded,
+      'networkType': e.networkType.name
+    },
+    deserializer: (e) => Network(
+      logo: e['logo'],
+      web3RpcHttpUrl: e['web3RpcHttpUrl'],
+      web3RpcWebsocketUrl: e['web3RpcWebsocketUrl'],
+      web3WebSocketUrl: e['web3WebSocketUrl'],
+      symbol: e['symbol'],
+      explorerUrl: e['explorerUrl'],
+      enabled: e['enabled'],
+      label: e['label'],
+      chainId: e['chainId'],
+      isAdded: e['isAdded'],
+      networkType: NetworkType.values
+          .firstWhere((element) => element.name == e['networkType']),
+    ),
+  );
 
   String? get mnemonic => _mnemonic.value;
   set mnemonic(String? value) => _mnemonic.value = value;
@@ -24,11 +51,8 @@ class DatadashSetupStore extends GlobalCacheStore {
   String? get publicAddress => _publicAddress.value;
   set publicAddress(String? value) => _publicAddress.value = value;
 
-  String? get web3RpcHttpUrl => _web3RpcHttpUrl.value;
-  set web3RpcHttpUrl(String? value) => _web3RpcHttpUrl.value = value;
-
-  String? get web3RpcWebsocketUrl => _web3RpcWebsocketUrl.value;
-  set web3RpcWebsocketUrl(String? value) => _web3RpcWebsocketUrl.value = value;
+  Network? get getNetwork => _network.value;
+  set network(Network value) => _network.value = value;
 
   Future<void> clean() => cleanFields([
         _mnemonic,

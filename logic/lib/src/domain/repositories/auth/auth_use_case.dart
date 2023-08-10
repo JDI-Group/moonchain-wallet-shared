@@ -33,8 +33,7 @@ class AuthUseCase {
   }
 
   void resetNetwork(Network network) {
-    authStorageRepository.setWeb3RpcHttpUrl(network.web3RpcHttpUrl);
-    authStorageRepository.setWeb3RpcWebsocketUrl(network.web3RpcWebsocketUrl);
+    authStorageRepository.setNetwork(network);
   }
 
   Account addNewAccount(int index) {

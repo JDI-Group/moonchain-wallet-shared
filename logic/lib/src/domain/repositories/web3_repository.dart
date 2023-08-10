@@ -11,18 +11,9 @@ class Web3Repository {
     required DatadashSetupStore setupStore,
   })  : _setupStore = setupStore,
         _web3client = DatadashClient(
-          getRpcHttpUrl: () =>
-              setupStore.web3RpcHttpUrl ??
-              Network.fixedNetworks()
-                  .where((item) => item.enabled)
-                  .first
-                  .web3RpcHttpUrl,
-          getRpcWebsocketUrl: () =>
-              setupStore.web3RpcWebsocketUrl ??
-              Network.fixedNetworks()
-                  .where((item) => item.enabled)
-                  .first
-                  .web3RpcWebsocketUrl,
+          getNetwork: () =>
+              setupStore.getNetwork ??
+              Network.fixedNetworks().where((item) => item.enabled).first,
         );
 
   final DatadashSetupStore _setupStore;

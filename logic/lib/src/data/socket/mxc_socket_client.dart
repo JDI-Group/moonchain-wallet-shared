@@ -20,13 +20,10 @@ class MXCSocketClient {
 
   static final MXCSocketClient _singleton = MXCSocketClient._internal();
 
-  NetworkType? _networkType;
-
   IMXCSocketClient? _socketClient;
 
-  void initialize(NetworkType networkType) {
-    _networkType = networkType;
-    updateClient();
+  void initialize() {
+    _socketClient = PhoenixClient();
   }
 
   bool isConnected() {
@@ -46,17 +43,5 @@ class MXCSocketClient {
     void Function(dynamic event) listeningCallBack,
   ) async {
     _socketClient!.subscribeToEvent(event, listeningCallBack);
-  }
-
-  // This will return the corresponding websocket client
-  void updateClient() {
-    switch (_networkType) {
-      case NetworkType.mainnet:
-        _socketClient = PhoenixClient();
-        break;
-      default:
-        _socketClient = PhoenixClient();
-        break;
-    }
   }
 }
