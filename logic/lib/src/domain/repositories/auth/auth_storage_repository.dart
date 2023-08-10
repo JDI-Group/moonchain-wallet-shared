@@ -16,13 +16,8 @@ class AuthenticationStorageRepository {
   void setPublicAddress(String? value) =>
       _datadashSetupStore.publicAddress = value;
 
-  String? get web3RpcHttpUrl => _datadashSetupStore.web3RpcHttpUrl;
-  void setWeb3RpcHttpUrl(String? value) =>
-      _datadashSetupStore.web3RpcHttpUrl = value;
-
-  String? get web3RpcWebsocketUrl => _datadashSetupStore.web3RpcWebsocketUrl;
-  void setWeb3RpcWebsocketUrl(String? value) =>
-      _datadashSetupStore.web3RpcWebsocketUrl = value;
+  Network? get network => _datadashSetupStore.getNetwork;
+  void setNetwork(Network value) => _datadashSetupStore.network = value;
 
   bool get loggedIn =>
       _datadashSetupStore.publicAddress != null &&
