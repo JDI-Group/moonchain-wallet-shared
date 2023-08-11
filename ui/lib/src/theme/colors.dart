@@ -199,6 +199,7 @@ class ColorsTheme {
   final mainRed = const Color(0xFFD22D2D);
   final systemStatusActive = const Color(0xFF63C174);
   final systemStatusInActive = const Color(0xFFEC5E41);
+  final systemStatusNotCritical = const Color(0xFFDB9036);
 }
 
 class ColorsThemeDark implements ColorsTheme {
@@ -620,4 +621,7 @@ class ColorsThemeDark implements ColorsTheme {
 
   @override
   final systemStatusInActive = const Color(0xFFEC5E41);
+
+  @override
+  final systemStatusNotCritical = const Color(0xFFDB9036);
 }
