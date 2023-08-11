@@ -276,18 +276,6 @@ class TokenContractRepository {
     }
   }
 
-  Future<DefaultTweets> getDefaultTweets() async {
-    final response = await _restClient.client.get(
-      Uri.parse(
-        Urls.defaultTweets,
-      ),
-      headers: {'accept': 'application/json'},
-    );
-
-    final defaultTweets = DefaultTweets.fromJson(response.body);
-    return defaultTweets;
-  }
-
   Future<void> dispose() async {
     await _web3Client.dispose();
   }
