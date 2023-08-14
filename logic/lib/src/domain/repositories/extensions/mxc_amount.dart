@@ -10,6 +10,6 @@ class MxcAmount extends EtherAmount {
   }
 
   static double toDoubleByEther(String value) {
-    return double.parse(value) / BigInt.from(10).pow(18).toDouble();
+    return (double.parse(value) / BigInt.from(10).pow(18).toDouble()).ceilToDouble();
   }
 }
