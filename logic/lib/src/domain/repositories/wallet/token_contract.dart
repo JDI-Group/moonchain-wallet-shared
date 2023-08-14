@@ -57,10 +57,11 @@ class TokenContractRepository {
 
   Future<WannseeTokenTransfersModel?> getTokenTransfersByAddress(
     String address,
+    TokenType tokenType,
   ) async {
     final response = await _restClient.client.get(
       Uri.parse(
-        Urls.tokenTransfers(address),
+        Urls.tokenTransfers(address, tokenType),
       ),
       headers: {'accept': 'application/json'},
     );

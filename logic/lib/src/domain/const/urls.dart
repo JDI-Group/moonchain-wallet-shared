@@ -7,8 +7,8 @@ class Urls {
       'https://wannsee-explorer-v1.mxc.com/api/v2/addresses/$hash/tokens?type=${type.toStringValue()}';
   static String transactions(String hash) =>
       'https://wannsee-explorer-v1.mxc.com/api/v2/addresses/$hash/transactions';
-  static String tokenTransfers(String hash) =>
-      'https://wannsee-explorer-v1.mxc.com/api/v2/addresses/$hash/token-transfers?type=';
+  static String tokenTransfers(String hash, TokenType type) =>
+      'https://wannsee-explorer-v1.mxc.com/api/v2/addresses/$hash/token-transfers?type=${type.toStringValue()}';
   static String transaction(String hash) =>
       'https://wannsee-explorer-v1.mxc.com/api/v2/transactions/$hash';
   static const String defaultTokenList =
