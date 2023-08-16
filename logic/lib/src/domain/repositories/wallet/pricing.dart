@@ -22,11 +22,10 @@ class PricingRepository {
   ) async {
     try {
       final tokenA = EthereumAddress.fromHex(token0.address!);
-      // final tokenADecimal = token0.decimals!;
+      final tokenADecimal = token0.decimals!;
       final tokenB = EthereumAddress.fromHex(token1.address!);
-      // final tokenBDecimal = token1.decimals!;
-      // final amountIn = BigInt.from(amount * (pow(10, tokenADecimal)));
-      final amountIn = BigInt.from(amount);
+      final tokenBDecimal = token1.decimals!;
+      final amountIn = BigInt.from(amount * (pow(10, tokenADecimal)));
       final routerAddress = EthereumAddress.fromHex(Const.routerAddress);
 
       final routerContract =
@@ -35,9 +34,10 @@ class PricingRepository {
         amountIn,
         [tokenA, tokenB],
       );
-      // final double amountOut =
-      //     outputPrice[1].toDouble() * pow(10, -tokenBDecimal);
-      final double amountOut = outputPrice[1].toDouble();
+      final double amountOut = MxcAmount.convertWithTokenDecimal(
+        outputPrice[1].toDouble(),
+        tokenBDecimal,
+      );
       return amountOut;
     } catch (e) {
       throw Exception(e.toString());
@@ -68,8 +68,8 @@ class PricingRepository {
           try {
             final balancePrice = await getAmountsOut(
               currentToken.balance!,
-              currentToken.copyWith(address: wMxcToken.address),
-              xsdToken,
+              currentToken.copyWith(address: wMxcToken.address, decimals: 0),
+              xsdToken.copyWith(decimals: 0),
             );
             tokens[i] = currentToken.copyWith(balancePrice: balancePrice);
           } catch (e) {

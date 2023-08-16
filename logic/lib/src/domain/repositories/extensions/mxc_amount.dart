@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:web3dart/web3dart.dart';
 
 class MxcAmount extends EtherAmount {
@@ -10,6 +12,16 @@ class MxcAmount extends EtherAmount {
   }
 
   static double toDoubleByEther(String value) {
-    return (double.parse(value) / BigInt.from(10).pow(18).toDouble()).ceilToDouble();
+    return (double.parse(value) / BigInt.from(10).pow(18).toDouble())
+        .ceilToDouble();
+  }
+
+  static double convertWithTokenDecimal(double input, int tokenDecimal) {
+    if (input < pow(10, tokenDecimal)) {
+      return 0.0;
+    }
+    double convertedInput =
+        double.parse((input / pow(10, tokenDecimal)).toStringAsFixed(1));
+    return convertedInput;
   }
 }
