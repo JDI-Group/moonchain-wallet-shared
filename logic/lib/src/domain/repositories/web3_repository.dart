@@ -2,6 +2,7 @@ import 'package:mxc_logic/mxc_logic.dart';
 import 'package:mxc_logic/src/data/api/client/web3_client.dart';
 import 'package:mxc_logic/src/data/data.dart';
 import 'package:mxc_logic/src/domain/repositories/wallet/nft_contract.dart';
+import 'package:mxc_logic/src/domain/repositories/wallet/pricing.dart';
 import 'package:mxc_logic/src/domain/repositories/wallet/token_contract.dart';
 import 'package:mxc_logic/src/domain/repositories/wallet/tweets.dart';
 
@@ -28,4 +29,6 @@ class Web3Repository {
   NftContractRepository get nftContract => NftContractRepository(_web3client);
 
   TweetsRepository get tweetsRepository => TweetsRepository(_web3client);
+
+  PricingRepository get pricingRepository => PricingRepository(_web3client);
 }

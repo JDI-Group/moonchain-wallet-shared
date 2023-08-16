@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 import 'package:ens_dart/ens_dart.dart';
 import 'package:flutter/services.dart';
 import 'package:mxc_logic/src/data/api/client/rest_client.dart';
@@ -152,9 +153,13 @@ class TokenContractRepository {
       if (token.address != null) {
         final data = EthereumAddress.fromHex(token.address!);
         final ensToken = EnsToken(client: _web3Client, address: data);
+        final tokenDecimal = token.decimals!;
 
         final tokenBalanceResponse = await ensToken.balanceOf(address);
-        tokens[i] = token.copyWith(balance: tokenBalanceResponse.toDouble());
+        // making number human understandable
+        final double tokenBalance = MxcAmount.convertWithTokenDecimal(
+            tokenBalanceResponse.toDouble(), tokenDecimal);
+        tokens[i] = token.copyWith(balance: tokenBalance);
       }
     }
     return tokens;
