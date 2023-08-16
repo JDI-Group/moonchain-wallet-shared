@@ -51,10 +51,26 @@ class PricingRepository {
       final xsdToken = tokens.firstWhere((element) => element.symbol == 'XSD');
       for (int i = 0; i < tokens.length; i++) {
         final currentToken = tokens[i];
-        if (currentToken.address == null) {
+        if (currentToken.address != null) {
           try {
             final balancePrice = await getAmountsOut(
-                currentToken.balance!, currentToken, xsdToken);
+              currentToken.balance!,
+              currentToken,
+              xsdToken,
+            );
+            tokens[i] = currentToken.copyWith(balancePrice: balancePrice);
+          } catch (e) {
+            continue;
+          }
+        } else if (currentToken.symbol == 'MXC') {
+          final wMxcToken =
+              tokens.firstWhere((element) => element.symbol == 'WMXC');
+          try {
+            final balancePrice = await getAmountsOut(
+              currentToken.balance!,
+              currentToken.copyWith(address: wMxcToken.address),
+              xsdToken,
+            );
             tokens[i] = currentToken.copyWith(balancePrice: balancePrice);
           } catch (e) {
             continue;
