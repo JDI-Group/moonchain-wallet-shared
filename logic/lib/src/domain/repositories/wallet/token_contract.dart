@@ -231,7 +231,7 @@ class TokenContractRepository {
       return EstimatedGasFee(
         gasPrice: gasPriceData,
         gas: gas,
-        gasFee: MxcAmount.toDoubleByEther(gasFee.getInWei.toString()),
+        gasFee: gasFee.getValueInUnit(EtherUnit.ether),
       );
     } catch (e) {
       throw e.toString();
