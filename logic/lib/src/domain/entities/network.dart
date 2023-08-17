@@ -58,7 +58,7 @@ class Network {
   static List<Network> fixedNetworks() {
     return [
       const Network(
-        logo: 'assets/svg/networks/wannsee.svg',
+        logo: 'assets/svg/networks/mxc.svg',
         web3RpcHttpUrl: 'https://wannsee-rpc.mxc.com',
         web3RpcWebsocketUrl: 'wss://wannsee-rpc.mxc.com',
         web3WebSocketUrl:
@@ -72,7 +72,7 @@ class Network {
         networkType: NetworkType.testnet,
       ),
       const Network(
-        logo: 'assets/svg/networks/wannsee.svg',
+        logo: 'assets/svg/networks/mxc.svg',
         web3RpcHttpUrl: 'https://rpc.mxc.com',
         web3RpcWebsocketUrl: 'wss://rpc.mxc.com',
         web3WebSocketUrl:
