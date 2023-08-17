@@ -29,11 +29,20 @@ class AuthUseCase {
     authStorageRepository.setPrivateKey(privateKey);
     authStorageRepository.setPublicAddress(publicAddress);
 
-    await authCacheRepository?.loadCache(mnemonic.split(' ').join());
+    await authCacheRepository?.loadCache();
   }
 
-  void resetNetwork(Network network) {
+  void resetNetwork(Network network) async {
     authStorageRepository.setNetwork(network);
+
+    await authCacheRepository?.loadCache();
+  }
+
+  void changeAccount(Account account) async {
+    authStorageRepository.setPrivateKey(account.privateKey);
+    authStorageRepository.setPublicAddress(account.address);
+
+    await authCacheRepository?.loadCache();
   }
 
   Account addNewAccount(int index) {
@@ -42,7 +51,8 @@ class AuthUseCase {
     createWallet(mnemoic!, index);
 
     return Account(
-      name: 'Account ${index + 1}',
+      name: '${index + 1}',
+      privateKey: authStorageRepository.privateKey!,
       address: authStorageRepository.publicAddress!,
     );
   }

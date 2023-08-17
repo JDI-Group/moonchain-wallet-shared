@@ -11,15 +11,15 @@ import 'wallet/wallet_address.dart';
 class Web3Repository {
   Web3Repository({
     required DatadashSetupStore setupStore,
-  })  : _setupStore = setupStore,
-        _web3client = DatadashClient(
-          getNetwork: () =>
-              setupStore.getNetwork ??
-              Network.fixedNetworks().where((item) => item.enabled).first,
-        );
+  }) : _setupStore = setupStore;
 
   final DatadashSetupStore _setupStore;
-  final DatadashClient _web3client;
+
+  DatadashClient get _web3client => DatadashClient(
+        getNetwork: () =>
+            _setupStore.getNetwork ??
+            Network.fixedNetworks().where((item) => item.enabled).first,
+      );
 
   WalletAddressRepoistory get walletAddress => const WalletAddressRepoistory();
 
