@@ -150,15 +150,20 @@ class TokenContractRepository {
 
     for (int i = 0; i < tokens.length; i++) {
       final token = tokens[i];
+      final tokenDecimal = token.decimals!;
       if (token.address != null) {
         final data = EthereumAddress.fromHex(token.address!);
         final ensToken = EnsToken(client: _web3Client, address: data);
-        final tokenDecimal = token.decimals!;
 
         final tokenBalanceResponse = await ensToken.balanceOf(address);
         // making number human understandable
         final double tokenBalance = MxcAmount.convertWithTokenDecimal(
             tokenBalanceResponse.toDouble(), tokenDecimal);
+        tokens[i] = token.copyWith(balance: tokenBalance);
+      } else {
+        // native token
+        final ethBalance = await getEthBalance(walletAddress);
+        final double tokenBalance = ethBalance.getInEther.toDouble();
         tokens[i] = token.copyWith(balance: tokenBalance);
       }
     }
