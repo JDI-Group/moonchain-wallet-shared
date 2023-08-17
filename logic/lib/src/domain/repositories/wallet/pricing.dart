@@ -51,6 +51,7 @@ class PricingRepository {
       final xsdToken = tokens.firstWhere((element) => element.symbol == 'XSD');
       for (int i = 0; i < tokens.length; i++) {
         final currentToken = tokens[i];
+        if (currentToken.balance == 0.0) continue;
         if (currentToken.address != null) {
           try {
             final balancePrice = await getAmountsOut(
@@ -62,7 +63,8 @@ class PricingRepository {
           } catch (e) {
             continue;
           }
-        } else if (currentToken.symbol == 'MXC') {
+        } else {
+          // Only the native token does not have address 
           final wMxcToken =
               tokens.firstWhere((element) => element.symbol == 'WMXC');
           try {
