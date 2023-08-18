@@ -30,6 +30,7 @@ dependencies:
   web3dart: ^2.3.3
   ens_dart:
     path: ../../ens_dart
+  http_interceptor: ^1.0.1
 
 dev_dependencies:
   build_runner: ^2.3.3
