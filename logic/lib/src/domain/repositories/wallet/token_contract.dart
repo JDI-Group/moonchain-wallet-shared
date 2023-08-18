@@ -105,24 +105,20 @@ class TokenContractRepository {
     return isConnected;
   }
 
-  Future<bool> subscribeToBalanceEvent(
-      String event, void Function(dynamic) listeningCallBack) async {
+  Future<Stream<dynamic>?> subscribeToBalanceEvent(
+    String event,
+  ) async {
     if ((_web3Client.network!.networkType == NetworkType.testnet ||
             _web3Client.network!.networkType == NetworkType.mainnet) &&
         _web3Client.network!.web3WebSocketUrl!.isNotEmpty) {
-      final _mxcSocketService = MXCSocketClient();
-      _mxcSocketService.initialize();
-
-      final isConnected = await _mxcSocketService
-          .connect(_web3Client.network!.web3WebSocketUrl!);
-
-      if (isConnected) {
-        _mxcSocketService.subscribeToEvent(event, listeningCallBack);
-      }
-
-      return isConnected;
+      final mxcSocketService = MXCSocketClient();
+      mxcSocketService.initialize();
+      await mxcSocketService.connect(_web3Client.network!.web3WebSocketUrl!);
+      return mxcSocketService.subscribeToEvent(
+        event,
+      );
     } else {
-      return false;
+      return null;
     }
   }
 

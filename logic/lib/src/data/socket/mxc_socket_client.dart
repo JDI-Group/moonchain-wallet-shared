@@ -1,13 +1,13 @@
-import 'package:mxc_logic/mxc_logic.dart';
+import 'dart:async';
 import 'package:mxc_logic/src/data/socket/phoenix/phoenix_client.dart';
+import 'package:phoenix_socket/phoenix_socket.dart';
 
 abstract class IMXCSocketClient {
   Future<bool> connect(String url);
   bool isConnected();
   void disconnect();
-  void subscribeToEvent(
+  Future<Stream<Message>?> subscribeToEvent(
     String event,
-    void Function(Object event) listeningCallBack,
   );
 }
 
@@ -31,17 +31,18 @@ class MXCSocketClient {
   }
 
   Future<bool> connect(String web3WebSocketUrl) async {
-    return _socketClient!.connect(web3WebSocketUrl);
+    return isConnected()
+        ? true
+        : await _socketClient!.connect(web3WebSocketUrl);
   }
 
   void disconnect() async {
     _socketClient!.disconnect();
   }
 
-  void subscribeToEvent(
+  Future<Stream<Message>?> subscribeToEvent(
     String event,
-    void Function(dynamic event) listeningCallBack,
   ) async {
-    _socketClient!.subscribeToEvent(event, listeningCallBack);
+    return _socketClient!.subscribeToEvent(event);
   }
 }
