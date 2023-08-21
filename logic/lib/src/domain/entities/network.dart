@@ -65,7 +65,7 @@ class Network {
             'wss://wannsee-explorer-v1.mxc.com/socket/v2/websocket?vsn=2.0.0',
         symbol: 'MXC',
         explorerUrl: 'https://wannsee-explorer.mxc.com',
-        enabled: true,
+        enabled: false,
         label: 'MXC Wannsee Testnet',
         chainId: 5167003,
         isAdded: true,
@@ -79,10 +79,10 @@ class Network {
             'wss://explorer-v1.mxc.com/socket/v2/websocket?vsn=2.0.0',
         symbol: 'MXC',
         explorerUrl: 'https://explorer.mxc.com/',
-        enabled: false,
+        enabled: true,
         label: 'MXC zkEVM Mainnet',
         chainId: 18686,
-        isAdded: false,
+        isAdded: true,
         networkType: NetworkType.mainnet,
       ),
       const Network(
@@ -95,7 +95,7 @@ class Network {
         enabled: false,
         label: 'Ethereum Mainnet',
         chainId: 1,
-        isAdded: false,
+        isAdded: true,
         networkType: NetworkType.mainnet,
       ),
       const Network(
@@ -108,7 +108,7 @@ class Network {
         enabled: false,
         label: 'Arbitrum One',
         chainId: 42161,
-        isAdded: false,
+        isAdded: true,
         networkType: NetworkType.mainnet,
       ),
       const Network(
@@ -121,7 +121,7 @@ class Network {
         enabled: false,
         label: 'Arbitrum Goerli',
         chainId: 421613,
-        isAdded: false,
+        isAdded: true,
         networkType: NetworkType.testnet,
       )
     ];
