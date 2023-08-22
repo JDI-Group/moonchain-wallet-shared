@@ -1,8 +1,5 @@
 import 'package:mxc_logic/mxc_logic.dart';
 
-import 'auth_cache_repository.dart';
-import 'auth_storage_repository.dart';
-
 import '../wallet/wallet_address.dart';
 
 class AuthUseCase {
@@ -21,7 +18,7 @@ class AuthUseCase {
   bool validateMnemonic(String mnemonic) =>
       walletAddressRepoistory.validateMnemonic(mnemonic);
 
-  void createWallet(String mnemonic, [int index = 0]) async {
+  Future<Account> createWallet(String mnemonic, [int index = 0]) async {
     final privateKey = walletAddressRepoistory.getPrivateKey(mnemonic, index);
     final publicAddress = walletAddressRepoistory.getPublicAddress(privateKey);
 
@@ -30,6 +27,12 @@ class AuthUseCase {
     authStorageRepository.setPublicAddress(publicAddress);
 
     await authCacheRepository?.loadCache();
+
+    return Account(
+      name: '${index + 1}',
+      privateKey: authStorageRepository.privateKey!,
+      address: authStorageRepository.publicAddress!,
+    );
   }
 
   void resetNetwork(Network network) async {
@@ -45,19 +48,16 @@ class AuthUseCase {
     await authCacheRepository?.loadCache();
   }
 
-  Account addNewAccount(int index) {
+  Future<Account> addNewAccount(int index) async {
     final mnemoic = authStorageRepository.mnemonic;
 
-    createWallet(mnemoic!, index);
-
-    return Account(
-      name: '${index + 1}',
-      privateKey: authStorageRepository.privateKey!,
-      address: authStorageRepository.publicAddress!,
-    );
+    return createWallet(mnemoic!, index);
   }
 
   bool get loggedIn => authStorageRepository.loggedIn;
 
-  void resetWallet() => authStorageRepository.cleanCache();
+  void resetWallet() {
+    authStorageRepository.cleanCache();
+    authCacheRepository!.cleanCache();
+  }
 }

@@ -18,4 +18,8 @@ class AuthenticationCacheRepository {
         '${currentNetwork.label?.split(' ').join()}_${_authStorageRepository.publicAddress}';
     await _controller.load(username);
   }
+
+  void cleanCache(){
+    _controller.unload();
+  }
 }
