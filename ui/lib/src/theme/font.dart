@@ -23,7 +23,7 @@ class FontTheme {
   TextStylePack get caption1 =>
       TextStylePack(_colorsTheme, _baseTextStyle.copyWith(fontSize: 12));
   TextStylePack get caption2 => TextStylePack(_colorsTheme,
-      _baseTextStyle.copyWith(fontWeight: FontWeight.w500, fontSize: 12));
+      _baseTextStyle.copyWith(fontWeight: FontWeight.w500, fontSize: 10));
 
   TextStylePack get subtitle1 =>
       TextStylePack(_colorsTheme, _baseTextStyle.copyWith(fontSize: 14));
