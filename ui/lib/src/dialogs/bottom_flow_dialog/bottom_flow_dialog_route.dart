@@ -21,6 +21,9 @@ class BottomFlowDialogRoute<T> extends MaterialPageRoute<T> {
       skipAnimation ? Duration.zero : super.transitionDuration;
 
   @override
+  Widget buildContent(BuildContext context) => builder(context);
+
+  @override
   Widget buildTransitions(
     BuildContext context,
     Animation<double> animation,

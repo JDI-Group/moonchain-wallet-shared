@@ -41,8 +41,6 @@ class BottomFlowDialogState extends State<BottomFlowDialog> {
   @protected
   BuildContext get context => super.context;
 
-  final _internalNavigator = GlobalKey<NavigatorState>();
-
   final BehaviorSubject<double> _overscrollValue = BehaviorSubject.seeded(0);
   ValueStream<double> get overscrollValue => _overscrollValue;
 
@@ -106,31 +104,14 @@ class BottomFlowDialogState extends State<BottomFlowDialog> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () {
-        if (_internalNavigator.currentState?.canPop() ?? false) {
-          _internalNavigator.currentState!.pop();
-          return Future.value(false);
-        }
-        return Future.value(true);
-      },
-      child: Provider.value(
-        value: this,
-        child: Navigator(
-          key: _internalNavigator,
-          onPopPage: (route, dynamic result) {
-            if (!route.didPop(result)) {
-              return false;
-            }
-            return true;
-          },
-          onGenerateInitialRoutes: (_, __) => [
-            PageRouteBuilder<dynamic>(
-              pageBuilder: (_, __, ___) => widget.child,
-            )
-          ],
-        ),
-      ),
-    );
+        onWillPop: () {
+          if (parentNavigator.canPop()) {
+            parentNavigator.pop();
+            return Future.value(false);
+          }
+          return Future.value(true);
+        },
+        child: widget.child);
   }
 }
 
