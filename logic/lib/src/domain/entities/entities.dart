@@ -9,3 +9,6 @@ export 'nft.dart';
 export 'account.dart';
 export 'network.dart';
 export 'token_type.dart';
+export 'dapp_store/dapp_store.dart';
+export 'dapp_store/dapp_item.dart';
+export 'dapp_info/dapp.dart';

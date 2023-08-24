@@ -1,5 +1,4 @@
-// import 'package:http/http.dart';
-// import 'package:http_interceptor/http/http.dart';
+import 'package:http/http.dart';
 import 'package:http_interceptor/http_interceptor.dart';
 import 'package:meta/meta.dart';
 import 'package:mxc_logic/mxc_logic.dart';
@@ -53,4 +52,9 @@ class DatadashClient extends Web3Client {
   final Network Function() _getNetwork;
 
   Network? get network => _getNetwork();
+  Client get restClient => InterceptedClient.build(
+        interceptors: [
+          LoggingInterceptor(),
+        ],
+      );
 }

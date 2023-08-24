@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 import 'package:ens_dart/ens_dart.dart';
-import 'package:mxc_logic/src/data/api/client/rest_client.dart';
+import 'package:http/http.dart';
 import 'package:mxc_logic/mxc_logic.dart';
 import 'package:mxc_logic/src/data/api/client/web3_client.dart';
 import 'package:mxc_logic/src/domain/const/const.dart';
@@ -10,10 +10,10 @@ import 'package:web3dart/web3dart.dart';
 class PricingRepository {
   PricingRepository(
     this._web3Client,
-  ) : _restClient = RestClient();
+  ) : _restClient = _web3Client.restClient;
 
   final DatadashClient _web3Client;
-  final RestClient _restClient;
+  final Client _restClient;
 
   Future<double> getAmountsOut(
     double amount,
@@ -64,7 +64,7 @@ class PricingRepository {
             continue;
           }
         } else {
-          // Only the native token does not have address 
+          // Only the native token does not have address
           final wMxcToken =
               tokens.firstWhere((element) => element.symbol == 'WMXC');
           try {
