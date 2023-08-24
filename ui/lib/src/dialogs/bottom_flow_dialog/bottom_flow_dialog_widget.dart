@@ -111,7 +111,10 @@ class BottomFlowDialogState extends State<BottomFlowDialog> {
           }
           return Future.value(true);
         },
-        child: widget.child);
+        child: Provider.value(
+          value: this,
+          child: widget.child,
+        ));
   }
 }
 
