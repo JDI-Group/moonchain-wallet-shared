@@ -34,25 +34,33 @@ class TokenContractRepository {
   Future<WannseeTransactionsModel?> getTransactionsByAddress(
     String address,
   ) async {
-    final response = await _restClient.client.get(
-      Uri.parse(
-        Urls.transactions(address),
-      ),
-      headers: {'accept': 'application/json'},
-    );
+    final selectedNetwork = _web3Client.network!;
+    final apiBaseUrl = selectedNetwork.chainId == Config.mxcMainnetChainId
+        ? Config.mainnetApiBaseUrl
+        : selectedNetwork.chainId == Config.mxcTestnetChainId
+            ? Config.testnetApiBaseUrl
+            : null;
 
-    if (response.statusCode == 200) {
-      final txList = WannseeTransactionsModel.fromJson(response.body);
-      return txList;
-    }
-    if (response.statusCode == 404) {
-      // new wallet and nothing is returned
-      final txList = WannseeTransactionsModel(
-        items: const [],
+    if (apiBaseUrl != null) {
+      final response = await _restClient.client.get(
+        Uri.parse(
+          Urls.transactions(apiBaseUrl, address),
+        ),
+        headers: {'accept': 'application/json'},
       );
-      return txList;
-    } else {
-      return null;
+      if (response.statusCode == 200) {
+        final txList = WannseeTransactionsModel.fromJson(response.body);
+        return txList;
+      }
+      if (response.statusCode == 404) {
+        // new wallet and nothing is returned
+        final txList = WannseeTransactionsModel(
+          items: const [],
+        );
+        return txList;
+      } else {
+        return null;
+      }
     }
   }
 
@@ -60,24 +68,33 @@ class TokenContractRepository {
     String address,
     TokenType tokenType,
   ) async {
-    final response = await _restClient.client.get(
-      Uri.parse(
-        Urls.tokenTransfers(address, tokenType),
-      ),
-      headers: {'accept': 'application/json'},
-    );
-    if (response.statusCode == 200) {
-      final txList = WannseeTokenTransfersModel.fromJson(response.body);
-      return txList;
-    }
-    if (response.statusCode == 404) {
-      // new wallet and nothing is returned
-      const txList = WannseeTokenTransfersModel(
-        items: [],
+    final selectedNetwork = _web3Client.network!;
+    final apiBaseUrl = selectedNetwork.chainId == Config.mxcMainnetChainId
+        ? Config.mainnetApiBaseUrl
+        : selectedNetwork.chainId == Config.mxcTestnetChainId
+            ? Config.testnetApiBaseUrl
+            : null;
+
+    if (apiBaseUrl != null) {
+      final response = await _restClient.client.get(
+        Uri.parse(
+          Urls.tokenTransfers(apiBaseUrl, address, tokenType),
+        ),
+        headers: {'accept': 'application/json'},
       );
-      return txList;
-    } else {
-      return null;
+      if (response.statusCode == 200) {
+        final txList = WannseeTokenTransfersModel.fromJson(response.body);
+        return txList;
+      }
+      if (response.statusCode == 404) {
+        // new wallet and nothing is returned
+        const txList = WannseeTokenTransfersModel(
+          items: [],
+        );
+        return txList;
+      } else {
+        return null;
+      }
     }
   }
 
@@ -85,18 +102,27 @@ class TokenContractRepository {
   Future<WannseeTransactionModel?> getTransactionByHash(
     String hash,
   ) async {
-    final response = await _restClient.client.get(
-      Uri.parse(
-        Urls.transaction(hash),
-      ),
-      headers: {'accept': 'application/json'},
-    );
+    final selectedNetwork = _web3Client.network!;
+    final apiBaseUrl = selectedNetwork.chainId == Config.mxcMainnetChainId
+        ? Config.mainnetApiBaseUrl
+        : selectedNetwork.chainId == Config.mxcTestnetChainId
+            ? Config.testnetApiBaseUrl
+            : null;
 
-    if (response.statusCode == 200) {
-      final txList = WannseeTransactionModel.fromJson(response.body);
-      return txList;
-    } else {
-      return null;
+    if (apiBaseUrl != null) {
+      final response = await _restClient.client.get(
+        Uri.parse(
+          Urls.transaction(apiBaseUrl, hash),
+        ),
+        headers: {'accept': 'application/json'},
+      );
+
+      if (response.statusCode == 200) {
+        final txList = WannseeTransactionModel.fromJson(response.body);
+        return txList;
+      } else {
+        return null;
+      }
     }
   }
 

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:ens_dart/ens_dart.dart';
 import 'package:mxc_logic/src/data/api/client/rest_client.dart';
 import 'package:mxc_logic/mxc_logic.dart';
+import 'package:mxc_logic/src/data/api/client/web3_client.dart';
 import 'package:mxc_logic/src/domain/const/const.dart';
 import 'package:web3dart/web3dart.dart';
 
@@ -10,7 +11,7 @@ class NftContractRepository {
     this._web3Client,
   ) : _restClient = RestClient();
 
-  final Web3Client _web3Client;
+  final DatadashClient _web3Client;
   final RestClient _restClient;
 
   Future<bool> checkConnectionToNetwork() async {
@@ -112,71 +113,81 @@ class NftContractRepository {
     try {
       final List<Nft> finalList = [];
 
-      final response = await _restClient.client.get(
-        Uri.parse(
-          Urls.tokens(address, TokenType.erc_721),
-        ),
-        headers: {'accept': 'application/json'},
-      );
+      final selectedNetwork = _web3Client.network!;
+      final apiBaseUrl = selectedNetwork.chainId == Config.mxcMainnetChainId
+          ? Config.mainnetApiBaseUrl
+          : selectedNetwork.chainId == Config.mxcTestnetChainId
+              ? Config.testnetApiBaseUrl
+              : null;
 
-      if (response.statusCode == 200) {
-        final addressCollections =
-            WannseeAddressTokensList.fromJson(response.body);
+      if (apiBaseUrl != null) {
+        final response = await _restClient.client.get(
+          Uri.parse(
+            Urls.tokens(apiBaseUrl, address, TokenType.erc_721),
+          ),
+          headers: {'accept': 'application/json'},
+        );
 
-        for (int i = 0; i < addressCollections.items!.length; i++) {
-          final tokenAddress = addressCollections.items![i].token!.address!;
-          final response = await _restClient.client.get(
-            Uri.parse(
-              Urls.tokenInstances(tokenAddress, TokenType.erc_721),
-            ),
-            headers: {'accept': 'application/json'},
-          );
+        if (response.statusCode == 200) {
+          final addressCollections =
+              WannseeAddressTokensList.fromJson(response.body);
 
-          if (response.statusCode == 200) {
-            final collectionDetail =
-                WannseeNftCollectionDetail.fromJson(response.body);
-            final currentCollectionNfts = collectionDetail.items!
-                .where(
-                    (element) => element.owner!.hash!.toLowerCase() == address)
-                .toList();
+          for (int i = 0; i < addressCollections.items!.length; i++) {
+            final tokenAddress = addressCollections.items![i].token!.address!;
+            final response = await _restClient.client.get(
+              Uri.parse(
+                Urls.tokenInstances(
+                    apiBaseUrl, tokenAddress, TokenType.erc_721),
+              ),
+              headers: {'accept': 'application/json'},
+            );
 
-            for (int i = 0; i < currentCollectionNfts.length; i++) {
-              final tokenInstance = currentCollectionNfts[i];
+            if (response.statusCode == 200) {
+              final collectionDetail =
+                  WannseeNftCollectionDetail.fromJson(response.body);
+              final currentCollectionNfts = collectionDetail.items!
+                  .where((element) =>
+                      element.owner!.hash!.toLowerCase() == address)
+                  .toList();
 
-              if (tokenInstance.token == null ||
-                  tokenInstance.token!.address == null ||
-                  tokenInstance.imageUrl == null ||
-                  tokenInstance.id == null ||
-                  tokenInstance.token!.name == null) {
-                throw Exception('NFT Data fetch error.');
+              for (int i = 0; i < currentCollectionNfts.length; i++) {
+                final tokenInstance = currentCollectionNfts[i];
+
+                if (tokenInstance.token == null ||
+                    tokenInstance.token!.address == null ||
+                    tokenInstance.imageUrl == null ||
+                    tokenInstance.id == null ||
+                    tokenInstance.token!.name == null) {
+                  throw Exception('NFT Data fetch error.');
+                }
+
+                final collectionAddress = tokenInstance.token!.address!;
+                final tokenId = int.parse(tokenInstance.id!);
+                final image = tokenInstance.imageUrl!;
+                final name = tokenInstance.token!.name!;
+
+                final nft = Nft(
+                  address: collectionAddress,
+                  tokenId: tokenId,
+                  image: image,
+                  name: name,
+                );
+
+                finalList.add(nft);
               }
-
-              final collectionAddress = tokenInstance.token!.address!;
-              final tokenId = int.parse(tokenInstance.id!);
-              final image = tokenInstance.imageUrl!;
-              final name = tokenInstance.token!.name!;
-
-              final nft = Nft(
-                address: collectionAddress,
-                tokenId: tokenId,
-                image: image,
-                name: name,
-              );
-
-              finalList.add(nft);
+            } else {
+              return null;
             }
-          } else {
-            return null;
           }
+          return finalList;
         }
-        return finalList;
-      }
 
-      if (response.statusCode == 404) {
-        // new wallet
-        return [];
-      } else {
-        return null;
+        if (response.statusCode == 404) {
+          // new wallet
+          return [];
+        } else {
+          return null;
+        }
       }
     } catch (e) {
       throw e.toString();
