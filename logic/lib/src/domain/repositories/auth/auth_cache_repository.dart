@@ -15,11 +15,11 @@ class AuthenticationCacheRepository {
         Network.fixedNetworks().where((item) => item.enabled).first;
 
     final username =
-        '${currentNetwork.label?.split(' ').join()}_${_authStorageRepository.publicAddress}';
+        '${currentNetwork.web3RpcHttpUrl}_${currentNetwork.chainId}_${_authStorageRepository.publicAddress}';
     await _controller.load(username);
   }
 
-  void cleanCache(){
+  void cleanCache() {
     _controller.unload();
   }
 }
