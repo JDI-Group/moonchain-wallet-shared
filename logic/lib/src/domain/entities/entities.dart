@@ -5,6 +5,7 @@ export 'default_ipfs_gateways/default_ipfs_gateways.dart';
 export 'default_tweets/default_tweets.dart';
 export 'default_tokens/token.dart';
 export 'estimated_gas_fee.dart';
+export 'ens_addresses.dart';
 export 'nft.dart';
 export 'account.dart';
 export 'network.dart';
