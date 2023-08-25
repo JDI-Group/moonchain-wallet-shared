@@ -186,10 +186,32 @@ class TokenContractRepository {
 
   Future<String> getName(String address) async {
     try {
-      final ens = Ens(client: _web3Client).withAddress(address);
-      final name = await ens.getName();
+      final selectedNetwork = _web3Client.network!;
+      final ensResolverAddress =
+          selectedNetwork.chainId == Config.mxcMainnetChainId
+              ? Config.mainnetEnsAddresses.ensResolver
+              : selectedNetwork.chainId == Config.mxcTestnetChainId
+                  ? Config.testnetEnsAddresses.ensResolver
+                  : null;
+      final ensFallBackRegistryAddress =
+          selectedNetwork.chainId == Config.mxcMainnetChainId
+              ? Config.mainnetEnsAddresses.ensFallbackRegistry
+              : selectedNetwork.chainId == Config.mxcTestnetChainId
+                  ? Config.testnetEnsAddresses.ensFallbackRegistry
+                  : null;
+      if (ensResolverAddress != null && ensFallBackRegistryAddress != null) {
+        final ens = Ens(
+                client: _web3Client,
+                address: EthereumAddress.fromHex(ensResolverAddress),
+                ensFallBackRegistryAddress:
+                    EthereumAddress.fromHex(ensFallBackRegistryAddress))
+            .withAddress(address);
+        final name = await ens.getName();
 
-      return name;
+        return name;
+      }
+
+      throw Exception('Ens addresses missing.');
     } catch (e) {
       throw e.toString();
     }
@@ -197,10 +219,32 @@ class TokenContractRepository {
 
   Future<String> getAddress(String? name) async {
     try {
-      final ens = Ens(client: _web3Client).withName(name);
-      final address = await ens.getAddress();
+      final selectedNetwork = _web3Client.network!;
+      final ensResolverAddress =
+          selectedNetwork.chainId == Config.mxcMainnetChainId
+              ? Config.mainnetEnsAddresses.ensResolver
+              : selectedNetwork.chainId == Config.mxcTestnetChainId
+                  ? Config.testnetEnsAddresses.ensResolver
+                  : null;
+      final ensFallBackRegistryAddress =
+          selectedNetwork.chainId == Config.mxcMainnetChainId
+              ? Config.mainnetEnsAddresses.ensFallbackRegistry
+              : selectedNetwork.chainId == Config.mxcTestnetChainId
+                  ? Config.testnetEnsAddresses.ensFallbackRegistry
+                  : null;
+      if (ensResolverAddress != null && ensFallBackRegistryAddress != null) {
+        final ens = Ens(
+                client: _web3Client,
+                address: EthereumAddress.fromHex(ensResolverAddress),
+                ensFallBackRegistryAddress:
+                    EthereumAddress.fromHex(ensFallBackRegistryAddress))
+            .withName(name);
+        final address = await ens.getAddress();
 
-      return address.hex;
+        return address.hex;
+      }
+
+      throw Exception('Ens addresses missing.');
     } catch (e) {
       throw e.toString();
     }
