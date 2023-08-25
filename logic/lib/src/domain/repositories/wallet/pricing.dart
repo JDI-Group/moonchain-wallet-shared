@@ -26,19 +26,29 @@ class PricingRepository {
       final tokenB = EthereumAddress.fromHex(token1.address!);
       final tokenBDecimal = token1.decimals!;
       final amountIn = BigInt.from(amount * (pow(10, tokenADecimal)));
-      final routerAddress = EthereumAddress.fromHex(Const.routerAddress);
+      final selectedNetwork = _web3Client.network!;
+      final router = selectedNetwork.chainId == Config.mxcMainnetChainId
+          ? Config.mainnetRouterAddress
+          : selectedNetwork.chainId == Config.mxcTestnetChainId
+              ? Config.testnetRouterAddress
+              : null;
+      if (router != null) {
+        final routerAddress = EthereumAddress.fromHex(router);
 
-      final routerContract =
-          RouterContract(client: _web3Client, address: routerAddress);
-      final outputPrice = await routerContract.getAmountsOut(
-        amountIn,
-        [tokenA, tokenB],
-      );
-      final double amountOut = MxcAmount.convertWithTokenDecimal(
-        outputPrice[1].toDouble(),
-        tokenBDecimal,
-      );
-      return amountOut;
+        final routerContract =
+            RouterContract(client: _web3Client, address: routerAddress);
+        final outputPrice = await routerContract.getAmountsOut(
+          amountIn,
+          [tokenA, tokenB],
+        );
+        final double amountOut = MxcAmount.convertWithTokenDecimal(
+          outputPrice[1].toDouble(),
+          tokenBDecimal,
+        );
+        return amountOut;
+      } else {
+        throw Exception('Router address is missing.');
+      }
     } catch (e) {
       throw Exception(e.toString());
     }

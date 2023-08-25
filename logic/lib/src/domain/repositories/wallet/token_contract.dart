@@ -123,6 +123,8 @@ class TokenContractRepository {
       } else {
         return null;
       }
+    } else {
+      return null;
     }
   }
 
@@ -149,16 +151,26 @@ class TokenContractRepository {
   }
 
   Future<DefaultTokens?> getDefaultTokens() async {
-    final response = await _restClient.client.get(
-      Uri.parse(
-        Urls.defaultTokenList,
-      ),
-      headers: {'accept': 'application/json'},
-    );
+    final selectedNetwork = _web3Client.network!;
+    final tokenListUrl = selectedNetwork.chainId == Config.mxcMainnetChainId
+        ? Config.mainnetTokenListUrl
+        : selectedNetwork.chainId == Config.mxcTestnetChainId
+            ? Config.testnetTokenListUrl
+            : null;
+    if (tokenListUrl != null) {
+      final response = await _restClient.client.get(
+        Uri.parse(
+          tokenListUrl,
+        ),
+        headers: {'accept': 'application/json'},
+      );
 
-    if (response.statusCode == 200) {
-      final defaultTokens = DefaultTokens.fromJson(response.body);
-      return defaultTokens;
+      if (response.statusCode == 200) {
+        final defaultTokens = DefaultTokens.fromJson(response.body);
+        return defaultTokens;
+      } else {
+        return null;
+      }
     } else {
       return null;
     }
