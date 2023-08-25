@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 import 'package:ens_dart/ens_dart.dart';
 import 'package:flutter/services.dart';
 import 'package:mxc_logic/src/data/api/client/rest_client.dart';
@@ -296,29 +295,25 @@ class TokenContractRepository {
     EtherAmount? gasPrice,
     Uint8List? data,
   }) async {
-    try {
-      final sender = EthereumAddress.fromHex(from);
-      final toAddress = EthereumAddress.fromHex(to);
+    final sender = EthereumAddress.fromHex(from);
+    final toAddress = EthereumAddress.fromHex(to);
 
-      final gasPriceData = gasPrice ?? await _web3Client.getGasPrice();
+    final gasPriceData = gasPrice ?? await _web3Client.getGasPrice();
 
-      final gas = await _web3Client.estimateGas(
-        sender: sender,
-        to: toAddress,
-        data: data,
-      );
+    final gas = await _web3Client.estimateGas(
+      sender: sender,
+      to: toAddress,
+      data: data,
+    );
 
-      final fee = gasPriceData.getInWei * gas;
-      final gasFee = EtherAmount.fromBigInt(EtherUnit.wei, fee);
+    final fee = gasPriceData.getInWei * gas;
+    final gasFee = EtherAmount.fromBigInt(EtherUnit.wei, fee);
 
-      return EstimatedGasFee(
-        gasPrice: gasPriceData,
-        gas: gas,
-        gasFee: gasFee.getValueInUnit(EtherUnit.ether),
-      );
-    } catch (e) {
-      throw e.toString();
-    }
+    return EstimatedGasFee(
+      gasPrice: gasPriceData,
+      gas: gas,
+      gasFee: gasFee.getValueInUnit(EtherUnit.ether),
+    );
   }
 
   Future<String> sendTransaction({
@@ -328,28 +323,24 @@ class TokenContractRepository {
     EstimatedGasFee? estimatedGasFee,
     Uint8List? data,
   }) async {
-    try {
-      final toAddress = EthereumAddress.fromHex(to);
-      final cred = EthPrivateKey.fromHex(privateKey);
-      final amountFromDouble = double.parse(amount);
-      final amountValue = MxcAmount.fromDoubleByEther(amountFromDouble);
+    final toAddress = EthereumAddress.fromHex(to);
+    final cred = EthPrivateKey.fromHex(privateKey);
+    final amountFromDouble = double.parse(amount);
+    final amountValue = MxcAmount.fromDoubleByEther(amountFromDouble);
 
-      final result = await _web3Client.sendTransaction(
-        cred,
-        Transaction(
-          to: toAddress,
-          value: amountValue,
-          gasPrice: estimatedGasFee?.gasPrice,
-          data: data,
-        ),
-        fetchChainIdFromNetworkId: true,
-        chainId: null,
-      );
+    final result = await _web3Client.sendTransaction(
+      cred,
+      Transaction(
+        to: toAddress,
+        value: amountValue,
+        gasPrice: estimatedGasFee?.gasPrice,
+        data: data,
+      ),
+      fetchChainIdFromNetworkId: true,
+      chainId: null,
+    );
 
-      return result;
-    } catch (e) {
-      throw e.toString();
-    }
+    return result;
   }
 
   Future<int> getChainId(String rpcUrl) async {
