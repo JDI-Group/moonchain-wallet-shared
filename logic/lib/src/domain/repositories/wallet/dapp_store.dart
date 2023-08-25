@@ -4,7 +4,6 @@ import 'package:http/http.dart';
 import 'package:mxc_logic/mxc_logic.dart';
 import 'package:mxc_logic/src/data/api/client/web3_client.dart';
 import 'package:mxc_logic/src/domain/const/urls.dart';
-import 'package:mxc_logic/src/domain/entities/dapp_info/dapp.dart';
 
 class DappStoreRepository {
   DappStoreRepository(

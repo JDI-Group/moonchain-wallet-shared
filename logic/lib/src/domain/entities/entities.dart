@@ -13,3 +13,4 @@ export 'token_type.dart';
 export 'dapp_store/dapp_store.dart';
 export 'dapp_store/dapp_item.dart';
 export 'dapp_info/dapp.dart';
+export 'app_version/app_version.dart';
