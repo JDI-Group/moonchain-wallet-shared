@@ -319,26 +319,27 @@ class TokenContractRepository {
   Future<String> sendTransaction({
     required String privateKey,
     required String to,
-    required String amount,
+    required String? from,
+    required EtherAmount amount,
     EstimatedGasFee? estimatedGasFee,
     Uint8List? data,
   }) async {
     final toAddress = EthereumAddress.fromHex(to);
+    EthereumAddress? fromAddress;
+    if (from != null) fromAddress = EthereumAddress.fromHex(from);
     final cred = EthPrivateKey.fromHex(privateKey);
-    final amountFromDouble = double.parse(amount);
-    final amountValue = MxcAmount.fromDoubleByEther(amountFromDouble);
 
     final result = await _web3Client.sendTransaction(
-      cred,
-      Transaction(
-        to: toAddress,
-        value: amountValue,
-        gasPrice: estimatedGasFee?.gasPrice,
-        data: data,
-      ),
-      fetchChainIdFromNetworkId: true,
-      chainId: null,
-    );
+        cred,
+        Transaction(
+          to: toAddress,
+          from: fromAddress,
+          value: amount,
+          gasPrice: estimatedGasFee?.gasPrice,
+          data: data,
+        ),
+        fetchChainIdFromNetworkId: true,
+        chainId: null);
 
     return result;
   }
