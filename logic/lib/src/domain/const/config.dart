@@ -25,6 +25,8 @@ class Config {
       'https://raw.githubusercontent.com/MXCzkEVM/wannseeswap-tokenlist/main/tokenlist-mainnet.json';
   static const String testnetTokenListUrl =
       'https://raw.githubusercontent.com/MXCzkEVM/wannseeswap-tokenlist/main/tokenlist.json';
+  static const String ethereumMainnetTokenListUrl =
+      'https://raw.githubusercontent.com/MXCzkEVM/wannseeswap-tokenlist/main/tokenlist-ethereum.json';
   static const String mainnetApiBaseUrl = 'https://explorer-v1.mxc.com/api/v2/';
   static const String testnetApiBaseUrl =
       'https://wannsee-explorer-v1.mxc.com/api/v2/';
