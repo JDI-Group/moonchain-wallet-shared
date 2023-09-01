@@ -11,7 +11,7 @@ class AppVersionRepository {
   final DatadashClient _web3Client;
   final Client _restClient;
 
-  Future<String?> checkLatestVersion(
+  Future<bool> checkLatestVersion(
     String appSecret,
     String groupId,
     String appVersion,
@@ -24,15 +24,9 @@ class AppVersionRepository {
     );
 
     final app = AppVersion.fromJson(res.body);
-    final latestVersion = app.shortVersion!.split('.');
-    final currentVersion = appVersion.split('.');
+    final latestVersion = int.parse(app.version!);
+    final currentVersion = int.parse(appVersion);
 
-    for (int i = 0; i < latestVersion.length; i++) {
-      if (int.parse(currentVersion[i]) < int.parse(latestVersion[i])) {
-        return app.downloadUrl;
-      }
-    }
-
-    return null;
+    return latestVersion > currentVersion;
   }
 }
