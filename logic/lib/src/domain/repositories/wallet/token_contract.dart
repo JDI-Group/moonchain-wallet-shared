@@ -155,7 +155,7 @@ class TokenContractRepository {
         ? Config.mainnetTokenListUrl
         : selectedNetwork.chainId == Config.mxcTestnetChainId
             ? Config.testnetTokenListUrl
-            : null;
+            : selectedNetwork.chainId == 1 ? Config.ethereumMainnetTokenListUrl : null;
     if (tokenListUrl != null) {
       final response = await _restClient.client.get(
         Uri.parse(
@@ -252,6 +252,10 @@ class TokenContractRepository {
     } catch (e) {
       throw e.toString();
     }
+  }
+
+  Network getCurrentNetwork() {
+    return _web3Client.network!;
   }
 
   Future<String> getAddress(String? name) async {
