@@ -41,19 +41,8 @@ class DappStoreRepository {
       );
 
       final data = Dapp.fromJson(response.body);
-      if (Platform.isAndroid) {
-        final supported = data.app!.supportedPlatforms!
-            .any((e) => (e as String).toLowerCase() == 'android');
-        if (supported) {
-          res.add(data);
-        }
-      } else {
-        final supported = data.app!.supportedPlatforms!
-            .any((e) => (e as String).toLowerCase() == 'ios');
-        if (supported) {
-          res.add(data);
-        }
-      }
+      
+      res.add(data);
     }
 
     res.sort((a, b) => b.reviewApi!.icons!.islarge
