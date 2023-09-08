@@ -118,7 +118,7 @@ class Network {
         enabled: false,
         label: 'Arbitrum Goerli',
         chainId: 421613,
-        isAdded: true,
+        isAdded: false,
         networkType: NetworkType.testnet,
       ),
       const Network(
@@ -129,9 +129,9 @@ class Network {
         symbol: 'ETH',
         explorerUrl: 'https://rpc2.sepolia.org',
         enabled: false,
-        label: 'Sepolia',
+        label: 'Sepolia Testnet',
         chainId: 11155111,
-        isAdded: true,
+        isAdded: false,
         networkType: NetworkType.testnet,
       )
     ];
