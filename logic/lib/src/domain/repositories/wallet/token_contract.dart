@@ -332,7 +332,6 @@ class TokenContractRepository {
     EthereumAddress? fromAddress;
     if (from != null) fromAddress = EthereumAddress.fromHex(from);
     final cred = EthPrivateKey.fromHex(privateKey);
-
     final result = await _web3Client.sendTransaction(
         cred,
         Transaction(
@@ -342,8 +341,7 @@ class TokenContractRepository {
           gasPrice: estimatedGasFee?.gasPrice,
           data: data,
         ),
-        fetchChainIdFromNetworkId: true,
-        chainId: null);
+        chainId: _web3Client.network!.chainId);
 
     return result;
   }
