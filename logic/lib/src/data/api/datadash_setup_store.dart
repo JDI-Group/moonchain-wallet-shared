@@ -58,6 +58,5 @@ class DatadashSetupStore extends GlobalCacheStore {
         _mnemonic,
         _privateKey,
         _publicAddress,
-        _network,
       ]);
 }
