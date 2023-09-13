@@ -123,9 +123,8 @@ class Network {
       ),
       const Network(
         logo: 'assets/svg/networks/ethereum.svg',
-        web3RpcHttpUrl: 'https://endpoints.omniatech.io/v1/eth/sepolia/public',
-        web3RpcWebsocketUrl:
-            'wss://endpoints.omniatech.io/v1/eth/sepolia/public',
+        web3RpcHttpUrl: 'https://eth-sepolia.public.blastapi.io',
+        web3RpcWebsocketUrl: 'wss://eth-sepolia.public.blastapi.io',
         symbol: 'ETH',
         explorerUrl: 'https://rpc2.sepolia.org',
         enabled: false,
