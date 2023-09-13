@@ -87,8 +87,8 @@ class Network {
       ),
       const Network(
         logo: 'assets/svg/networks/ethereum.svg',
-        web3RpcHttpUrl: 'https://rpc.payload.de',
-        web3RpcWebsocketUrl: 'wss://rpc.payload.de',
+        web3RpcHttpUrl: 'https://eth.llamarpc.com',
+        web3RpcWebsocketUrl: 'wss://eth.llamarpc.com',
         symbol: 'ETH',
         explorerUrl: 'https://etherscan.io/',
         enabled: false,
