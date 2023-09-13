@@ -155,7 +155,9 @@ class TokenContractRepository {
         ? Config.mainnetTokenListUrl
         : selectedNetwork.chainId == Config.mxcTestnetChainId
             ? Config.testnetTokenListUrl
-            : selectedNetwork.chainId == 1 ? Config.ethereumMainnetTokenListUrl : null;
+            : selectedNetwork.chainId == 1
+                ? Config.ethereumMainnetTokenListUrl
+                : null;
     if (tokenListUrl != null) {
       final response = await _restClient.client.get(
         Uri.parse(
@@ -293,22 +295,23 @@ class TokenContractRepository {
 
   Future<EtherAmount> getGasPrice() async => await _web3Client.getGasPrice();
 
-  Future<EstimatedGasFee> estimateGesFee({
-    required String from,
-    required String to,
-    EtherAmount? gasPrice,
-    Uint8List? data,
-  }) async {
+  Future<EstimatedGasFee> estimateGesFee(
+      {required String from,
+      required String to,
+      EtherAmount? gasPrice,
+      Uint8List? data,
+      BigInt? amountOfGas}) async {
     final sender = EthereumAddress.fromHex(from);
     final toAddress = EthereumAddress.fromHex(to);
 
     final gasPriceData = gasPrice ?? await _web3Client.getGasPrice();
 
     final gas = await _web3Client.estimateGas(
-      sender: sender,
-      to: toAddress,
-      data: data,
-    );
+        sender: sender,
+        to: toAddress,
+        data: data,
+        gasPrice: gasPriceData,
+        amountOfGas: amountOfGas);
 
     final fee = gasPriceData.getInWei * gas;
     final gasFee = EtherAmount.fromBigInt(EtherUnit.wei, fee);
