@@ -89,7 +89,7 @@ class Network {
         logo: 'assets/svg/networks/ethereum.svg',
         web3RpcHttpUrl: 'https://rpc.payload.de',
         web3RpcWebsocketUrl: 'wss://rpc.payload.de',
-        symbol: 'Eth',
+        symbol: 'ETH',
         explorerUrl: 'https://etherscan.io/',
         enabled: false,
         label: 'Ethereum Mainnet',
