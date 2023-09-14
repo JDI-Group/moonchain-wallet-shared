@@ -1,5 +1,5 @@
 import 'dart:math';
-
+import 'package:mxc_logic/src/domain/const/config.dart';
 import 'package:web3dart/web3dart.dart';
 
 class MxcAmount extends EtherAmount {
@@ -19,8 +19,8 @@ class MxcAmount extends EtherAmount {
     if (input < pow(10, tokenDecimal)) {
       return 0.0;
     }
-    double convertedInput =
-        double.parse((input / pow(10, tokenDecimal)).toStringAsFixed(1));
+    double convertedInput = double.parse(
+        (input / pow(10, tokenDecimal)).toStringAsFixed(Config.decimalFixed));
     return convertedInput;
   }
 }
