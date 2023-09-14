@@ -58,6 +58,9 @@ class PricingRepository {
     List<Token> tokens,
   ) async {
     try {
+      if (!Config.isMxcChains(_web3Client.network!.chainId)) {
+        return tokens;
+      }
       final xsdToken = tokens.firstWhere((element) => element.symbol == 'XSD');
       for (int i = 0; i < tokens.length; i++) {
         final currentToken = tokens[i];
