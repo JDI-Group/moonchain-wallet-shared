@@ -198,7 +198,8 @@ class TokenContractRepository {
       } else {
         // native token
         final ethBalance = await getEthBalance(walletAddress);
-        final double tokenBalance = ethBalance.getInEther.toDouble();
+        final double tokenBalance =
+            ethBalance.getValueInUnit(EtherUnit.ether).toDouble();
         tokens[i] = token.copyWith(balance: tokenBalance);
       }
     }
