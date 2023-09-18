@@ -324,30 +324,41 @@ class TokenContractRepository {
     );
   }
 
-  Future<String> sendTransaction({
-    required String privateKey,
-    required String to,
-    required String? from,
-    required EtherAmount amount,
-    EstimatedGasFee? estimatedGasFee,
-    Uint8List? data,
-  }) async {
+  Future<String> sendTransaction(
+      {required String privateKey,
+      required String to,
+      required String? from,
+      required EtherAmount amount,
+      EstimatedGasFee? estimatedGasFee,
+      Uint8List? data,
+      String? tokenAddress}) async {
     final toAddress = EthereumAddress.fromHex(to);
     EthereumAddress? fromAddress;
     if (from != null) fromAddress = EthereumAddress.fromHex(from);
     final cred = EthPrivateKey.fromHex(privateKey);
+    late Transaction transaction;
 
-    final result = await _web3Client.sendTransaction(
-        cred,
-        Transaction(
-          to: toAddress,
-          from: fromAddress,
-          value: amount,
-          maxFeePerGas: estimatedGasFee?.gasPrice,
-          maxPriorityFeePerGas: estimatedGasFee?.gasPrice,
-          data: data,
-        ),
-        chainId: _web3Client.network!.chainId);
+    String result;
+
+    if (tokenAddress == null) {
+      final transaction = Transaction(
+        to: toAddress,
+        from: fromAddress,
+        value: amount,
+        maxFeePerGas: estimatedGasFee?.gasPrice,
+        maxPriorityFeePerGas: estimatedGasFee?.gasPrice,
+        data: data,
+      );
+
+      result = await _web3Client.sendTransaction(cred, transaction,
+          chainId: _web3Client.network!.chainId);
+    } else {
+      final tokenHash = EthereumAddress.fromHex(tokenAddress);
+      final erc20Token = EnsToken(address: tokenHash, client: _web3Client);
+      result = await erc20Token.transfer(
+          toAddress, amount.getValueInUnitBI(EtherUnit.wei),
+          credentials: cred);
+    }
 
     return result;
   }
