@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
+import 'package:mxc_logic/src/domain/entities/wannsee/wannsee_transactions_model/decoded_input.dart';
 
 import '../wannsee_models.dart';
 
@@ -34,7 +35,7 @@ class WannseeTransactionModel extends Equatable {
   final int? nonce;
   final bool? hasErrorInInternalTxs;
   final List<dynamic>? actions;
-  final dynamic decodedInput;
+  final DecodedInput? decodedInput;
   final bool? tokenTransfersOverflow;
   final String? rawInput;
   String? value;
@@ -118,7 +119,9 @@ class WannseeTransactionModel extends Equatable {
       nonce: data['nonce'] as int?,
       hasErrorInInternalTxs: data['has_error_in_internal_txs'] as bool?,
       actions: data['actions'] as List<dynamic>?,
-      decodedInput: data['decoded_input'] as dynamic,
+      decodedInput: data['decoded_input'] == null
+          ? null
+          : DecodedInput.fromJson(data['decoded_input']),
       tokenTransfersOverflow: data['token_transfers_overflow'] as bool?,
       rawInput: data['raw_input'] as String?,
       value: data['value'] as String?,
