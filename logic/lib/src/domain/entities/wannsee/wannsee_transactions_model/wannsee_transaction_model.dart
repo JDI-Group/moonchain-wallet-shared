@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:equatable/equatable.dart';
 import 'package:mxc_logic/src/domain/entities/wannsee/wannsee_transactions_model/decoded_input.dart';
 
+import '../../transaction_model.dart';
 import '../wannsee_models.dart';
 
 import '../shared/shared.dart';
@@ -258,6 +259,15 @@ class WannseeTransactionModel extends Equatable {
       confirmationDuration: confirmationDuration ?? this.confirmationDuration,
       txTag: txTag ?? this.txTag,
     );
+  }
+
+  TransactionType checkForTransactionType(
+      String userAddress, String currentTxFromHash,) {
+    if (currentTxFromHash == userAddress) {
+      return TransactionType.sent;
+    } else {
+      return TransactionType.received;
+    }
   }
 
   @override

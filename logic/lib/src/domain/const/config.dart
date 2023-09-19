@@ -19,6 +19,12 @@ class Config {
     ensReverseResolver: '0x5325640Cc17A06a409d4f4b6af02A0120528c67E',
     ensReverseRegistrar: '0x18c02bA5D8391b3CB49586C94454E44102252cFA',
   );
+
+  static const String mxcSymbol = 'MXC';
+  static const String mxcName = 'MXC Token';
+  static const String mxcLogoUri = 'assets/svg/networks/mxc.svg';
+  static const int ethDecimals = 18;
+
   static const int mxcMainnetChainId = 18686;
   static const int mxcTestnetChainId = 5167003;
   static const String mainnetTokenListUrl =
