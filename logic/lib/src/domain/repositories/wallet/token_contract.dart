@@ -376,6 +376,23 @@ class TokenContractRepository {
     }
   }
 
+  StreamSubscription<bool> spyTransaction(
+    String hash,
+  ) {
+    final controller = StreamController<bool>();
+
+    final stream = Stream.periodic(const Duration(seconds: 20), (count) async {
+      final receipt = await _web3Client.getTransactionReceipt(hash);
+
+      if (receipt?.status ?? false) {
+        return true;
+      }
+      return false;
+    }).asyncMap((event) => event).listen(controller.add);
+
+    return stream;
+  }
+
   Future<void> dispose() async {
     await _web3Client.dispose();
   }
