@@ -106,6 +106,24 @@ class TransactionModel {
     required this.token,
   });
 
+  TransactionModel copyWith({
+    String? hash,
+    DateTime? timeStamp,
+    TransactionStatus? status,
+    TransactionType? type,
+    String? value,
+    Token? token,
+  }) {
+    return TransactionModel(
+      hash: hash ?? this.hash,
+      timeStamp: timeStamp ?? this.timeStamp,
+      status: status ?? this.status,
+      type: type ?? this.type,
+      value: value ?? this.value,
+      token: token ?? this.token,
+    );
+  }
+
   Map<String, dynamic> toMap() {
     return {
       'timeStamp': timeStamp?.millisecondsSinceEpoch,
