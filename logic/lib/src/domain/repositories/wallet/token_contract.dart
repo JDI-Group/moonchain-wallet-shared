@@ -381,7 +381,7 @@ class TokenContractRepository {
   ) {
     final controller = StreamController<bool>();
 
-    final stream = Stream.periodic(const Duration(seconds: 20), (count) async {
+    final stream = Stream.periodic(const Duration(seconds: 60), (count) async {
       final receipt = await _web3Client.getTransactionReceipt(hash);
 
       if (receipt?.status ?? false) {
