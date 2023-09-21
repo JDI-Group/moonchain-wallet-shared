@@ -126,7 +126,7 @@ class Network {
         web3RpcHttpUrl: 'https://eth-sepolia.public.blastapi.io',
         web3RpcWebsocketUrl: 'wss://eth-sepolia.public.blastapi.io',
         symbol: 'ETH',
-        explorerUrl: 'https://rpc2.sepolia.org',
+        explorerUrl: 'https://sepolia.etherscan.io/',
         enabled: false,
         label: 'Sepolia Testnet',
         chainId: 11155111,
