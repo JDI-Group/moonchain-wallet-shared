@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'package:mxc_logic/mxc_logic.dart';
+import 'package:web3dart/crypto.dart';
+import 'package:web3dart/web3dart.dart';
 
 import '../const/const.dart';
 
@@ -78,6 +80,44 @@ class TransactionModel {
       status: status,
       type: type,
       value: value,
+      token: token,
+    );
+  }
+
+  factory TransactionModel.fromTransactionReceipt(
+      TransactionReceipt receipt, String walletAddress, Token token) {
+    final txHash = bytesToHex(receipt.transactionHash, include0x: true);
+    final timeStamp = DateTime.now();
+    final txStatus = receipt.status == true
+        ? TransactionStatus.done
+        : TransactionStatus.pending;
+    final txType = receipt.from!.hex == walletAddress
+        ? TransactionType.sent
+        : TransactionType.received;
+
+    return TransactionModel(
+      hash: txHash,
+      timeStamp: timeStamp,
+      status: txStatus,
+      type: txType,
+      value: '0',
+      token: token,
+    );
+  }
+
+  factory TransactionModel.fromTransaction(
+      TransactionInformation receipt, String walletAddress, Token token) {
+    final txHash = receipt.hash;
+    final timeStamp = DateTime.now();
+    const txStatus = TransactionStatus.pending;
+    const txType = TransactionType.sent;
+
+    return TransactionModel(
+      hash: txHash,
+      timeStamp: timeStamp,
+      status: txStatus,
+      type: txType,
+      value: '0',
       token: token,
     );
   }
