@@ -53,6 +53,35 @@ class Network {
         networkType: networkType ?? this.networkType);
   }
 
+
+  Network copyWithOther(Network otherNetwork) {
+    return Network(
+        logo: otherNetwork.logo,
+        web3RpcHttpUrl: otherNetwork.web3RpcHttpUrl,
+        web3RpcWebsocketUrl: otherNetwork.web3RpcWebsocketUrl,
+        web3WebSocketUrl: otherNetwork.web3WebSocketUrl ?? web3WebSocketUrl,
+        symbol: otherNetwork.symbol,
+        explorerUrl: otherNetwork.explorerUrl ?? explorerUrl,
+        enabled: enabled,
+        label: otherNetwork.label ?? label,
+        chainId: otherNetwork.chainId,
+        isAdded: isAdded,
+        networkType: otherNetwork.networkType);
+  }
+
+  /// True means they are same.
+  bool compareWithOther(Network otherNetwork) {
+    return logo == otherNetwork.logo &&
+        web3RpcHttpUrl == otherNetwork.web3RpcHttpUrl &&
+        web3RpcWebsocketUrl == otherNetwork.web3RpcWebsocketUrl &&
+        web3WebSocketUrl == otherNetwork.web3WebSocketUrl &&
+        symbol == otherNetwork.symbol &&
+        explorerUrl == otherNetwork.explorerUrl &&
+        label == otherNetwork.label &&
+        chainId == otherNetwork.chainId &&
+        networkType == otherNetwork.networkType;
+  }
+
   // This data will be initialized for the first time
   // the first two are always mxc chains
   static List<Network> fixedNetworks() {
