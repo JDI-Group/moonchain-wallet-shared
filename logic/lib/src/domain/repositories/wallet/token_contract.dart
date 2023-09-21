@@ -127,6 +127,10 @@ class TokenContractRepository {
     }
   }
 
+  Future<TransactionInformation?> getTransactionByHashCustomChain(String hash) {
+    return _web3Client.getTransactionByHash(hash);
+  }
+
   Future<bool> checkConnectionToNetwork() async {
     final isConnected = await _web3Client.isListeningForNetwork();
     return isConnected;
@@ -391,6 +395,10 @@ class TokenContractRepository {
     }).asyncMap((event) => event).listen(controller.add);
 
     return stream;
+  }
+
+  Future<TransactionReceipt?> getTransactionReceipt(String hash) async {
+    return await _web3Client.getTransactionReceipt(hash);
   }
 
   Future<void> dispose() async {
