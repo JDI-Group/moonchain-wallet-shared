@@ -15,7 +15,7 @@ class AuthenticationCacheRepository {
         Network.fixedNetworks().where((item) => item.enabled).first;
 
     final username =
-        '${currentNetwork.web3RpcHttpUrl}_${currentNetwork.chainId}_${_authStorageRepository.publicAddress}';
+        '${currentNetwork.chainId}_${_authStorageRepository.publicAddress}';
     await _controller.load(username);
   }
 
