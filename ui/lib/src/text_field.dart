@@ -23,6 +23,7 @@ class MxcTextField extends FormField<String> {
     ValueChanged<String>? onChanged,
     final ValueChanged<bool>? onFocused,
     Function(PointerDownEvent)? onTapOutside,
+    bool autoFocus = false
   }) : super(
           key: key,
           initialValue: controller.text,
@@ -47,6 +48,7 @@ class MxcTextField extends FormField<String> {
               onChanged: onChanged,
               onFocused: onFocused,
               onTapOutside: onTapOutside,
+              autoFocus: autoFocus,
             );
           },
         );
@@ -117,6 +119,9 @@ class MxcTextField extends FormField<String> {
     AutovalidateMode? autovalidateMode,
     TextInputAction? action,
     Color? textColor,
+    bool autoFocus = false,
+    Color? borderUnFocusColor,
+    Color? borderFocusColor    
   }) : super(
           key: key,
           initialValue: controller.text,
@@ -135,6 +140,9 @@ class MxcTextField extends FormField<String> {
               action: action,
               errorText: field.errorText,
               textColor: textColor,
+              autoFocus: autoFocus,
+              borderFocusColor: borderFocusColor,
+              borderUnFocusColor: borderUnFocusColor,
             );
           },
         );
@@ -235,10 +243,13 @@ class _MxcNonFormTextField extends StatefulWidget {
     this.margin,
     this.padding,
     this.borderRadius,
+    this.borderUnFocusColor,
+    this.borderFocusColor,
     this.prefix,
     this.onFocused,
     this.onTapOutside,
     this.textColor,
+    this.autoFocus = false
   })  : _controller = controller,
         _initialValue = null,
         disabled = false,
@@ -263,10 +274,13 @@ class _MxcNonFormTextField extends StatefulWidget {
     this.margin,
     this.padding,
     this.borderRadius,
+    this.borderUnFocusColor,
+    this.borderFocusColor,
     this.prefix,
     this.onFocused,
     this.onTapOutside,
     this.textColor,
+    this.autoFocus = false
   })  : _initialValue = text,
         readOnly = true,
         _controller = null,
@@ -293,6 +307,7 @@ class _MxcNonFormTextField extends StatefulWidget {
   final String? errorText;
   final ValueChanged<String>? onChanged;
   final ValueChanged<bool>? onFocused;
+  final bool autoFocus;
   final Function(PointerDownEvent)? onTapOutside;
 
   final String? followText;
@@ -302,6 +317,8 @@ class _MxcNonFormTextField extends StatefulWidget {
   final EdgeInsetsGeometry? margin;
   final EdgeInsetsGeometry? padding;
   final BorderRadiusGeometry? borderRadius;
+  final Color? borderUnFocusColor;
+  final Color? borderFocusColor;
 
   final Widget? prefix;
 
@@ -350,8 +367,8 @@ class _MxcNonFormTextFieldState extends State<_MxcNonFormTextField> {
           borderRadius: const BorderRadius.all(Radius.circular(12)),
           border: Border.all(
             color: focused
-                ? ColorsTheme.of(context).borderPrimary100
-                : ColorsTheme.of(context).grey3,
+                ? widget.borderFocusColor ?? ColorsTheme.of(context).borderPrimary100
+                : widget.borderUnFocusColor ?? ColorsTheme.of(context).grey3,
           ),
         ),
         child: child,
@@ -436,6 +453,7 @@ class _MxcNonFormTextFieldState extends State<_MxcNonFormTextField> {
                           textInputAction: widget.action,
                           controller: controller,
                           cursorColor: ColorsTheme.of(context).textPrimary,
+                          autofocus: widget.autoFocus,
                           style: (widget.disabled)
                               ? FontTheme.of(context).body1().copyWith(
                                     color: ColorsTheme.of(context)
