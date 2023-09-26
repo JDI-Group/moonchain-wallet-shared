@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:ens_dart/ens_dart.dart';
+import 'package:eth_sig_util/eth_sig_util.dart';
 import 'package:flutter/services.dart';
 import 'package:mxc_logic/src/data/api/client/rest_client.dart';
 import 'package:mxc_logic/mxc_logic.dart';
@@ -395,6 +396,12 @@ class TokenContractRepository {
     }).asyncMap((event) => event).listen(controller.add);
 
     return stream;
+  }
+
+  String signTypedMessage({required String privateKey, required String data}) {
+    final result = EthSigUtil.signTypedData(
+        jsonData: data, version: TypedDataVersion.V4, privateKey: privateKey,);
+    return result;
   }
 
   Future<TransactionReceipt?> getTransactionReceipt(String hash) async {
