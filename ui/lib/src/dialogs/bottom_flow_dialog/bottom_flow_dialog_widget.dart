@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:mxc_ui/mxc_ui.dart';
 import 'package:rxdart/rxdart.dart';
@@ -7,9 +8,11 @@ class BottomFlowDialog extends StatefulWidget {
   const BottomFlowDialog({
     Key? key,
     required this.child,
+    this.canPop = true
   }) : super(key: key);
 
   final Widget child;
+  final bool canPop;
 
   static BottomFlowDialogState of(BuildContext context) {
     return Provider.of<BottomFlowDialogState>(context, listen: false);
@@ -105,6 +108,11 @@ class BottomFlowDialogState extends State<BottomFlowDialog> {
   Widget build(BuildContext context) {
     return WillPopScope(
         onWillPop: () {
+          if (!widget.canPop) {
+            SystemNavigator.pop();
+            return Future.value(false);
+          }
+          
           if (parentNavigator.canPop()) {
             parentNavigator.pop();
             return Future.value(false);

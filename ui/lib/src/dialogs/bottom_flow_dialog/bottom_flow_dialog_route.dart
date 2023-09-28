@@ -8,6 +8,7 @@ class BottomFlowDialogRoute<T> extends MaterialPageRoute<T> {
     RouteSettings? settings,
     bool maintainState = true,
     this.skipAnimation = false,
+    this.canPopThisPage = true
   }) : super(
           builder: builder,
           settings: settings,
@@ -15,6 +16,7 @@ class BottomFlowDialogRoute<T> extends MaterialPageRoute<T> {
         );
 
   final bool skipAnimation;
+  final bool canPopThisPage;
 
   @override
   Duration get transitionDuration =>
@@ -31,6 +33,7 @@ class BottomFlowDialogRoute<T> extends MaterialPageRoute<T> {
     Widget child,
   ) {
     child = BottomFlowDialog(
+      canPop: canPopThisPage,
       child: child,
     );
 
