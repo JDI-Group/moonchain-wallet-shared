@@ -37,7 +37,7 @@ class Config {
   static const String testnetApiBaseUrl =
       'https://wannsee-explorer-v1.mxc.com/api/v2/';
 
-  static int decimalFixed = 3;
+  static int decimalShowFixed = 3;
 
   static bool isMxcChains(int chainId) {
     return chainId == mxcMainnetChainId || chainId == mxcTestnetChainId;

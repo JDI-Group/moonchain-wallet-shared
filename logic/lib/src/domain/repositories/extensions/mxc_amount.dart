@@ -19,8 +19,8 @@ class MxcAmount extends EtherAmount {
     if (input < pow(10, tokenDecimal)) {
       return 0.0;
     }
-    double convertedInput = double.parse(
-        (input / pow(10, tokenDecimal)).toStringAsFixed(Config.decimalFixed));
+    double convertedInput = double.parse((input / pow(10, tokenDecimal))
+        .toStringAsFixed(Config.decimalShowFixed));
     return convertedInput;
   }
 }
