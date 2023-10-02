@@ -61,9 +61,12 @@ class PricingRepository {
       if (!Config.isMxcChains(_web3Client.network!.chainId)) {
         return tokens;
       }
-      final xsdToken = tokens.firstWhere((element) => element.symbol == 'XSD');
+      final xsdToken = Config.mxcTestnetChainId == _web3Client.network!.chainId
+          ? Config.xsdTestnet
+          : Config.xsdMainnet;
       for (int i = 0; i < tokens.length; i++) {
         final currentToken = tokens[i];
+        // The price of a token with 0 balance is zero
         if (currentToken.balance == 0.0) continue;
         if (currentToken.address != null) {
           try {
@@ -79,7 +82,9 @@ class PricingRepository {
         } else {
           // Only the native token does not have address
           final wMxcToken =
-              tokens.firstWhere((element) => element.symbol == 'WMXC');
+              Config.mxcTestnetChainId == _web3Client.network!.chainId
+                  ? Config.wMXCTestnet
+                  : Config.wMXCMainnet;
           try {
             final balancePrice = await getAmountsOut(
               currentToken.balance!,
