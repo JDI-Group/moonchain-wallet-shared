@@ -18,6 +18,8 @@ class CacheField<T> implements Field<T> {
   final Serializer<T>? _serializer;
   final Deserializer<T>? _deserializer;
 
+  StreamController<T> valueController = StreamController<T>();
+
   final String _name;
 
   static CacheField<T?> nullable<T>(
@@ -51,6 +53,13 @@ class CacheField<T> implements Field<T> {
   Future<void> save(T value) {
     return _cache.write(_name, value, _serializer);
   }
+
+  void broadCastValue() {
+    valueController.sink.add(value);
+  }
+
+  @override
+  Stream<T> get valueStream => valueController.stream;
 }
 
 class _NullableCacheField<T> extends CacheField<T?> {
