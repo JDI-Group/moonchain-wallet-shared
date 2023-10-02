@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:mxc_logic/internal.dart';
 import 'package:mxc_logic/mxc_logic.dart';
 
@@ -11,7 +13,7 @@ class CacheField<T> implements Field<T> {
   })  : _serializer = serializer,
         _deserializer = deserializer;
 
-  final CacheZone _cache;
+  CacheZone _cache;
 
   final Serializer<T>? _serializer;
   final Deserializer<T>? _deserializer;
@@ -30,6 +32,10 @@ class CacheField<T> implements Field<T> {
       serializer: serializer,
       deserializer: deserializer,
     );
+  }
+
+  void updateCacheZone(CacheZone cache) {
+    _cache = cache;
   }
 
   final T defaultValue;
