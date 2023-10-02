@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:collection';
 
 class ListWithTotal<T> extends ListBase<T> {
@@ -36,4 +37,6 @@ class Location {
 abstract class Field<T> {
   T get value;
   set value(T value);
+
+  Stream<T> get valueStream;
 }
