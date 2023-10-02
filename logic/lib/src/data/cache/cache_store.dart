@@ -5,6 +5,8 @@ import 'package:mxc_logic/mxc_logic.dart';
 abstract class BaseCacheStore {
   CacheZone get _zone;
 
+  List<Field> fields = [];
+
   @protected
   String get zone;
 
@@ -13,13 +15,16 @@ abstract class BaseCacheStore {
     String name, {
     Serializer<T>? serializer,
     Deserializer<T>? deserializer,
-  }) =>
-      CacheField.nullable<T>(
-        _zone,
-        name,
-        serializer: serializer,
-        deserializer: deserializer,
-      );
+  }) {
+    final newField = CacheField.nullable<T>(
+      _zone,
+      name,
+      serializer: serializer,
+      deserializer: deserializer,
+    );
+    fields.add(newField);
+    return newField;
+  }
 
   @protected
   Field<T> fieldWithDefault<T>(
@@ -27,19 +32,31 @@ abstract class BaseCacheStore {
     T defaultValue, {
     Serializer<T>? serializer,
     Deserializer<T>? deserializer,
-  }) =>
-      CacheField.withDefault(
-        _zone,
-        name,
-        defaultValue,
-        serializer: serializer,
-        deserializer: deserializer,
-      );
+  }) {
+    final newField = CacheField.withDefault(
+      _zone,
+      name,
+      defaultValue,
+      serializer: serializer,
+      deserializer: deserializer,
+    );
+    fields.add(newField);
+    return newField;
+  }
 
   @protected
   Future<void> cleanFields(List<Field> fields) {
     return Future.wait(
       fields.whereType<CacheField>().map((e) => e.save(e.defaultValue)),
+    );
+  }
+
+  Future<dynamic> loadFields() {
+    return Future(
+      () => fields.whereType<CacheField>().forEach((e) {
+        e.updateCacheZone(_zone);
+        e.broadCastValue();
+      }),
     );
   }
 }
@@ -62,6 +79,7 @@ abstract class ControlledCacheStore extends BaseCacheStore {
 
   Future<void> _load(CacheManager manager, String key) async {
     _backedZone = await manager.loadZone('$key/$zone');
+    await loadFields();
   }
 
   void unload() => _backedZone = null;
