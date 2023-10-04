@@ -115,9 +115,9 @@ class NftContractRepository {
 
       final selectedNetwork = _web3Client.network!;
       final apiBaseUrl = selectedNetwork.chainId == Config.mxcMainnetChainId
-          ? Config.mainnetApiBaseUrl
+          ? Urls.mainnetApiBaseUrl
           : selectedNetwork.chainId == Config.mxcTestnetChainId
-              ? Config.testnetApiBaseUrl
+              ? Urls.testnetApiBaseUrl
               : null;
 
       if (apiBaseUrl != null) {

@@ -36,9 +36,9 @@ class TokenContractRepository {
   ) async {
     final selectedNetwork = _web3Client.network!;
     final apiBaseUrl = selectedNetwork.chainId == Config.mxcMainnetChainId
-        ? Config.mainnetApiBaseUrl
+        ? Urls.mainnetApiBaseUrl
         : selectedNetwork.chainId == Config.mxcTestnetChainId
-            ? Config.testnetApiBaseUrl
+            ? Urls.testnetApiBaseUrl
             : null;
 
     if (apiBaseUrl != null) {
@@ -70,9 +70,9 @@ class TokenContractRepository {
   ) async {
     final selectedNetwork = _web3Client.network!;
     final apiBaseUrl = selectedNetwork.chainId == Config.mxcMainnetChainId
-        ? Config.mainnetApiBaseUrl
+        ? Urls.mainnetApiBaseUrl
         : selectedNetwork.chainId == Config.mxcTestnetChainId
-            ? Config.testnetApiBaseUrl
+            ? Urls.testnetApiBaseUrl
             : null;
 
     if (apiBaseUrl != null) {
@@ -104,9 +104,9 @@ class TokenContractRepository {
   ) async {
     final selectedNetwork = _web3Client.network!;
     final apiBaseUrl = selectedNetwork.chainId == Config.mxcMainnetChainId
-        ? Config.mainnetApiBaseUrl
+        ? Urls.mainnetApiBaseUrl
         : selectedNetwork.chainId == Config.mxcTestnetChainId
-            ? Config.testnetApiBaseUrl
+            ? Urls.testnetApiBaseUrl
             : null;
 
     if (apiBaseUrl != null) {
@@ -157,11 +157,11 @@ class TokenContractRepository {
   Future<DefaultTokens?> getDefaultTokens() async {
     final selectedNetwork = _web3Client.network!;
     final tokenListUrl = selectedNetwork.chainId == Config.mxcMainnetChainId
-        ? Config.mainnetTokenListUrl
+        ? Urls.mainnetTokenListUrl
         : selectedNetwork.chainId == Config.mxcTestnetChainId
-            ? Config.testnetTokenListUrl
+            ? Urls.testnetTokenListUrl
             : selectedNetwork.chainId == 1
-                ? Config.ethereumMainnetTokenListUrl
+                ? Urls.ethereumMainnetTokenListUrl
                 : null;
     if (tokenListUrl != null) {
       final response = await _restClient.client.get(

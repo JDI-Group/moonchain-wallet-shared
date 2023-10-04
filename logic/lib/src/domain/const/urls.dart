@@ -11,6 +11,13 @@ class Urls {
       '${baseUrl}addresses/$hash/token-transfers?type=${type.toStringValue()}';
   static String transaction(String baseUrl, String hash) =>
       '${baseUrl}transactions/$hash';
+
+  static const String mainnetTokenListUrl =
+      'https://raw.githubusercontent.com/MXCzkEVM/wannseeswap-tokenlist/main/tokenlist-mainnet.json';
+  static const String testnetTokenListUrl =
+      'https://raw.githubusercontent.com/MXCzkEVM/wannseeswap-tokenlist/main/tokenlist.json';
+  static const String ethereumMainnetTokenListUrl =
+      'https://raw.githubusercontent.com/MXCzkEVM/wannseeswap-tokenlist/main/tokenlist-ethereum.json';
   static const String defaultTokenList =
       'https://raw.githubusercontent.com/MXCzkEVM/wannseeswap-tokenlist/main/tokenlist.json';
   static const String defaultIpfsGateway =
@@ -25,4 +32,8 @@ class Urls {
 
   static String getLatestVersion(String appSecret, String groupId) =>
       'https://api.appcenter.ms/v0.1/public/sdk/apps/$appSecret/distribution_groups/$groupId/releases/latest';
+
+  static const String mainnetApiBaseUrl = 'https://explorer-v1.mxc.com/api/v2/';
+  static const String testnetApiBaseUrl =
+      'https://wannsee-explorer-v1.mxc.com/api/v2/';
 }
