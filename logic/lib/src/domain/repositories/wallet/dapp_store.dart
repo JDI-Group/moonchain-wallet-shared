@@ -39,7 +39,7 @@ class DappStoreRepository {
       );
 
       final data = Dapp.fromJson(response.body);
-      
+
       res.add(data);
     }
 

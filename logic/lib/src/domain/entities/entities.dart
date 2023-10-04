@@ -16,3 +16,4 @@ export 'dapp_store/dapp_item.dart';
 export 'dapp_info/dapp.dart';
 export 'app_version/app_version.dart';
 export 'bookmark.dart';
+export 'watch_asset_model.dart';

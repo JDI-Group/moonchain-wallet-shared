@@ -262,7 +262,9 @@ class WannseeTransactionModel extends Equatable {
   }
 
   TransactionType checkForTransactionType(
-      String userAddress, String currentTxFromHash,) {
+    String userAddress,
+    String currentTxFromHash,
+  ) {
     if (currentTxFromHash == userAddress) {
       return TransactionType.sent;
     } else {

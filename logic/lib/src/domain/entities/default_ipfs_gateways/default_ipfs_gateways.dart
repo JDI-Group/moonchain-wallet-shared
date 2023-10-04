@@ -33,7 +33,7 @@ class DefaultIpfsGateways extends Equatable {
 
   Map<String, dynamic> toMap() => <String, dynamic>{
         'name': name,
-        'gateways': gateways ,
+        'gateways': gateways,
         'version': version?.toMap(),
       };
 

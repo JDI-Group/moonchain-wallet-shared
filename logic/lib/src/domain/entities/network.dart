@@ -53,7 +53,6 @@ class Network {
         networkType: networkType ?? this.networkType);
   }
 
-
   Network copyWithOther(Network otherNetwork) {
     return Network(
         logo: otherNetwork.logo,

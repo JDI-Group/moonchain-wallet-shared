@@ -26,30 +26,34 @@ class Config {
   static const int ethDecimals = 18;
 
   static const Token xsdMainnet = Token(
-      address: '0x7d2016B09BF46A7CAABD3b45f9e1D6C485A2c729',
-      decimals: 18,
-      chainId: mxcMainnetChainId,
-      name: 'XSD Token',
-      symbol: 'XSD',);
+    address: '0x7d2016B09BF46A7CAABD3b45f9e1D6C485A2c729',
+    decimals: 18,
+    chainId: mxcMainnetChainId,
+    name: 'XSD Token',
+    symbol: 'XSD',
+  );
   static const Token xsdTestnet = Token(
-      address: '0xB9506A80429Ee619C74D46a3276c622358795e2B',
-      decimals: 18,
-      chainId: mxcTestnetChainId,
-      name: 'XSD Token',
-      symbol: 'XSD',);
+    address: '0xB9506A80429Ee619C74D46a3276c622358795e2B',
+    decimals: 18,
+    chainId: mxcTestnetChainId,
+    name: 'XSD Token',
+    symbol: 'XSD',
+  );
 
   static const Token wMXCMainnet = Token(
-      address: '0xcBCE60BAD702026d6385E5f449e44099A655d14f',
-      decimals: 18,
-      chainId: mxcMainnetChainId,
-      name: 'Wrap MXC Token',
-      symbol: 'WMXC',);
+    address: '0xcBCE60BAD702026d6385E5f449e44099A655d14f',
+    decimals: 18,
+    chainId: mxcMainnetChainId,
+    name: 'Wrap MXC Token',
+    symbol: 'WMXC',
+  );
   static const Token wMXCTestnet = Token(
-      address: '0x6807F4B0D75c59Ef89f0dbEF9841Fb23fFDF105D',
-      decimals: 18,
-      chainId: mxcTestnetChainId,
-      name: 'Wrap MXC Token',
-      symbol: 'WMXC',);
+    address: '0x6807F4B0D75c59Ef89f0dbEF9841Fb23fFDF105D',
+    decimals: 18,
+    chainId: mxcTestnetChainId,
+    name: 'Wrap MXC Token',
+    symbol: 'WMXC',
+  );
 
   static const int mxcMainnetChainId = 18686;
   static const int mxcTestnetChainId = 5167003;

@@ -81,6 +81,15 @@ class Token extends Equatable {
 
   @override
   List<Object?> get props {
-    return [chainId, address, name, symbol, decimals, logoUri, balance, balancePrice];
+    return [
+      chainId,
+      address,
+      name,
+      symbol,
+      decimals,
+      logoUri,
+      balance,
+      balancePrice
+    ];
   }
 }
