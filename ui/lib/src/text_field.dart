@@ -121,7 +121,8 @@ class MxcTextField extends FormField<String> {
     Color? textColor,
     bool autoFocus = false,
     Color? borderUnFocusColor,
-    Color? borderFocusColor    
+    Color? borderFocusColor,
+    MxcTextFieldButton? suffixButton    
   }) : super(
           key: key,
           initialValue: controller.text,
@@ -143,6 +144,7 @@ class MxcTextField extends FormField<String> {
               autoFocus: autoFocus,
               borderFocusColor: borderFocusColor,
               borderUnFocusColor: borderUnFocusColor,
+              suffixButton: suffixButton,
             );
           },
         );
@@ -493,6 +495,7 @@ class _MxcNonFormTextFieldState extends State<_MxcNonFormTextField> {
                           if (widget.onChanged != null) widget.onChanged!('');
                         },
                       ),
+                    // if (widget.autoFocus)
                     if (widget.suffixText != null)
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 4),
