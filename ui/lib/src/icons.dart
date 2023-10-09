@@ -111,6 +111,8 @@ class MxcIcons {
       IconData(0xe82a, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData network_status =
       IconData(0xe83d, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData clipboard =
+      IconData(0xe84a, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData down_dir =
       IconData(0xe887, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData up_dir =
