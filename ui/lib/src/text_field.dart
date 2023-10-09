@@ -487,7 +487,7 @@ class _MxcNonFormTextFieldState extends State<_MxcNonFormTextField> {
                       InkWell(
                         child: Icon(
                           Icons.cancel_rounded,
-                          size: 20,
+                          size: 24,
                           color: ColorsTheme.of(context).iconWhite,
                         ),
                         onTap: () {
