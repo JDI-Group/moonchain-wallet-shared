@@ -346,21 +346,25 @@ class TokenContractRepository {
     if (from != null) fromAddress = EthereumAddress.fromHex(from);
     final cred = EthPrivateKey.fromHex(privateKey);
     late Transaction transaction;
+    final gasLimit = estimatedGasFee?.gas.toInt();
 
     String result;
 
     if (tokenAddress == null) {
       final transaction = Transaction(
-        to: toAddress,
-        from: fromAddress,
-        value: amount,
-        maxFeePerGas: estimatedGasFee?.gasPrice,
-        maxPriorityFeePerGas: estimatedGasFee?.gasPrice,
-        data: data,
-      );
+          to: toAddress,
+          from: fromAddress,
+          value: amount,
+          maxFeePerGas: estimatedGasFee?.gasPrice,
+          maxPriorityFeePerGas: estimatedGasFee?.gasPrice,
+          data: data,
+          maxGas: gasLimit);
 
-      result = await _web3Client.sendTransaction(cred, transaction,
-          chainId: _web3Client.network!.chainId);
+      result = await _web3Client.sendTransaction(
+        cred,
+        transaction,
+        chainId: _web3Client.network!.chainId,
+      );
     } else {
       final tokenHash = EthereumAddress.fromHex(tokenAddress);
       final erc20Token = EnsToken(address: tokenHash, client: _web3Client);
