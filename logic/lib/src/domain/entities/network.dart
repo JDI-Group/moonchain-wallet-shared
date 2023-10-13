@@ -115,8 +115,8 @@ class Network {
       ),
       const Network(
         logo: 'assets/svg/networks/ethereum.svg',
-        web3RpcHttpUrl: 'https://eth.llamarpc.com',
-        web3RpcWebsocketUrl: 'wss://eth.llamarpc.com',
+        web3RpcHttpUrl: 'https://rpc.eu-central-1.gateway.fm/v4/ethereum/non-archival/mainnet',
+        web3RpcWebsocketUrl: 'wss://rpc.eu-central-1.gateway.fm/ws/v4/ethereum/non-archival/mainnet',
         symbol: 'ETH',
         explorerUrl: 'https://etherscan.io/',
         enabled: false,
