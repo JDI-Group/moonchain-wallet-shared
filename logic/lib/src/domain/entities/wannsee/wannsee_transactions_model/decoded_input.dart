@@ -1,3 +1,5 @@
+import 'package:chopper/chopper.dart';
+
 class DecodedInput {
   String? methodCall;
   String? methodId;
@@ -10,9 +12,11 @@ class DecodedInput {
     methodId = json['method_id'];
     if (json['parameters'] != null) {
       parameters = <Parameters>[];
-      json['parameters'].forEach((v) {
-        parameters!.add(new Parameters.fromJson(v));
-      });
+      if (json['parameters'].runtimeType == List<dynamic>) {
+        json['parameters'].forEach((v) {
+          parameters!.add(Parameters.fromJson(v));
+        });
+      }
     }
   }
 
@@ -37,7 +41,9 @@ class Parameters {
   Parameters.fromJson(Map<String, dynamic> json) {
     name = json['name'];
     type = json['type'];
-    value = json['value'];
+    value = (json['value'].runtimeType == List<dynamic>)
+        ? json['value'][0]
+        : json['value'];
   }
 
   Map<String, dynamic> toJson() {
