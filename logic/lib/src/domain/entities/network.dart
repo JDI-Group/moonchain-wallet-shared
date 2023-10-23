@@ -69,10 +69,11 @@ class Network {
   }
 
   /// True means they are same.
+  /// Excluded fields for comparison, web3RpcWebsocketUrl - web3RpcHttpUrl - enabled - isAdded
   bool compareWithOther(Network otherNetwork) {
     return logo == otherNetwork.logo &&
-        web3RpcHttpUrl == otherNetwork.web3RpcHttpUrl &&
-        web3RpcWebsocketUrl == otherNetwork.web3RpcWebsocketUrl &&
+        // web3RpcHttpUrl == otherNetwork.web3RpcHttpUrl &&
+        // web3RpcWebsocketUrl == otherNetwork.web3RpcWebsocketUrl &&
         web3WebSocketUrl == otherNetwork.web3WebSocketUrl &&
         symbol == otherNetwork.symbol &&
         explorerUrl == otherNetwork.explorerUrl &&
