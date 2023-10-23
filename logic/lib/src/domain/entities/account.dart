@@ -8,11 +8,13 @@ class Account {
     // this.alias
   });
 
+  /// Use this as index for added accounts.
   String name;
   String privateKey;
   String address;
   String? mns;
-  /// If -1 then It is the import account
+
+  /// Means Is It imported.
   bool isCustom;
   // String? alias;
 }

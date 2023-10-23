@@ -7,7 +7,6 @@ import 'headers.dart';
 import 'icons.dart';
 
 class ReviewApi extends Equatable {
-
   /// `dart:convert`
   ///
   /// Parses the string and returns the resulting Json object as [ReviewApi].

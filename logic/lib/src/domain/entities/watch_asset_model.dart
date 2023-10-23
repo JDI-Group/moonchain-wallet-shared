@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:equatable/equatable.dart';
 
 class WatchAssetModel extends Equatable {
-
   /// `dart:convert`
   ///
   /// Parses the string and returns the resulting Json object as [WatchAssetModel].
