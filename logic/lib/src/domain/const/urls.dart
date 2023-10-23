@@ -36,4 +36,6 @@ class Urls {
   static const String mainnetApiBaseUrl = 'https://explorer-v1.mxc.com/api/v2/';
   static const String testnetApiBaseUrl =
       'https://wannsee-explorer-v1.mxc.com/api/v2/';
+
+  static const String chainsRpcList = 'https://raw.githubusercontent.com/MXCzkEVM/chains-rpc-list/main/chains_rpc_list.json';
 }
