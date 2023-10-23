@@ -347,18 +347,30 @@ class TokenContractRepository {
     final cred = EthPrivateKey.fromHex(privateKey);
     late Transaction transaction;
     final gasLimit = estimatedGasFee?.gas.toInt();
+    EtherAmount? maxFeePerGas;
+
+    if (estimatedGasFee != null) {
+      final estimatedGasFeeAsDouble =
+          estimatedGasFee.gasPrice.getValueInUnitBI(EtherUnit.wei).toDouble() *
+              1.5;
+      maxFeePerGas = EtherAmount.fromBigInt(
+        EtherUnit.wei,
+        BigInt.from(estimatedGasFeeAsDouble),
+      );
+    }
 
     String result;
 
     if (tokenAddress == null) {
       final transaction = Transaction(
-          to: toAddress,
-          from: fromAddress,
-          value: amount,
-          maxFeePerGas: estimatedGasFee?.gasPrice,
-          maxPriorityFeePerGas: estimatedGasFee?.gasPrice,
-          data: data,
-          maxGas: gasLimit);
+        to: toAddress,
+        from: fromAddress,
+        value: amount,
+        maxFeePerGas: maxFeePerGas,
+        maxPriorityFeePerGas: MxcAmount.fromDoubleByEther(0.0000000015),
+        data: data,
+        maxGas: gasLimit,
+      );
 
       result = await _web3Client.sendTransaction(
         cred,
@@ -369,8 +381,10 @@ class TokenContractRepository {
       final tokenHash = EthereumAddress.fromHex(tokenAddress);
       final erc20Token = EnsToken(address: tokenHash, client: _web3Client);
       result = await erc20Token.transfer(
-          toAddress, amount.getValueInUnitBI(EtherUnit.wei),
-          credentials: cred);
+        toAddress,
+        amount.getValueInUnitBI(EtherUnit.wei),
+        credentials: cred,
+      );
     }
 
     return result;
