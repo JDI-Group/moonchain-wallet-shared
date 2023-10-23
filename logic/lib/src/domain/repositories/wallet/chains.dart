@@ -1,9 +1,8 @@
 import 'dart:async';
 import 'package:http/http.dart';
 import 'package:mxc_logic/src/data/api/client/rest_client.dart';
-import 'package:mxc_logic/mxc_logic.dart';
 import 'package:mxc_logic/src/domain/const/const.dart';
-import 'package:mxc_logic/src/domain/entities/chains_rpc_list/chains_rpc_list.dart';
+import 'package:mxc_logic/src/domain/entities/chains_list/chains_list.dart';
 import 'package:web3dart/web3dart.dart';
 
 class ChainsRepository {
@@ -14,15 +13,15 @@ class ChainsRepository {
   final Web3Client _web3Client;
   final RestClient _restClient;
 
-  Future<ChainsRpcList> getChainsRpcUrls() async {
+  Future<ChainsList> getChainsRpcUrls() async {
     final response = await _restClient.client.get(
       Uri.parse(
-        Urls.chainsRpcList,
+        Urls.chainsList,
       ),
       headers: {'accept': 'application/json'},
     );
 
-    final chainsRpcUrls = ChainsRpcList.fromJson(response.body);
+    final chainsRpcUrls = ChainsList.fromJson(response.body);
     return chainsRpcUrls;
   }
 

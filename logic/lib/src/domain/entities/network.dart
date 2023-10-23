@@ -1,6 +1,31 @@
+import 'dart:convert';
+
+import 'package:equatable/equatable.dart';
+
 enum NetworkType { testnet, mainnet, custom }
 
 class Network {
+  /// `dart:convert`
+  ///
+  /// Parses the string and returns the resulting Json object as [Network].
+  factory Network.fromJson(String data) {
+    return Network.fromMap(json.decode(data) as Map<String, dynamic>);
+  }
+
+  factory Network.fromMap(Map<String, dynamic> data) => Network(
+        logo: data['logo'] as String,
+        web3RpcHttpUrl: data['web3RpcHttpUrl'] as String,
+        web3RpcWebsocketUrl: data['web3RpcWebsocketUrl'] as String,
+        web3WebSocketUrl: data['web3WebSocketUrl'] as String?,
+        symbol: data['symbol'] as String,
+        explorerUrl: data['explorerUrl'] as String?,
+        enabled: data['enabled'] as bool,
+        label: data['label'] as String?,
+        chainId: data['chainId'] as int,
+        isAdded: data['isAdded'] as bool,
+        networkType: NetworkType.values
+            .firstWhere((e) => e.name == data['networkType'] as String),
+      );
   const Network({
     required this.logo,
     required this.web3RpcHttpUrl,
@@ -53,33 +78,74 @@ class Network {
         networkType: networkType ?? this.networkType);
   }
 
+  Map<String, dynamic> toMap() => {
+        'logo': logo,
+        'web3RpcHttpUrl': web3RpcHttpUrl,
+        'web3RpcWebsocketUrl': web3RpcWebsocketUrl,
+        'web3WebSocketUrl': web3WebSocketUrl,
+        'symbol': symbol,
+        'explorerUrl': explorerUrl,
+        'enabled': enabled,
+        'label': label,
+        'chainId': chainId,
+        'isAdded': isAdded,
+        'networkType': networkType,
+      };
+
+  /// `dart:convert`
+  ///
+  /// Converts [Network] to a JSON string.
+  String toJson() => json.encode(toMap());
+
+  /// Excluded fields for copy, enabled - isAdded
   Network copyWithOther(Network otherNetwork) {
     return Network(
-        logo: otherNetwork.logo,
-        web3RpcHttpUrl: otherNetwork.web3RpcHttpUrl,
-        web3RpcWebsocketUrl: otherNetwork.web3RpcWebsocketUrl,
-        web3WebSocketUrl: otherNetwork.web3WebSocketUrl ?? web3WebSocketUrl,
-        symbol: otherNetwork.symbol,
-        explorerUrl: otherNetwork.explorerUrl ?? explorerUrl,
-        enabled: enabled,
-        label: otherNetwork.label ?? label,
-        chainId: otherNetwork.chainId,
-        isAdded: isAdded,
-        networkType: otherNetwork.networkType);
+      logo: otherNetwork.logo,
+      web3RpcHttpUrl: otherNetwork.web3RpcHttpUrl,
+      web3RpcWebsocketUrl: otherNetwork.web3RpcWebsocketUrl,
+      web3WebSocketUrl: otherNetwork.web3WebSocketUrl ?? web3WebSocketUrl,
+      symbol: otherNetwork.symbol,
+      explorerUrl: otherNetwork.explorerUrl ?? explorerUrl,
+      enabled: enabled,
+      label: otherNetwork.label ?? label,
+      chainId: otherNetwork.chainId,
+      isAdded: isAdded,
+      networkType: otherNetwork.networkType,
+    );
   }
 
   /// True means they are same.
-  /// Excluded fields for comparison, web3RpcWebsocketUrl - web3RpcHttpUrl - enabled - isAdded
+  /// Excluded fields for comparison, enabled - isAdded
   bool compareWithOther(Network otherNetwork) {
     return logo == otherNetwork.logo &&
-        // web3RpcHttpUrl == otherNetwork.web3RpcHttpUrl &&
-        // web3RpcWebsocketUrl == otherNetwork.web3RpcWebsocketUrl &&
+        web3RpcHttpUrl == otherNetwork.web3RpcHttpUrl &&
+        web3RpcWebsocketUrl == otherNetwork.web3RpcWebsocketUrl &&
         web3WebSocketUrl == otherNetwork.web3WebSocketUrl &&
         symbol == otherNetwork.symbol &&
         explorerUrl == otherNetwork.explorerUrl &&
         label == otherNetwork.label &&
         chainId == otherNetwork.chainId &&
         networkType == otherNetwork.networkType;
+  }
+
+  @override
+  bool get stringify => true;
+
+  @override
+  List<Object?> get props {
+    return [
+      logo,
+      web3RpcHttpUrl,
+      web3RpcWebsocketUrl,
+      web3WebSocketUrl,
+      symbol,
+      explorerUrl,
+      enabled,
+      label,
+      chainId,
+      isAdded,
+      networkType,
+    ];
   }
 
   // This data will be initialized for the first time
