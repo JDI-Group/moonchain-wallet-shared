@@ -5,6 +5,7 @@ import 'package:mxc_logic/src/domain/repositories/wallet/app_version.dart';
 import 'package:mxc_logic/src/domain/repositories/wallet/dapp_store.dart';
 import 'package:mxc_logic/src/domain/repositories/wallet/nft_contract.dart';
 import 'package:mxc_logic/src/domain/repositories/wallet/pricing.dart';
+import 'package:mxc_logic/src/domain/repositories/wallet/chains.dart';
 import 'package:mxc_logic/src/domain/repositories/wallet/token_contract.dart';
 import 'package:mxc_logic/src/domain/repositories/wallet/tweets.dart';
 
@@ -39,4 +40,6 @@ class Web3Repository {
 
   AppVersionRepository get appVersionRepository =>
       AppVersionRepository(_web3client);
+
+  ChainsRepository get chainsRepository => ChainsRepository(_web3client);
 }
