@@ -9,6 +9,7 @@ abstract class IMXCSocketClient {
   Future<Stream<Message>?> subscribeToEvent(
     String event,
   );
+  String get endpoint;
 }
 
 class MXCSocketClient {
@@ -31,9 +32,17 @@ class MXCSocketClient {
   }
 
   Future<bool> connect(String web3WebSocketUrl) async {
-    return isConnected()
-        ? true
-        : await _socketClient!.connect(web3WebSocketUrl);
+    if (_socketClient!.endpoint.isEmpty) {
+      // not connected at all
+      return await _socketClient!.connect(web3WebSocketUrl);
+    } else if (isConnected() && _socketClient!.endpoint == web3WebSocketUrl) {
+      // request to connect to same url
+      return true;
+    } else {
+      // connect with new url
+      _socketClient!.disconnect();
+      return await _socketClient!.connect(web3WebSocketUrl);
+    }
   }
 
   void disconnect() async {
