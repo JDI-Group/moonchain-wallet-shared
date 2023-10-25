@@ -32,6 +32,10 @@ class PhoenixClient implements IMXCSocketClient {
     }
   }
 
+  /// Empty string If not connected at all
+  @override
+  String get endpoint => _socketInstance?.endpoint ?? '';
+
   @override
   void disconnect() async {
     if (isConnected()) {
@@ -44,12 +48,12 @@ class PhoenixClient implements IMXCSocketClient {
     String event,
   ) async {
     if (_socketInstance == null) {
-      throw PhoenixSocketNotInitialized(null, "subscribeToEvent");
+      throw PhoenixSocketNotInitialized(null, 'subscribeToEvent');
     }
 
     if (!isConnected()) {
       throw PhoenixSocketNotConnected(
-          Uri.parse(_socketInstance!.endpoint), "subscribeToEvent");
+          Uri.parse(_socketInstance!.endpoint), 'subscribeToEvent');
     }
 
     final doesChannelExists = _socketInstance!.channels.values
@@ -60,6 +64,12 @@ class PhoenixClient implements IMXCSocketClient {
           .firstWhere((element) => element.topic == event);
       return channel.messages;
     } else {
+      // Leave all other channels
+      final channels = _socketInstance!.channels.values.toList();
+      for (PhoenixChannel channel in channels) {
+        // _socketInstance.
+        _socketInstance!.removeChannel(channel);
+      }
       return await joinChannel(event);
     }
   }
