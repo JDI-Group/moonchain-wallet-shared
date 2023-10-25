@@ -23,6 +23,8 @@ class TokenContractRepository {
   final DatadashClient _web3Client;
   final RestClient _restClient;
 
+  MXCSocketClient get _mxcSocketClient => MXCSocketClient();
+
   EthPrivateKey getCredentials(String privateKey) =>
       EthPrivateKey.fromHex(privateKey);
 
@@ -137,16 +139,17 @@ class TokenContractRepository {
     return isConnected;
   }
 
-  Future<Stream<dynamic>?> subscribeToBalanceEvent(
+  Future<bool> connectToWebSocket() async {
+    _mxcSocketClient.initialize();
+    return await _mxcSocketClient
+        .connect(_web3Client.network!.web3WebSocketUrl!);
+  }
+
+  Future<Stream<dynamic>?> subscribeEvent(
     String event,
   ) async {
-    if ((_web3Client.network!.networkType == NetworkType.testnet ||
-            _web3Client.network!.networkType == NetworkType.mainnet) &&
-        _web3Client.network!.web3WebSocketUrl!.isNotEmpty) {
-      final mxcSocketService = MXCSocketClient();
-      mxcSocketService.initialize();
-      await mxcSocketService.connect(_web3Client.network!.web3WebSocketUrl!);
-      return mxcSocketService.subscribeToEvent(
+    if (Config.isMxcChains(_web3Client.network!.chainId)) {
+      return _mxcSocketClient.subscribeToEvent(
         event,
       );
     } else {
