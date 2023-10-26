@@ -351,14 +351,16 @@ class TokenContractRepository {
     late Transaction transaction;
     final gasLimit = estimatedGasFee?.gas.toInt();
     EtherAmount? maxFeePerGas;
+    EtherAmount? maxPriorityFeePerGas =
+        MxcAmount.fromDoubleByEther(0.0000000015);
 
     if (estimatedGasFee != null) {
       final estimatedGasFeeAsDouble =
           estimatedGasFee.gasPrice.getValueInUnitBI(EtherUnit.wei).toDouble() *
-              1.5;
+              Config.priority;
       maxFeePerGas = EtherAmount.fromBigInt(
         EtherUnit.wei,
-        BigInt.from(estimatedGasFeeAsDouble),
+        BigInt.from(estimatedGasFeeAsDouble) + maxPriorityFeePerGas.getInWei,
       );
     }
 
@@ -370,7 +372,7 @@ class TokenContractRepository {
         from: fromAddress,
         value: amount,
         maxFeePerGas: maxFeePerGas,
-        maxPriorityFeePerGas: MxcAmount.fromDoubleByEther(0.0000000015),
+        maxPriorityFeePerGas: maxPriorityFeePerGas,
         data: data,
         maxGas: gasLimit,
       );
