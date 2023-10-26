@@ -12,6 +12,7 @@ class Config {
     ensReverseResolver: '0x438b261bEb8D3C500153DD17588E6feC36535312',
     ensReverseRegistrar: '0x3453c56D41A18147dcb4a92b0B08210F90740a87',
   );
+  static const double priority = 1.5;
   static EnsAddresses mainnetEnsAddresses = EnsAddresses(
     ens: '0xd241E9681B22Ae47e94c523d25CDdC1a4960cDC3',
     ensFallbackRegistry: '0xd241E9681B22Ae47e94c523d25CDdC1a4960cDC3',
