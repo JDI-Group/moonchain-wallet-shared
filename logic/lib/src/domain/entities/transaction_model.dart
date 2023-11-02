@@ -1,18 +1,21 @@
 import 'dart:convert';
+import 'package:collection/collection.dart';
 import 'package:mxc_logic/mxc_logic.dart';
 import 'package:web3dart/crypto.dart';
 import 'package:web3dart/web3dart.dart';
 
 import '../const/const.dart';
 
-enum TransactionType { sent, received, all }
+enum TransactionType { sent, received, contractCall, all }
 
 enum TransactionStatus { done, pending, failed }
 
 class TransactionModel {
   factory TransactionModel.fromMXCTransaction(
-      WannseeTransactionModel mxcTransaction, String walletAddress) {
-    String value = '0';
+    WannseeTransactionModel mxcTransaction,
+    String walletAddress,
+  ) {
+    String? value = '0';
     Token token = Token();
     DateTime? timeStamp;
     String hash = mxcTransaction.hash ?? 'Unknown';
@@ -28,19 +31,29 @@ class TransactionModel {
       status = TransactionStatus.pending;
       final time = DateTime.now();
       timeStamp = time;
+      final isCoinTransfer = mxcTransaction.txTypes!.contains('coin_transfer');
 
-      type = mxcTransaction.checkForTransactionType(
-          walletAddress, mxcTransaction.from!.hash!.toLowerCase());
-      value = mxcTransaction.value ?? '0';
-      token =
-          token.copyWith(logoUri: Config.mxcLogoUri, symbol: Config.mxcName);
+      if (mxcTransaction.decodedInput == null && !isCoinTransfer) {
+        // It's contract call
+        type = TransactionType.contractCall;
+        value = mxcTransaction.txBurntFee;
+      } else {
+        type = mxcTransaction.checkForTransactionType(
+          walletAddress,
+          mxcTransaction.from!.hash!.toLowerCase(),
+        );
+        value = mxcTransaction.value ?? '0';
+        token =
+            token.copyWith(logoUri: Config.mxcLogoUri, symbol: Config.mxcName);
 
-      if (mxcTransaction.decodedInput != null) {
-        if (mxcTransaction.to?.hash != null) {
-          token = token.copyWith(
-              address: mxcTransaction.to?.hash,
-              symbol: mxcTransaction.to!.name!);
-          value = mxcTransaction.decodedInput?.parameters?[1].value ?? '0';
+        if (mxcTransaction.decodedInput != null) {
+          // It should be token transfer
+          if (mxcTransaction.to?.hash != null) {
+            token = token.copyWith(
+                address: mxcTransaction.to?.hash,
+                symbol: mxcTransaction.to!.name!);
+            value = mxcTransaction.decodedInput?.parameters?[1].value ?? '0';
+          }
         }
       }
     } else if (mxcTransaction.txTypes != null &&
@@ -55,7 +68,9 @@ class TransactionModel {
       value = mxcTransaction.value ?? '0';
     } else if (mxcTransaction.txTypes == null &&
         mxcTransaction.tokenTransfers != null &&
-        mxcTransaction.tokenTransfers![0].type == 'token_transfer') {
+        mxcTransaction.tokenTransfers!
+                .indexWhere((element) => element.type == 'token_transfer') !=
+            -1) {
       token = token.copyWith(
           symbol: mxcTransaction.tokenTransfers![0].token!.name!);
 
@@ -72,6 +87,11 @@ class TransactionModel {
         walletAddress,
         mxcTransaction.tokenTransfers![0].from!.hash!.toLowerCase(),
       );
+    } else if (mxcTransaction.txTypes != null &&
+        mxcTransaction.txTypes!.contains('contract_call')) {
+      timeStamp = mxcTransaction.timestamp!;
+      type = TransactionType.contractCall;
+      value = mxcTransaction.txBurntFee;
     }
 
     return TransactionModel(
@@ -193,7 +213,7 @@ class TransactionModel {
   final TransactionType type;
 
   /// The value that is transferred in transaction.
-  final String value;
+  final String? value;
 
   final Token token;
 }
