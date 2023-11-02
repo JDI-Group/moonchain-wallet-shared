@@ -408,18 +408,14 @@ class TokenContractRepository {
     }
   }
 
-  StreamSubscription<bool> spyTransaction(
+  StreamSubscription<TransactionReceipt?> spyTransaction(
     String hash,
   ) {
-    final controller = StreamController<bool>();
+    final controller = StreamController<TransactionReceipt?>();
 
     final stream = Stream.periodic(const Duration(seconds: 60), (count) async {
       final receipt = await _web3Client.getTransactionReceipt(hash);
-
-      if (receipt?.status ?? false) {
-        return true;
-      }
-      return false;
+      return receipt;
     }).asyncMap((event) => event).listen(controller.add);
 
     return stream;
