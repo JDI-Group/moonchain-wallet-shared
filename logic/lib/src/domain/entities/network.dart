@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 
+import 'entities.dart';
+
 enum NetworkType { testnet, mainnet, custom }
 
 class Network {
@@ -10,6 +12,32 @@ class Network {
   /// Parses the string and returns the resulting Json object as [Network].
   factory Network.fromJson(String data) {
     return Network.fromMap(json.decode(data) as Map<String, dynamic>);
+  }
+
+  factory Network.fromAddEthereumChain(
+      AddEthereumChain addEthereumChain, int chainId) {
+    String logo = 'assets/svg/networks/unknown.svg';
+    String web3RpcHttpUrl = addEthereumChain.rpcUrls[0];
+    String web3RpcWebsocketUrl =
+        addEthereumChain.rpcUrls[0].replaceFirst('https', 'wss');
+    String symbol = addEthereumChain.nativeCurrency.name!;
+    bool enabled = false;
+    bool isAdded = true;
+    NetworkType networkType = NetworkType.custom;
+    String explorerUrl = addEthereumChain.blockExplorerUrls[0];
+    String label = addEthereumChain.chainName;
+    return Network(
+      logo: logo,
+      web3RpcHttpUrl: web3RpcHttpUrl,
+      web3RpcWebsocketUrl: web3RpcWebsocketUrl,
+      symbol: symbol,
+      enabled: enabled,
+      chainId: chainId,
+      isAdded: isAdded,
+      networkType: networkType,
+      label: label,
+      explorerUrl: explorerUrl,
+    );
   }
 
   factory Network.fromMap(Map<String, dynamic> data) => Network(
