@@ -18,3 +18,4 @@ export 'app_version/app_version.dart';
 export 'bookmark.dart';
 export 'watch_asset_model.dart';
 export 'chains_list/chains_list.dart';
+export 'add_ethereum_chain/add_ethereum_chain.dart';
