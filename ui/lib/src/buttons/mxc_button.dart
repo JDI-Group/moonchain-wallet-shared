@@ -250,7 +250,7 @@ class _AxsButtonState extends State<MxcButton> with TickerProviderStateMixin {
       case AxsButtonType.pass:
         return ColorsTheme.of(context).textBlack200;
       case AxsButtonType.warning:
-        return ColorsTheme.of(context).textBlack200;
+        return ColorsTheme.of(context).textCritical;
       default:
         return Colors.transparent;
     }
