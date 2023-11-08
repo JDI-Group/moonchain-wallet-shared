@@ -16,7 +16,9 @@ class Network {
 
   factory Network.fromAddEthereumChain(
       AddEthereumChain addEthereumChain, int chainId) {
-    String logo = 'assets/svg/networks/unknown.svg';
+    String logo = addEthereumChain.iconUrls?.isNotEmpty ?? false
+        ? addEthereumChain.iconUrls![0]
+        : 'assets/svg/networks/unknown.svg';
     String web3RpcHttpUrl = addEthereumChain.rpcUrls[0];
     String web3RpcWebsocketUrl =
         addEthereumChain.rpcUrls[0].replaceFirst('https', 'wss');
@@ -24,7 +26,10 @@ class Network {
     bool enabled = false;
     bool isAdded = true;
     NetworkType networkType = NetworkType.custom;
-    String explorerUrl = addEthereumChain.blockExplorerUrls[0];
+    String? explorerUrl = addEthereumChain.blockExplorerUrls != null &&
+            addEthereumChain.blockExplorerUrls!.isNotEmpty
+        ? addEthereumChain.blockExplorerUrls![0]
+        : null;
     String label = addEthereumChain.chainName;
     return Network(
       logo: logo,

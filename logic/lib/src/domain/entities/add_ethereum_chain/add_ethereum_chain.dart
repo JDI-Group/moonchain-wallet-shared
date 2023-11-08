@@ -17,10 +17,15 @@ class AddEthereumChain extends Equatable {
       chainId: data['chainId'] as String,
       chainName: data['chainName'] as String,
       rpcUrls: (data['rpcUrls'] as List<dynamic>).cast<String>(),
-      iconUrls: (data['rpcUrls'] as List<dynamic>).cast<String>(),
+      iconUrls: data['iconUrls'] != null
+          ? (data['iconUrls'] as List<dynamic>).cast<String>()
+          : null,
       nativeCurrency: NativeCurrency.fromMap(
-          data['nativeCurrency'] as Map<String, dynamic>),
-      blockExplorerUrls: (data['rpcUrls'] as List<dynamic>).cast<String>(),
+        data['nativeCurrency'] as Map<String, dynamic>,
+      ),
+      blockExplorerUrls: data['blockExplorerUrls'] != null
+          ? (data['blockExplorerUrls'] as List<dynamic>).cast<String>()
+          : null,
     );
   }
 
@@ -37,7 +42,7 @@ class AddEthereumChain extends Equatable {
   final List<String> rpcUrls;
   final List<String>? iconUrls;
   final NativeCurrency nativeCurrency;
-  final List<String> blockExplorerUrls;
+  final List<String>? blockExplorerUrls;
 
   Map<String, dynamic> toMap() => {
         'chainId': chainId,
