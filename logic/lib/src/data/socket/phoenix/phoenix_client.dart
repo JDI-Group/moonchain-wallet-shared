@@ -38,7 +38,7 @@ class PhoenixClient implements IMXCSocketClient {
 
   @override
   void disconnect() async {
-    if (isConnected()) {
+    if (_socketInstance != null && isConnected()) {
       _socketInstance!.close();
     }
   }
@@ -74,8 +74,10 @@ class PhoenixClient implements IMXCSocketClient {
     }
   }
 
-  Future<Stream<Message>?> joinChannel(String event,
-      {PhoenixChannel? subscription}) async {
+  Future<Stream<Message>> joinChannel(
+    String event, {
+    PhoenixChannel? subscription,
+  }) async {
     subscription = subscription ??
         _socketInstance!.addChannel(
           topic: event,
@@ -85,6 +87,12 @@ class PhoenixClient implements IMXCSocketClient {
 
     if (subscriptionResponse.isOk) {
       return subscription.messages;
+    } else {
+      throw PhoenixSocketJoinChannelError(
+        Uri.parse(_socketInstance!.endpoint),
+        'joinChannel',
+        event,
+      );
     }
   }
 }

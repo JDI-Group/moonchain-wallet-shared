@@ -36,6 +36,20 @@ class PhoenixSocketNotConnected extends PhoenixException {
             statusCode: statusCode);
 }
 
+class PhoenixSocketJoinChannelError extends PhoenixException {
+  PhoenixSocketJoinChannelError(
+    Uri? url,
+    Object? source,
+    String channel, {
+    int? statusCode,
+  }) : super(
+          url,
+          'Phoenix socket cannot join the $channel channel',
+          source,
+          statusCode: statusCode,
+        );
+}
+
 class PhoenixSocketConnectionError extends PhoenixException {
   PhoenixSocketConnectionError(
     Uri? url,
