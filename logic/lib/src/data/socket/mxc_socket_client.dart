@@ -46,7 +46,9 @@ class MXCSocketClient {
   }
 
   void disconnect() async {
-    _socketClient!.disconnect();
+    if (_socketClient != null) {
+      _socketClient!.disconnect();
+    }
   }
 
   Future<Stream<Message>?> subscribeToEvent(
