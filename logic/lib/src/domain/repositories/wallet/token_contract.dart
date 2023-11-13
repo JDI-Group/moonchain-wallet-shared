@@ -145,6 +145,10 @@ class TokenContractRepository {
         .connect(_web3Client.network!.web3WebSocketUrl!);
   }
 
+  void disconnectWebSocket() async {
+    _mxcSocketClient.disconnect();
+  }
+
   Future<Stream<dynamic>?> subscribeEvent(
     String event,
   ) async {
