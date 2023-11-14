@@ -1,4 +1,5 @@
-import 'package:mxc_logic/src/domain/entities/entities.dart';
+import 'package:mxc_logic/mxc_logic.dart';
+import 'package:web3dart/web3dart.dart';
 
 class Config {
   static const String testnetRouterAddress =
@@ -29,6 +30,9 @@ class Config {
   static const String mxcLogoUri = 'assets/svg/networks/mxc.svg';
   static const String mxcName = 'MXC Token';
   static const priority = 1.5;
+  static EtherAmount maxPriorityFeePerGas =
+      MxcAmount.fromDoubleByGWei(priority);
+
   static const String zeroAddress =
       '0x0000000000000000000000000000000000000000';
   static const String mxcAddressSepolia =
