@@ -327,12 +327,15 @@ class TokenContractRepository {
     required String from,
     required String to,
     required Uint8List data,
+    EtherAmount? gasPrice,
+    BigInt? amountOfGas,
   }) =>
       estimateGesFee(
-        from: from,
-        to: to,
-        data: data,
-      );
+          from: from,
+          to: to,
+          data: data,
+          gasPrice: gasPrice,
+          amountOfGas: amountOfGas);
 
   Future<EstimatedGasFee> estimateGesFee({
     required String from,
