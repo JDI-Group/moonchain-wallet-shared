@@ -83,7 +83,7 @@ class NftContractRepository {
     required int tokenId,
     required String privateKey,
     required String to,
-    EstimatedGasFee? estimatedGasFee,
+    TransactionGasEstimation? estimatedGasFee,
   }) async {
     try {
       final addressValue = EthereumAddress.fromHex(address);

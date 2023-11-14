@@ -1,7 +1,7 @@
 import 'package:web3dart/web3dart.dart';
 
-class EstimatedGasFee {
-  const EstimatedGasFee({
+class TransactionGasEstimation {
+  const TransactionGasEstimation({
     required this.gasPrice,
     required this.gas,
     required this.gasFee,

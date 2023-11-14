@@ -314,30 +314,30 @@ class TokenContractRepository {
   Future<EtherAmount> getGasPrice() async => await _web3Client.getGasPrice();
 
   /// This function is only used for native token transfer gas estimation
-  Future<EstimatedGasFee> estimateGasFeeForCoinTransfer({
+  Future<TransactionGasEstimation> estimateGasFeeForCoinTransfer({
     required String from,
     required String to,
     required EtherAmount? gasPrice,
     required EtherAmount value,
   }) =>
-      estimateGesFee(from: from, to: to, gasPrice: gasPrice, value: value);
+      estimateGasFee(from: from, to: to, gasPrice: gasPrice, value: value);
 
   /// This function is only used for token transfer gas estimation
-  Future<EstimatedGasFee> estimateGasFeeForContractCall({
+  Future<TransactionGasEstimation> estimateGasFeeForContractCall({
     required String from,
     required String to,
     required Uint8List data,
     EtherAmount? gasPrice,
     BigInt? amountOfGas,
   }) =>
-      estimateGesFee(
+      estimateGasFee(
           from: from,
           to: to,
           data: data,
           gasPrice: gasPrice,
           amountOfGas: amountOfGas);
 
-  Future<EstimatedGasFee> estimateGesFee({
+  Future<TransactionGasEstimation> estimateGasFee({
     required String from,
     required String to,
     EtherAmount? gasPrice,
@@ -365,7 +365,7 @@ class TokenContractRepository {
     final fee = gasPriceData.getInWei * gas;
     final gasFee = EtherAmount.fromBigInt(EtherUnit.wei, fee);
 
-    return EstimatedGasFee(
+    return TransactionGasEstimation(
       gasPrice: gasPriceData,
       gas: gas,
       gasFee: gasFee.getValueInUnit(EtherUnit.ether),
@@ -388,7 +388,7 @@ class TokenContractRepository {
       required String to,
       required String? from,
       required EtherAmount amount,
-      EstimatedGasFee? estimatedGasFee,
+      TransactionGasEstimation? estimatedGasFee,
       Uint8List? data,
       String? tokenAddress}) async {
     final toAddress = EthereumAddress.fromHex(to);
