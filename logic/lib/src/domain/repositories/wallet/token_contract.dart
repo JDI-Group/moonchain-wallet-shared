@@ -7,6 +7,7 @@ import 'package:mxc_logic/mxc_logic.dart';
 import 'package:mxc_logic/src/data/api/client/web3_client.dart';
 import 'package:mxc_logic/src/data/socket/mxc_socket_client.dart';
 import 'package:mxc_logic/src/domain/const/const.dart';
+import 'package:web3dart/crypto.dart';
 import 'package:web3dart/web3dart.dart';
 
 typedef TransferEvent = void Function(
@@ -312,23 +313,51 @@ class TokenContractRepository {
 
   Future<EtherAmount> getGasPrice() async => await _web3Client.getGasPrice();
 
-  Future<EstimatedGasFee> estimateGesFee(
-      {required String from,
-      required String to,
-      EtherAmount? gasPrice,
-      Uint8List? data,
-      BigInt? amountOfGas}) async {
+  /// This function is only used for native token transfer gas estimation
+  Future<EstimatedGasFee> estimateGasFeeForCoinTransfer({
+    required String from,
+    required String to,
+    required EtherAmount? gasPrice,
+    required EtherAmount value,
+  }) =>
+      estimateGesFee(from: from, to: to, gasPrice: gasPrice, value: value);
+
+  /// This function is only used for token transfer gas estimation
+  Future<EstimatedGasFee> estimateGasFeeForContractCall({
+    required String from,
+    required String to,
+    required Uint8List data,
+  }) =>
+      estimateGesFee(
+        from: from,
+        to: to,
+        data: data,
+      );
+
+  Future<EstimatedGasFee> estimateGesFee({
+    required String from,
+    required String to,
+    EtherAmount? gasPrice,
+    Uint8List? data,
+    BigInt? amountOfGas,
+    EtherAmount? value,
+  }) async {
     final sender = EthereumAddress.fromHex(from);
     final toAddress = EthereumAddress.fromHex(to);
 
     final gasPriceData = gasPrice ?? await _web3Client.getGasPrice();
 
+    EtherAmount maxFeePerGas = calculateMaxFeePerGas(gasPriceData);
+
+    // NOTE: If data is not null then value should be null vice versa
     final gas = await _web3Client.estimateGas(
-        sender: sender,
-        to: toAddress,
-        data: data,
-        gasPrice: gasPriceData,
-        amountOfGas: amountOfGas);
+      sender: sender,
+      to: toAddress,
+      data: data,
+      maxFeePerGas: maxFeePerGas,
+      maxPriorityFeePerGas: Config.maxPriorityFeePerGas,
+      value: value,
+    );
 
     final fee = gasPriceData.getInWei * gas;
     final gasFee = EtherAmount.fromBigInt(EtherUnit.wei, fee);
@@ -338,6 +367,17 @@ class TokenContractRepository {
       gas: gas,
       gasFee: gasFee.getValueInUnit(EtherUnit.ether),
     );
+  }
+
+  calculateMaxFeePerGas(EtherAmount gasPrice) {
+    final estimatedGasFeeAsDouble =
+        gasPrice.getValueInUnitBI(EtherUnit.wei).toDouble() * Config.priority;
+    EtherAmount maxFeePerGas = EtherAmount.fromBigInt(
+      EtherUnit.wei,
+      BigInt.from(estimatedGasFeeAsDouble) +
+          Config.maxPriorityFeePerGas.getInWei,
+    );
+    return maxFeePerGas;
   }
 
   Future<String> sendTransaction(
@@ -354,19 +394,7 @@ class TokenContractRepository {
     final cred = EthPrivateKey.fromHex(privateKey);
     late Transaction transaction;
     final gasLimit = estimatedGasFee?.gas.toInt();
-    EtherAmount? maxFeePerGas;
-    EtherAmount? maxPriorityFeePerGas =
-        MxcAmount.fromDoubleByEther(0.0000000015);
-
-    if (estimatedGasFee != null) {
-      final estimatedGasFeeAsDouble =
-          estimatedGasFee.gasPrice.getValueInUnitBI(EtherUnit.wei).toDouble() *
-              Config.priority;
-      maxFeePerGas = EtherAmount.fromBigInt(
-        EtherUnit.wei,
-        BigInt.from(estimatedGasFeeAsDouble) + maxPriorityFeePerGas.getInWei,
-      );
-    }
+    EtherAmount maxFeePerGas = calculateMaxFeePerGas(estimatedGasFee!.gasPrice);
 
     String result;
 
@@ -374,11 +402,9 @@ class TokenContractRepository {
       final transaction = Transaction(
         to: toAddress,
         from: fromAddress,
-        value: amount,
         maxFeePerGas: maxFeePerGas,
-        maxPriorityFeePerGas: maxPriorityFeePerGas,
+        maxPriorityFeePerGas: Config.maxPriorityFeePerGas,
         data: data,
-        maxGas: gasLimit,
       );
 
       result = await _web3Client.sendTransaction(
@@ -389,14 +415,42 @@ class TokenContractRepository {
     } else {
       final tokenHash = EthereumAddress.fromHex(tokenAddress);
       final erc20Token = EnsToken(address: tokenHash, client: _web3Client);
+
+      final transaction = Transaction(
+        to: tokenHash,
+        from: fromAddress,
+        maxFeePerGas: maxFeePerGas,
+        maxPriorityFeePerGas: Config.maxPriorityFeePerGas,
+      );
+
       result = await erc20Token.transfer(
         toAddress,
         amount.getValueInUnitBI(EtherUnit.wei),
         credentials: cred,
+        transaction: transaction,
       );
     }
 
     return result;
+  }
+
+  Uint8List getTokenTransferData(
+    String tokenHash,
+    EthereumAddress toAddress,
+    BigInt amount,
+  ) {
+    final erc20Token = EnsToken(
+      address: EthereumAddress.fromHex(tokenHash),
+      client: _web3Client,
+    );
+    final function = erc20Token.self.functions[33];
+    assert(checkSignature(function, 'a9059cbb'));
+    final params = [toAddress, amount];
+    return function.encodeCall(params);
+  }
+
+  bool checkSignature(ContractFunction function, String expected) {
+    return bytesToHex(function.selector) == expected;
   }
 
   Future<int> getChainId(String rpcUrl) async {
