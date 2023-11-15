@@ -40,7 +40,7 @@ class Urls {
   static const String chainsList =
       'https://raw.githubusercontent.com/MXCzkEVM/chains-list/main/chains_list.json';
 
-        static const String mxcMainnetNftMarketPlace = 'https://nft.mxc.com/';
+  static const String mxcMainnetNftMarketPlace = 'https://nft.mxc.com/';
   static const String mxcTestnetNftMarketPlace = 'https://wannsee-nft.mxc.com/';
   static const String mxcStatus = 'https://mxc.instatus.com/';
 
@@ -50,8 +50,13 @@ class Urls {
   static const String iOSUrl =
       'https://apps.apple.com/us/app/axs-decentralized-wallet/id6460891587';
 
+  static const String weChat = 'weixin://';
+  static const String telegram = 'tg://';
   static const String emailApp = 'mailto:';
-
+  static const String mxcChatGPT = 'http://t.me/mxcchatgpt_bot';
+  static const String axsTermsConditions =
+      'https://doc.mxc.com/docs/Resources/tns';
+  static const String axsPrivacy = 'https://doc.mxc.com/docs/Resources/Privacy';
   static const String gateio = 'https://gate.io/';
   static const String okx = 'https://www.okx.com/';
   static const String mainnetL3Bridge = 'https://erc20.mxc.com/';
