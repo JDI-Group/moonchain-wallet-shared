@@ -407,6 +407,7 @@ class TokenContractRepository {
         from: fromAddress,
         maxFeePerGas: maxFeePerGas,
         maxPriorityFeePerGas: Config.maxPriorityFeePerGas,
+        value: amount,
         data: data,
       );
 
