@@ -2,6 +2,15 @@ import 'package:mxc_logic/mxc_logic.dart';
 import 'package:web3dart/web3dart.dart';
 
 class Config {
+
+  // App related config 
+  static const String appName = 'AXS';
+  // Firebase 
+  static const googleServiceApiKey = '';
+  static const appId = '';
+  static const projectId = '';
+  static const messagingSenderId = '';
+
   static const String testnetRouterAddress =
       '0xCaf6FE52B3b2948EFe7EA72C1ffd0B49C5FB030E';
   static const String mainnetRouterAddress =
