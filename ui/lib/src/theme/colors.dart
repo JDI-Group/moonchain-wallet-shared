@@ -33,7 +33,7 @@ class ColorsTheme {
   final primary90 = const Color(0xFF0B3FEA);
   final primary100 = const Color(0xFF2958F5);
   final primary200 = const Color(0xFF3C67F6);
-  final primary300 = const Color(0xFF5077F7);
+  static const primary300 = Color(0xFF5077F7);
   final primary400 = const Color(0xFF6386F8);
   final primary500 = const Color(0xFF7795F9);
   final primary600 = const Color(0xFF8AA4F9);
