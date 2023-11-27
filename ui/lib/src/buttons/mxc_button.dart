@@ -16,145 +16,155 @@ enum AxsButtonSize { xl, xxl }
 
 class MxcButton extends StatefulWidget {
   /// [key] marked as required, because it's often needed for testing purposes
-  const MxcButton({
-    required Key? key,
-    required this.title,
-    required this.onTap,
-    this.type = AxsButtonType.primary,
-    this.size = AxsButtonSize.xxl,
-    this.width,
-    this.titleColor,
-    this.color,
-    this.borderColor,
-    this.icon,
-    this.iconSize,
-  }) : super(key: key);
+  const MxcButton(
+      {required Key? key,
+      required this.title,
+      required this.onTap,
+      this.type = AxsButtonType.primary,
+      this.size = AxsButtonSize.xxl,
+      this.width,
+      this.titleColor,
+      this.color,
+      this.borderColor,
+      this.icon,
+      this.iconSize,
+      this.titleSize})
+      : super(key: key);
 
-  const MxcButton.primaryWhite({
-    required Key? key,
-    required this.title,
-    required this.onTap,
-    this.type = AxsButtonType.primaryWhite,
-    this.size = AxsButtonSize.xxl,
-    this.width,
-    this.titleColor,
-    this.color,
-    this.borderColor,
-    this.icon,
-    this.iconSize,
-  }) : super(key: key);
+  const MxcButton.primaryWhite(
+      {required Key? key,
+      required this.title,
+      required this.onTap,
+      this.type = AxsButtonType.primaryWhite,
+      this.size = AxsButtonSize.xxl,
+      this.width,
+      this.titleColor,
+      this.color,
+      this.borderColor,
+      this.icon,
+      this.iconSize,
+      this.titleSize})
+      : super(key: key);
 
-  const MxcButton.secondaryWhite({
-    required Key? key,
-    required this.title,
-    required this.onTap,
-    this.type = AxsButtonType.secondaryWhite,
-    this.size = AxsButtonSize.xxl,
-    this.width,
-    this.titleColor,
-    this.color = Colors.transparent,
-    this.borderColor,
-    this.icon,
-    this.iconSize,
-  }) : super(key: key);
+  const MxcButton.secondaryWhite(
+      {required Key? key,
+      required this.title,
+      required this.onTap,
+      this.type = AxsButtonType.secondaryWhite,
+      this.size = AxsButtonSize.xxl,
+      this.width,
+      this.titleColor,
+      this.color = Colors.transparent,
+      this.borderColor,
+      this.icon,
+      this.iconSize,
+      this.titleSize})
+      : super(key: key);
 
-  const MxcButton.plainWhite({
-    required Key? key,
-    required this.title,
-    required this.onTap,
-    this.type = AxsButtonType.plainWhite,
-    this.size = AxsButtonSize.xxl,
-    this.width,
-    this.titleColor,
-    this.color = Colors.transparent,
-    this.borderColor,
-    this.icon,
-    this.iconSize,
-  }) : super(key: key);
+  const MxcButton.plainWhite(
+      {required Key? key,
+      required this.title,
+      required this.onTap,
+      this.type = AxsButtonType.plainWhite,
+      this.size = AxsButtonSize.xxl,
+      this.width,
+      this.titleColor,
+      this.color = Colors.transparent,
+      this.borderColor,
+      this.icon,
+      this.iconSize,
+      this.titleSize})
+      : super(key: key);
 
-  const MxcButton.primary({
-    required Key? key,
-    required this.title,
-    required this.onTap,
-    this.type = AxsButtonType.primary,
-    this.size = AxsButtonSize.xxl,
-    this.width,
-    this.titleColor,
-    this.color,
-    this.borderColor,
-    this.icon,
-    this.iconSize,
-  }) : super(key: key);
+  const MxcButton.primary(
+      {required Key? key,
+      required this.title,
+      required this.onTap,
+      this.type = AxsButtonType.primary,
+      this.size = AxsButtonSize.xxl,
+      this.width,
+      this.titleColor,
+      this.color,
+      this.borderColor,
+      this.icon,
+      this.iconSize,
+      this.titleSize})
+      : super(key: key);
 
-  const MxcButton.secondary({
-    required Key? key,
-    required this.title,
-    required this.onTap,
-    this.type = AxsButtonType.secondary,
-    this.size = AxsButtonSize.xxl,
-    this.width,
-    this.titleColor,
-    this.color = Colors.transparent,
-    this.borderColor,
-    this.icon,
-    this.iconSize,
-  }) : super(key: key);
+  const MxcButton.secondary(
+      {required Key? key,
+      required this.title,
+      required this.onTap,
+      this.type = AxsButtonType.secondary,
+      this.size = AxsButtonSize.xxl,
+      this.width,
+      this.titleColor,
+      this.color = Colors.transparent,
+      this.borderColor,
+      this.icon,
+      this.iconSize,
+      this.titleSize})
+      : super(key: key);
 
-  const MxcButton.plain({
-    required Key? key,
-    required this.title,
-    required this.onTap,
-    this.type = AxsButtonType.plain,
-    this.size = AxsButtonSize.xxl,
-    this.width,
-    this.titleColor,
-    this.color = Colors.transparent,
-    this.borderColor,
-    this.icon,
-    this.iconSize,
-  }) : super(key: key);
+  const MxcButton.plain(
+      {required Key? key,
+      required this.title,
+      required this.onTap,
+      this.type = AxsButtonType.plain,
+      this.size = AxsButtonSize.xxl,
+      this.width,
+      this.titleColor,
+      this.color = Colors.transparent,
+      this.borderColor,
+      this.icon,
+      this.iconSize,
+      this.titleSize})
+      : super(key: key);
 
-  const MxcButton.primaryPass({
-    required Key? key,
-    required this.title,
-    required this.onTap,
-    this.type = AxsButtonType.pass,
-    this.size = AxsButtonSize.xxl,
-    this.width,
-    this.titleColor,
-    this.color,
-    this.borderColor,
-    this.icon,
-    this.iconSize,
-  }) : super(key: key);
+  const MxcButton.primaryPass(
+      {required Key? key,
+      required this.title,
+      required this.onTap,
+      this.type = AxsButtonType.pass,
+      this.size = AxsButtonSize.xxl,
+      this.width,
+      this.titleColor,
+      this.color,
+      this.borderColor,
+      this.icon,
+      this.iconSize,
+      this.titleSize})
+      : super(key: key);
 
-  const MxcButton.primaryWarning({
-    required Key? key,
-    required this.title,
-    required this.onTap,
-    this.type = AxsButtonType.warning,
-    this.size = AxsButtonSize.xxl,
-    this.width,
-    this.titleColor,
-    this.color,
-    this.borderColor,
-    this.icon,
-    this.iconSize,
-  }) : super(key: key);
+  const MxcButton.primaryWarning(
+      {required Key? key,
+      required this.title,
+      required this.onTap,
+      this.type = AxsButtonType.warning,
+      this.size = AxsButtonSize.xxl,
+      this.width,
+      this.titleColor,
+      this.color,
+      this.borderColor,
+      this.icon,
+      this.iconSize,
+      this.titleSize})
+      : super(key: key);
 
-  const MxcButton.secondaryWarning({
-    required Key? key,
-    required this.title,
-    required this.onTap,
-    this.type = AxsButtonType.warning,
-    this.size = AxsButtonSize.xxl,
-    this.width,
-    this.titleColor,
-    this.color = Colors.transparent,
-    this.borderColor,
-    this.icon,
-    this.iconSize,
-  }) : super(key: key);
+  const MxcButton.secondaryWarning(
+      {required Key? key,
+      required this.title,
+      required this.onTap,
+      this.type = AxsButtonType.warning,
+      this.size = AxsButtonSize.xxl,
+      this.width,
+      this.titleColor,
+      this.color = Colors.transparent,
+      this.borderColor,
+      this.icon,
+      this.iconSize,
+      this.titleSize})
+      : super(key: key);
 
   final AxsButtonType type;
   final AxsButtonSize size;
@@ -166,6 +176,7 @@ class MxcButton extends StatefulWidget {
   final double? width;
   final IconData? icon;
   final double? iconSize;
+  final double? titleSize;
 
   @override
   _AxsButtonState createState() => _AxsButtonState();
@@ -342,12 +353,13 @@ class _AxsButtonState extends State<MxcButton> with TickerProviderStateMixin {
                     size: widget.iconSize,
                     color: getTitleColor(),
                   ),
-                  const SizedBox(width: 10),
+                  const SizedBox(width: Sizes.spaceXSmall),
                 ],
                 Text(
                   widget.title,
                   textAlign: TextAlign.center,
                   style: FontTheme.of(context).body1().copyWith(
+                        fontSize: widget.titleSize,
                         fontWeight: FontWeight.w600,
                         color: getTitleColor(),
                       ),
