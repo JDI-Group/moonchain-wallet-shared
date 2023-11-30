@@ -33,7 +33,7 @@ class Config {
   static const String mxcSymbol = 'MXC';
   static const String mxcLogoUri = 'assets/svg/networks/mxc.svg';
   static const String mxcName = 'MXC Token';
-  static const priority = 1.5;
+  static const priority = 1.1;
   static EtherAmount maxPriorityFeePerGas =
       MxcAmount.fromDoubleByGWei(priority);
 

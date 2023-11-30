@@ -372,6 +372,10 @@ class TokenContractRepository {
     );
   }
 
+  // estimated gas fee = from blockchain with getGasPrice method on web3dart
+  // max priority fee per gas = 1.5 Gwei
+  // max fee per gas = gasPrice * priority + 1.5 Gwei (This is to prevent max fee per gas being smallet than max priority fee per gas )
+
   calculateMaxFeePerGas(EtherAmount gasPrice) {
     final estimatedGasFeeAsDouble =
         gasPrice.getValueInUnitBI(EtherUnit.wei).toDouble() * Config.priority;
@@ -383,14 +387,15 @@ class TokenContractRepository {
     return maxFeePerGas;
   }
 
-  Future<String> sendTransaction(
-      {required String privateKey,
-      required String to,
-      required String? from,
-      required EtherAmount amount,
-      TransactionGasEstimation? estimatedGasFee,
-      Uint8List? data,
-      String? tokenAddress}) async {
+  Future<String> sendTransaction({
+    required String privateKey,
+    required String to,
+    required String? from,
+    required EtherAmount amount,
+    TransactionGasEstimation? estimatedGasFee,
+    Uint8List? data,
+    String? tokenAddress,
+  }) async {
     final toAddress = EthereumAddress.fromHex(to);
     EthereumAddress? fromAddress;
     if (from != null) fromAddress = EthereumAddress.fromHex(from);
