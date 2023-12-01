@@ -35,7 +35,8 @@ class Config {
   static const String mxcName = 'MXC Token';
   static const priority = 1.1;
   static EtherAmount maxPriorityFeePerGas =
-      MxcAmount.fromDoubleByGWei(priority);
+      MxcAmount.fromDoubleByGWei(1.5);
+  static const dappSectionFeeDivision = 1.5;
 
   static const String zeroAddress =
       '0x0000000000000000000000000000000000000000';
