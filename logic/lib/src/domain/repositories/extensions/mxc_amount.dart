@@ -5,6 +5,12 @@ import 'package:web3dart/web3dart.dart';
 class MxcAmount extends EtherAmount {
   MxcAmount.inWei(super.value) : super.inWei();
 
+  static EtherAmount fromDoubleByWei(double value) {
+    final wei = value;
+
+    return EtherAmount.inWei(BigInt.from(wei));
+  }
+
   static EtherAmount fromDoubleByGWei(double value) {
     final wei = BigInt.from(10).pow(9).toDouble() * value;
 
