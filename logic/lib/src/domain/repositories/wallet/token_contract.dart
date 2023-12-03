@@ -7,6 +7,7 @@ import 'package:mxc_logic/mxc_logic.dart';
 import 'package:mxc_logic/src/data/api/client/web3_client.dart';
 import 'package:mxc_logic/src/data/socket/mxc_socket_client.dart';
 import 'package:mxc_logic/src/domain/const/const.dart';
+import 'package:mxc_logic/src/domain/utils/utils.dart';
 import 'package:web3dart/crypto.dart';
 import 'package:web3dart/web3dart.dart';
 
@@ -350,7 +351,7 @@ class TokenContractRepository {
 
     final gasPriceData = gasPrice ?? await _web3Client.getGasPrice();
 
-    EtherAmount maxFeePerGas = calculateMaxFeePerGas(gasPriceData);
+    EtherAmount maxFeePerGas = MXCGas.calculateMaxFeePerGas(gasPriceData);
 
     // NOTE: If data is not null then value should be null vice versa
     final gas = await _web3Client.estimateGas(
@@ -372,21 +373,6 @@ class TokenContractRepository {
     );
   }
 
-  // estimated gas fee = from blockchain with getGasPrice method on web3dart
-  // max priority fee per gas = 1.5 Gwei
-  // max fee per gas = gasPrice * priority + 1.5 Gwei (This is to prevent max fee per gas being smallet than max priority fee per gas )
-
-  calculateMaxFeePerGas(EtherAmount gasPrice) {
-    final estimatedGasFeeAsDouble =
-        gasPrice.getValueInUnitBI(EtherUnit.wei).toDouble() * Config.priority;
-    EtherAmount maxFeePerGas = EtherAmount.fromBigInt(
-      EtherUnit.wei,
-      BigInt.from(estimatedGasFeeAsDouble) +
-          Config.maxPriorityFeePerGas.getInWei,
-    );
-    return maxFeePerGas;
-  }
-
   Future<String> sendTransaction({
     required String privateKey,
     required String to,
@@ -402,7 +388,8 @@ class TokenContractRepository {
     final cred = EthPrivateKey.fromHex(privateKey);
     late Transaction transaction;
     final gasLimit = estimatedGasFee?.gas.toInt();
-    EtherAmount maxFeePerGas = calculateMaxFeePerGas(estimatedGasFee!.gasPrice);
+    EtherAmount maxFeePerGas =
+        MXCGas.calculateMaxFeePerGas(estimatedGasFee!.gasPrice);
 
     String result;
 
@@ -499,6 +486,146 @@ class TokenContractRepository {
 
   Future<TransactionReceipt?> getTransactionReceipt(String hash) async {
     return await _web3Client.getTransactionReceipt(hash);
+  }
+
+  /// This functions will send a dump transaction (sending 0 ETH to ourselves) with increased fees in order to
+  /// be included in a block before the old transaction.
+  Future<String> cancelTransaction(
+    TransactionModel toCancelTransaction,
+    Account account,
+  ) async {
+    final transactionReceipt =
+        await _web3Client.getTransactionReceipt(toCancelTransaction.hash);
+
+    // If tx is pending It will be null
+    if (transactionReceipt?.status ?? false) {
+      throw 'Target transaction to cancel is not pending';
+    }
+
+    // Sending to ourselves
+    final fromAddress = EthereumAddress.fromHex(account.address);
+    if (toCancelTransaction.from != fromAddress.hex) {
+      throw 'Cannot cancel a transaction that is not sent from this account';
+    }
+    final toAddress = fromAddress;
+
+    final cred = EthPrivateKey.fromHex(account.privateKey);
+    late Transaction cancelTransaction;
+
+    // Increasing fee per gas
+    double newGasPrice = MXCGas.addExtraFeeForTxReplacement(
+      toCancelTransaction.feePerGas!,
+    );
+
+    // Increasing max fee per gas
+    double maxFeePerGasDouble = MXCGas.calculateMaxFeePerGasDouble(newGasPrice);
+    EtherAmount maxFeePerGas =
+        EtherAmount.fromBigInt(EtherUnit.wei, BigInt.from(maxFeePerGasDouble));
+
+    // Making the transaction a mock transaction (Only for disposing other transaction(s))
+    EtherAmount value = EtherAmount.fromBigInt(EtherUnit.ether, BigInt.zero);
+
+    late String result;
+
+    // Nonce is important since we are going to override this nonce transaction
+    final nonce = await _web3Client.getTransactionCount(fromAddress);
+
+    cancelTransaction = Transaction(
+      to: toAddress,
+      from: fromAddress,
+      maxFeePerGas: maxFeePerGas,
+      maxPriorityFeePerGas: Config.maxPriorityFeePerGas,
+      value: value,
+      nonce: nonce,
+    );
+
+    result = await _web3Client.sendTransaction(
+      cred,
+      cancelTransaction,
+      chainId: _web3Client.network!.chainId,
+    );
+
+    return result;
+  }
+
+  /// Either get transaction here or get transaction from api The downside for this is that there is a fetch involved which makes the fetching take longer
+  /// Or add properties to transaction model
+  /// The first problem that I might encounter is the old saved models in other chains
+  /// I can handle that by making the properties optional
+  /// On MXC chains I might not encounter any issues since data is remote
+
+  Future<String> speedUpTransaction(
+    TransactionModel toSpeedUpTransaction,
+    Account account,
+  ) async {
+    final transactionReceipt =
+        await _web3Client.getTransactionReceipt(toSpeedUpTransaction.hash);
+
+    // If tx is pending It will be null
+    if (transactionReceipt?.status ?? false) {
+      throw 'Target transaction to speed up is not pending';
+    }
+
+    // Sending to ourselves
+    final fromAddress = EthereumAddress.fromHex(account.address);
+    if (toSpeedUpTransaction.from != fromAddress.hex) {
+      throw 'Cannot speed up a transaction that is not sent from this account';
+    }
+
+    final toAddress = EthereumAddress.fromHex(toSpeedUpTransaction.to!);
+
+    final cred = EthPrivateKey.fromHex(account.privateKey);
+    late Transaction speedUpTransaction;
+
+    // might or might not contain gas limit
+    int? gasLimit = toSpeedUpTransaction.gasLimit;
+
+    Uint8List? data;
+    if (toSpeedUpTransaction.data != null) {
+      data = MXCType.stringToUint8List(toSpeedUpTransaction.data!);
+    }
+
+    // Increasing fee per gas
+    double newGasPrice = MXCGas.addExtraFeeForTxReplacement(
+      toSpeedUpTransaction.feePerGas!,
+    );
+
+    // Increasing max fee per gas
+    double maxFeePerGasDouble = MXCGas.calculateMaxFeePerGasDouble(newGasPrice);
+    EtherAmount maxFeePerGas =
+        EtherAmount.fromBigInt(EtherUnit.wei, BigInt.from(maxFeePerGasDouble));
+
+    // Making the transaction a mock transaction (Only for disposing other transaction(s))
+    EtherAmount? value;
+    if (toSpeedUpTransaction.value != null) {
+      final valueInBigInt = MXCType.stringToBigInt(toSpeedUpTransaction.value!);
+      value = EtherAmount.fromBigInt(EtherUnit.ether, valueInBigInt);
+    }
+
+    late String result;
+
+    // Nonce is important since we are going to override this nonce transaction
+    final nonce = await _web3Client.getTransactionCount(fromAddress);
+
+    speedUpTransaction = Transaction(
+      to: toAddress,
+      from: fromAddress,
+      maxFeePerGas: maxFeePerGas,
+      maxPriorityFeePerGas: Config.maxPriorityFeePerGas,
+      maxGas: gasLimit,
+      value: value,
+      nonce: nonce,
+      data: data,
+    );
+
+    result = await _web3Client.sendTransaction(
+      cred,
+      speedUpTransaction,
+      chainId: _web3Client.network!.chainId,
+    );
+
+    return result;
+    // Token transfer & simple coin transfer has differences
   }
 
   Future<void> dispose() async {
