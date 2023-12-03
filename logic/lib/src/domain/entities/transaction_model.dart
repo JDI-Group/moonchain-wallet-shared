@@ -1,14 +1,14 @@
 import 'dart:convert';
-import 'package:collection/collection.dart';
 import 'package:mxc_logic/mxc_logic.dart';
+import 'package:mxc_logic/src/domain/utils/utils.dart';
 import 'package:web3dart/crypto.dart';
 import 'package:web3dart/web3dart.dart';
-
-import '../const/const.dart';
 
 enum TransactionType { sent, received, contractCall, all }
 
 enum TransactionStatus { done, pending, failed }
+
+enum TransactionActions { cancel, speedUp }
 
 class TransactionModel {
   factory TransactionModel.fromMXCTransaction(
@@ -21,17 +21,33 @@ class TransactionModel {
     String hash = mxcTransaction.hash ?? 'Unknown';
     TransactionType type = TransactionType.sent;
     TransactionStatus status = TransactionStatus.done;
+    String? from;
+    String? to;
+    double? feePerGas;
+    String? data;
+    int? gasLimit;
 
     // two type of tx : coin_transfer from filtered tx list & token transfer from token transfer list
     // If not 'contract_call' or 'coin_transfer' then empty and that means failed in other words
     // another tx that we have are : pending coin transfer (which is received on both sides) &
     // pending token transfer (which is only received on the sender side)
     if (mxcTransaction.result == 'pending') {
-      // could be contract_call || coin_transfer
+      // could be contract_call (token transfer || unknown transactions) || coin_transfer
       status = TransactionStatus.pending;
       final time = DateTime.now();
       timeStamp = time;
       final isCoinTransfer = mxcTransaction.txTypes!.contains('coin_transfer');
+
+      // Getting tx info to tx model for speed up & cancel operation
+      from = mxcTransaction.from?.hash;
+      to = mxcTransaction.to?.hash;
+      if (mxcTransaction.gasPrice != null) {
+        feePerGas = double.parse(mxcTransaction.gasPrice!);
+      }
+      data = mxcTransaction.rawInput;
+      if (mxcTransaction.gasLimit != null) {
+        gasLimit = int.parse(mxcTransaction.gasLimit!);
+      }
 
       if (mxcTransaction.decodedInput == null && !isCoinTransfer) {
         // It's contract call
@@ -101,9 +117,16 @@ class TransactionModel {
       type: type,
       value: value,
       token: token,
+      action: null,
+      from: from,
+      to: to,
+      feePerGas: feePerGas,
+      data: data,
+      gasLimit: gasLimit,
     );
   }
 
+  // In this state the tx
   factory TransactionModel.fromTransactionReceipt(
       TransactionReceipt receipt, String walletAddress, Token token) {
     final txHash = bytesToHex(receipt.transactionHash, include0x: true);
@@ -114,6 +137,13 @@ class TransactionModel {
     final txType = receipt.from!.hex == walletAddress
         ? TransactionType.sent
         : TransactionType.received;
+    // When the receipt is available no need to have these props, since these props are used for
+    // speed up & cancel operations.
+    // final from = receipt.from;
+    // final to = receipt.to;
+    // final feePerGas = receipt.cumulativeGasUsed;
+    // final data = receipt.;
+    // final gasLimit = receipt.gasUsed?.toInt();
 
     return TransactionModel(
       hash: txHash,
@@ -122,6 +152,10 @@ class TransactionModel {
       type: txType,
       value: '0',
       token: token,
+      action: null,
+      // from: from?.hex,
+      // to: to?.hex,
+      // feePerGas: feePerGas.toDouble(), gasLimit: gasLimit,
     );
   }
 
@@ -131,6 +165,11 @@ class TransactionModel {
     final timeStamp = DateTime.now();
     const txStatus = TransactionStatus.pending;
     const txType = TransactionType.sent;
+    final from = receipt.from;
+    final to = receipt.to;
+    final feePerGas = receipt.gasPrice;
+    final data = MXCType.uint8ListToString(receipt.input);
+    final gasLimit = receipt.gas;
 
     return TransactionModel(
       hash: txHash,
@@ -139,6 +178,12 @@ class TransactionModel {
       type: txType,
       value: '0',
       token: token,
+      action: null,
+      from: from.hex,
+      to: to?.hex,
+      feePerGas: feePerGas.getInWei.toDouble(),
+      data: data,
+      gasLimit: gasLimit,
     );
   }
 
@@ -154,6 +199,16 @@ class TransactionModel {
           .firstWhere((type) => type.toString().split('.').last == map['type']),
       value: map['value'],
       token: Token.fromMap(map['token']),
+      action: map['action'] != null && map['action'] != 'null'
+          ? TransactionActions.values.firstWhere(
+              (action) => action.toString().split('.').last == map['action'],
+            )
+          : null,
+      from: map['from'] as String?,
+      to: map['to'] as String?,
+      feePerGas: map['feePerGas'] as double?,
+      data: map['data'] as String?,
+      gasLimit: map['gasLimit'] as int?,
     );
   }
 
@@ -164,16 +219,27 @@ class TransactionModel {
     required this.type,
     required this.value,
     required this.token,
+    required this.action,
+    this.from,
+    this.to,
+    this.feePerGas,
+    this.data,
+    this.gasLimit,
   });
 
-  TransactionModel copyWith({
-    String? hash,
-    DateTime? timeStamp,
-    TransactionStatus? status,
-    TransactionType? type,
-    String? value,
-    Token? token,
-  }) {
+  TransactionModel copyWith(
+      {String? hash,
+      DateTime? timeStamp,
+      TransactionStatus? status,
+      TransactionActions? action,
+      TransactionType? type,
+      String? value,
+      Token? token,
+      String? from,
+      String? to,
+      double? feePerGas,
+      String? data,
+      int? gasLimit}) {
     return TransactionModel(
       hash: hash ?? this.hash,
       timeStamp: timeStamp ?? this.timeStamp,
@@ -181,6 +247,12 @@ class TransactionModel {
       type: type ?? this.type,
       value: value ?? this.value,
       token: token ?? this.token,
+      action: action ?? this.action,
+      from: from ?? this.from,
+      to: to ?? this.to,
+      feePerGas: feePerGas ?? this.feePerGas,
+      data: data ?? this.data,
+      gasLimit: gasLimit ?? this.gasLimit,
     );
   }
 
@@ -192,6 +264,12 @@ class TransactionModel {
       'type': type.toString().split('.').last,
       'value': value,
       'token': token.toMap(),
+      'action': action?.toString().split('.').last,
+      'from': from,
+      'to': to,
+      'feePerGas': feePerGas,
+      'data': data,
+      'gasLimit': gasLimit
     };
   }
 
@@ -209,6 +287,9 @@ class TransactionModel {
   /// Whether this transaction was executed successfully.
   final TransactionStatus status;
 
+  /// The action that are taken over this transaction
+  final TransactionActions? action;
+
   /// Whether this transaction was sent or received.
   final TransactionType type;
 
@@ -216,4 +297,16 @@ class TransactionModel {
   final String? value;
 
   final Token token;
+
+  // Below variables are added for speed up & cancel feature
+  // pending transactions must contains these props (Some props depending on the case) .
+  final String? from;
+
+  final String? to;
+
+  final double? feePerGas;
+
+  final int? gasLimit;
+
+  final String? data;
 }
