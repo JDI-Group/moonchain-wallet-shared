@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:mxc_ui/mxc_ui.dart';
 
-enum ChipButtonStates { defaultState, activeState, inactiveState, disabled }
+enum ChipButtonStates {
+  defaultState,
+  activeState,
+  inactiveState,
+  disabled,
+  danger
+}
 
 class MxcChipButton extends StatelessWidget {
   const MxcChipButton(
@@ -65,6 +71,13 @@ class MxcChipButton extends StatelessWidget {
                 backgroundColor ?? ColorsTheme.of(context).backgroundDisabled,
             borderRadius: BorderRadius.circular(40),
           );
+        case ChipButtonStates.danger:
+          return BoxDecoration(
+              color: backgroundColor ?? Colors.transparent,
+              borderRadius: BorderRadius.circular(40),
+              border: Border.all(
+                color: ColorsTheme.of(context).mainRed,
+              ));
       }
     }
 
@@ -88,6 +101,10 @@ class MxcChipButton extends StatelessWidget {
         case ChipButtonStates.disabled:
           return FontTheme.of(context).subtitle2().copyWith(
                 color: ColorsTheme.of(context).textDisabled,
+              );
+        case ChipButtonStates.danger:
+          return FontTheme.of(context).subtitle2().copyWith(
+                color: ColorsTheme.of(context).mainRed,
               );
       }
     }
@@ -116,6 +133,12 @@ class MxcChipButton extends StatelessWidget {
           return Icon(
             iconData,
             color: iconColor ?? ColorsTheme.of(context).textDisabled,
+            size: iconSize ?? 20,
+          );
+        case ChipButtonStates.danger:
+          return Icon(
+            iconData,
+            color: iconColor ?? ColorsTheme.of(context).mainRed,
             size: iconSize ?? 20,
           );
       }
