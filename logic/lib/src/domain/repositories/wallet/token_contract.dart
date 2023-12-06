@@ -494,17 +494,11 @@ class TokenContractRepository {
     TransactionModel toCancelTransaction,
     Account account,
   ) async {
-    final transactionReceipt =
-        await _web3Client.getTransactionReceipt(toCancelTransaction.hash);
-
-    // If tx is pending It will be null
-    if (transactionReceipt?.status ?? false) {
-      throw 'Target transaction to cancel is not pending';
-    }
-
     // Sending to ourselves
     final fromAddress = EthereumAddress.fromHex(account.address);
-    if (toCancelTransaction.from != fromAddress.hex) {
+    final toCancelTransactionFrom =
+        EthereumAddress.fromHex(toCancelTransaction.from!);
+    if (toCancelTransactionFrom != fromAddress) {
       throw 'Cannot cancel a transaction that is not sent from this account';
     }
     final toAddress = fromAddress;
@@ -513,14 +507,20 @@ class TokenContractRepository {
     late Transaction cancelTransaction;
 
     // Increasing fee per gas
-    double newGasPrice = MXCGas.addExtraFeeForTxReplacement(
+    double newGasPriceDouble = MXCGas.addExtraFeeForTxReplacement(
       toCancelTransaction.feePerGas!,
     );
+    EtherAmount maxFeePerGas =
+        EtherAmount.fromBigInt(EtherUnit.wei, BigInt.from(newGasPriceDouble));
+
+    double priorityFeeDouble = toCancelTransaction.maxPriorityFee!.toDouble() *
+        Config.extraGasPercentage;
+    BigInt priorityFeeBigInt = BigInt.from(priorityFeeDouble);
+    EtherAmount priorityFee =
+        EtherAmount.fromBigInt(EtherUnit.wei, priorityFeeBigInt);
 
     // Increasing max fee per gas
-    double maxFeePerGasDouble = MXCGas.calculateMaxFeePerGasDouble(newGasPrice);
-    EtherAmount maxFeePerGas =
-        EtherAmount.fromBigInt(EtherUnit.wei, BigInt.from(maxFeePerGasDouble));
+    final totalGas = newGasPriceDouble * toCancelTransaction.gasLimit!;
 
     // Making the transaction a mock transaction (Only for disposing other transaction(s))
     EtherAmount value = EtherAmount.fromBigInt(EtherUnit.ether, BigInt.zero);
@@ -528,13 +528,13 @@ class TokenContractRepository {
     late String result;
 
     // Nonce is important since we are going to override this nonce transaction
-    final nonce = await _web3Client.getTransactionCount(fromAddress);
+    final int nonce = toCancelTransaction.nonce!;
 
     cancelTransaction = Transaction(
       to: toAddress,
       from: fromAddress,
       maxFeePerGas: maxFeePerGas,
-      maxPriorityFeePerGas: Config.maxPriorityFeePerGas,
+      maxPriorityFeePerGas: priorityFee,
       value: value,
       nonce: nonce,
     );
@@ -558,13 +558,13 @@ class TokenContractRepository {
     TransactionModel toSpeedUpTransaction,
     Account account,
   ) async {
-    final transactionReceipt =
-        await _web3Client.getTransactionReceipt(toSpeedUpTransaction.hash);
+    // final transactionReceipt =
+    //     await _web3Client.getTransactionReceipt(toSpeedUpTransaction.hash);
 
-    // If tx is pending It will be null
-    if (transactionReceipt?.status ?? false) {
-      throw 'Target transaction to speed up is not pending';
-    }
+    // // If tx is pending It will be null
+    // if (transactionReceipt?.status ?? false) {
+    //   throw 'Target transaction to speed up is not pending';
+    // }
 
     // Sending to ourselves
     final fromAddress = EthereumAddress.fromHex(account.address);
