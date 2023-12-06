@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:mxc_logic/mxc_logic.dart';
-import 'package:mxc_logic/src/domain/utils/utils.dart';
 import 'package:web3dart/crypto.dart';
 import 'package:web3dart/web3dart.dart';
 
@@ -8,7 +7,9 @@ enum TransactionType { sent, received, contractCall, all }
 
 enum TransactionStatus { done, pending, failed }
 
-enum TransactionActions { cancel, speedUp }
+/// cancelSpeedUp = null => speed up => (show cancel) cancel ==> Show nothing
+/// speedUpCancel = null => cancel => (show speed up cancellation) speed up  ==> Show speed up cancellation
+enum TransactionActions { cancel, speedUp, cancelSpeedUp, speedUpCancel }
 
 class TransactionModel {
   factory TransactionModel.fromMXCTransaction(
@@ -26,6 +27,8 @@ class TransactionModel {
     double? feePerGas;
     String? data;
     int? gasLimit;
+    int? nonce;
+    BigInt? maxPriorityFee;
 
     // two type of tx : coin_transfer from filtered tx list & token transfer from token transfer list
     // If not 'contract_call' or 'coin_transfer' then empty and that means failed in other words
@@ -42,11 +45,19 @@ class TransactionModel {
       from = mxcTransaction.from?.hash;
       to = mxcTransaction.to?.hash;
       if (mxcTransaction.gasPrice != null) {
-        feePerGas = double.parse(mxcTransaction.gasPrice!);
+        feePerGas = double.parse(mxcTransaction.maxFeePerGas!);
       }
       data = mxcTransaction.rawInput;
       if (mxcTransaction.gasLimit != null) {
         gasLimit = int.parse(mxcTransaction.gasLimit!);
+      }
+
+      if (mxcTransaction.nonce != null) {
+        nonce = mxcTransaction.nonce;
+      }
+
+      if (mxcTransaction.maxPriorityFeePerGas != null) {
+        maxPriorityFee = BigInt.parse(mxcTransaction.maxPriorityFeePerGas!);
       }
 
       if (mxcTransaction.decodedInput == null && !isCoinTransfer) {
@@ -123,6 +134,8 @@ class TransactionModel {
       feePerGas: feePerGas,
       data: data,
       gasLimit: gasLimit,
+      nonce: nonce,
+      maxPriorityFee: maxPriorityFee,
     );
   }
 
@@ -159,17 +172,21 @@ class TransactionModel {
     );
   }
 
+  // Does not cover the priority fee
   factory TransactionModel.fromTransaction(
-      TransactionInformation receipt, String walletAddress, Token token) {
-    final txHash = receipt.hash;
+      TransactionInformation transactionInformation,
+      String walletAddress,
+      Token token) {
+    final txHash = transactionInformation.hash;
     final timeStamp = DateTime.now();
     const txStatus = TransactionStatus.pending;
     const txType = TransactionType.sent;
-    final from = receipt.from;
-    final to = receipt.to;
-    final feePerGas = receipt.gasPrice;
-    final data = MXCType.uint8ListToString(receipt.input);
-    final gasLimit = receipt.gas;
+    final from = transactionInformation.from;
+    final to = transactionInformation.to;
+    final feePerGas = transactionInformation.gasPrice;
+    final data = MXCType.uint8ListToString(transactionInformation.input);
+    final gasLimit = transactionInformation.gas;
+    final nonce = transactionInformation.nonce;
 
     return TransactionModel(
       hash: txHash,
@@ -184,6 +201,8 @@ class TransactionModel {
       feePerGas: feePerGas.getInWei.toDouble(),
       data: data,
       gasLimit: gasLimit,
+      nonce: nonce,
+      maxPriorityFee: null,
     );
   }
 
@@ -209,6 +228,10 @@ class TransactionModel {
       feePerGas: map['feePerGas'] as double?,
       data: map['data'] as String?,
       gasLimit: map['gasLimit'] as int?,
+      nonce: map['nonce'] as int?,
+      maxPriorityFee: map['maxPriorityFee'] != null
+          ? BigInt.parse(map['maxPriorityFee'])
+          : null,
     );
   }
 
@@ -225,21 +248,26 @@ class TransactionModel {
     this.feePerGas,
     this.data,
     this.gasLimit,
+    this.nonce,
+    this.maxPriorityFee,
   });
 
-  TransactionModel copyWith(
-      {String? hash,
-      DateTime? timeStamp,
-      TransactionStatus? status,
-      TransactionActions? action,
-      TransactionType? type,
-      String? value,
-      Token? token,
-      String? from,
-      String? to,
-      double? feePerGas,
-      String? data,
-      int? gasLimit}) {
+  TransactionModel copyWith({
+    String? hash,
+    DateTime? timeStamp,
+    TransactionStatus? status,
+    TransactionActions? action,
+    TransactionType? type,
+    String? value,
+    Token? token,
+    String? from,
+    String? to,
+    double? feePerGas,
+    String? data,
+    int? gasLimit,
+    int? nonce,
+    BigInt? maxPriorityFee,
+  }) {
     return TransactionModel(
       hash: hash ?? this.hash,
       timeStamp: timeStamp ?? this.timeStamp,
@@ -253,6 +281,8 @@ class TransactionModel {
       feePerGas: feePerGas ?? this.feePerGas,
       data: data ?? this.data,
       gasLimit: gasLimit ?? this.gasLimit,
+      nonce: nonce ?? this.nonce,
+      maxPriorityFee: maxPriorityFee ?? this.maxPriorityFee,
     );
   }
 
@@ -269,7 +299,9 @@ class TransactionModel {
       'to': to,
       'feePerGas': feePerGas,
       'data': data,
-      'gasLimit': gasLimit
+      'gasLimit': gasLimit,
+      'nonce': nonce,
+      'maxPriorityFee': maxPriorityFee.toString()
     };
   }
 
@@ -306,7 +338,11 @@ class TransactionModel {
 
   final double? feePerGas;
 
+  final BigInt? maxPriorityFee;
+
   final int? gasLimit;
 
   final String? data;
+
+  final int? nonce;
 }
