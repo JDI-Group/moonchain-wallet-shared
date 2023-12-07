@@ -506,12 +506,12 @@ class TokenContractRepository {
     final cred = EthPrivateKey.fromHex(account.privateKey);
     late Transaction cancelTransaction;
 
-    // Increasing fee per gas
-    double newGasPriceDouble = MXCGas.addExtraFeeForTxReplacement(
+    // Increasing max fee per gas
+    double newGasPrice = MXCGas.addExtraFeeForTxReplacement(
       toCancelTransaction.feePerGas!,
     );
     EtherAmount maxFeePerGas =
-        EtherAmount.fromBigInt(EtherUnit.wei, BigInt.from(newGasPriceDouble));
+        EtherAmount.fromBigInt(EtherUnit.wei, BigInt.from(newGasPrice));
 
     double priorityFeeDouble = toCancelTransaction.maxPriorityFee!.toDouble() *
         Config.extraGasPercentage;
@@ -519,10 +519,7 @@ class TokenContractRepository {
     EtherAmount priorityFee =
         EtherAmount.fromBigInt(EtherUnit.wei, priorityFeeBigInt);
 
-    // Increasing max fee per gas
-    final totalGas = newGasPriceDouble * toCancelTransaction.gasLimit!;
-
-    // Making the transaction a mock transaction (Only for disposing other transaction(s))
+    // Making a dump transaction (Only for disposing other transaction(s))
     EtherAmount value = EtherAmount.fromBigInt(EtherUnit.ether, BigInt.zero);
 
     late String result;
@@ -558,20 +555,13 @@ class TokenContractRepository {
     TransactionModel toSpeedUpTransaction,
     Account account,
   ) async {
-    // final transactionReceipt =
-    //     await _web3Client.getTransactionReceipt(toSpeedUpTransaction.hash);
-
-    // // If tx is pending It will be null
-    // if (transactionReceipt?.status ?? false) {
-    //   throw 'Target transaction to speed up is not pending';
-    // }
-
     // Sending to ourselves
     final fromAddress = EthereumAddress.fromHex(account.address);
-    if (toSpeedUpTransaction.from != fromAddress.hex) {
+    final toSpeedUpTransactionFrom =
+        EthereumAddress.fromHex(toSpeedUpTransaction.from!);
+    if (toSpeedUpTransactionFrom != fromAddress) {
       throw 'Cannot speed up a transaction that is not sent from this account';
     }
-
     final toAddress = EthereumAddress.fromHex(toSpeedUpTransaction.to!);
 
     final cred = EthPrivateKey.fromHex(account.privateKey);
@@ -581,7 +571,8 @@ class TokenContractRepository {
     int? gasLimit = toSpeedUpTransaction.gasLimit;
 
     Uint8List? data;
-    if (toSpeedUpTransaction.data != null) {
+    if (toSpeedUpTransaction.data != null &&
+        toSpeedUpTransaction.data != '0x') {
       data = MXCType.stringToUint8List(toSpeedUpTransaction.data!);
     }
 
@@ -591,27 +582,32 @@ class TokenContractRepository {
     );
 
     // Increasing max fee per gas
-    double maxFeePerGasDouble = MXCGas.calculateMaxFeePerGasDouble(newGasPrice);
     EtherAmount maxFeePerGas =
-        EtherAmount.fromBigInt(EtherUnit.wei, BigInt.from(maxFeePerGasDouble));
+        EtherAmount.fromBigInt(EtherUnit.wei, BigInt.from(newGasPrice));
 
-    // Making the transaction a mock transaction (Only for disposing other transaction(s))
+    double priorityFeeDouble = toSpeedUpTransaction.maxPriorityFee!.toDouble() *
+        Config.extraGasPercentage;
+    BigInt priorityFeeBigInt = BigInt.from(priorityFeeDouble);
+    EtherAmount priorityFee =
+        EtherAmount.fromBigInt(EtherUnit.wei, priorityFeeBigInt);
+
+    // Making a copy transaction (Only for disposing other transaction(s))
     EtherAmount? value;
-    if (toSpeedUpTransaction.value != null) {
+    if (toSpeedUpTransaction.value != null && data == null) {
       final valueInBigInt = MXCType.stringToBigInt(toSpeedUpTransaction.value!);
-      value = EtherAmount.fromBigInt(EtherUnit.ether, valueInBigInt);
+      value = EtherAmount.fromBigInt(EtherUnit.wei, valueInBigInt);
     }
 
     late String result;
 
     // Nonce is important since we are going to override this nonce transaction
-    final nonce = await _web3Client.getTransactionCount(fromAddress);
+    final int nonce = toSpeedUpTransaction.nonce!;
 
     speedUpTransaction = Transaction(
       to: toAddress,
       from: fromAddress,
       maxFeePerGas: maxFeePerGas,
-      maxPriorityFeePerGas: Config.maxPriorityFeePerGas,
+      maxPriorityFeePerGas: priorityFee,
       maxGas: gasLimit,
       value: value,
       nonce: nonce,
