@@ -7,8 +7,10 @@ enum TransactionType { sent, received, contractCall, all }
 
 enum TransactionStatus { done, pending, failed }
 
-/// cancelSpeedUp = null => speed up => (show cancel) cancel ==> Show nothing
-/// speedUpCancel = null => cancel => (show speed up cancellation) speed up  ==> Show speed up cancellation
+/// cancelSpeedUp = null (show both buttons) => speed up => (show cancel) cancel ==> Show nothing
+/// speedUpCancel = null (show both buttons) => cancel => (show speed up cancellation) speed up  ==> Show speed up cancellation
+/// null (show both buttons) => speed up => speed up => speed up ....
+/// speedUpCancel = null (show both buttons) => cancel => cancel => cancel ....
 enum TransactionActions { cancel, speedUp, cancelSpeedUp, speedUpCancel }
 
 class TransactionModel {
@@ -18,7 +20,7 @@ class TransactionModel {
   ) {
     String? value = '0';
     Token token = Token();
-    DateTime? timeStamp;
+    DateTime? timeStamp = mxcTransaction.timestamp;
     String hash = mxcTransaction.hash ?? 'Unknown';
     TransactionType type = TransactionType.sent;
     TransactionStatus status = mxcTransaction.status == 'error'
