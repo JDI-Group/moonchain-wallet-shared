@@ -330,13 +330,16 @@ class TokenContractRepository {
     required Uint8List data,
     EtherAmount? gasPrice,
     BigInt? amountOfGas,
+    EtherAmount? value,
   }) =>
       estimateGasFee(
-          from: from,
-          to: to,
-          data: data,
-          gasPrice: gasPrice,
-          amountOfGas: amountOfGas);
+        from: from,
+        to: to,
+        data: data,
+        gasPrice: gasPrice,
+        amountOfGas: amountOfGas,
+        value: value,
+      );
 
   Future<TransactionGasEstimation> estimateGasFee({
     required String from,
@@ -496,34 +499,13 @@ class TokenContractRepository {
     EtherAmount maxFeePerGas,
     EtherAmount priorityFee,
   ) async {
-    // Sending to ourselves
-    final fromAddress = EthereumAddress.fromHex(account.address);
-    final toCancelTransactionFrom =
-        EthereumAddress.fromHex(toCancelTransaction.from!);
-    if (toCancelTransactionFrom != fromAddress) {
-      throw 'Cannot cancel a transaction that is not sent from this account';
-    }
-    final toAddress = fromAddress;
-
     final cred = EthPrivateKey.fromHex(account.privateKey);
     late Transaction cancelTransaction;
-
-    // Making a dump transaction (Only for disposing other transaction(s))
-    EtherAmount value = EtherAmount.fromBigInt(EtherUnit.ether, BigInt.zero);
-
     late String result;
 
-    // Nonce is important since we are going to override this nonce transaction
-    final int nonce = toCancelTransaction.nonce!;
-
-    cancelTransaction = Transaction(
-      to: toAddress,
-      from: fromAddress,
-      maxFeePerGas: maxFeePerGas,
-      maxPriorityFeePerGas: priorityFee,
-      value: value,
-      nonce: nonce,
-    );
+    cancelTransaction =
+        MXCTransaction.buildCancelTransactionFromTransactionModel(
+            toCancelTransaction, account, maxFeePerGas, priorityFee);
 
     result = await _web3Client.sendTransaction(
       cred,
@@ -541,64 +523,25 @@ class TokenContractRepository {
   /// On MXC chains I might not encounter any issues since data is remote
 
   Future<String> speedUpTransaction(
-      TransactionModel toSpeedUpTransaction,
-      Account account,
-      EtherAmount maxFeePerGas,
-      EtherAmount priorityFee) async {
-    // Sending to ourselves
-    final fromAddress = EthereumAddress.fromHex(account.address);
-    final toSpeedUpTransactionFrom =
-        EthereumAddress.fromHex(toSpeedUpTransaction.from!);
-    if (toSpeedUpTransactionFrom != fromAddress) {
-      throw 'Cannot speed up a transaction that is not sent from this account';
-    }
-    final toAddress = EthereumAddress.fromHex(toSpeedUpTransaction.to!);
-
+    TransactionModel toSpeedUpTransaction,
+    Account account,
+    EtherAmount maxFeePerGas,
+    EtherAmount priorityFee,
+  ) async {
     final cred = EthPrivateKey.fromHex(account.privateKey);
     late Transaction speedUpTransaction;
 
-    // might or might not contain gas limit
-    int? gasLimit = toSpeedUpTransaction.gasLimit;
+    speedUpTransaction =
+        MXCTransaction.buildSpeedUpTransactionFromTransactionModel(
+            toSpeedUpTransaction, account, maxFeePerGas, priorityFee);
 
-    Uint8List? data;
-    if (toSpeedUpTransaction.data != null &&
-        toSpeedUpTransaction.data != '0x') {
-      data = MXCType.hexToUint8List(toSpeedUpTransaction.data!);
-    }
-
-    // Making a copy transaction (Only for disposing other transaction(s))
-    EtherAmount? value;
-    final txType = toSpeedUpTransaction.type;
-    // If It's a sent then It has coin transfer
-    if (toSpeedUpTransaction.value != null && txType == TransactionType.sent) {
-      final valueInBigInt = MXCType.stringToBigInt(toSpeedUpTransaction.value!);
-      value = EtherAmount.fromBigInt(EtherUnit.wei, valueInBigInt);
-    }
-
-    late String result;
-
-    // Nonce is important since we are going to override this nonce transaction
-    final int nonce = toSpeedUpTransaction.nonce!;
-
-    speedUpTransaction = Transaction(
-      to: toAddress,
-      from: fromAddress,
-      maxFeePerGas: maxFeePerGas,
-      maxPriorityFeePerGas: priorityFee,
-      maxGas: gasLimit,
-      value: value,
-      nonce: nonce,
-      data: data,
-    );
-
-    result = await _web3Client.sendTransaction(
+    final result = await _web3Client.sendTransaction(
       cred,
       speedUpTransaction,
       chainId: _web3Client.network!.chainId,
     );
 
     return result;
-    // Token transfer & simple coin transfer has differences
   }
 
   Future<void> dispose() async {
