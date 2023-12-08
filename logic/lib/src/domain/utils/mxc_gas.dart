@@ -36,6 +36,13 @@ class MXCGas {
     return gasFee;
   }
 
+  static String getTotalFeeInString(double gasPrice, int gasLimit) {
+    final totalFeeDouble = calculateTotalFee(gasPrice, gasLimit!);
+    String totalFee = totalFeeDouble.toString();
+    totalFee = MXCFormatter.checkExpoNumber(totalFee);
+    return totalFee;
+  }
+
   /// calculates total max fee based on base gas price & gas limit,
   /// The returned value is in Eth
   static double calculateTotalMaxFee(double gasPrice, int gasLimit) {
@@ -51,8 +58,35 @@ class MXCGas {
   }
 
   /// This functions adds to the fee by multiplying the gas price by the Config.extraGasPercentage.
-  static double addExtraFeeForTxReplacement(double gasPrice) {
-    final gasPriceDouble = gasPrice * Config.extraGasPercentage;
-    return gasPriceDouble;
+  static double addExtraFee(double value) {
+    final newValue = value * Config.extraGasPercentage;
+    return newValue;
+  }
+
+  /// This function will get current transaction max fee per gas & max priority fee per gas and will add extraGasPercentage to these properties.
+  static TransactionPriorityFeeEstimation addExtraFeeToPriorityFees({
+    required double feePerGas,
+    required double priorityFeePerGas,
+  }) {
+    double maxFeePerGas = MXCGas.addExtraFee(
+      feePerGas,
+    );
+
+    double maxPriorityFeePerGas = MXCGas.addExtraFee(
+      priorityFeePerGas,
+    );
+    return TransactionPriorityFeeEstimation(
+        maxFeePerGas: maxFeePerGas, maxPriorityFeePerGas: maxPriorityFeePerGas);
+  }
+
+  /// This function will return max fee per gas based on the given gas price & current max fee per gas.
+  static double getReplacementMaxFeePerGas(
+      double gasPrice, double maxFeePerGas) {
+    if (maxFeePerGas < gasPrice) {
+      // Base fee is higher than the max fee so we should raise max fee to be more than the base fee
+      return calculateMaxFeePerGasDouble(gasPrice);
+    } else {
+      return maxFeePerGas;
+    }
   }
 }
