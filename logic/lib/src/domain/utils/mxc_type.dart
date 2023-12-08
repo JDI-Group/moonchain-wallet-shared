@@ -1,9 +1,10 @@
 import 'dart:typed_data';
 
+import 'package:web3dart/crypto.dart';
+
 class MXCType {
-  static Uint8List stringToUint8List(String value) {
-    List<int> list = value.codeUnits;
-    return Uint8List.fromList(list);
+  static Uint8List hexToUint8List(String value) {
+    return hexToBytes(value);
   }
 
   static String uint8ListToString(Uint8List value) {

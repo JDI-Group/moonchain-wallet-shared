@@ -493,6 +493,8 @@ class TokenContractRepository {
   Future<String> cancelTransaction(
     TransactionModel toCancelTransaction,
     Account account,
+    EtherAmount maxFeePerGas,
+    EtherAmount priorityFee,
   ) async {
     // Sending to ourselves
     final fromAddress = EthereumAddress.fromHex(account.address);
@@ -505,19 +507,6 @@ class TokenContractRepository {
 
     final cred = EthPrivateKey.fromHex(account.privateKey);
     late Transaction cancelTransaction;
-
-    // Increasing max fee per gas
-    double newGasPrice = MXCGas.addExtraFeeForTxReplacement(
-      toCancelTransaction.feePerGas!,
-    );
-    EtherAmount maxFeePerGas =
-        EtherAmount.fromBigInt(EtherUnit.wei, BigInt.from(newGasPrice));
-
-    double priorityFeeDouble = toCancelTransaction.maxPriorityFee!.toDouble() *
-        Config.extraGasPercentage;
-    BigInt priorityFeeBigInt = BigInt.from(priorityFeeDouble);
-    EtherAmount priorityFee =
-        EtherAmount.fromBigInt(EtherUnit.wei, priorityFeeBigInt);
 
     // Making a dump transaction (Only for disposing other transaction(s))
     EtherAmount value = EtherAmount.fromBigInt(EtherUnit.ether, BigInt.zero);
@@ -552,9 +541,10 @@ class TokenContractRepository {
   /// On MXC chains I might not encounter any issues since data is remote
 
   Future<String> speedUpTransaction(
-    TransactionModel toSpeedUpTransaction,
-    Account account,
-  ) async {
+      TransactionModel toSpeedUpTransaction,
+      Account account,
+      EtherAmount maxFeePerGas,
+      EtherAmount priorityFee) async {
     // Sending to ourselves
     final fromAddress = EthereumAddress.fromHex(account.address);
     final toSpeedUpTransactionFrom =
@@ -573,27 +563,14 @@ class TokenContractRepository {
     Uint8List? data;
     if (toSpeedUpTransaction.data != null &&
         toSpeedUpTransaction.data != '0x') {
-      data = MXCType.stringToUint8List(toSpeedUpTransaction.data!);
+      data = MXCType.hexToUint8List(toSpeedUpTransaction.data!);
     }
-
-    // Increasing fee per gas
-    double newGasPrice = MXCGas.addExtraFeeForTxReplacement(
-      toSpeedUpTransaction.feePerGas!,
-    );
-
-    // Increasing max fee per gas
-    EtherAmount maxFeePerGas =
-        EtherAmount.fromBigInt(EtherUnit.wei, BigInt.from(newGasPrice));
-
-    double priorityFeeDouble = toSpeedUpTransaction.maxPriorityFee!.toDouble() *
-        Config.extraGasPercentage;
-    BigInt priorityFeeBigInt = BigInt.from(priorityFeeDouble);
-    EtherAmount priorityFee =
-        EtherAmount.fromBigInt(EtherUnit.wei, priorityFeeBigInt);
 
     // Making a copy transaction (Only for disposing other transaction(s))
     EtherAmount? value;
-    if (toSpeedUpTransaction.value != null && data == null) {
+    final txType = toSpeedUpTransaction.type;
+    // If It's a sent then It has coin transfer
+    if (toSpeedUpTransaction.value != null && txType == TransactionType.sent) {
       final valueInBigInt = MXCType.stringToBigInt(toSpeedUpTransaction.value!);
       value = EtherAmount.fromBigInt(EtherUnit.wei, valueInBigInt);
     }
