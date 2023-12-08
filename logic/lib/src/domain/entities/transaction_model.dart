@@ -21,7 +21,9 @@ class TransactionModel {
     DateTime? timeStamp;
     String hash = mxcTransaction.hash ?? 'Unknown';
     TransactionType type = TransactionType.sent;
-    TransactionStatus status = TransactionStatus.done;
+    TransactionStatus status = mxcTransaction.status == 'error'
+        ? TransactionStatus.failed
+        : TransactionStatus.done;
     String? from;
     String? to;
     double? feePerGas;
