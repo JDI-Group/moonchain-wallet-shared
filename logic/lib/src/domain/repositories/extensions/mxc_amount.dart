@@ -11,6 +11,13 @@ class MxcAmount extends EtherAmount {
     return EtherAmount.inWei(BigInt.from(wei));
   }
 
+  static EtherAmount fromStringByWei(String value) {
+    final valueDouble = double.parse(value);
+    final wei = valueDouble;
+
+    return EtherAmount.inWei(BigInt.from(wei));
+  }
+
   static EtherAmount fromDoubleByGWei(double value) {
     final wei = BigInt.from(10).pow(9).toDouble() * value;
 
