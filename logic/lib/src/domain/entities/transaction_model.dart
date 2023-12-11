@@ -5,6 +5,8 @@ import 'package:web3dart/web3dart.dart';
 
 enum TransactionType { sent, received, contractCall, all }
 
+enum TransferType { coin, erc20, erc1155, erc721, none }
+
 enum TransactionStatus { done, pending, failed }
 
 /// cancelSpeedUp = null (show both buttons) => speed up => (show cancel) cancel ==> Show nothing
@@ -33,6 +35,7 @@ class TransactionModel {
     int? gasLimit;
     int? nonce;
     BigInt? maxPriorityFee;
+    TransferType? transferType;
 
     // two type of tx : coin_transfer from filtered tx list & token transfer from token transfer list
     // If not 'contract_call' or 'coin_transfer' then empty and that means failed in other words
@@ -80,9 +83,11 @@ class TransactionModel {
         if (mxcTransaction.decodedInput != null) {
           // It should be token transfer
           if (mxcTransaction.to?.hash != null) {
+            transferType = TransferType.erc20;
             token = token.copyWith(
-                address: mxcTransaction.to?.hash,
-                symbol: mxcTransaction.to!.name!);
+              address: mxcTransaction.to?.hash,
+              symbol: mxcTransaction.to!.name!,
+            );
             value = mxcTransaction.decodedInput?.parameters?[1].value ?? '0';
           }
         }
@@ -126,21 +131,21 @@ class TransactionModel {
     }
 
     return TransactionModel(
-      hash: hash,
-      timeStamp: timeStamp,
-      status: status,
-      type: type,
-      value: value,
-      token: token,
-      action: null,
-      from: from,
-      to: to,
-      feePerGas: feePerGas,
-      data: data,
-      gasLimit: gasLimit,
-      nonce: nonce,
-      maxPriorityFee: maxPriorityFee,
-    );
+        hash: hash,
+        timeStamp: timeStamp,
+        status: status,
+        type: type,
+        value: value,
+        token: token,
+        action: null,
+        from: from,
+        to: to,
+        feePerGas: feePerGas,
+        data: data,
+        gasLimit: gasLimit,
+        nonce: nonce,
+        maxPriorityFee: maxPriorityFee,
+        transferType: transferType);
   }
 
   // In this state the tx
@@ -207,6 +212,7 @@ class TransactionModel {
       gasLimit: gasLimit,
       nonce: nonce,
       maxPriorityFee: null,
+      transferType: null,
     );
   }
 
@@ -236,6 +242,13 @@ class TransactionModel {
       maxPriorityFee: map['maxPriorityFee'] != null
           ? BigInt.parse(map['maxPriorityFee'])
           : null,
+      transferType: map['transferType'] != null && map['transferType'] != 'null'
+          ? TransferType.values.firstWhere(
+              (transferType) =>
+                  transferType.toString().split('.').last ==
+                  map['transferType'],
+            )
+          : null,
     );
   }
 
@@ -254,6 +267,7 @@ class TransactionModel {
     this.gasLimit,
     this.nonce,
     this.maxPriorityFee,
+    this.transferType,
   });
 
   TransactionModel copyWith({
@@ -271,6 +285,7 @@ class TransactionModel {
     int? gasLimit,
     int? nonce,
     BigInt? maxPriorityFee,
+    TransferType? transferType,
   }) {
     return TransactionModel(
       hash: hash ?? this.hash,
@@ -287,6 +302,7 @@ class TransactionModel {
       gasLimit: gasLimit ?? this.gasLimit,
       nonce: nonce ?? this.nonce,
       maxPriorityFee: maxPriorityFee ?? this.maxPriorityFee,
+      transferType: transferType ?? this.transferType,
     );
   }
 
@@ -305,7 +321,8 @@ class TransactionModel {
       'data': data,
       'gasLimit': gasLimit,
       'nonce': nonce,
-      'maxPriorityFee': maxPriorityFee.toString()
+      'maxPriorityFee': maxPriorityFee.toString(),
+      'transferType': transferType?.toString().split('.').last,
     };
   }
 
@@ -349,4 +366,8 @@ class TransactionModel {
   final String? data;
 
   final int? nonce;
+
+  // This is for detecting the token transfer from coin transfer in MXC Chains since BlockScout sends value in both cases
+  // And that makes hard to detect wether to send the value for speed up.
+  final TransferType? transferType;
 }

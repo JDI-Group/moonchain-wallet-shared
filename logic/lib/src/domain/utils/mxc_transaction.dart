@@ -31,8 +31,10 @@ class MXCTransaction {
     // Making a copy transaction (Only for disposing other transaction(s))
     EtherAmount? value;
     final txType = toSpeedUpTransaction.type;
+    // read the comments transferType property of TransactionModel 
+    final transferType = toSpeedUpTransaction.transferType;
     // If It's a sent then It has coin transfer
-    if (toSpeedUpTransaction.value != null && txType == TransactionType.sent) {
+    if (toSpeedUpTransaction.value != null && txType == TransactionType.sent && transferType != TransferType.erc20) {
       final valueInBigInt = MXCType.stringToBigInt(toSpeedUpTransaction.value!);
       value = EtherAmount.fromBigInt(EtherUnit.wei, valueInBigInt);
     }
