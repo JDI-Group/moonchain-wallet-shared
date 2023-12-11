@@ -81,7 +81,9 @@ class MXCGas {
 
   /// This function will return max fee per gas based on the given gas price & current max fee per gas.
   static double getReplacementMaxFeePerGas(
-      double gasPrice, double maxFeePerGas) {
+    double gasPrice,
+    double maxFeePerGas,
+  ) {
     if (maxFeePerGas < gasPrice) {
       // Base fee is higher than the max fee so we should raise max fee to be more than the base fee
       return calculateMaxFeePerGasDouble(gasPrice);

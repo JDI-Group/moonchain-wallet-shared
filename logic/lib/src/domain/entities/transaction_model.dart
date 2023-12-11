@@ -67,7 +67,14 @@ class TransactionModel {
         maxPriorityFee = BigInt.parse(mxcTransaction.maxPriorityFeePerGas!);
       }
 
-      if (mxcTransaction.decodedInput == null && !isCoinTransfer) {
+      // if (!isCoinTransfer && from == to && value == '0') {
+      //   // It's cancel transaction
+
+      // }
+      // Avoid cancel transaction to be trapped in contract by  && from != to check.
+      if (mxcTransaction.decodedInput == null &&
+          !isCoinTransfer &&
+          from != to) {
         // It's contract call
         type = TransactionType.contractCall;
         value = mxcTransaction.txBurntFee;
@@ -131,21 +138,22 @@ class TransactionModel {
     }
 
     return TransactionModel(
-        hash: hash,
-        timeStamp: timeStamp,
-        status: status,
-        type: type,
-        value: value,
-        token: token,
-        action: null,
-        from: from,
-        to: to,
-        feePerGas: feePerGas,
-        data: data,
-        gasLimit: gasLimit,
-        nonce: nonce,
-        maxPriorityFee: maxPriorityFee,
-        transferType: transferType);
+      hash: hash,
+      timeStamp: timeStamp,
+      status: status,
+      type: type,
+      value: value,
+      token: token,
+      action: null,
+      from: from,
+      to: to,
+      feePerGas: feePerGas,
+      data: data,
+      gasLimit: gasLimit,
+      nonce: nonce,
+      maxPriorityFee: maxPriorityFee,
+      transferType: transferType,
+    );
   }
 
   // In this state the tx
