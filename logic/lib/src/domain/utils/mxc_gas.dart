@@ -19,13 +19,23 @@ class MXCGas {
   }
 
   ///  The returned value is in Wei.
-  static double calculateMaxFeePerGasDouble(double gasPrice) {
+  static double maxFeePerGasByEthByWei(double gasPrice) {
     final estimatedGasFeeAsDouble = gasPrice * Config.priority;
 
-    BigInt maxFeePerGas = BigInt.from(estimatedGasFeeAsDouble) +
-        Config.maxPriorityFeePerGas.getInWei;
+    double maxFeePerGas = estimatedGasFeeAsDouble +
+        Config.maxPriorityFeePerGas.getInWei.toDouble();
 
     return maxFeePerGas.toDouble();
+  }
+
+  ///  The returned value is in Wei.
+  static double maxFeePerGasByEth(double gasPrice) {
+    final estimatedGasFeeAsDouble = gasPrice * Config.priority;
+
+    double maxFeePerGas = estimatedGasFeeAsDouble +
+        Config.maxPriorityFeePerGas.getInEther.toDouble();
+
+    return maxFeePerGas;
   }
 
   /// calculates total base fee based on base gas price & gas limit,
@@ -37,7 +47,7 @@ class MXCGas {
   }
 
   static String getTotalFeeInString(double gasPrice, int gasLimit) {
-    final totalFeeDouble = calculateTotalFee(gasPrice, gasLimit!);
+    final totalFeeDouble = calculateTotalFee(gasPrice, gasLimit);
     String totalFee = totalFeeDouble.toString();
     totalFee = MXCFormatter.checkExpoNumber(totalFee);
     return totalFee;
@@ -86,7 +96,7 @@ class MXCGas {
   ) {
     if (maxFeePerGas < gasPrice) {
       // Base fee is higher than the max fee so we should raise max fee to be more than the base fee
-      return calculateMaxFeePerGasDouble(gasPrice);
+      return maxFeePerGasByEthByWei(gasPrice);
     } else {
       return maxFeePerGas;
     }
