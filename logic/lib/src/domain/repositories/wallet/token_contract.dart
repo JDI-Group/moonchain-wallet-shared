@@ -376,7 +376,7 @@ class TokenContractRepository {
     );
   }
 
-  Future<String> sendTransaction({
+  Future<TransactionModel> sendTransaction({
     required String privateKey,
     required String to,
     required String? from,
@@ -384,27 +384,33 @@ class TokenContractRepository {
     TransactionGasEstimation? estimatedGasFee,
     Uint8List? data,
     String? tokenAddress,
+    Token? token,
   }) async {
     final toAddress = EthereumAddress.fromHex(to);
     EthereumAddress? fromAddress;
     if (from != null) fromAddress = EthereumAddress.fromHex(from);
     final cred = EthPrivateKey.fromHex(privateKey);
-    late Transaction transaction;
     final gasLimit = estimatedGasFee?.gas.toInt();
     EtherAmount maxFeePerGas =
         MXCGas.calculateMaxFeePerGas(estimatedGasFee!.gasPrice);
 
-    String result;
+    final nonce = await _web3Client.getTransactionCount(fromAddress!);
+
+    late TransactionModel transactionData;
+    String? result;
 
     if (tokenAddress == null) {
       final transaction = Transaction(
-        to: toAddress,
-        from: fromAddress,
-        maxFeePerGas: maxFeePerGas,
-        maxPriorityFeePerGas: Config.maxPriorityFeePerGas,
-        value: amount,
-        data: data,
-      );
+          to: toAddress,
+          from: fromAddress,
+          maxFeePerGas: maxFeePerGas,
+          maxPriorityFeePerGas: Config.maxPriorityFeePerGas,
+          value: amount,
+          data: data,
+          nonce: nonce,
+          maxGas: gasLimit);
+
+      transactionData = TransactionModel.fromTransaction(transaction, token);
 
       result = await _web3Client.sendTransaction(
         cred,
@@ -414,23 +420,40 @@ class TokenContractRepository {
     } else {
       final tokenHash = EthereumAddress.fromHex(tokenAddress);
       final erc20Token = EnsToken(address: tokenHash, client: _web3Client);
+      final tokenAmount = amount.getValueInUnitBI(EtherUnit.wei);
 
       final transaction = Transaction(
-        to: tokenHash,
-        from: fromAddress,
-        maxFeePerGas: maxFeePerGas,
-        maxPriorityFeePerGas: Config.maxPriorityFeePerGas,
-      );
+          to: tokenHash,
+          from: fromAddress,
+          maxFeePerGas: maxFeePerGas,
+          maxPriorityFeePerGas: Config.maxPriorityFeePerGas,
+          nonce: nonce,
+          maxGas: gasLimit);
+
+      transactionData = TransactionModel.fromTransaction(transaction, token);
 
       result = await erc20Token.transfer(
         toAddress,
-        amount.getValueInUnitBI(EtherUnit.wei),
+        tokenAmount,
         credentials: cred,
         transaction: transaction,
       );
+
+      transactionData = transactionData.copyWith(
+        data: MXCType.uint8ListToString(
+          getTokenTransferData(
+            tokenHash.hex,
+            toAddress,
+            tokenAmount,
+          ),
+        ),
+      );
     }
 
-    return result;
+    // Updating hash since we have put empty string for hash
+    transactionData = transactionData.copyWith(hash: result);
+
+    return transactionData;
   }
 
   Uint8List getTokenTransferData(
@@ -505,7 +528,11 @@ class TokenContractRepository {
 
     cancelTransaction =
         MXCTransaction.buildCancelTransactionFromTransactionModel(
-            toCancelTransaction, account, maxFeePerGas, priorityFee);
+      toCancelTransaction,
+      account,
+      maxFeePerGas,
+      priorityFee,
+    );
 
     result = await _web3Client.sendTransaction(
       cred,
@@ -533,7 +560,11 @@ class TokenContractRepository {
 
     speedUpTransaction =
         MXCTransaction.buildSpeedUpTransactionFromTransactionModel(
-            toSpeedUpTransaction, account, maxFeePerGas, priorityFee);
+      toSpeedUpTransaction,
+      account,
+      maxFeePerGas,
+      priorityFee,
+    );
 
     final result = await _web3Client.sendTransaction(
       cred,
