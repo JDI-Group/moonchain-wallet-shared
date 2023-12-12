@@ -87,7 +87,8 @@ class TransactionModel {
         token =
             token.copyWith(logoUri: Config.mxcLogoUri, symbol: Config.mxcName);
 
-        if (mxcTransaction.decodedInput != null && mxcTransaction.tokenTransfers != null ) {
+        if (mxcTransaction.decodedInput != null &&
+            mxcTransaction.tokenTransfers != null) {
           // It should be token transfer
           if (mxcTransaction.to?.hash != null) {
             transferType = TransferType.erc20;
@@ -247,9 +248,10 @@ class TransactionModel {
       data: map['data'] as String?,
       gasLimit: map['gasLimit'] as int?,
       nonce: map['nonce'] as int?,
-      maxPriorityFee: map['maxPriorityFee'] != null
-          ? BigInt.parse(map['maxPriorityFee'])
-          : null,
+      maxPriorityFee:
+          map['maxPriorityFee'] != null && map['maxPriorityFee'] != 'null'
+              ? BigInt.parse(map['maxPriorityFee'])
+              : null,
       transferType: map['transferType'] != null && map['transferType'] != 'null'
           ? TransferType.values.firstWhere(
               (transferType) =>
