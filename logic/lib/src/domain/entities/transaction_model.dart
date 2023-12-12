@@ -191,10 +191,11 @@ class TransactionModel {
   }
 
   // Does not cover the priority fee
-  factory TransactionModel.fromTransaction(
-      TransactionInformation transactionInformation,
-      String walletAddress,
-      Token token) {
+  factory TransactionModel.fromTransactionInformation(
+    TransactionInformation transactionInformation,
+    String walletAddress,
+    Token token,
+  ) {
     final txHash = transactionInformation.hash;
     final timeStamp = DateTime.now();
     const txStatus = TransactionStatus.pending;
@@ -222,6 +223,51 @@ class TransactionModel {
       nonce: nonce,
       maxPriorityFee: null,
       transferType: null,
+    );
+  }
+
+  factory TransactionModel.fromTransaction(
+    Transaction transaction,
+    Token? token,
+  ) {
+    final timeStamp = DateTime.now();
+    const txStatus = TransactionStatus.pending;
+    final from = transaction.from;
+    final to = transaction.to!;
+    final feePerGas = transaction.maxFeePerGas?.getInWei.toDouble();
+    final maxPriorityFeePerGas = transaction.maxPriorityFeePerGas?.getInWei;
+    final gasLimit = transaction.maxGas;
+    final value = transaction.value?.getInWei.toDouble().toString();
+    final nonce = transaction.nonce;
+
+    final transferType = token?.address != null ? TransferType.erc20 : null;
+
+    // For token transfer If It's null It's going to be initialized after tx is done
+    final data = transaction.data != null
+        ? MXCType.uint8ListToString(transaction.data!)
+        : null;
+
+    // How about token transfer which contains data but is contract call
+    final txType = token?.address != null || data == null
+        ? TransactionType.sent
+        : TransactionType.contractCall;
+
+    return TransactionModel(
+      hash: '',
+      timeStamp: timeStamp,
+      status: txStatus,
+      type: txType,
+      value: value,
+      token: token ?? const Token(),
+      action: null,
+      from: from?.hex,
+      to: to.hex,
+      feePerGas: feePerGas,
+      data: data,
+      gasLimit: gasLimit,
+      nonce: nonce,
+      maxPriorityFee: maxPriorityFeePerGas,
+      transferType: transferType,
     );
   }
 
