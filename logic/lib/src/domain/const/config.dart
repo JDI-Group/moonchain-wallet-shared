@@ -2,8 +2,7 @@ import 'package:mxc_logic/mxc_logic.dart';
 import 'package:web3dart/web3dart.dart';
 
 class Config {
-
-  // App related config 
+  // App related config
   static const String appName = 'AXS';
 
   static const String testnetRouterAddress =
@@ -34,12 +33,12 @@ class Config {
   static const String mxcLogoUri = 'assets/svg/networks/mxc.svg';
   static const String mxcName = 'MXC Token';
   static const priority = 1.1;
-  static EtherAmount maxPriorityFeePerGas =
-      MxcAmount.fromDoubleByGWei(1.5);
+  static EtherAmount maxPriorityFeePerGas = MxcAmount.fromDoubleByGWei(1.5);
   static const dappSectionFeeDivision = 1.5;
-  // Used for cancel & speed up 
+  // Used for cancel & speed up
   static double extraGasPercentage = 1.1;
 
+  static const String erc20TransferMethodId = 'a9059cbb';
 
   static const String zeroAddress =
       '0x0000000000000000000000000000000000000000';
