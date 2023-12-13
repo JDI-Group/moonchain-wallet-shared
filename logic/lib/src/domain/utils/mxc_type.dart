@@ -8,7 +8,7 @@ class MXCType {
   }
 
   static String uint8ListToString(Uint8List value) {
-    return String.fromCharCodes(value);
+    return bytesToHex(value);
   }
 
   static BigInt stringToBigInt(String value) {
