@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:ens_dart/ens_dart.dart';
 import 'package:eth_sig_util/eth_sig_util.dart';
 import 'package:flutter/services.dart';
@@ -6,8 +7,6 @@ import 'package:mxc_logic/src/data/api/client/rest_client.dart';
 import 'package:mxc_logic/mxc_logic.dart';
 import 'package:mxc_logic/src/data/api/client/web3_client.dart';
 import 'package:mxc_logic/src/data/socket/mxc_socket_client.dart';
-import 'package:mxc_logic/src/domain/const/const.dart';
-import 'package:mxc_logic/src/domain/utils/utils.dart';
 import 'package:web3dart/crypto.dart';
 import 'package:web3dart/web3dart.dart';
 
@@ -401,14 +400,15 @@ class TokenContractRepository {
 
     if (tokenAddress == null) {
       final transaction = Transaction(
-          to: toAddress,
-          from: fromAddress,
-          maxFeePerGas: maxFeePerGas,
-          maxPriorityFeePerGas: Config.maxPriorityFeePerGas,
-          value: amount,
-          data: data,
-          nonce: nonce,
-          maxGas: gasLimit);
+        to: toAddress,
+        from: fromAddress,
+        maxFeePerGas: maxFeePerGas,
+        maxPriorityFeePerGas: Config.maxPriorityFeePerGas,
+        value: amount,
+        data: data,
+        nonce: nonce,
+        maxGas: gasLimit,
+      );
 
       transactionData = TransactionModel.fromTransaction(transaction, token);
 
@@ -423,12 +423,13 @@ class TokenContractRepository {
       final tokenAmount = amount.getValueInUnitBI(EtherUnit.wei);
 
       final transaction = Transaction(
-          to: tokenHash,
-          from: fromAddress,
-          maxFeePerGas: maxFeePerGas,
-          maxPriorityFeePerGas: Config.maxPriorityFeePerGas,
-          nonce: nonce,
-          maxGas: gasLimit);
+        to: tokenHash,
+        from: fromAddress,
+        maxFeePerGas: maxFeePerGas,
+        maxPriorityFeePerGas: Config.maxPriorityFeePerGas,
+        nonce: nonce,
+        maxGas: gasLimit,
+      );
 
       transactionData = TransactionModel.fromTransaction(transaction, token);
 
@@ -440,6 +441,7 @@ class TokenContractRepository {
       );
 
       transactionData = transactionData.copyWith(
+        value: amount.getInWei.toDouble().toString(),
         data: MXCType.uint8ListToString(
           getTokenTransferData(
             tokenHash.hex,
@@ -516,7 +518,7 @@ class TokenContractRepository {
 
   /// This functions will send a dump transaction (sending 0 ETH to ourselves) with increased fees in order to
   /// be included in a block before the old transaction.
-  Future<String> cancelTransaction(
+  Future<TransactionModel> cancelTransaction(
     TransactionModel toCancelTransaction,
     Account account,
     EtherAmount maxFeePerGas,
@@ -524,6 +526,7 @@ class TokenContractRepository {
   ) async {
     final cred = EthPrivateKey.fromHex(account.privateKey);
     late Transaction cancelTransaction;
+    late TransactionModel transactionData;
     late String result;
 
     cancelTransaction =
@@ -534,13 +537,17 @@ class TokenContractRepository {
       priorityFee,
     );
 
+    transactionData = TransactionModel.fromTransaction(cancelTransaction, null);
+
     result = await _web3Client.sendTransaction(
       cred,
       cancelTransaction,
       chainId: _web3Client.network!.chainId,
     );
 
-    return result;
+    transactionData = transactionData.copyWith(hash: result);
+
+    return transactionData;
   }
 
   /// Either get transaction here or get transaction from api The downside for this is that there is a fetch involved which makes the fetching take longer
@@ -549,7 +556,7 @@ class TokenContractRepository {
   /// I can handle that by making the properties optional
   /// On MXC chains I might not encounter any issues since data is remote
 
-  Future<String> speedUpTransaction(
+  Future<TransactionModel> speedUpTransaction(
     TransactionModel toSpeedUpTransaction,
     Account account,
     EtherAmount maxFeePerGas,
@@ -557,6 +564,7 @@ class TokenContractRepository {
   ) async {
     final cred = EthPrivateKey.fromHex(account.privateKey);
     late Transaction speedUpTransaction;
+    late TransactionModel transactionData;
 
     speedUpTransaction =
         MXCTransaction.buildSpeedUpTransactionFromTransactionModel(
@@ -566,13 +574,23 @@ class TokenContractRepository {
       priorityFee,
     );
 
+    transactionData = TransactionModel.fromTransaction(
+        speedUpTransaction, toSpeedUpTransaction.token);
+
     final result = await _web3Client.sendTransaction(
       cred,
       speedUpTransaction,
       chainId: _web3Client.network!.chainId,
     );
 
-    return result;
+    // Because
+    transactionData = transactionData.copyWith(
+        hash: result,
+        value: toSpeedUpTransaction.transferType == TransferType.erc20
+            ? toSpeedUpTransaction.value
+            : transactionData.value);
+
+    return transactionData;
   }
 
   Future<void> dispose() async {

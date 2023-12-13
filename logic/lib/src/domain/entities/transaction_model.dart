@@ -403,7 +403,7 @@ class TransactionModel {
   /// Whether this transaction was sent or received.
   final TransactionType type;
 
-  /// The value that is transferred in transaction.
+  /// The value that is transferred in transaction, The unit is in Wei.
   final String? value;
 
   final Token token;
