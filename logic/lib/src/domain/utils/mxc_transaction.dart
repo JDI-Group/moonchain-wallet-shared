@@ -20,7 +20,7 @@ class MXCTransaction {
     final toAddress = EthereumAddress.fromHex(toSpeedUpTransaction.to!);
 
     // might or might not contain gas limit
-    int? gasLimit = toSpeedUpTransaction.gasLimit;
+    int gasLimit = toSpeedUpTransaction.gasLimit!;
 
     Uint8List? data;
     if (toSpeedUpTransaction.data != null &&
@@ -31,10 +31,12 @@ class MXCTransaction {
     // Making a copy transaction (Only for disposing other transaction(s))
     EtherAmount? value;
     final txType = toSpeedUpTransaction.type;
-    // read the comments transferType property of TransactionModel 
+    // read the comments transferType property of TransactionModel
     final transferType = toSpeedUpTransaction.transferType;
     // If It's a sent then It has coin transfer
-    if (toSpeedUpTransaction.value != null && txType == TransactionType.sent && transferType != TransferType.erc20) {
+    if (toSpeedUpTransaction.value != null &&
+        txType == TransactionType.sent &&
+        transferType != TransferType.erc20) {
       final valueInBigInt = MXCType.stringToBigInt(toSpeedUpTransaction.value!);
       value = EtherAmount.fromBigInt(EtherUnit.wei, valueInBigInt);
     }
@@ -72,16 +74,18 @@ class MXCTransaction {
     // Making a dump transaction (Only for disposing other transaction(s))
     EtherAmount value = EtherAmount.fromBigInt(EtherUnit.ether, BigInt.zero);
 
+    final gasLimit = toCancelTransaction.gasLimit!;
+
     // Nonce is important since we are going to override this nonce transaction
     final int nonce = toCancelTransaction.nonce!;
 
     return Transaction(
-      to: toAddress,
-      from: fromAddress,
-      maxFeePerGas: maxFeePerGas,
-      maxPriorityFeePerGas: priorityFee,
-      value: value,
-      nonce: nonce,
-    );
+        to: toAddress,
+        from: fromAddress,
+        maxFeePerGas: maxFeePerGas,
+        maxPriorityFeePerGas: priorityFee,
+        value: value,
+        nonce: nonce,
+        maxGas: gasLimit);
   }
 }
