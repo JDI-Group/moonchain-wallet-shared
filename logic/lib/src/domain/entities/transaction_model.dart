@@ -3,7 +3,7 @@ import 'package:mxc_logic/mxc_logic.dart';
 import 'package:web3dart/crypto.dart';
 import 'package:web3dart/web3dart.dart';
 
-enum TransactionType { sent, received, contractCall, all }
+enum TransactionType { sent, received, contractCall, all, unknown }
 
 enum TransferType { coin, erc20, erc1155, erc721, none }
 
@@ -37,125 +37,146 @@ class TransactionModel {
     BigInt? maxPriorityFee;
     TransferType? transferType;
 
-    // two type of tx : coin_transfer from filtered tx list & token transfer from token transfer list
-    // If not 'contract_call' or 'coin_transfer' then empty and that means failed in other words
-    // another tx that we have are : pending coin transfer (which is received on both sides) &
-    // pending token transfer (which is only received on the sender side)
-    if (mxcTransaction.result == 'pending') {
-      // could be contract_call (token transfer || unknown transactions) || coin_transfer
-      status = TransactionStatus.pending;
-      final time = DateTime.now();
-      timeStamp = time;
-      final isCoinTransfer = mxcTransaction.txTypes!.contains('coin_transfer');
+    try {
+      // two type of tx : coin_transfer from filtered tx list & token transfer from token transfer list
+      // If not 'contract_call' or 'coin_transfer' then empty and that means failed in other words
+      // another tx that we have are : pending coin transfer (which is received on both sides) &
+      // pending token transfer (which is only received on the sender side)
+      if (mxcTransaction.result == 'pending') {
+        // could be contract_call (token transfer || unknown transactions) || coin_transfer
+        status = TransactionStatus.pending;
+        final time = DateTime.now();
+        timeStamp = time;
+        final isCoinTransfer =
+            mxcTransaction.txTypes!.contains('coin_transfer');
 
-      // Getting tx info to tx model for speed up & cancel operation
-      from = mxcTransaction.from?.hash;
-      to = mxcTransaction.to?.hash;
-      if (mxcTransaction.gasPrice != null) {
-        feePerGas = double.parse(mxcTransaction.maxFeePerGas!);
-      }
-      data = mxcTransaction.rawInput;
-      if (mxcTransaction.gasLimit != null) {
-        gasLimit = int.parse(mxcTransaction.gasLimit!);
-      }
+        // Getting tx info to tx model for speed up & cancel operation
+        from = mxcTransaction.from?.hash;
+        to = mxcTransaction.to?.hash;
+        if (mxcTransaction.gasPrice != null) {
+          feePerGas = double.parse(mxcTransaction.maxFeePerGas!);
+        }
+        data = mxcTransaction.rawInput;
+        if (mxcTransaction.gasLimit != null) {
+          gasLimit = int.parse(mxcTransaction.gasLimit!);
+        }
 
-      if (mxcTransaction.nonce != null) {
-        nonce = mxcTransaction.nonce;
-      }
+        if (mxcTransaction.nonce != null) {
+          nonce = mxcTransaction.nonce;
+        }
 
-      if (mxcTransaction.maxPriorityFeePerGas != null) {
-        maxPriorityFee = BigInt.parse(mxcTransaction.maxPriorityFeePerGas!);
-      }
+        if (mxcTransaction.maxPriorityFeePerGas != null) {
+          maxPriorityFee = BigInt.parse(mxcTransaction.maxPriorityFeePerGas!);
+        }
 
-      // if (!isCoinTransfer && from == to && value == '0') {
-      //   // It's cancel transaction
+        // if (!isCoinTransfer && from == to && value == '0') {
+        //   // It's cancel transaction
 
-      // }
-      // Avoid cancel transaction to be trapped in contract by  && from != to check.
-      if (mxcTransaction.decodedInput?.methodId !=
-              Config.erc20TransferMethodId &&
-          !isCoinTransfer &&
-          from != to) {
-        // It's contract call
-        type = TransactionType.contractCall;
-        value = mxcTransaction.txBurntFee;
-      } else {
-        type = mxcTransaction.checkForTransactionType(
-          walletAddress,
-          mxcTransaction.from!.hash!.toLowerCase(),
-        );
-        value = mxcTransaction.value ?? '0';
+        // }
+        // Avoid cancel transaction to be trapped in contract by  && from != to check.
+        if (mxcTransaction.decodedInput?.methodId !=
+                Config.erc20TransferMethodId &&
+            !isCoinTransfer &&
+            from != to) {
+          // It's contract call
+          type = TransactionType.contractCall;
+          value = mxcTransaction.txBurntFee;
+        } else {
+          type = mxcTransaction.checkForTransactionType(
+            walletAddress,
+            mxcTransaction.from!.hash!.toLowerCase(),
+          );
+          value = mxcTransaction.value ?? '0';
+          token = token.copyWith(
+              logoUri: Config.mxcLogoUri, symbol: Config.mxcName);
+
+          if (mxcTransaction.decodedInput?.methodId ==
+              Config.erc20TransferMethodId) {
+            // It should be token transfer
+            if (mxcTransaction.to?.hash != null) {
+              transferType = TransferType.erc20;
+              token = token.copyWith(
+                address: mxcTransaction.to?.hash,
+                symbol: mxcTransaction.to!.name!,
+              );
+              value = mxcTransaction.decodedInput?.parameters?[1].value ?? '0';
+            }
+          }
+        }
+      } else if (mxcTransaction.txTypes != null &&
+          mxcTransaction.txTypes!.contains('coin_transfer')) {
         token =
             token.copyWith(logoUri: Config.mxcLogoUri, symbol: Config.mxcName);
 
-        if (mxcTransaction.decodedInput?.methodId ==
-            Config.erc20TransferMethodId) {
-          // It should be token transfer
-          if (mxcTransaction.to?.hash != null) {
-            transferType = TransferType.erc20;
-            token = token.copyWith(
-              address: mxcTransaction.to?.hash,
-              symbol: mxcTransaction.to!.name!,
-            );
-            value = mxcTransaction.decodedInput?.parameters?[1].value ?? '0';
-          }
-        }
-      }
-    } else if (mxcTransaction.txTypes != null &&
-        mxcTransaction.txTypes!.contains('coin_transfer')) {
-      token =
-          token.copyWith(logoUri: Config.mxcLogoUri, symbol: Config.mxcName);
+        timeStamp = mxcTransaction.timestamp!;
 
-      timeStamp = mxcTransaction.timestamp!;
-
-      type = mxcTransaction.checkForTransactionType(
-          walletAddress, mxcTransaction.from!.hash!.toLowerCase());
-      value = mxcTransaction.value ?? '0';
-    } else if (mxcTransaction.txTypes == null &&
-        mxcTransaction.tokenTransfers != null &&
-        mxcTransaction.tokenTransfers!
-                .indexWhere((element) => element.type == 'token_transfer') !=
-            -1) {
-      token = token.copyWith(
-          symbol: mxcTransaction.tokenTransfers![0].token!.name!);
-
-      if (mxcTransaction.tokenTransfers?[0].token?.name != null) {
+        type = mxcTransaction.checkForTransactionType(
+            walletAddress, mxcTransaction.from!.hash!.toLowerCase());
+        value = mxcTransaction.value ?? '0';
+      } else if (mxcTransaction.txTypes == null &&
+          mxcTransaction.tokenTransfers != null &&
+          mxcTransaction.tokenTransfers!
+                  .indexWhere((element) => element.type == 'token_transfer') !=
+              -1) {
         token = token.copyWith(
-            address: mxcTransaction.tokenTransfers?[0].token?.address);
+            symbol: mxcTransaction.tokenTransfers![0].token!.name!);
+
+        if (mxcTransaction.tokenTransfers?[0].token?.name != null) {
+          token = token.copyWith(
+              address: mxcTransaction.tokenTransfers?[0].token?.address);
+        }
+
+        timeStamp = mxcTransaction.tokenTransfers?[0].timestamp;
+
+        value = mxcTransaction.tokenTransfers![0].total!.value ?? '0';
+        hash = mxcTransaction.tokenTransfers![0].txHash ?? 'Unknown';
+        type = mxcTransaction.checkForTransactionType(
+          walletAddress,
+          mxcTransaction.tokenTransfers![0].from!.hash!.toLowerCase(),
+        );
+      } else if (mxcTransaction.txTypes != null &&
+          mxcTransaction.txTypes!.contains('contract_call')) {
+        timeStamp = mxcTransaction.timestamp!;
+        type = TransactionType.contractCall;
+        value = mxcTransaction.txBurntFee;
       }
 
-      timeStamp = mxcTransaction.tokenTransfers?[0].timestamp;
-
-      value = mxcTransaction.tokenTransfers![0].total!.value ?? '0';
-      hash = mxcTransaction.tokenTransfers![0].txHash ?? 'Unknown';
-      type = mxcTransaction.checkForTransactionType(
-        walletAddress,
-        mxcTransaction.tokenTransfers![0].from!.hash!.toLowerCase(),
+      return TransactionModel(
+        hash: hash,
+        timeStamp: timeStamp,
+        status: status,
+        type: type,
+        value: value,
+        token: token,
+        action: null,
+        from: from,
+        to: to,
+        feePerGas: feePerGas,
+        data: data,
+        gasLimit: gasLimit,
+        nonce: nonce,
+        maxPriorityFee: maxPriorityFee,
+        transferType: transferType,
       );
-    } else if (mxcTransaction.txTypes != null &&
-        mxcTransaction.txTypes!.contains('contract_call')) {
-      timeStamp = mxcTransaction.timestamp!;
-      type = TransactionType.contractCall;
-      value = mxcTransaction.txBurntFee;
+    } catch (e) {
+      return TransactionModel(
+        hash: hash,
+        timeStamp: timeStamp,
+        status: TransactionStatus.done,
+        type: TransactionType.unknown,
+        value: value,
+        token: token,
+        action: null,
+        from: from,
+        to: to,
+        feePerGas: feePerGas,
+        data: data,
+        gasLimit: gasLimit,
+        nonce: nonce,
+        maxPriorityFee: maxPriorityFee,
+        transferType: transferType,
+      );
     }
-
-    return TransactionModel(
-      hash: hash,
-      timeStamp: timeStamp,
-      status: status,
-      type: type,
-      value: value,
-      token: token,
-      action: null,
-      from: from,
-      to: to,
-      feePerGas: feePerGas,
-      data: data,
-      gasLimit: gasLimit,
-      nonce: nonce,
-      maxPriorityFee: maxPriorityFee,
-      transferType: transferType,
-    );
   }
 
   // In this state the tx
