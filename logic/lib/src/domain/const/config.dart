@@ -106,4 +106,12 @@ class Config {
     // Sending more than native token balance
     'insufficient funds for gas * price + value'
   ];
+
+  static List<String> errorList = [nonceTooLowError];
+
+  static String nonceTooLowError = 'nonce too low';
+
+  static Map<String, String> errorMessageMapper = {
+    nonceTooLowError: 'transaction_finalized'
+  };
 }
