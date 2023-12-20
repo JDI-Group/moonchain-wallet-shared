@@ -96,6 +96,10 @@ class Config {
     symbol: 'WMXC',
   );
 
+
+  static double dAppDoubleTapLowerBound = 0;
+  static double dAppDoubleTapUpperBound = 150;
+
   /// If error happens with these messages then we will need to show receive bottom sheet
   static List<String> fundErrors = [
     // User doesn't have enough to pay for native token transfer
