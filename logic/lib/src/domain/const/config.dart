@@ -98,7 +98,7 @@ class Config {
 
 
   static double dAppDoubleTapLowerBound = 0;
-  static double dAppDoubleTapUpperBound = 150;
+  static double dAppDoubleTapUpperBound = 200;
 
   /// If error happens with these messages then we will need to show receive bottom sheet
   static List<String> fundErrors = [
