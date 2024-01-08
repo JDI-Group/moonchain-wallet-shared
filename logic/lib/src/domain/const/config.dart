@@ -96,9 +96,10 @@ class Config {
     symbol: 'WMXC',
   );
 
-
   static double dAppDoubleTapLowerBound = 0;
   static double dAppDoubleTapUpperBound = 200;
+
+  static const String axsPeriodicalTask = 'com.mxc.axswallet.periodicalTasks';
 
   /// If error happens with these messages then we will need to show receive bottom sheet
   static List<String> fundErrors = [
