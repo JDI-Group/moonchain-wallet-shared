@@ -60,6 +60,10 @@ class Urls {
   static const String mxcKnowledgeHub = 'https://www.mxc.org/blog#technology';
   static const String mxcDesignDocs = 'https://doc.mxc.com/docs/intro';
 
+  /// Used to retrieve the latest epoch details
+  static const String mepEpochList =
+      'https://mining-api.matchx.io/mep2542/getEpochList?page=0&limit=1';
+
   static const String axsTermsConditions =
       'https://doc.mxc.com/docs/Resources/tns';
   static const String axsPrivacy = 'https://doc.mxc.com/docs/Resources/Privacy';
