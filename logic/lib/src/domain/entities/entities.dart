@@ -20,3 +20,4 @@ export 'bookmark.dart';
 export 'watch_asset_model.dart';
 export 'chains_list/chains_list.dart';
 export 'add_ethereum_chain/add_ethereum_chain.dart';
+export 'periodical_call_data.dart';
