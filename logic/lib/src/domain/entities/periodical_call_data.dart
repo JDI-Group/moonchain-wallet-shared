@@ -3,6 +3,15 @@ import 'dart:convert';
 enum PeriodicalCallDuration { fifteen }
 
 class PeriodicalCallData {
+  factory PeriodicalCallData.getDefault() => PeriodicalCallData(
+      lowBalanceLimit: 10,
+      expectedGasPrice: 600000,
+      lasEpoch: 0,
+      expectedEpochQuantity: 6,
+      duration: 15,
+      lowBalanceLimitEnabled: false,
+      expectedGasPriceEnabled: false,
+      expectedEpochQuantityEnabled: false);
   factory PeriodicalCallData.fromJson(String source) =>
       PeriodicalCallData.fromMap(json.decode(source));
 
@@ -10,7 +19,7 @@ class PeriodicalCallData {
     return PeriodicalCallData(
       lowBalanceLimit: map['lowBalanceLimit']?.toDouble() ?? 0.0,
       expectedGasPrice: map['expectedGasPrice']?.toDouble() ?? 0.0,
-      epochQuantity: map['epochQuantity']?.toInt() ?? 0,
+      lasEpoch: map['lasEpoch']?.toInt() ?? 0,
       expectedEpochQuantity: map['expectedEpochQuantity']?.toInt() ?? 0,
       duration: map['duration']?.toInt() ?? 0,
       lowBalanceLimitEnabled: map['lowBalanceLimitEnabled'] ?? false,
@@ -22,7 +31,7 @@ class PeriodicalCallData {
   PeriodicalCallData({
     required this.lowBalanceLimit,
     required this.expectedGasPrice,
-    required this.epochQuantity,
+    required this.lasEpoch,
     required this.expectedEpochQuantity,
     required this.duration,
     required this.lowBalanceLimitEnabled,
@@ -32,9 +41,11 @@ class PeriodicalCallData {
 
   // Should have defaults
   double lowBalanceLimit;
+  // Gwei
   double expectedGasPrice;
-  int epochQuantity;
+  int lasEpoch;
   int expectedEpochQuantity;
+  // Minutes
   int duration;
 
   /// Defaults to false
@@ -45,7 +56,7 @@ class PeriodicalCallData {
   PeriodicalCallData copyWith({
     double? lowBalanceLimit,
     double? expectedGasPrice,
-    int? epochQuantity,
+    int? lasEpoch,
     int? expectedEpochQuantity,
     int? duration,
     bool? lowBalanceLimitEnabled,
@@ -55,7 +66,7 @@ class PeriodicalCallData {
     return PeriodicalCallData(
       lowBalanceLimit: lowBalanceLimit ?? this.lowBalanceLimit,
       expectedGasPrice: expectedGasPrice ?? this.expectedGasPrice,
-      epochQuantity: epochQuantity ?? this.epochQuantity,
+      lasEpoch: lasEpoch ?? this.lasEpoch,
       expectedEpochQuantity:
           expectedEpochQuantity ?? this.expectedEpochQuantity,
       duration: duration ?? this.duration,
@@ -72,7 +83,7 @@ class PeriodicalCallData {
     return {
       'lowBalanceLimit': lowBalanceLimit,
       'expectedGasPrice': expectedGasPrice,
-      'epochQuantity': epochQuantity,
+      'lasEpoch': lasEpoch,
       'expectedEpochQuantity': expectedEpochQuantity,
       'duration': duration,
       'lowBalanceLimitEnabled': lowBalanceLimitEnabled,
@@ -85,7 +96,7 @@ class PeriodicalCallData {
 
   @override
   String toString() {
-    return 'PeriodicalCallData(lowBalanceLimit: $lowBalanceLimit, expectedGasPrice: $expectedGasPrice, epochQuantity: $epochQuantity, expectedEpochQuantity: $expectedEpochQuantity, duration: $duration, lowBalanceLimitEnabled: $lowBalanceLimitEnabled, expectedGasPriceEnabled: $expectedGasPriceEnabled, expectedEpochQuantityEnabled: $expectedEpochQuantityEnabled)';
+    return 'PeriodicalCallData(lowBalanceLimit: $lowBalanceLimit, expectedGasPrice: $expectedGasPrice, lasEpoch: $lasEpoch, expectedEpochQuantity: $expectedEpochQuantity, duration: $duration, lowBalanceLimitEnabled: $lowBalanceLimitEnabled, expectedGasPriceEnabled: $expectedGasPriceEnabled, expectedEpochQuantityEnabled: $expectedEpochQuantityEnabled)';
   }
 
   @override
@@ -95,7 +106,7 @@ class PeriodicalCallData {
     return other is PeriodicalCallData &&
         other.lowBalanceLimit == lowBalanceLimit &&
         other.expectedGasPrice == expectedGasPrice &&
-        other.epochQuantity == epochQuantity &&
+        other.lasEpoch == lasEpoch &&
         other.expectedEpochQuantity == expectedEpochQuantity &&
         other.duration == duration &&
         other.lowBalanceLimitEnabled == lowBalanceLimitEnabled &&
@@ -107,7 +118,7 @@ class PeriodicalCallData {
   int get hashCode {
     return lowBalanceLimit.hashCode ^
         expectedGasPrice.hashCode ^
-        epochQuantity.hashCode ^
+        lasEpoch.hashCode ^
         expectedEpochQuantity.hashCode ^
         duration.hashCode ^
         lowBalanceLimitEnabled.hashCode ^
