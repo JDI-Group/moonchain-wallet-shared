@@ -7,11 +7,11 @@ class PeriodicalCallData {
       lowBalanceLimit: 10,
       expectedGasPrice: 600000,
       lasEpoch: 0,
-      expectedEpochQuantity: 6,
+      expectedEpochOccurrence: 6,
       duration: 15,
       lowBalanceLimitEnabled: false,
       expectedGasPriceEnabled: false,
-      expectedEpochQuantityEnabled: false);
+      expectedEpochOccurrenceEnabled: false);
   factory PeriodicalCallData.fromJson(String source) =>
       PeriodicalCallData.fromMap(json.decode(source));
 
@@ -20,23 +20,23 @@ class PeriodicalCallData {
       lowBalanceLimit: map['lowBalanceLimit']?.toDouble() ?? 0.0,
       expectedGasPrice: map['expectedGasPrice']?.toDouble() ?? 0.0,
       lasEpoch: map['lasEpoch']?.toInt() ?? 0,
-      expectedEpochQuantity: map['expectedEpochQuantity']?.toInt() ?? 0,
+      expectedEpochOccurrence: map['expectedEpochOccurrence']?.toInt() ?? 0,
       duration: map['duration']?.toInt() ?? 0,
       lowBalanceLimitEnabled: map['lowBalanceLimitEnabled'] ?? false,
       expectedGasPriceEnabled: map['expectedGasPriceEnabled'] ?? false,
-      expectedEpochQuantityEnabled:
-          map['expectedEpochQuantityEnabled'] ?? false,
+      expectedEpochOccurrenceEnabled:
+          map['expectedEpochOccurrenceEnabled'] ?? false,
     );
   }
   PeriodicalCallData({
     required this.lowBalanceLimit,
     required this.expectedGasPrice,
     required this.lasEpoch,
-    required this.expectedEpochQuantity,
+    required this.expectedEpochOccurrence,
     required this.duration,
     required this.lowBalanceLimitEnabled,
     required this.expectedGasPriceEnabled,
-    required this.expectedEpochQuantityEnabled,
+    required this.expectedEpochOccurrenceEnabled,
   });
 
   // Should have defaults
@@ -44,38 +44,38 @@ class PeriodicalCallData {
   // Gwei
   double expectedGasPrice;
   int lasEpoch;
-  int expectedEpochQuantity;
+  int expectedEpochOccurrence;
   // Minutes
   int duration;
 
   /// Defaults to false
   bool lowBalanceLimitEnabled;
   bool expectedGasPriceEnabled;
-  bool expectedEpochQuantityEnabled;
+  bool expectedEpochOccurrenceEnabled;
 
   PeriodicalCallData copyWith({
     double? lowBalanceLimit,
     double? expectedGasPrice,
     int? lasEpoch,
-    int? expectedEpochQuantity,
+    int? expectedEpochOccurrence,
     int? duration,
     bool? lowBalanceLimitEnabled,
     bool? expectedGasPriceEnabled,
-    bool? expectedEpochQuantityEnabled,
+    bool? expectedEpochOccurrenceEnabled,
   }) {
     return PeriodicalCallData(
       lowBalanceLimit: lowBalanceLimit ?? this.lowBalanceLimit,
       expectedGasPrice: expectedGasPrice ?? this.expectedGasPrice,
       lasEpoch: lasEpoch ?? this.lasEpoch,
-      expectedEpochQuantity:
-          expectedEpochQuantity ?? this.expectedEpochQuantity,
+      expectedEpochOccurrence:
+          expectedEpochOccurrence ?? this.expectedEpochOccurrence,
       duration: duration ?? this.duration,
       lowBalanceLimitEnabled:
           lowBalanceLimitEnabled ?? this.lowBalanceLimitEnabled,
       expectedGasPriceEnabled:
           expectedGasPriceEnabled ?? this.expectedGasPriceEnabled,
-      expectedEpochQuantityEnabled:
-          expectedEpochQuantityEnabled ?? this.expectedEpochQuantityEnabled,
+      expectedEpochOccurrenceEnabled:
+          expectedEpochOccurrenceEnabled ?? this.expectedEpochOccurrenceEnabled,
     );
   }
 
@@ -84,11 +84,11 @@ class PeriodicalCallData {
       'lowBalanceLimit': lowBalanceLimit,
       'expectedGasPrice': expectedGasPrice,
       'lasEpoch': lasEpoch,
-      'expectedEpochQuantity': expectedEpochQuantity,
+      'expectedEpochOccurrence': expectedEpochOccurrence,
       'duration': duration,
       'lowBalanceLimitEnabled': lowBalanceLimitEnabled,
       'expectedGasPriceEnabled': expectedGasPriceEnabled,
-      'expectedEpochQuantityEnabled': expectedEpochQuantityEnabled,
+      'expectedEpochOccurrenceEnabled': expectedEpochOccurrenceEnabled,
     };
   }
 
@@ -96,7 +96,7 @@ class PeriodicalCallData {
 
   @override
   String toString() {
-    return 'PeriodicalCallData(lowBalanceLimit: $lowBalanceLimit, expectedGasPrice: $expectedGasPrice, lasEpoch: $lasEpoch, expectedEpochQuantity: $expectedEpochQuantity, duration: $duration, lowBalanceLimitEnabled: $lowBalanceLimitEnabled, expectedGasPriceEnabled: $expectedGasPriceEnabled, expectedEpochQuantityEnabled: $expectedEpochQuantityEnabled)';
+    return 'PeriodicalCallData(lowBalanceLimit: $lowBalanceLimit, expectedGasPrice: $expectedGasPrice, lasEpoch: $lasEpoch, expectedEpochOccurrence: $expectedEpochOccurrence, duration: $duration, lowBalanceLimitEnabled: $lowBalanceLimitEnabled, expectedGasPriceEnabled: $expectedGasPriceEnabled, expectedEpochOccurrenceEnabled: $expectedEpochOccurrenceEnabled)';
   }
 
   @override
@@ -107,11 +107,11 @@ class PeriodicalCallData {
         other.lowBalanceLimit == lowBalanceLimit &&
         other.expectedGasPrice == expectedGasPrice &&
         other.lasEpoch == lasEpoch &&
-        other.expectedEpochQuantity == expectedEpochQuantity &&
+        other.expectedEpochOccurrence == expectedEpochOccurrence &&
         other.duration == duration &&
         other.lowBalanceLimitEnabled == lowBalanceLimitEnabled &&
         other.expectedGasPriceEnabled == expectedGasPriceEnabled &&
-        other.expectedEpochQuantityEnabled == expectedEpochQuantityEnabled;
+        other.expectedEpochOccurrenceEnabled == expectedEpochOccurrenceEnabled;
   }
 
   @override
@@ -119,10 +119,10 @@ class PeriodicalCallData {
     return lowBalanceLimit.hashCode ^
         expectedGasPrice.hashCode ^
         lasEpoch.hashCode ^
-        expectedEpochQuantity.hashCode ^
+        expectedEpochOccurrence.hashCode ^
         duration.hashCode ^
         lowBalanceLimitEnabled.hashCode ^
         expectedGasPriceEnabled.hashCode ^
-        expectedEpochQuantityEnabled.hashCode;
+        expectedEpochOccurrenceEnabled.hashCode;
   }
 }
