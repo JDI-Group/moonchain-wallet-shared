@@ -73,6 +73,35 @@ int getPeriodicalCallDurationMinute(String enumString) {
   return result;
 }
 
+PeriodicalCallDuration getPeriodicalCallDurationFromInt(int duration) {
+  late PeriodicalCallDuration result;
+
+  switch (duration) {
+    case 15:
+      result = PeriodicalCallDuration.mostFrequent;
+      break;
+    case 60:
+      result = PeriodicalCallDuration.veryFrequent;
+      break;
+    case 180:
+      result = PeriodicalCallDuration.frequent;
+      break;
+    case 360:
+      result = PeriodicalCallDuration.inFrequent;
+      break;
+    case 720:
+      result = PeriodicalCallDuration.veryInFrequent;
+      break;
+    case 1440:
+      result = PeriodicalCallDuration.leastFrequent;
+      break;
+    default:
+      result = PeriodicalCallDuration.mostFrequent;
+  }
+
+  return result;
+}
+
 class PeriodicalCallData {
   factory PeriodicalCallData.getDefault() => PeriodicalCallData(
       lowBalanceLimit: 1000,
