@@ -3,26 +3,27 @@ import 'package:mxc_ui/mxc_ui.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 
 class MxcAppBarEvenly extends StatelessWidget {
-  const MxcAppBarEvenly({
-    super.key,
-    required this.title,
-    this.action,
-    this.leading,
-    this.padding,
-    this.useContentPadding = false,
-  });
-
-  MxcAppBarEvenly.text(
-      {Key? key,
-      required String titleText,
-      String? leadingText,
-      String? actionText,
+  const MxcAppBarEvenly(
+      {super.key,
+      required this.title,
+      this.action,
+      this.leading,
       this.padding,
-      Function()? onActionTap,
-      bool isActionTap = false,
       this.useContentPadding = false,
-      bool showCancel = true})
-      : title = Builder(
+      this.textFieldFlex});
+
+  MxcAppBarEvenly.text({
+    Key? key,
+    required String titleText,
+    String? leadingText,
+    String? actionText,
+    this.padding,
+    this.textFieldFlex,
+    Function()? onActionTap,
+    bool isActionTap = false,
+    this.useContentPadding = false,
+    bool showCancel = true,
+  })  : title = Builder(
           builder: (context) => Text(
             titleText,
             style: FontTheme.of(context).body1().copyWith(
@@ -73,6 +74,7 @@ class MxcAppBarEvenly extends StatelessWidget {
     required String titleText,
     String? actionText,
     this.padding,
+    this.textFieldFlex,
     Function()? onActionTap,
     bool isActionTap = true,
     this.useContentPadding = false,
@@ -125,6 +127,7 @@ class MxcAppBarEvenly extends StatelessWidget {
     required String titleText,
     Widget? action,
     this.padding,
+    this.textFieldFlex,
     this.useContentPadding = false,
   })  : title = Builder(
           builder: (context) => Text(
@@ -163,14 +166,16 @@ class MxcAppBarEvenly extends StatelessWidget {
     required String titleText,
     Widget? leading,
     Widget? action,
+    double? fontSize,
+    this.textFieldFlex,
     this.padding,
     this.useContentPadding = false,
   })  : title = Builder(
           builder: (context) => Text(
             titleText,
-            style: FontTheme.of(context).body1().copyWith(
-                  fontWeight: FontWeight.w500,
-                ),
+            style: FontTheme.of(context)
+                .body1()
+                .copyWith(fontWeight: FontWeight.w500, fontSize: fontSize),
             textAlign: TextAlign.center,
             softWrap: true,
             overflow: TextOverflow.ellipsis,
@@ -185,6 +190,7 @@ class MxcAppBarEvenly extends StatelessWidget {
   final Widget? leading;
   final Widget? action;
   final bool useContentPadding;
+  final int? textFieldFlex;
 
   @override
   Widget build(BuildContext context) {
@@ -206,7 +212,7 @@ class MxcAppBarEvenly extends StatelessWidget {
               child: leading!,
             ),
           Expanded(
-            flex: 3,
+            flex: textFieldFlex ?? 3,
             child: title,
           ),
           if (action != null)
