@@ -1,11 +1,82 @@
 import 'dart:convert';
 
-enum PeriodicalCallDuration { fifteen }
+// Most frequent 15M~ 15
+// Very frequent 1H~ 60
+// Frequent 3H~ 180
+// Infrequent 6H~ 360
+// Very infrequent 12H~ 720
+// Least frequent 24H~ 1440
+
+enum PeriodicalCallDuration {
+  mostFrequent,
+  veryFrequent,
+  frequent,
+  inFrequent,
+  veryInFrequent,
+  leastFrequent
+}
+
+extension PeriodicalCallDurationExtension on PeriodicalCallDuration {
+  String toStringFormatted() {
+    String enumString = name.split('.').last; // Remove the enum type prefix
+    final time = getPeriodicalCallDurationHint(enumString);
+    List<String> words =
+        enumString.split(RegExp('(?=[A-Z])')); // Split by capital letters
+    String result = words
+        .map((word) => word[0].toUpperCase() + word.substring(1))
+        .join(' ');
+    return '$result $time';
+  }
+
+  int toMinutes() => getPeriodicalCallDurationMinute(name);
+}
+
+String getPeriodicalCallDurationHint(String enumString) {
+  late String result;
+
+  if (enumString == PeriodicalCallDuration.mostFrequent.name) {
+    result = '~15 M';
+  } else if (enumString == PeriodicalCallDuration.veryFrequent.name) {
+    result = '~1 H';
+  } else if (enumString == PeriodicalCallDuration.frequent.name) {
+    result = '~3 H';
+  } else if (enumString == PeriodicalCallDuration.inFrequent.name) {
+    result = '~6 H';
+  } else if (enumString == PeriodicalCallDuration.veryInFrequent.name) {
+    result = '~12 H';
+  } else if (enumString == PeriodicalCallDuration.leastFrequent.name) {
+    result = '~24 H';
+  } else {
+    result = 'Unknown';
+  }
+  return result;
+}
+
+int getPeriodicalCallDurationMinute(String enumString) {
+  late int result;
+
+  if (enumString == PeriodicalCallDuration.mostFrequent.name) {
+    result = 15;
+  } else if (enumString == PeriodicalCallDuration.veryFrequent.name) {
+    result = 60;
+  } else if (enumString == PeriodicalCallDuration.frequent.name) {
+    result = 180;
+  } else if (enumString == PeriodicalCallDuration.inFrequent.name) {
+    result = 360;
+  } else if (enumString == PeriodicalCallDuration.veryInFrequent.name) {
+    result = 720;
+  } else if (enumString == PeriodicalCallDuration.leastFrequent.name) {
+    result = 1440;
+  } else {
+    result = 0;
+  }
+  return result;
+}
 
 class PeriodicalCallData {
   factory PeriodicalCallData.getDefault() => PeriodicalCallData(
-      lowBalanceLimit: 10,
-      expectedGasPrice: 600000,
+      lowBalanceLimit: 1000,
+      expectedGasPrice: 300,
       lasEpoch: 0,
       expectedEpochOccurrence: 6,
       duration: 15,
@@ -39,9 +110,9 @@ class PeriodicalCallData {
     required this.expectedEpochOccurrenceEnabled,
   });
 
-  // Should have defaults
+  // In MXC
   double lowBalanceLimit;
-  // Gwei
+  // In MXC
   double expectedGasPrice;
   int lasEpoch;
   int expectedEpochOccurrence;
