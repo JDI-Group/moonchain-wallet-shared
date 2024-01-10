@@ -100,6 +100,8 @@ class Config {
   static double dAppDoubleTapUpperBound = 200;
 
   static const String axsPeriodicalTask = 'com.mxc.axswallet.periodicalTasks';
+  // Miner dApp transactions gas limit
+  static const double gasLimit = 750000;
 
   /// If error happens with these messages then we will need to show receive bottom sheet
   static List<String> fundErrors = [
