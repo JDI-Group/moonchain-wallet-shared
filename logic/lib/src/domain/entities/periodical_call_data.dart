@@ -105,12 +105,12 @@ PeriodicalCallDuration getPeriodicalCallDurationFromInt(int duration) {
 class PeriodicalCallData {
   factory PeriodicalCallData.getDefault() => PeriodicalCallData(
       lowBalanceLimit: 1000,
-      expectedGasPrice: 300,
+      expectedTransactionFee: 300,
       lasEpoch: 0,
       expectedEpochOccurrence: 6,
       duration: 15,
       lowBalanceLimitEnabled: false,
-      expectedGasPriceEnabled: false,
+      expectedTransactionFeeEnabled: false,
       expectedEpochOccurrenceEnabled: false);
   factory PeriodicalCallData.fromJson(String source) =>
       PeriodicalCallData.fromMap(json.decode(source));
@@ -118,31 +118,32 @@ class PeriodicalCallData {
   factory PeriodicalCallData.fromMap(Map<String, dynamic> map) {
     return PeriodicalCallData(
       lowBalanceLimit: map['lowBalanceLimit']?.toDouble() ?? 0.0,
-      expectedGasPrice: map['expectedGasPrice']?.toDouble() ?? 0.0,
+      expectedTransactionFee: map['expectedTransactionFee']?.toDouble() ?? 0.0,
       lasEpoch: map['lasEpoch']?.toInt() ?? 0,
       expectedEpochOccurrence: map['expectedEpochOccurrence']?.toInt() ?? 0,
       duration: map['duration']?.toInt() ?? 0,
       lowBalanceLimitEnabled: map['lowBalanceLimitEnabled'] ?? false,
-      expectedGasPriceEnabled: map['expectedGasPriceEnabled'] ?? false,
+      expectedTransactionFeeEnabled:
+          map['expectedTransactionFeeEnabled'] ?? false,
       expectedEpochOccurrenceEnabled:
           map['expectedEpochOccurrenceEnabled'] ?? false,
     );
   }
   PeriodicalCallData({
     required this.lowBalanceLimit,
-    required this.expectedGasPrice,
+    required this.expectedTransactionFee,
     required this.lasEpoch,
     required this.expectedEpochOccurrence,
     required this.duration,
     required this.lowBalanceLimitEnabled,
-    required this.expectedGasPriceEnabled,
+    required this.expectedTransactionFeeEnabled,
     required this.expectedEpochOccurrenceEnabled,
   });
 
   // In MXC
   double lowBalanceLimit;
   // In MXC
-  double expectedGasPrice;
+  double expectedTransactionFee;
   int lasEpoch;
   int expectedEpochOccurrence;
   // Minutes
@@ -150,30 +151,31 @@ class PeriodicalCallData {
 
   /// Defaults to false
   bool lowBalanceLimitEnabled;
-  bool expectedGasPriceEnabled;
+  bool expectedTransactionFeeEnabled;
   bool expectedEpochOccurrenceEnabled;
 
   PeriodicalCallData copyWith({
     double? lowBalanceLimit,
-    double? expectedGasPrice,
+    double? expectedTransactionFee,
     int? lasEpoch,
     int? expectedEpochOccurrence,
     int? duration,
     bool? lowBalanceLimitEnabled,
-    bool? expectedGasPriceEnabled,
+    bool? expectedTransactionFeeEnabled,
     bool? expectedEpochOccurrenceEnabled,
   }) {
     return PeriodicalCallData(
       lowBalanceLimit: lowBalanceLimit ?? this.lowBalanceLimit,
-      expectedGasPrice: expectedGasPrice ?? this.expectedGasPrice,
+      expectedTransactionFee:
+          expectedTransactionFee ?? this.expectedTransactionFee,
       lasEpoch: lasEpoch ?? this.lasEpoch,
       expectedEpochOccurrence:
           expectedEpochOccurrence ?? this.expectedEpochOccurrence,
       duration: duration ?? this.duration,
       lowBalanceLimitEnabled:
           lowBalanceLimitEnabled ?? this.lowBalanceLimitEnabled,
-      expectedGasPriceEnabled:
-          expectedGasPriceEnabled ?? this.expectedGasPriceEnabled,
+      expectedTransactionFeeEnabled:
+          expectedTransactionFeeEnabled ?? this.expectedTransactionFeeEnabled,
       expectedEpochOccurrenceEnabled:
           expectedEpochOccurrenceEnabled ?? this.expectedEpochOccurrenceEnabled,
     );
@@ -182,12 +184,12 @@ class PeriodicalCallData {
   Map<String, dynamic> toMap() {
     return {
       'lowBalanceLimit': lowBalanceLimit,
-      'expectedGasPrice': expectedGasPrice,
+      'expectedTransactionFee': expectedTransactionFee,
       'lasEpoch': lasEpoch,
       'expectedEpochOccurrence': expectedEpochOccurrence,
       'duration': duration,
       'lowBalanceLimitEnabled': lowBalanceLimitEnabled,
-      'expectedGasPriceEnabled': expectedGasPriceEnabled,
+      'expectedTransactionFeeEnabled': expectedTransactionFeeEnabled,
       'expectedEpochOccurrenceEnabled': expectedEpochOccurrenceEnabled,
     };
   }
@@ -196,7 +198,7 @@ class PeriodicalCallData {
 
   @override
   String toString() {
-    return 'PeriodicalCallData(lowBalanceLimit: $lowBalanceLimit, expectedGasPrice: $expectedGasPrice, lasEpoch: $lasEpoch, expectedEpochOccurrence: $expectedEpochOccurrence, duration: $duration, lowBalanceLimitEnabled: $lowBalanceLimitEnabled, expectedGasPriceEnabled: $expectedGasPriceEnabled, expectedEpochOccurrenceEnabled: $expectedEpochOccurrenceEnabled)';
+    return 'PeriodicalCallData(lowBalanceLimit: $lowBalanceLimit, expectedTransactionFee: $expectedTransactionFee, lasEpoch: $lasEpoch, expectedEpochOccurrence: $expectedEpochOccurrence, duration: $duration, lowBalanceLimitEnabled: $lowBalanceLimitEnabled, expectedTransactionFeeEnabled: $expectedTransactionFeeEnabled, expectedEpochOccurrenceEnabled: $expectedEpochOccurrenceEnabled)';
   }
 
   @override
@@ -205,24 +207,24 @@ class PeriodicalCallData {
 
     return other is PeriodicalCallData &&
         other.lowBalanceLimit == lowBalanceLimit &&
-        other.expectedGasPrice == expectedGasPrice &&
+        other.expectedTransactionFee == expectedTransactionFee &&
         other.lasEpoch == lasEpoch &&
         other.expectedEpochOccurrence == expectedEpochOccurrence &&
         other.duration == duration &&
         other.lowBalanceLimitEnabled == lowBalanceLimitEnabled &&
-        other.expectedGasPriceEnabled == expectedGasPriceEnabled &&
+        other.expectedTransactionFeeEnabled == expectedTransactionFeeEnabled &&
         other.expectedEpochOccurrenceEnabled == expectedEpochOccurrenceEnabled;
   }
 
   @override
   int get hashCode {
     return lowBalanceLimit.hashCode ^
-        expectedGasPrice.hashCode ^
+        expectedTransactionFee.hashCode ^
         lasEpoch.hashCode ^
         expectedEpochOccurrence.hashCode ^
         duration.hashCode ^
         lowBalanceLimitEnabled.hashCode ^
-        expectedGasPriceEnabled.hashCode ^
+        expectedTransactionFeeEnabled.hashCode ^
         expectedEpochOccurrenceEnabled.hashCode;
   }
 }
