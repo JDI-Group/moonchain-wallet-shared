@@ -6,17 +6,17 @@ class MXCDropDown extends StatelessWidget {
       {super.key,
       required this.onTap,
       required this.selectedItem,
-      this.selectedItemHint});
+      this.selectedItemHint,
+      this.enabled = true});
   final Function onTap;
   final String selectedItem;
   final String? selectedItemHint;
+  final bool enabled;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        onTap();
-      },
+      onTap: () => enabled ? onTap() : () {},
       child: Container(
         padding: const EdgeInsetsDirectional.only(
             top: Sizes.spaceSmall,
