@@ -10,7 +10,6 @@ import 'package:mxc_logic/src/data/socket/mxc_socket_client.dart';
 import 'package:web3dart/crypto.dart';
 import 'package:web3dart/web3dart.dart';
 
-
 class TokenContractRepository {
   TokenContractRepository(
     this._web3Client,
@@ -60,6 +59,17 @@ class TokenContractRepository {
         return null;
       }
     }
+  }
+
+  Future<int> getEpochDetails() async {
+    final res = await _restClient.client.get(Uri.parse(Urls.mepEpochList));
+
+    final epochDetails =
+        MEPEpochDetails.fromJson(json.decode(res.body) as Map<String, dynamic>);
+
+    final epochNumberString = epochDetails.epochDetails![0].epochNumber;
+    final epochNumber = int.parse(epochNumberString!);
+    return epochNumber;
   }
 
   Future<WannseeTokenTransfersModel?> getTokenTransfersByAddress(
@@ -510,7 +520,6 @@ class TokenContractRepository {
   Future<TransactionReceipt?> getTransactionReceipt(String hash) async {
     return await _web3Client.getTransactionReceipt(hash);
   }
-
 
   Future<void> dispose() async {
     await _web3Client.dispose();
