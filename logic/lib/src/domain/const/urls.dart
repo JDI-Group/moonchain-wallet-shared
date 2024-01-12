@@ -61,8 +61,18 @@ class Urls {
   static const String mxcDesignDocs = 'https://doc.mxc.com/docs/intro';
 
   /// Used to retrieve the latest epoch details
-  static const String mepEpochList =
+  static const String mepEpochListTestnet =
+      'https://wannsee-mining-api.matchx.io/mep2542/getEpochList?page=0&limit=1';
+  static const String mepEpochListMainnet =
       'https://mining-api.matchx.io/mep2542/getEpochList?page=0&limit=1';
+
+
+  static String getMepEpochList(int chainId) {
+    if (Config.isMXCMainnet(chainId)){
+      return mepEpochListMainnet;
+    } 
+    return mepEpochListTestnet;
+  }
 
   static const String axsTermsConditions =
       'https://doc.mxc.com/docs/Resources/tns';

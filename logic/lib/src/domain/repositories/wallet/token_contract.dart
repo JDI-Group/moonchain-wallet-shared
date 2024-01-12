@@ -61,8 +61,9 @@ class TokenContractRepository {
     }
   }
 
-  Future<int> getEpochDetails() async {
-    final res = await _restClient.client.get(Uri.parse(Urls.mepEpochList));
+  Future<int> getEpochDetails(int chainId) async {
+    final res =
+        await _restClient.client.get(Uri.parse(Urls.getMepEpochList(chainId)));
 
     final epochDetails =
         MEPEpochDetails.fromJson(json.decode(res.body) as Map<String, dynamic>);
