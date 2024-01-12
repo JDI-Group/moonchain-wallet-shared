@@ -3,28 +3,29 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mxc_ui/mxc_ui.dart';
 
 class MxcTextField extends FormField<String> {
-  MxcTextField({
-    required Key? key,
-    String? label,
-    required TextEditingController this.controller,
-    String? hint,
-    FormFieldValidator<String>? validator,
-    TextInputAction? action,
-    bool readOnly = false,
-    MxcTextFieldButton? suffixButton,
-    double width = double.infinity,
-    FocusNode? focusNode,
-    TextInputType? keyboardType,
-    String? suffixText,
-    bool obscure = false,
-    AutovalidateMode? autovalidateMode,
-    String? followText,
-    String? errorText,
-    ValueChanged<String>? onChanged,
-    final ValueChanged<bool>? onFocused,
-    Function(PointerDownEvent)? onTapOutside,
-    bool autoFocus = false
-  }) : super(
+  MxcTextField(
+      {required Key? key,
+      String? label,
+      required TextEditingController this.controller,
+      String? hint,
+      FormFieldValidator<String>? validator,
+      TextInputAction? action,
+      bool readOnly = false,
+      MxcTextFieldButton? suffixButton,
+      double width = double.infinity,
+      FocusNode? focusNode,
+      TextInputType? keyboardType,
+      String? suffixText,
+      bool obscure = false,
+      AutovalidateMode? autovalidateMode,
+      String? followText,
+      String? errorText,
+      ValueChanged<String>? onChanged,
+      final ValueChanged<bool>? onFocused,
+      Function(PointerDownEvent)? onTapOutside,
+      bool autoFocus = false,
+      bool hasClearButton = true})
+      : super(
           key: key,
           initialValue: controller.text,
           validator: validator,
@@ -49,6 +50,7 @@ class MxcTextField extends FormField<String> {
               onFocused: onFocused,
               onTapOutside: onTapOutside,
               autoFocus: autoFocus,
+              hasClearButton: hasClearButton,
             );
           },
         );
@@ -110,20 +112,20 @@ class MxcTextField extends FormField<String> {
           ),
         );
 
-  MxcTextField.multiline({
-    required Key? key,
-    String? label,
-    required TextEditingController this.controller,
-    String? hint,
-    FormFieldValidator<String>? validator,
-    AutovalidateMode? autovalidateMode,
-    TextInputAction? action,
-    Color? textColor,
-    bool autoFocus = false,
-    Color? borderUnFocusColor,
-    Color? borderFocusColor,
-    MxcTextFieldButton? suffixButton    
-  }) : super(
+  MxcTextField.multiline(
+      {required Key? key,
+      String? label,
+      required TextEditingController this.controller,
+      String? hint,
+      FormFieldValidator<String>? validator,
+      AutovalidateMode? autovalidateMode,
+      TextInputAction? action,
+      Color? textColor,
+      bool autoFocus = false,
+      Color? borderUnFocusColor,
+      Color? borderFocusColor,
+      MxcTextFieldButton? suffixButton})
+      : super(
           key: key,
           initialValue: controller.text,
           validator: validator,
@@ -223,67 +225,69 @@ class MxcTextFieldFormState extends FormFieldState<String> {
 }
 
 class _MxcNonFormTextField extends StatefulWidget {
-  const _MxcNonFormTextField({
-    required Key? key,
-    required this.label,
-    required TextEditingController controller,
-    this.hint,
-    this.action,
-    this.readOnly = false,
-    this.suffixButton,
-    this.width = double.infinity,
-    this.maxLines = 1,
-    this.focusNode,
-    this.keyboardType,
-    this.suffixText,
-    this.obscure = false,
-    this.errorText,
-    this.followText,
-    this.onChanged,
-    this.useAnimation = true,
-    this.backgroundColor,
-    this.margin,
-    this.padding,
-    this.borderRadius,
-    this.borderUnFocusColor,
-    this.borderFocusColor,
-    this.prefix,
-    this.onFocused,
-    this.onTapOutside,
-    this.textColor,
-    this.autoFocus = false
-  })  : _controller = controller,
+  const _MxcNonFormTextField(
+      {required Key? key,
+      required this.label,
+      required TextEditingController controller,
+      this.hint,
+      this.action,
+      this.readOnly = false,
+      this.suffixButton,
+      this.width = double.infinity,
+      this.maxLines = 1,
+      this.focusNode,
+      this.keyboardType,
+      this.suffixText,
+      this.obscure = false,
+      this.errorText,
+      this.followText,
+      this.onChanged,
+      this.useAnimation = true,
+      this.backgroundColor,
+      this.margin,
+      this.padding,
+      this.borderRadius,
+      this.borderUnFocusColor,
+      this.borderFocusColor,
+      this.prefix,
+      this.onFocused,
+      this.onTapOutside,
+      this.textColor,
+      this.autoFocus = false,
+      this.hasClearButton = true})
+      : _controller = controller,
         _initialValue = null,
         disabled = false,
         super(key: key);
 
-  const _MxcNonFormTextField.viewOnly({
-    Key? key,
-    required this.label,
-    required String text,
-    this.hint,
-    this.action,
-    this.suffixButton,
-    this.width = double.infinity,
-    this.focusNode,
-    this.keyboardType,
-    this.suffixText,
-    this.obscure = false,
-    this.disabled = false,
-    this.followText,
-    this.useAnimation = true,
-    this.backgroundColor,
-    this.margin,
-    this.padding,
-    this.borderRadius,
-    this.borderUnFocusColor,
-    this.borderFocusColor,
-    this.prefix,
-    this.onFocused,
-    this.onTapOutside,
-    this.textColor,
-    this.autoFocus = false
-  })  : _initialValue = text,
+  const _MxcNonFormTextField.viewOnly(
+      {Key? key,
+      required this.label,
+      required String text,
+      this.hint,
+      this.action,
+      this.suffixButton,
+      this.width = double.infinity,
+      this.focusNode,
+      this.keyboardType,
+      this.suffixText,
+      this.obscure = false,
+      this.disabled = false,
+      this.followText,
+      this.useAnimation = true,
+      this.backgroundColor,
+      this.margin,
+      this.padding,
+      this.borderRadius,
+      this.borderUnFocusColor,
+      this.borderFocusColor,
+      this.prefix,
+      this.onFocused,
+      this.onTapOutside,
+      this.textColor,
+      this.autoFocus = false,
+      this.hasClearButton = true})
+      : _initialValue = text,
         readOnly = true,
         _controller = null,
         maxLines = 1,
@@ -310,6 +314,7 @@ class _MxcNonFormTextField extends StatefulWidget {
   final ValueChanged<String>? onChanged;
   final ValueChanged<bool>? onFocused;
   final bool autoFocus;
+  final bool hasClearButton;
   final Function(PointerDownEvent)? onTapOutside;
 
   final String? followText;
@@ -369,7 +374,8 @@ class _MxcNonFormTextFieldState extends State<_MxcNonFormTextField> {
           borderRadius: const BorderRadius.all(Radius.circular(12)),
           border: Border.all(
             color: focused
-                ? widget.borderFocusColor ?? ColorsTheme.of(context).borderPrimary100
+                ? widget.borderFocusColor ??
+                    ColorsTheme.of(context).borderPrimary100
                 : widget.borderUnFocusColor ?? ColorsTheme.of(context).grey3,
           ),
         ),
@@ -483,7 +489,7 @@ class _MxcNonFormTextFieldState extends State<_MxcNonFormTextField> {
                         ),
                       ),
                     ),
-                    if (controller.text.isNotEmpty)
+                    if (controller.text.isNotEmpty && widget.hasClearButton)
                       InkWell(
                         child: Icon(
                           Icons.cancel_rounded,
