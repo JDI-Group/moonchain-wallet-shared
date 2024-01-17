@@ -104,6 +104,7 @@ PeriodicalCallDuration getPeriodicalCallDurationFromInt(int duration) {
 
 class PeriodicalCallData {
   factory PeriodicalCallData.getDefault() => PeriodicalCallData(
+      serviceEnabled: false,
       lowBalanceLimit: 1000,
       expectedTransactionFee: 300,
       lasEpoch: 0,
@@ -117,6 +118,7 @@ class PeriodicalCallData {
 
   factory PeriodicalCallData.fromMap(Map<String, dynamic> map) {
     return PeriodicalCallData(
+      serviceEnabled: map['serviceEnabled'] ?? false,
       lowBalanceLimit: map['lowBalanceLimit']?.toDouble() ?? 0.0,
       expectedTransactionFee: map['expectedTransactionFee']?.toDouble() ?? 0.0,
       lasEpoch: map['lasEpoch']?.toInt() ?? 0,
@@ -130,6 +132,7 @@ class PeriodicalCallData {
     );
   }
   PeriodicalCallData({
+    required this.serviceEnabled,
     required this.lowBalanceLimit,
     required this.expectedTransactionFee,
     required this.lasEpoch,
@@ -149,12 +152,15 @@ class PeriodicalCallData {
   // Minutes
   int duration;
 
+  bool serviceEnabled;
+
   /// Defaults to false
   bool lowBalanceLimitEnabled;
   bool expectedTransactionFeeEnabled;
   bool expectedEpochOccurrenceEnabled;
 
   PeriodicalCallData copyWith({
+    bool? serviceEnabled,
     double? lowBalanceLimit,
     double? expectedTransactionFee,
     int? lasEpoch,
@@ -165,6 +171,7 @@ class PeriodicalCallData {
     bool? expectedEpochOccurrenceEnabled,
   }) {
     return PeriodicalCallData(
+      serviceEnabled: serviceEnabled ?? this.serviceEnabled,
       lowBalanceLimit: lowBalanceLimit ?? this.lowBalanceLimit,
       expectedTransactionFee:
           expectedTransactionFee ?? this.expectedTransactionFee,
@@ -183,6 +190,7 @@ class PeriodicalCallData {
 
   Map<String, dynamic> toMap() {
     return {
+      'serviceEnabled': serviceEnabled,
       'lowBalanceLimit': lowBalanceLimit,
       'expectedTransactionFee': expectedTransactionFee,
       'lasEpoch': lasEpoch,
@@ -198,7 +206,7 @@ class PeriodicalCallData {
 
   @override
   String toString() {
-    return 'PeriodicalCallData(lowBalanceLimit: $lowBalanceLimit, expectedTransactionFee: $expectedTransactionFee, lasEpoch: $lasEpoch, expectedEpochOccurrence: $expectedEpochOccurrence, duration: $duration, lowBalanceLimitEnabled: $lowBalanceLimitEnabled, expectedTransactionFeeEnabled: $expectedTransactionFeeEnabled, expectedEpochOccurrenceEnabled: $expectedEpochOccurrenceEnabled)';
+    return 'PeriodicalCallData(serviceEnabled: $serviceEnabled, lowBalanceLimit: $lowBalanceLimit, expectedTransactionFee: $expectedTransactionFee, lasEpoch: $lasEpoch, expectedEpochOccurrence: $expectedEpochOccurrence, duration: $duration, lowBalanceLimitEnabled: $lowBalanceLimitEnabled, expectedTransactionFeeEnabled: $expectedTransactionFeeEnabled, expectedEpochOccurrenceEnabled: $expectedEpochOccurrenceEnabled)';
   }
 
   @override
@@ -206,6 +214,7 @@ class PeriodicalCallData {
     if (identical(this, other)) return true;
 
     return other is PeriodicalCallData &&
+        other.serviceEnabled == serviceEnabled &&
         other.lowBalanceLimit == lowBalanceLimit &&
         other.expectedTransactionFee == expectedTransactionFee &&
         other.lasEpoch == lasEpoch &&
@@ -218,7 +227,8 @@ class PeriodicalCallData {
 
   @override
   int get hashCode {
-    return lowBalanceLimit.hashCode ^
+    return serviceEnabled.hashCode ^
+        lowBalanceLimit.hashCode ^
         expectedTransactionFee.hashCode ^
         lasEpoch.hashCode ^
         expectedEpochOccurrence.hashCode ^
