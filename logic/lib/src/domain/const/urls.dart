@@ -66,19 +66,22 @@ class Urls {
   static const String mepEpochListMainnet =
       'https://mining-api.matchx.io/mep2542/getEpochList?page=0&limit=1';
 
-
   static String getMepEpochList(int chainId) {
-    if (Config.isMXCMainnet(chainId)){
+    if (Config.isMXCMainnet(chainId)) {
       return mepEpochListMainnet;
-    } 
+    }
     return mepEpochListTestnet;
   }
 
   static const String axsTermsConditions =
       'https://doc.mxc.com/docs/Resources/tns';
   static const String axsPrivacy = 'https://doc.mxc.com/docs/Resources/Privacy';
+
   static const String gateio = 'https://gate.io/';
   static const String okx = 'https://www.okx.com/';
+  static const String kucoin = 'https://www.kucoin.com/';
+  static const String cryptocom = 'https://crypto.com/';
+
   static const String mainnetL3Bridge = 'https://erc20.mxc.com/';
   static const String testnetL3Bridge = 'https://wannsee-erc20.mxc.com/';
 
