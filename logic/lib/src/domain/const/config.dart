@@ -111,7 +111,8 @@ class Config {
     // Sending more than tokens balance
     'execution reverted: ERC20: transfer amount exceeds balance',
     // Sending more than native token balance
-    'insufficient funds for gas * price + value'
+    'insufficient funds for gas * price + value',
+    'insufficient funds for transfer'
   ];
 
   static List<String> errorList = [nonceTooLowError];
