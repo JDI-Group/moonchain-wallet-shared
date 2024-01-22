@@ -100,6 +100,7 @@ class Config {
   static double dAppDoubleTapUpperBound = 200;
 
   static const String axsPeriodicalTask = 'com.mxc.axswallet.periodicalTasks';
+  static const String dappHookTasks = 'com.mxc.axswallet.dappHooksTasks';
   // Miner dApp transactions gas limit
   static const double minerDAppGasLimit = 750000;
 
