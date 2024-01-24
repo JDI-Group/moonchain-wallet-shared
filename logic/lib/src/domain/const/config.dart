@@ -104,6 +104,8 @@ class Config {
   // Miner dApp transactions gas limit
   static const double minerDAppGasLimit = 750000;
 
+  static const int h3Resolution = 7;
+
   /// If error happens with these messages then we will need to show receive bottom sheet
   static List<String> fundErrors = [
     // User doesn't have enough to pay for native token transfer
