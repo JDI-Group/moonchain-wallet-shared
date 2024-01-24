@@ -42,4 +42,8 @@ class MxcAmount extends EtherAmount {
         .toStringAsFixed(Config.decimalShowFixed));
     return convertedInput;
   }
+
+  static EtherAmount zero() {
+    return EtherAmount.inWei(BigInt.zero);
+  }
 }
