@@ -14,4 +14,8 @@ class MXCType {
   static BigInt stringToBigInt(String value) {
     return BigInt.from(double.parse(value));
   }
+
+  static String bigIntToHex(BigInt value) {
+    return value.toRadixString(16);
+  }
 }
