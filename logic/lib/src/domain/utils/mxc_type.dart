@@ -18,4 +18,9 @@ class MXCType {
   static String bigIntToHex(BigInt value) {
     return value.toRadixString(16);
   }
+
+  static Uint8List stringToUint8List(String value) {
+    List<int> utf8Bytes = value.codeUnits;
+    return Uint8List.fromList(utf8Bytes);
+  }
 }
