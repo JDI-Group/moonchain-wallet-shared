@@ -395,9 +395,15 @@ class TokenContractRepository {
     EthereumAddress? fromAddress;
     if (from != null) fromAddress = EthereumAddress.fromHex(from);
     final cred = EthPrivateKey.fromHex(privateKey);
-    final gasLimit = estimatedGasFee?.gas.toInt();
+    estimatedGasFee ??= await estimateGasFee(
+      from: from ?? cred.address.hex,
+      to: to,
+      data: data,
+      value: amount,
+    );
+    final gasLimit = estimatedGasFee.gas.toInt();
     EtherAmount maxFeePerGas =
-        MXCGas.calculateMaxFeePerGas(estimatedGasFee!.gasPrice);
+        MXCGas.calculateMaxFeePerGas(estimatedGasFee.gasPrice);
 
     final nonce = await _web3Client.getTransactionCount(fromAddress!);
 
