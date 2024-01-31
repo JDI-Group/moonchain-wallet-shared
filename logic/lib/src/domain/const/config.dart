@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:mxc_logic/mxc_logic.dart';
 import 'package:web3dart/web3dart.dart';
 
@@ -125,4 +126,7 @@ class Config {
   static Map<String, String> errorMessageMapper = {
     nonceTooLowError: 'transaction_finalized'
   };
+
+  static TimeOfDay defaultTimeForMinerDapp =
+      const TimeOfDay(hour: 13, minute: 0);
 }
