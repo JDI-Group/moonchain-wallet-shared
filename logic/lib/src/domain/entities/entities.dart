@@ -23,3 +23,4 @@ export 'add_ethereum_chain/add_ethereum_chain.dart';
 export 'periodical_call_data.dart';
 export 'mep_epoch_details.dart';
 export 'dapp_hooks/dapp_hooks.dart';
+export 'wifi_hooks/wifi_hooks.dart';
