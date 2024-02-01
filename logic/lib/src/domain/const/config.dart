@@ -129,4 +129,7 @@ class Config {
 
   static TimeOfDay defaultTimeForMinerDapp =
       const TimeOfDay(hour: 13, minute: 0);
+
+  static String wifiHooksDataV = 'v1';
 }
+  
