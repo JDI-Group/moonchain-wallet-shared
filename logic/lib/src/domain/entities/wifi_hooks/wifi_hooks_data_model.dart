@@ -13,20 +13,25 @@ class WifiHooksDataModel {
       version: map['version'] ?? '',
       hexagonId: map['hexagonId'] ?? '',
       wifiList: List<WifiModel>.from(
-          map['wifiList']?.map((x) => WifiModel.fromMap(x))),
+        map['BSSIDList']?.map((x) => WifiModel.fromMap(x)),
+      ),
+      os: map['OS'] ?? '',
     );
   }
-  WifiHooksDataModel({
-    required this.version,
-    required this.hexagonId,
-    required this.wifiList,
-  });
+
+  WifiHooksDataModel(
+      {required this.version,
+      required this.hexagonId,
+      required this.wifiList,
+      required this.os});
   String version;
   String hexagonId;
+  String os;
   List<WifiModel> wifiList;
 
   WifiHooksDataModel copyWith({
     String? version,
+    String? os,
     String? hexagonId,
     List<WifiModel>? wifiList,
   }) {
@@ -34,6 +39,7 @@ class WifiHooksDataModel {
       version: version ?? this.version,
       hexagonId: hexagonId ?? this.hexagonId,
       wifiList: wifiList ?? this.wifiList,
+      os: os ?? this.os,
     );
   }
 
@@ -41,7 +47,8 @@ class WifiHooksDataModel {
     return {
       'version': version,
       'hexagonId': hexagonId,
-      'wifiList': wifiList.map((x) => x.toMap()).toList(),
+      'BSSIDList': wifiList.map((x) => x.toMap()).toList(),
+      'OS': os,
     };
   }
 
@@ -49,7 +56,7 @@ class WifiHooksDataModel {
 
   @override
   String toString() =>
-      'WifiHooksDataModel(version: $version, hexagonId: $hexagonId, wifiList: $wifiList)';
+      'WifiHooksDataModel(version: $version, hexagonId: $hexagonId, wifiList: $wifiList, OS: $os)';
 
   @override
   bool operator ==(Object other) {
@@ -59,9 +66,11 @@ class WifiHooksDataModel {
     return other is WifiHooksDataModel &&
         other.version == version &&
         other.hexagonId == hexagonId &&
-        listEquals(other.wifiList, wifiList);
+        listEquals(other.wifiList, wifiList) &&
+        other.os == os;
   }
 
   @override
-  int get hashCode => version.hashCode ^ hexagonId.hashCode ^ wifiList.hashCode;
+  int get hashCode =>
+      version.hashCode ^ hexagonId.hashCode ^ wifiList.hashCode ^ os.hashCode;
 }

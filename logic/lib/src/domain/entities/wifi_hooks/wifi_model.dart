@@ -6,8 +6,8 @@ class WifiModel {
 
   factory WifiModel.fromMap(Map<String, dynamic> map) {
     return WifiModel(
-      wifiName: map['wifiName'] ?? '',
-      wifiBSSID: map['wifiBSSID'] ?? '',
+      wifiName: map['WiFi'] ?? '',
+      wifiBSSID: map['BSSID'] ?? '',
     );
   }
   WifiModel({
@@ -30,15 +30,15 @@ class WifiModel {
 
   Map<String, dynamic> toMap() {
     return {
-      'wifiName': wifiName,
-      'wifiBSSID': wifiBSSID,
+      'WiFi': wifiName,
+      'BSSID': wifiBSSID,
     };
   }
 
   String toJson() => json.encode(toMap());
 
   @override
-  String toString() => 'WifiModel(wifiName: $wifiName, wifiBSSID: $wifiBSSID)';
+  String toString() => 'WifiModel(WiFi: $wifiName, BSSID: $wifiBSSID)';
 
   @override
   bool operator ==(Object other) {
