@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:mxc_ui/mxc_ui.dart';
 
 class BottomFlowDialogRoute<T> extends MaterialPageRoute<T> {
-  BottomFlowDialogRoute({
-    required WidgetBuilder builder,
-    RouteSettings? settings,
-    bool maintainState = true,
-    this.skipAnimation = false,
-    this.canPopThisPage = true
-  }) : super(
+  BottomFlowDialogRoute(
+      {required WidgetBuilder builder,
+      RouteSettings? settings,
+      bool maintainState = true,
+      this.skipAnimation = false,
+      this.canPopThisPage = true})
+      : super(
           builder: builder,
           settings: settings,
           maintainState: maintainState,

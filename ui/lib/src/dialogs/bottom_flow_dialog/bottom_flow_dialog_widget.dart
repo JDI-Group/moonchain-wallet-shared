@@ -5,11 +5,8 @@ import 'package:mxc_ui/mxc_ui.dart';
 import 'package:rxdart/rxdart.dart';
 
 class BottomFlowDialog extends StatefulWidget {
-  const BottomFlowDialog({
-    Key? key,
-    required this.child,
-    this.canPop = true
-  }) : super(key: key);
+  const BottomFlowDialog({Key? key, required this.child, this.canPop = true})
+      : super(key: key);
 
   final Widget child;
   final bool canPop;
@@ -112,7 +109,7 @@ class BottomFlowDialogState extends State<BottomFlowDialog> {
             SystemNavigator.pop();
             return Future.value(false);
           }
-          
+
           if (parentNavigator.canPop()) {
             parentNavigator.pop();
             return Future.value(false);
