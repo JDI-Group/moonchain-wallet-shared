@@ -1,8 +1,7 @@
 import 'dart:async';
-import 'package:ens_dart/ens_dart.dart';
 import 'package:mxc_logic/src/data/api/client/rest_client.dart';
 import 'package:mxc_logic/mxc_logic.dart';
-import 'package:mxc_logic/src/domain/const/const.dart';
+import 'package:mxc_logic/src/data/api/client/web3_client.dart';
 import 'package:web3dart/web3dart.dart';
 
 class TweetsRepository {
@@ -10,7 +9,7 @@ class TweetsRepository {
     this._web3Client,
   ) : _restClient = RestClient();
 
-  final Web3Client _web3Client;
+  final DatadashClient _web3Client;
   final RestClient _restClient;
 
   Future<DefaultTweets> getDefaultTweets() async {

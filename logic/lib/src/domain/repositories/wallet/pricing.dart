@@ -1,10 +1,9 @@
 import 'dart:async';
 import 'dart:math';
-import 'package:ens_dart/ens_dart.dart';
+import 'package:ens_dart/ens_dart.dart' as contracts;
 import 'package:http/http.dart';
 import 'package:mxc_logic/mxc_logic.dart';
 import 'package:mxc_logic/src/data/api/client/web3_client.dart';
-import 'package:mxc_logic/src/domain/const/const.dart';
 import 'package:web3dart/web3dart.dart';
 
 class PricingRepository {
@@ -35,8 +34,10 @@ class PricingRepository {
       if (router != null) {
         final routerAddress = EthereumAddress.fromHex(router);
 
-        final routerContract =
-            RouterContract(client: _web3Client, address: routerAddress);
+        final routerContract = contracts.RouterContract(
+          client: _web3Client,
+          address: routerAddress,
+        );
         final outputPrice = await routerContract.getAmountsOut(
           amountIn,
           [tokenA, tokenB],

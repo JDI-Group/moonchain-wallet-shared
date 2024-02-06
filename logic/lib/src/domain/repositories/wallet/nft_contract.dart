@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:ens_dart/ens_dart.dart';
+import 'package:ens_dart/ens_dart.dart' as contracts;
 import 'package:mxc_logic/src/data/api/client/rest_client.dart';
 import 'package:mxc_logic/mxc_logic.dart';
 import 'package:mxc_logic/src/data/api/client/web3_client.dart';
@@ -27,7 +27,8 @@ class NftContractRepository {
       final addressValue = EthereumAddress.fromHex(address);
       final tokenIdValue = BigInt.from(tokenId);
 
-      final ensNft = EnsNft(address: addressValue, client: _web3Client);
+      final ensNft =
+          contracts.EnsNft(address: addressValue, client: _web3Client);
       final result = await ensNft.ownerOf(tokenIdValue);
 
       return result.hex;
@@ -44,7 +45,8 @@ class NftContractRepository {
       final addressValue = EthereumAddress.fromHex(address);
       final tokenIdValue = BigInt.from(tokenId);
 
-      final ensNft = EnsNft(address: addressValue, client: _web3Client);
+      final ensNft =
+          contracts.EnsNft(address: addressValue, client: _web3Client);
       final tokenMetaDataUri = await ensNft.tokenURI(tokenIdValue);
 
       RegExp regExp = RegExp(r'ipfs://(.+)');
@@ -89,7 +91,8 @@ class NftContractRepository {
       final addressValue = EthereumAddress.fromHex(address);
       final tokenIdValue = BigInt.from(tokenId);
 
-      final ensNft = EnsNft(address: addressValue, client: _web3Client);
+      final ensNft =
+          contracts.EnsNft(address: addressValue, client: _web3Client);
 
       final toAddress = EthereumAddress.fromHex(to);
       final cred = EthPrivateKey.fromHex(privateKey);

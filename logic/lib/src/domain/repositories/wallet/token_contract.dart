@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:ens_dart/ens_dart.dart';
+import 'package:ens_dart/ens_dart.dart' as contracts;
 import 'package:eth_sig_util/eth_sig_util.dart';
 import 'package:flutter/services.dart';
 import 'package:mxc_logic/src/data/api/client/rest_client.dart';
@@ -62,8 +62,8 @@ class TokenContractRepository {
   }
 
   Future<int> getEpochDetails(int chainId) async {
-    final res =
-        await _restClient.client.get(Uri.parse(Urls.getMepEpochList(chainId)));
+    final res = await _restClient.client
+        .get(Uri.parse(Urls.mepEpochList(chainId, 0, 1)));
 
     final epochDetails =
         MEPEpochDetails.fromJson(json.decode(res.body) as Map<String, dynamic>);
@@ -208,7 +208,8 @@ class TokenContractRepository {
       try {
         if (token.address != null) {
           final data = EthereumAddress.fromHex(token.address!);
-          final ensToken = EnsToken(client: _web3Client, address: data);
+          final ensToken =
+              contracts.EnsToken(client: _web3Client, address: data);
 
           final tokenBalanceResponse = await ensToken.balanceOf(address);
           // making number human understandable
@@ -232,7 +233,7 @@ class TokenContractRepository {
   Future<Token?> getToken(String address) async {
     try {
       final data = EthereumAddress.fromHex(address);
-      final ensToken = EnsToken(client: _web3Client, address: data);
+      final ensToken = contracts.EnsToken(client: _web3Client, address: data);
       final symbol = await ensToken.symbol();
       final decimals = await ensToken.decimals();
 
@@ -263,7 +264,7 @@ class TokenContractRepository {
                   ? Config.testnetEnsAddresses.ensFallbackRegistry
                   : null;
       if (ensResolverAddress != null && ensFallBackRegistryAddress != null) {
-        final ens = Ens(
+        final ens = contracts.Ens(
                 client: _web3Client,
                 address: EthereumAddress.fromHex(ensResolverAddress),
                 ensFallBackRegistryAddress:
@@ -300,7 +301,7 @@ class TokenContractRepository {
                   ? Config.testnetEnsAddresses.ensFallbackRegistry
                   : null;
       if (ensResolverAddress != null && ensFallBackRegistryAddress != null) {
-        final ens = Ens(
+        final ens = contracts.Ens(
                 client: _web3Client,
                 address: EthereumAddress.fromHex(ensResolverAddress),
                 ensFallBackRegistryAddress:
@@ -431,7 +432,8 @@ class TokenContractRepository {
       );
     } else {
       final tokenHash = EthereumAddress.fromHex(tokenAddress);
-      final erc20Token = EnsToken(address: tokenHash, client: _web3Client);
+      final erc20Token =
+          contracts.EnsToken(address: tokenHash, client: _web3Client);
       final tokenAmount = amount.getValueInUnitBI(EtherUnit.wei);
 
       final transaction = Transaction(
@@ -475,7 +477,7 @@ class TokenContractRepository {
     EthereumAddress toAddress,
     BigInt amount,
   ) {
-    final erc20Token = EnsToken(
+    final erc20Token = contracts.EnsToken(
       address: EthereumAddress.fromHex(tokenHash),
       client: _web3Client,
     );
