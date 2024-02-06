@@ -24,3 +24,5 @@ export 'periodical_call_data.dart';
 export 'mep_epoch_details.dart';
 export 'dapp_hooks/dapp_hooks.dart';
 export 'wifi_hooks/wifi_hooks.dart';
+export 'epoch_by_release_time_model.dart';
+export 'epoch_model.dart';
