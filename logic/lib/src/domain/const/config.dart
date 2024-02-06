@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mxc_logic/mxc_logic.dart';
 import 'package:web3dart/web3dart.dart';
 
+enum MXCContacts { erc6551AccountImpl, mep2542, erc6551Registry, mep1004Token }
+
 class Config {
   // App related config
   static const String appName = 'AXS';
@@ -26,6 +28,26 @@ class Config {
     ensReverseRegistrar: '0x18c02bA5D8391b3CB49586C94454E44102252cFA',
   );
 
+  static getContractAddress(MXCContacts contract, int chainId) =>
+      isMXCMainnet(chainId)
+          ? contractsList[mxcMainnetChainId]![contract]
+          : contractsList[mxcTestnetChainId]![contract];
+
+  static Map<int, Map<MXCContacts, String>> contractsList = {
+    mxcTestnetChainId: {
+      MXCContacts.mep2542: mep2542AddressTestnet,
+      MXCContacts.erc6551AccountImpl: erc6551AccountImplTestnet,
+      MXCContacts.erc6551Registry: erc6551RegistryTestnet,
+      MXCContacts.mep1004Token: mep1004TokenTestnet,
+    },
+    mxcMainnetChainId: {
+      MXCContacts.mep2542: mep2542AddressMainnet,
+      MXCContacts.erc6551AccountImpl: erc6551AccountImplMainnet,
+      MXCContacts.erc6551Registry: erc6551RegistryMainnet,
+      MXCContacts.mep1004Token: mep1004TokenMainnet,
+    }
+  };
+
   static const int mxcMainnetChainId = 18686;
   static const int mxcTestnetChainId = 5167003;
   static const int ethereumMainnetChainId = 1;
@@ -47,6 +69,23 @@ class Config {
       '0x52f72a3c94a6ffca3f8caf769e14015fd040b0cd';
   static const String mxcAddressEthereum =
       '0x5Ca381bBfb58f0092df149bD3D243b08B9a8386e';
+
+  static const String mep2542AddressTestnet =
+      '0xc23832093cEC4306108775468FCCbcA84E19eAEa';
+  static const String mep2542AddressMainnet =
+      '0xBF717fCD0FD99238998d90D3fAA8C015530e85F4';
+  static const String erc6551AccountImplTestnet =
+      '0x8ACf9E74D74384d1eae89A522390500B7a9b7426';
+  static const String erc6551AccountImplMainnet =
+      '0xaafd9fF2225c8FEa0c616a219a78eD1d9B4CBeF7';
+  static const String erc6551RegistryTestnet =
+      '0x71A3998cc4802743A4bBb23385786365BFe0dac1';
+  static const String erc6551RegistryMainnet =
+      '0x4c802AFb54Ef4e27429b6Ab87e6C2Da6991Fd4B9';
+  static const String mep1004TokenTestnet =
+      '0x5CE293229a794AF03Ec3c95Cfba6b1058D558026';
+  static const String mep1004TokenMainnet =
+      '0x8Ff08F39B1F4Ad7dc42E6D63fd25AeE47EA801Ce';
 
   // Numbers fixed decimals
   static int decimalShowFixed = 3;
@@ -132,4 +171,3 @@ class Config {
 
   static String wifiHooksDataV = 'v1';
 }
-  
