@@ -31,6 +31,7 @@ class DAppHooksModel {
         minerHooks: MinerHooksModel(
           enabled: false,
           time: Config.defaultTimeForMinerDapp,
+          selectedMiners: []
         ),
       );
 
