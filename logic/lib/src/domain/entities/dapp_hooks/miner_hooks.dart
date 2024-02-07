@@ -21,24 +21,31 @@ class MinerHooksModel {
     return MinerHooksModel(
       enabled: map['enabled'] ?? false,
       time: time,
+      selectedMiners: map['selectedMiners'] == null
+          ? []
+          : List<String>.from(map['selectedMiners']),
     );
   }
 
   MinerHooksModel({
     required this.enabled,
     required this.time,
+    required this.selectedMiners,
   });
 
   bool enabled;
   TimeOfDay time;
+  List<String> selectedMiners;
 
   MinerHooksModel copyWith({
     bool? enabled,
     TimeOfDay? time,
+    List<String>? selectedMiners,
   }) {
     return MinerHooksModel(
       enabled: enabled ?? this.enabled,
       time: time ?? this.time,
+      selectedMiners: selectedMiners ?? this.selectedMiners,
     );
   }
 
@@ -46,6 +53,7 @@ class MinerHooksModel {
     return {
       'enabled': enabled,
       'time': '${time.hour}:${time.minute}',
+      'selectedMiners': selectedMiners,
     };
   }
 
