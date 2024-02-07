@@ -26,3 +26,8 @@ export 'dapp_hooks/dapp_hooks.dart';
 export 'wifi_hooks/wifi_hooks.dart';
 export 'epoch_by_release_time_model.dart';
 export 'epoch_model.dart';
+export 'reward_query_model.dart';
+export 'reward_response_model.dart';
+export 'reward_details_model.dart';
+export 'rewards_request_model.dart';
+export 'proofs_request_model.dart';
