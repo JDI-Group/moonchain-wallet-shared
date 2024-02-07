@@ -7,8 +7,8 @@ class EpochModel {
   factory EpochModel.fromMap(Map<String, dynamic> map) {
     return EpochModel(
       epochReleaseTime: BigInt.parse(map['epochReleaseTime']),
-      id: map['id']?.toInt() ?? 0,
-      epoch: map['epoch']?.toInt() ?? 0,
+      id: map['id'] as int? ?? 0,
+      epoch: map['epoch'] as int? ?? 0,
       expired: map['expired'] ?? false,
     );
   }

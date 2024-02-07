@@ -10,8 +10,12 @@ class RewardResponseModel {
 
   factory RewardResponseModel.fromMap(Map<String, dynamic> map) {
     return RewardResponseModel(
-      rewardInfoDetails: List<RewardDetailsModel>.from(
-          map['rewardInfoDetails']?.map((x) => RewardDetailsModel.fromMap(x))),
+      rewardInfoDetails: map['rewardInfoDetails'] == null
+          ? []
+          : List<RewardDetailsModel>.from(
+              (map['rewardInfoDetails'] as Iterable<dynamic>)
+                  .map((x) => RewardDetailsModel.fromMap(x)),
+            ),
     );
   }
   RewardResponseModel({

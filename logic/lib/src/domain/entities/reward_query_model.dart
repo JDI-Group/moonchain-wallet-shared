@@ -8,7 +8,7 @@ class RewardQueryModel {
 
   factory RewardQueryModel.fromMap(Map<String, dynamic> map) {
     return RewardQueryModel(
-      mep1004TokenId: map['mep1004TokenId']?.toInt() ?? 0,
+      mep1004TokenId: map['mep1004TokenId'] as int? ?? 0,
       epochNumbers: List<int>.from(map['epochNumbers']),
     );
   }

@@ -8,8 +8,8 @@ class RewardDetailsModel {
 
   factory RewardDetailsModel.fromMap(Map<String, dynamic> map) {
     return RewardDetailsModel(
-      mep1004TokenId: map['mep1004TokenId']?.toInt() ?? 0,
-      epochNumber: map['epochNumber']?.toInt() ?? 0,
+      mep1004TokenId: map['mep1004TokenId'] as int? ?? 0,
+      epochNumber: map['epochNumber'] as int? ?? 0,
       createTime: map['createTime'] ?? '',
       rewardInfoJson: map['rewardInfoJson'] == null
           ? RewardInfoJson(amount: [], token: [])

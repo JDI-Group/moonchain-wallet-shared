@@ -119,11 +119,11 @@ class PeriodicalCallData {
   factory PeriodicalCallData.fromMap(Map<String, dynamic> map) {
     return PeriodicalCallData(
       serviceEnabled: map['serviceEnabled'] ?? false,
-      lowBalanceLimit: map['lowBalanceLimit']?.toDouble() ?? 0.0,
-      expectedTransactionFee: map['expectedTransactionFee']?.toDouble() ?? 0.0,
-      lasEpoch: map['lasEpoch']?.toInt() ?? 0,
-      expectedEpochOccurrence: map['expectedEpochOccurrence']?.toInt() ?? 0,
-      duration: map['duration']?.toInt() ?? 0,
+      lowBalanceLimit: map['lowBalanceLimit'] as double? ?? 0,
+      expectedTransactionFee: map['expectedTransactionFee'] as double? ?? 0,
+      lasEpoch: map['lasEpoch'] as int? ?? 0,
+      expectedEpochOccurrence: map['expectedEpochOccurrence'] as int? ?? 0,
+      duration: map['duration'] as int? ?? 0,
       lowBalanceLimitEnabled: map['lowBalanceLimitEnabled'] ?? false,
       expectedTransactionFeeEnabled:
           map['expectedTransactionFeeEnabled'] ?? false,
