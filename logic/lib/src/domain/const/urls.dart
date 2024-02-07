@@ -98,6 +98,36 @@ class Urls {
     return 'address/$address';
   }
 
+  static String addressMinersByChainId(int chainId, String address) =>
+      Config.isMXCMainnet(chainId)
+          ? addressMinersMainnet(address)
+          : addressMinersTestnet(address);
+
+  static String postMEP2542RewardInfo(int chainId) =>
+      Config.isMXCMainnet(chainId)
+          ? mep2542RewardInfoMainnet
+          : mep2542RewardInfoTestnet;
+
+  static String addressMinersTestnet(String address) =>
+      minerDappApiTestnet + addressMiners + address;
+  static String addressMinersMainnet(String address) =>
+      minerDappApiMainnet + addressMiners + address;
+
+  static const String mep2542RewardInfoTestnet =
+      minerDappApiTestnet + mep2542RewardInfo;
+  static const String mep2542RewardInfoMainnet =
+      minerDappApiMainnet + mep2542RewardInfo;
+
+  static const String addressMiners = 'mep2542/getMEP1004TokenList?owner=';
+  static const String mep2542RewardInfo = 'mep2542/getMEP2542RewardInfo';
+
+  static const String minerDappApiTestnet =
+      'https://wannsee-mining-api.matchx.io/';
+  static const String minerDappApiMainnet = 'https://mining-api.matchx.io/';
+
+  // static minerDappTestnet = 'https://wannsee-mining.matchx.io/';
+  // static minerDappMainnet = 'https://mining.matchx.io/';
+
   static bool isL3Bridge(String url) {
     return url.contains('erc20.mxc.com') ||
         url.contains('wannsee-erc20.mxc.com');
