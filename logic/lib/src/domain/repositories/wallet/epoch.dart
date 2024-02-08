@@ -31,7 +31,7 @@ class EpochRepository {
       address: mep2542Address,
     );
 
-    const List<Future<BigInt>> epochReleaseTimeTask = [];
+    List<Future<BigInt>> epochReleaseTimeTask = [];
     for (var i = 0; i < pageSize; i++) {
       final epochNumber = epoch.epoch.toInt();
       final number = epochNumber - offset - i;
@@ -51,12 +51,14 @@ class EpochRepository {
               epochReleaseTime.toInt() >
           3600 * 24;
 
-      data.add(EpochModel(
-        epochReleaseTime: epochReleaseTime,
-        id: id,
-        epoch: id,
-        expired: expired,
-      ));
+      data.add(
+        EpochModel(
+          epochReleaseTime: epochReleaseTime,
+          id: id,
+          epoch: id,
+          expired: expired,
+        ),
+      );
     }
 
     return data;
