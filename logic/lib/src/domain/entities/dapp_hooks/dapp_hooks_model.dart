@@ -11,7 +11,7 @@ class DAppHooksModel {
   factory DAppHooksModel.fromMap(Map<String, dynamic> map) {
     return DAppHooksModel(
       enabled: map['enabled'] ?? false,
-      duration: map['duration']?.toInt() ?? 0,
+      duration: map['duration'] as int? ?? 0,
       wifiHooks: WifiHooksModel.fromMap(map['wifiHooks']),
       minerHooks: MinerHooksModel.fromMap(map['minerHooks']),
     );
@@ -31,7 +31,7 @@ class DAppHooksModel {
         minerHooks: MinerHooksModel(
           enabled: false,
           time: Config.defaultTimeForMinerDapp,
-          selectedMiners: []
+          selectedMiners: [],
         ),
       );
 

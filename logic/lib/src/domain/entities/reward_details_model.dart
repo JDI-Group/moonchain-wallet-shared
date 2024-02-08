@@ -8,16 +8,19 @@ class RewardDetailsModel {
 
   factory RewardDetailsModel.fromMap(Map<String, dynamic> map) {
     return RewardDetailsModel(
-      mep1004TokenId: map['mep1004TokenId'] as int? ?? 0,
-      epochNumber: map['epochNumber'] as int? ?? 0,
+      mep1004TokenId: int.parse(map['mep1004TokenId'] ?? '0'),
+      epochNumber: int.parse(map['epochNumber'] ?? '0'),
       createTime: map['createTime'] ?? '',
       rewardInfoJson: map['rewardInfoJson'] == null
           ? RewardInfoJson(amount: [], token: [])
           : RewardInfoJson.fromJson(map['rewardInfoJson']),
       rewardHash: map['rewardHash'] ?? '',
       userselectedToken: map['userselectedToken'] ?? '',
-      proofJson:
-          map['proofJson'] == null ? [] : List<String>.from(map['proofJson']),
+      proofJson: map['proofJson'] == null
+          ? []
+          : (jsonDecode(map['proofJson']) as Iterable<dynamic>)
+              .map<String>((dynamic item) => item.toString())
+              .toList(),
     );
   }
 
@@ -112,7 +115,8 @@ class RewardInfoJson {
       amount: map['Amount'] == null
           ? []
           : List<BigInt>.from(
-              (map['Amount'] as List<dynamic>).map((x) => BigInt.parse(x))),
+              (map['Amount'] as List<dynamic>).map((x) => BigInt.from(x)),
+            ),
       token: map['Token'] == null ? [] : List<String>.from(map['Token']),
     );
   }
