@@ -3,6 +3,8 @@ import 'package:mxc_logic/src/data/api/client/web3_client.dart';
 import 'package:mxc_logic/src/data/data.dart';
 import 'package:mxc_logic/src/domain/repositories/wallet/app_version.dart';
 import 'package:mxc_logic/src/domain/repositories/wallet/dapp_store.dart';
+import 'package:mxc_logic/src/domain/repositories/wallet/epoch.dart';
+import 'package:mxc_logic/src/domain/repositories/wallet/miner.dart';
 import 'package:mxc_logic/src/domain/repositories/wallet/nft_contract.dart';
 import 'package:mxc_logic/src/domain/repositories/wallet/pricing.dart';
 import 'package:mxc_logic/src/domain/repositories/wallet/chains.dart';
@@ -46,4 +48,8 @@ class Web3Repository {
       AppVersionRepository(_web3client);
 
   ChainsRepository get chainsRepository => ChainsRepository(_web3client);
+
+  MinerRepository get minerRepository => MinerRepository(_web3client, epochRepository);
+
+  EpochRepository get epochRepository => EpochRepository(_web3client);
 }
