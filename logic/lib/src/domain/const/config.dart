@@ -28,10 +28,14 @@ class Config {
     ensReverseRegistrar: '0x18c02bA5D8391b3CB49586C94454E44102252cFA',
   );
 
-  static getContractAddress(MXCContacts contract, int chainId) =>
+  static EthereumAddress getContractAddress(
+          MXCContacts contract, int chainId) =>
+      EthereumAddress.fromHex(getContractAddressString(contract, chainId));
+
+  static String getContractAddressString(MXCContacts contract, int chainId) =>
       isMXCMainnet(chainId)
-          ? contractsList[mxcMainnetChainId]![contract]
-          : contractsList[mxcTestnetChainId]![contract];
+          ? contractsList[mxcMainnetChainId]![contract]!
+          : contractsList[mxcTestnetChainId]![contract]!;
 
   static Map<int, Map<MXCContacts, String>> contractsList = {
     mxcTestnetChainId: {
@@ -166,8 +170,7 @@ class Config {
     nonceTooLowError: 'transaction_finalized'
   };
 
-  static TimeOfDay defaultTimeForMinerDapp =
-      const TimeOfDay(hour: 13, minute: 0);
+  static DateTime defaultTimeForMinerDapp = DateTime(2024, 1, 1, 13, 0, 0);
 
   static String wifiHooksDataV = 'v1';
 }

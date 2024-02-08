@@ -1,7 +1,4 @@
 import 'dart:convert';
-
-import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:mxc_logic/mxc_logic.dart';
 
 class MinerHooksModel {
@@ -9,12 +6,10 @@ class MinerHooksModel {
       MinerHooksModel.fromMap(json.decode(source));
 
   factory MinerHooksModel.fromMap(Map<String, dynamic> map) {
-    late TimeOfDay time;
+    late DateTime time;
     if (map['time'] != null) {
       final timeString = map['time'];
-      time = TimeOfDay.fromDateTime(
-        DateFormat('h:mm').parse(timeString),
-      );
+      time = DateTime.parse(timeString);
     } else {
       time = Config.defaultTimeForMinerDapp;
     }
@@ -34,12 +29,12 @@ class MinerHooksModel {
   });
 
   bool enabled;
-  TimeOfDay time;
+  DateTime time;
   List<String> selectedMiners;
 
   MinerHooksModel copyWith({
     bool? enabled,
-    TimeOfDay? time,
+    DateTime? time,
     List<String>? selectedMiners,
   }) {
     return MinerHooksModel(
@@ -52,7 +47,7 @@ class MinerHooksModel {
   Map<String, dynamic> toMap() {
     return {
       'enabled': enabled,
-      'time': '${time.hour}:${time.minute}',
+      'time': time.toString(),
       'selectedMiners': selectedMiners,
     };
   }
