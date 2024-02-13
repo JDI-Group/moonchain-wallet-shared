@@ -55,7 +55,6 @@ class Urls {
   static const String emailApp = 'mailto:';
 
   // MXC support
-  static const String mxcChatGPT = 'http://t.me/mxcchatgpt_bot';
   static const String mxcZendesk = 'https://mxcfoundation.zendesk.com/hc/en-gb';
   static const String mxcKnowledgeHub = 'https://www.mxc.org/blog#technology';
   static const String mxcDesignDocs = 'https://doc.mxc.com/docs/intro';
