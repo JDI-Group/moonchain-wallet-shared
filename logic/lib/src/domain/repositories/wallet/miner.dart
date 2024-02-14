@@ -134,12 +134,15 @@ class MinerRepository {
 
       if (anyReward == BigInt.zero) continue;
 
-      epochIds.add(BigInt.parse(epoch.epoch.toString()));
-      proofsArray.add(ProofsRequestModel(proofs: rewardInfo.proofJson));
-      rewardInfoArray.add(
+      epochIds.insert(0, BigInt.parse(epoch.epoch.toString()));
+      proofsArray.insert(0, ProofsRequestModel(proofs: rewardInfo.proofJson));
+      rewardInfoArray.insert(
+        0,
         RewardsRequestModel(
           amount: rewardInfo.rewardInfoJson.amount,
-          token: rewardInfo.rewardInfoJson.token,
+          token: rewardInfo.rewardInfoJson.token
+              .map((e) => EthereumAddress.fromHex(e))
+              .toList(),
         ),
       );
     }

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
+import 'package:mxc_logic/mxc_logic.dart';
 
 class RewardsRequestModel {
   factory RewardsRequestModel.fromJson(String source) =>
@@ -9,7 +10,7 @@ class RewardsRequestModel {
   factory RewardsRequestModel.fromMap(Map<String, dynamic> map) {
     return RewardsRequestModel(
       amount: List<BigInt>.from(map['amount']?.map((x) => BigInt.parse(x))),
-      token: List<String>.from(map['token']),
+      token: List<EthereumAddress>.from(map['token']),
     );
   }
   RewardsRequestModel({
@@ -17,11 +18,11 @@ class RewardsRequestModel {
     required this.token,
   });
   List<BigInt> amount;
-  List<String> token;
+  List<EthereumAddress> token;
 
   RewardsRequestModel copyWith({
     List<BigInt>? amount,
-    List<String>? token,
+    List<EthereumAddress>? token,
   }) {
     return RewardsRequestModel(
       amount: amount ?? this.amount,
@@ -31,8 +32,8 @@ class RewardsRequestModel {
 
   Map<String, dynamic> toMap() {
     return {
-      'amount': amount.map((x) => x.toString()).toList(),
-      'token': token,
+      'token': token.map((e) => e.toString() as dynamic).toList().toString(),
+      'amount': amount.map((e) => e.toString() as dynamic).toList().toString()
     };
   }
 
