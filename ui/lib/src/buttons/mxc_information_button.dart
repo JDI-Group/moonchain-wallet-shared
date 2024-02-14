@@ -28,7 +28,7 @@ class MXCInformationButton extends StatelessWidget {
       showDropBoxFilter: true,
       sigmaX: 5,
       sigmaY: 5,
-      backgroundColor: ColorsTheme.of(context).mainRed,
+      backgroundColor: ColorsTheme.of(context).btnBgWhite,
       borderRadius: 25,
       onShow: () => Future.delayed(const Duration(seconds: 5), () {
         if (controller.isVisible) {
@@ -37,7 +37,8 @@ class MXCInformationButton extends StatelessWidget {
       }),
       child: Icon(
         Icons.info_rounded,
-        color: ColorsTheme.of(context).mainRed,
+        color: ColorsTheme.of(context).btnBgWhite,
+        size: 18,
       ),
     );
   }
