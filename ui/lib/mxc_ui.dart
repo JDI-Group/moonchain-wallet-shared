@@ -5,6 +5,7 @@ export 'package:font_awesome_flutter/font_awesome_flutter.dart';
 export 'src/theme/theme.dart';
 export 'src/dialogs/dialogs.dart';
 export 'src/buttons/buttons.dart';
+export 'src/widgets/widgets.dart';
 export 'src/loading_barrier.dart';
 export 'src/shadow.dart';
 export 'src/text_field.dart';
