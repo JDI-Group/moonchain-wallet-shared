@@ -43,7 +43,7 @@ class MXCSwitchRowItem extends StatelessWidget {
           ],
           const Spacer(),
           const SizedBox(
-            width: Sizes.spaceNormal,
+            width: Sizes.spaceXSmall,
           ),
           CupertinoSwitch(
             value: value,
