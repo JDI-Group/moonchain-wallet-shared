@@ -28,6 +28,11 @@ class TokenContractRepository {
     return _web3Client.getBalance(data);
   }
 
+  Future<int> getAddressNonce(EthereumAddress address,
+      {BlockNum? atBlock}) async {
+    return await _web3Client.getTransactionCount(address, atBlock: atBlock);
+  }
+
   Future<WannseeTransactionsModel?> getTransactionsByAddress(
     String address,
   ) async {
@@ -391,6 +396,7 @@ class TokenContractRepository {
     Uint8List? data,
     String? tokenAddress,
     Token? token,
+    int? nonce,
   }) async {
     final toAddress = EthereumAddress.fromHex(to);
     EthereumAddress? fromAddress;
@@ -406,7 +412,8 @@ class TokenContractRepository {
     EtherAmount maxFeePerGas =
         MXCGas.calculateMaxFeePerGas(estimatedGasFee.gasPrice);
 
-    final nonce = await _web3Client.getTransactionCount(fromAddress!);
+    final txNonce =
+        nonce ?? await _web3Client.getTransactionCount(fromAddress!);
 
     late TransactionModel transactionData;
     String? result;
@@ -419,7 +426,7 @@ class TokenContractRepository {
         maxPriorityFeePerGas: Config.maxPriorityFeePerGas,
         value: amount,
         data: data,
-        nonce: nonce,
+        nonce: txNonce,
         maxGas: gasLimit,
       );
 
@@ -441,7 +448,7 @@ class TokenContractRepository {
         from: fromAddress,
         maxFeePerGas: maxFeePerGas,
         maxPriorityFeePerGas: Config.maxPriorityFeePerGas,
-        nonce: nonce,
+        nonce: txNonce,
         maxGas: gasLimit,
       );
 
