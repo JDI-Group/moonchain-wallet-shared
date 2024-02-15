@@ -170,6 +170,8 @@ class Config {
     nonceTooLowError: 'transaction_finalized'
   };
 
+  static List<String> ignoredErrors = ['already known'];
+
   static DateTime defaultTimeForMinerDapp = DateTime(2024, 1, 1, 13, 0, 0);
 
   static String wifiHooksDataV = 'v1';
