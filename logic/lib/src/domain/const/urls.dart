@@ -120,12 +120,24 @@ class Urls {
   static const String addressMiners = 'mep2542/getMEP1004TokenList?owner=';
   static const String mep2542RewardInfo = 'mep2542/getMEP2542RewardInfo';
 
+  static String postVerifyMerkleProof(int chainId) =>
+      Config.isMXCMainnet(chainId)
+          ? postVerifyMerkleProofMainnet
+          : postVerifyMerkleProofTestnet;
+
+  static String postVerifyMerkleProofTestnet =
+      minerDappTestnet + verifyMerkleProof;
+  static String postVerifyMerkleProofMainnet =
+      minerDappMainnet + verifyMerkleProof;
+
+  static const String verifyMerkleProof = 'api/verifier/verifyMerkleProof';
+
   static const String minerDappApiTestnet =
       'https://wannsee-mining-api.matchx.io/';
   static const String minerDappApiMainnet = 'https://mining-api.matchx.io/';
 
-  // static minerDappTestnet = 'https://wannsee-mining.matchx.io/';
-  // static minerDappMainnet = 'https://mining.matchx.io/';
+  static const minerDappTestnet = 'https://wannsee-mining.matchx.io/';
+  static const minerDappMainnet = 'https://mining.matchx.io/';
 
   static bool isL3Bridge(String url) {
     return url.contains('erc20.mxc.com') ||
