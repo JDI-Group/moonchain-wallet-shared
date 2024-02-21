@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:intl/intl.dart';
 import 'package:mxc_logic/mxc_logic.dart';
 import 'package:intl/intl.dart' as intl;
 
@@ -135,5 +136,10 @@ class MXCFormatter {
 
   static String checkExpoNumber(String value) {
     return MXCValidation.isExpoNumber(value) ? '0.000' : value;
+  }
+
+  static String formatExpoNumber(double number) {
+    NumberFormat formatter = NumberFormat('###', 'en_US');
+    return formatter.format(number);
   }
 }
