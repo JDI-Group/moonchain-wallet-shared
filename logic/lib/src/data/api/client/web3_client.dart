@@ -34,6 +34,7 @@ class DatadashClient extends Web3Client {
             interceptors: [
               LoggingInterceptor(),
             ],
+            requestTimeout: Config.httpClientTimeOut,
           ),
           socketConnector: () {
             return IOWebSocketChannel.connect(getNetwork().web3RpcWebsocketUrl)

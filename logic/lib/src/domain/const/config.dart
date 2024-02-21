@@ -150,6 +150,8 @@ class Config {
 
   static const int h3Resolution = 7;
 
+  static const Duration httpClientTimeOut = Duration(seconds: 5);
+
   /// If error happens with these messages then we will need to show receive bottom sheet
   static List<String> fundErrors = [
     // User doesn't have enough to pay for native token transfer
