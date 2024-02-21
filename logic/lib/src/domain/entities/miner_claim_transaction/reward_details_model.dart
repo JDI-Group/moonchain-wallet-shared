@@ -1,6 +1,8 @@
 import 'dart:convert';
-
+import 'dart:math';
 import 'package:collection/collection.dart';
+import 'package:mxc_logic/mxc_logic.dart';
+import 'package:intl/intl.dart';
 
 class RewardDetailsModel {
   factory RewardDetailsModel.fromJson(String source) =>
@@ -115,7 +117,10 @@ class RewardInfoJson {
       amount: map['Amount'] == null
           ? []
           : List<BigInt>.from(
-              (map['Amount'] as List<dynamic>).map((x) => BigInt.from(x)),
+              ((map['Amount'] as List<dynamic>)).map((x) {
+                final String e = MXCFormatter.formatExpoNumber(x.toDouble());
+                return BigInt.parse(e);
+              }),
             ),
       token: map['Token'] == null ? [] : List<String>.from(map['Token']),
     );
