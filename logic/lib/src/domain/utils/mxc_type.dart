@@ -2,14 +2,24 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:web3dart/crypto.dart';
+import 'package:convert/convert.dart' show hex;
+import 'package:eth_sig_util/util/utils.dart' as utils;
 
 class MXCType {
   static Uint8List hexToUint8List(String value) {
     return hexToBytes(value);
   }
 
-  static String uint8ListToString(Uint8List value) {
-    return bytesToHex(value);
+  static String uint8ListToString(
+    Uint8List value, {
+    bool include0x = false,
+    int? forcePadLength,
+    bool padToEvenLength = false,
+  }) {
+    return bytesToHex(value,
+        include0x: include0x,
+        forcePadLength: forcePadLength,
+        padToEvenLength: padToEvenLength);
   }
 
   static BigInt stringToBigInt(String value) {
@@ -23,6 +33,12 @@ class MXCType {
   static Uint8List stringToUint8List(String value) {
     List<int> utf8Bytes = value.codeUnits;
     return Uint8List.fromList(utf8Bytes);
+  }
+
+  static Uint8List hexStringToUint8List(String value) {
+    return Uint8List.fromList(
+      hex.decode(utils.padToEven(utils.stripHexPrefix(value))),
+    );
   }
 
   static int timeOfDayInMinutes(TimeOfDay time) {
