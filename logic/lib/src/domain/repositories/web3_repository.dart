@@ -49,7 +49,8 @@ class Web3Repository {
 
   ChainsRepository get chainsRepository => ChainsRepository(_web3client);
 
-  MinerRepository get minerRepository => MinerRepository(_web3client, epochRepository);
+  MinerRepository get minerRepository =>
+      MinerRepository(_web3client, epochRepository, tokenContract);
 
   EpochRepository get epochRepository => EpochRepository(_web3client);
 }

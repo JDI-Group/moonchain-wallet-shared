@@ -35,12 +35,6 @@ class MXCType {
     return Uint8List.fromList(utf8Bytes);
   }
 
-  static Uint8List hexStringToUint8List(String value) {
-    return Uint8List.fromList(
-      hex.decode(utils.padToEven(utils.stripHexPrefix(value))),
-    );
-  }
-
   static int timeOfDayInMinutes(TimeOfDay time) {
     return time.hour * 60 + time.minute;
   }
