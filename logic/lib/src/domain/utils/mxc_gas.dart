@@ -73,6 +73,13 @@ class MXCGas {
     return newValue;
   }
 
+  /// This functions adds to the fee by multiplying the gas price by the Config.extraGasPercentage.
+  static EtherAmount addExtraFeeEtherAmount(EtherAmount value) {
+    final newValue =
+        MxcAmount.etherAmountToDoubleByWei(value) * Config.extraGasPercentage;
+    return MxcAmount.etherAmountFromDoubleByWei(newValue);
+  }
+
   /// This function will get current transaction max fee per gas & max priority fee per gas and will add extraGasPercentage to these properties.
   static TransactionPriorityFeeEstimation addExtraFeeToPriorityFees({
     required double feePerGas,
@@ -80,6 +87,23 @@ class MXCGas {
   }) {
     double maxFeePerGas = MXCGas.addExtraFee(
       feePerGas,
+    );
+
+    double maxPriorityFeePerGas = MXCGas.addExtraFee(
+      priorityFeePerGas,
+    );
+    return TransactionPriorityFeeEstimation(
+        maxFeePerGas: maxFeePerGas, maxPriorityFeePerGas: maxPriorityFeePerGas);
+  }
+
+  /// This function will get current transaction max fee per gas & max priority fee per gas and will add extraGasPercentage to these properties.
+  static TransactionPriorityFeeEstimation
+      addExtraFeeToPriorityFeesByEtherAmount({
+    required EtherAmount feePerGas,
+    required double priorityFeePerGas,
+  }) {
+    double maxFeePerGas = MXCGas.addExtraFee(
+      feePerGas.getInWei.toDouble(),
     );
 
     double maxPriorityFeePerGas = MXCGas.addExtraFee(
