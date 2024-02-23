@@ -64,6 +64,7 @@ class Config {
   static const dappSectionFeeDivision = 1.5;
   // Used for cancel & speed up
   static double extraGasPercentage = 1.1;
+  static double minerClaimTransactionGasMultiply = 1.3;
 
   static const String erc20TransferMethodId = 'a9059cbb';
 
@@ -150,7 +151,7 @@ class Config {
 
   static const int h3Resolution = 7;
 
-  static const Duration httpClientTimeOut = Duration(seconds: 5);
+  static const Duration httpClientTimeOut = Duration(seconds: 15);
 
   /// If error happens with these messages then we will need to show receive bottom sheet
   static List<String> fundErrors = [
