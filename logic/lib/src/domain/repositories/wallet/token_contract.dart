@@ -537,6 +537,13 @@ class TokenContractRepository {
     return await _web3Client.getTransactionReceipt(hash);
   }
 
+  ContractFunction getContractFunction(
+      DeployedContract contract, int functionIndex, String signature) {
+    final selectedFunction = contract.abi.functions[0];
+    assert(checkSignature(selectedFunction, signature));
+    return selectedFunction;
+  }
+
   Future<void> dispose() async {
     await _web3Client.dispose();
   }
