@@ -34,6 +34,14 @@ class MxcAmount extends EtherAmount {
     return double.parse(value) / BigInt.from(10).pow(18).toDouble();
   }
 
+  static double etherAmountToDoubleByWei(EtherAmount value) {
+    return value.getInWei.toDouble();
+  }
+
+  static EtherAmount etherAmountFromDoubleByWei(double value) {
+    return EtherAmount.inWei(BigInt.from(value));
+  }
+
   static double convertWithTokenDecimal(double input, int tokenDecimal) {
     if (input < pow(10, tokenDecimal)) {
       return 0.0;
