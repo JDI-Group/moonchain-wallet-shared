@@ -61,25 +61,60 @@ class MinerRepository {
       }
 
       final verifyMerkleProofRequest = VerifyMerkleProofRequest(
-        encodeFunctionData: MXCType.uint8ListToString(data,
-            include0x: true, padToEvenLength: true),
+        encodeFunctionData: MXCType.uint8ListToString(
+          data,
+          include0x: true,
+        ),
         spender: miner.erc6551Addr!,
         to: miner.erc6551Addr!,
       );
 
       final verifierSignatureResp =
           await verifyMerkleProof(verifyMerkleProofRequest);
+      final merkleProofData = MXCType.hexToUint8List(
+        verifierSignatureResp.claimEncodeFunctionData,
+      );
 
-      // final tx = await erc6551AccountImpl.executeCall(
-      //   mep2542Address,
-      //   BigInt.zero,
-      //   MXCType.hexToUint8List(
-      //     verifierSignatureResp.claimEncodeFunctionData,
-      //   ),
-      //   credentials: cred,
-      // );
+      final params = [
+        mep2542Address,
+        BigInt.zero,
+        merkleProofData,
+      ];
+      final function = _tokenContractRepository.getContractFunction(
+        erc6551AccountImpl.self,
+        0,
+        '9e5d4c49',
+      );
+
+      final gasEstimation =
+          await _tokenContractRepository.estimateGasFeeForContractCall(
+        from: cred.address.hex,
+        to: miner.erc6551Addr!,
+        data: function.encodeCall(params),
+      );
+      final maxFeePerGas =
+          MXCGas.addExtraFeeEtherAmount(gasEstimation.gasPrice);
+      final maxGasDouble = gasEstimation.gas.toDouble() *
+          Config.minerClaimTransactionGasMultiply;
+      final maxGas = maxGasDouble.toInt();
+
+      final transaction = Transaction.callContract(
+        contract: erc6551AccountImpl.self,
+        function: function,
+        parameters: params,
+        maxFeePerGas: maxFeePerGas,
+        maxGas: maxGas,
+        maxPriorityFeePerGas: Config.maxPriorityFeePerGas,
+      );
+
+      final tx = await _web3Client.sendTransaction(
+        cred,
+        transaction,
+        chainId: _web3Client.network!.chainId,
+      );
+
       ableToClaim = true;
-      // print('claimMinersReward : $tx');
+      print('claimMinersReward : $tx');
     }
 
     return ableToClaim;
@@ -97,6 +132,10 @@ class MinerRepository {
       headers: headers,
       body: verifyMerkleProofRequest.toMap(),
     );
+
+    if (response.statusCode != 200) {
+      throw 'Error while trying to verify Merkle proof';
+    }
 
     final verifyMerkleProofResponse =
         VerifyMerkleProofResponse.fromJson(response.body);
