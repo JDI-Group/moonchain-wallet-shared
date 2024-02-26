@@ -1,5 +1,6 @@
 export 'urls.dart';
 export 'config.dart';
+export 'js_channel/js_channel.dart';
 
 class Const {
   static const String hashToTest =
