@@ -24,3 +24,4 @@ export 'wifi_hooks/wifi_hooks.dart';
 export 'miner_claim_transaction/miner_claim_transaction.dart';
 export 'miner_claim_epoch_models/miner_claim_epoch_models.dart';
 export 'gas_estimation_models/gas_estimation_models.dart';
+export 'dapp_interaction/dapp_interaction.dart';
