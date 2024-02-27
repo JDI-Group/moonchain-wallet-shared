@@ -1,3 +1,5 @@
+import 'package:mxc_logic/mxc_logic.dart';
+
 class JSChannelScripts {
   static String axsWalletObjectInjectScript(
     String axsWalletJSObjectName,
@@ -26,7 +28,7 @@ class JSChannelScripts {
               }
             }''';
   static const String clipboardHandlerScript =
-      'javascript:navigator.clipboard.writeText = (msg) => { return window.flutter_inappwebview?.callHandler("axs-wallet-copy-clipboard", msg); }';
+      'javascript:navigator.clipboard.writeText = (msg) => { return window.flutter_inappwebview?.callHandler("${JSChannelEvents.axsWalletCopyClipboard}", msg); }';
 
   static const String overScrollScript = '''
       var pStart = { x: 0, y: 0 };
@@ -60,9 +62,9 @@ class JSChannelScripts {
         var changeY = pStart.y - pStop.y;
         var changeX = pStart.x - pStop.x;
         if (isPullDown(changeY, changeX)) {
-          window.flutter_inappwebview?.callHandler("axs-scroll-detector", true);
+          window.flutter_inappwebview?.callHandler("${JSChannelEvents.axsWalletScrollDetector}", true);
         } else if (isPullUp(changeY, changeX)) {
-          window.flutter_inappwebview?.callHandler("axs-scroll-detector", false);
+          window.flutter_inappwebview?.callHandler("${JSChannelEvents.axsWalletScrollDetector}", false);
         }
       }
 
