@@ -1,8 +1,6 @@
 import 'dart:convert';
+import 'dapp_interaction.dart';
 
-import 'package:mxc_logic/src/domain/entities/dapp_interaction/cron_service_data_model.dart';
-
-import 'axs_cron_data_model.dart';
 
 class ChangeCronTransitionRequestModel<T> extends CronServiceDataModel<T> {
   ChangeCronTransitionRequestModel({

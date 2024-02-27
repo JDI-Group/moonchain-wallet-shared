@@ -1,10 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/widgets.dart';
-import 'package:mxc_logic/src/domain/entities/dapp_interaction/cron_service_data_model.dart';
+import 'dapp_interaction.dart';
 
-import 'axs_cron_data_model.dart';
-import 'axs_js_channel_response_status.dart';
 
 class AXSJSChannelResponseModel<T> {
   factory AXSJSChannelResponseModel.fromJson(
