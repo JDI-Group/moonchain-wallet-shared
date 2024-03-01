@@ -34,8 +34,4 @@ class MXCType {
     List<int> utf8Bytes = value.codeUnits;
     return Uint8List.fromList(utf8Bytes);
   }
-
-  static int timeOfDayInMinutes(TimeOfDay time) {
-    return time.hour * 60 + time.minute;
-  }
 }
