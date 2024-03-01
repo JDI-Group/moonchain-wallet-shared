@@ -144,8 +144,13 @@ class Config {
   static double dAppDoubleTapLowerBound = 0;
   static double dAppDoubleTapUpperBound = 200;
 
+  /// The frequency in which background process will be 
+  /// executed, NOTE : It's in minutes.
+  static const axsBackgroundServiceInterval = 15;
+
   static const String axsPeriodicalTask = 'com.mxc.axswallet.periodicalTasks';
   static const String dappHookTasks = 'com.mxc.axswallet.dappHooksTasks';
+  static const String minerAutoClaimTask = 'com.mxc.axswallet.minerAutoClaimTask';
   // Miner dApp transactions gas limit
   static const double minerDAppGasLimit = 750000;
 
