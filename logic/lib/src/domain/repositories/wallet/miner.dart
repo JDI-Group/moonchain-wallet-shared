@@ -22,10 +22,11 @@ class MinerRepository {
   final EpochRepository _epochRepository;
   final TokenContractRepository _tokenContractRepository;
 
-  Future<bool> claimMinersReward({
-    required List<String> selectedMinerListId,
-    required Account account,
-  }) async {
+  Future<bool> claimMinersReward(
+      {required List<String> selectedMinerListId,
+      required Account account,
+      required void Function(String title, String? text)
+          showNotification}) async {
     bool ableToClaim = false;
 
     final minerList = await getAddressMiners(account.address);
@@ -46,75 +47,94 @@ class MinerRepository {
     final cred = EthPrivateKey.fromHex(account.privateKey);
 
     for (Mep1004TokenDetail miner in minersList) {
-      final erc6551AccountImpl = contracts.Erc6551AccountImpl(
-        client: _web3Client,
-        address: EthereumAddress.fromHex(miner.erc6551Addr!),
-      );
+      try {
+        showNotification(
+          'Mining tokens from Miner #${miner.mep1004TokenId}. ⛏️',
+          null,
+        );
+        final erc6551AccountImpl = contracts.Erc6551AccountImpl(
+          client: _web3Client,
+          address: EthereumAddress.fromHex(miner.erc6551Addr!),
+        );
 
-      await ensureERC6551RegistryAccount(miner, account);
+        await ensureERC6551RegistryAccount(miner, account);
 
-      final data = await encodeFunctionByClaimRewards(miner);
+        final data = await encodeFunctionByClaimRewards(miner);
 
-      if (data == null) {
-        // nothing to claim
-        continue;
+        if (data == null) {
+          // nothing to claim
+          showNotification(
+            'Miner #${miner.mep1004TokenId}: No tokens to claim. ℹ️',
+            null,
+          );
+          continue;
+        }
+
+        final verifyMerkleProofRequest = VerifyMerkleProofRequest(
+          encodeFunctionData: MXCType.uint8ListToString(
+            data,
+            include0x: true,
+          ),
+          spender: miner.erc6551Addr!,
+          to: miner.erc6551Addr!,
+        );
+
+        final verifierSignatureResp =
+            await verifyMerkleProof(verifyMerkleProofRequest);
+        final merkleProofData = MXCType.hexToUint8List(
+          verifierSignatureResp.claimEncodeFunctionData,
+        );
+
+        final params = [
+          mep2542Address,
+          BigInt.zero,
+          merkleProofData,
+        ];
+        final function = _tokenContractRepository.getContractFunction(
+          erc6551AccountImpl.self,
+          0,
+          '9e5d4c49',
+        );
+
+        final gasEstimation =
+            await _tokenContractRepository.estimateGasFeeForContractCall(
+          from: cred.address.hex,
+          to: miner.erc6551Addr!,
+          data: function.encodeCall(params),
+        );
+        final maxFeePerGas =
+            MXCGas.addExtraFeeEtherAmount(gasEstimation.gasPrice);
+        final maxGasDouble = gasEstimation.gas.toDouble() *
+            Config.minerClaimTransactionGasMultiply;
+        final maxGas = maxGasDouble.toInt();
+
+        final transaction = Transaction.callContract(
+          contract: erc6551AccountImpl.self,
+          function: function,
+          parameters: params,
+          maxFeePerGas: maxFeePerGas,
+          maxGas: maxGas,
+          maxPriorityFeePerGas: Config.maxPriorityFeePerGas,
+        );
+
+        final tx = await _web3Client.sendTransaction(
+          cred,
+          transaction,
+          chainId: _web3Client.network!.chainId,
+        );
+
+        ableToClaim = true;
+        print('claimMinersReward : $tx');
+        showNotification(
+          'Miner #${miner.mep1004TokenId}: Tokens mined successfully. ✅',
+          null,
+        );
+      } catch (e) {
+        showNotification(
+          'Miner #${miner.mep1004TokenId}: Token mine failed. ❌',
+          e.toString(),
+        );
       }
-
-      final verifyMerkleProofRequest = VerifyMerkleProofRequest(
-        encodeFunctionData: MXCType.uint8ListToString(
-          data,
-          include0x: true,
-        ),
-        spender: miner.erc6551Addr!,
-        to: miner.erc6551Addr!,
-      );
-
-      final verifierSignatureResp =
-          await verifyMerkleProof(verifyMerkleProofRequest);
-      final merkleProofData = MXCType.hexToUint8List(
-        verifierSignatureResp.claimEncodeFunctionData,
-      );
-
-      final params = [
-        mep2542Address,
-        BigInt.zero,
-        merkleProofData,
-      ];
-      final function = _tokenContractRepository.getContractFunction(
-        erc6551AccountImpl.self,
-        0,
-        '9e5d4c49',
-      );
-
-      final gasEstimation =
-          await _tokenContractRepository.estimateGasFeeForContractCall(
-        from: cred.address.hex,
-        to: miner.erc6551Addr!,
-        data: function.encodeCall(params),
-      );
-      final maxFeePerGas =
-          MXCGas.addExtraFeeEtherAmount(gasEstimation.gasPrice);
-      final maxGasDouble = gasEstimation.gas.toDouble() *
-          Config.minerClaimTransactionGasMultiply;
-      final maxGas = maxGasDouble.toInt();
-
-      final transaction = Transaction.callContract(
-        contract: erc6551AccountImpl.self,
-        function: function,
-        parameters: params,
-        maxFeePerGas: maxFeePerGas,
-        maxGas: maxGas,
-        maxPriorityFeePerGas: Config.maxPriorityFeePerGas,
-      );
-
-      final tx = await _web3Client.sendTransaction(
-        cred,
-        transaction,
-        chainId: _web3Client.network!.chainId,
-      );
-
-      ableToClaim = true;
-      print('claimMinersReward : $tx');
     }
 
     return ableToClaim;
