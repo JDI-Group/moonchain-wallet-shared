@@ -10,7 +10,9 @@ class JSChannelScripts {
     String eventName,
     Map<String, dynamic> data,
   ) =>
-      'window.$axsWalletJSObjectName.callsHandler($eventName, $data)';
+      'window.$axsWalletJSObjectName.callHandler(\'$eventName\', $data)';
+
+  
 
   static String walletProviderInfoScript(
     int chainId,
