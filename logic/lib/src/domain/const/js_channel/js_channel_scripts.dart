@@ -5,16 +5,20 @@ class JSChannelScripts {
     String axsWalletJSObjectName,
   ) =>
       'window.$axsWalletJSObjectName = { callHandler: window.flutter_inappwebview.callHandler }';
+  static String axsWalletReadyInjectScript(
+    String axsReadyEvent,
+  ) =>
+      '''
+        const event = new CustomEvent('$axsReadyEvent', {});
+        window.dispatchEvent(event);
+      ''';
+
   static String axsWalletJSHandler(
     String axsWalletJSObjectName,
     String eventName,
     Map<String, dynamic> data,
   ) =>
-      '''
-        const event = new CustomEvent("$axsWalletJSObjectName", {
-        });
-        window.dispatchEvent(event);
-      ''';
+      'window.$axsWalletJSObjectName.callHandler(\'$eventName\', $data)';
 
   static String walletProviderInfoScript(
     int chainId,
