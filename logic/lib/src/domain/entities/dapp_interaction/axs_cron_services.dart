@@ -15,9 +15,10 @@ extension AXSCronServicesExtension on AXSCronServices {
   }
 
   static AXSCronServices getCronServiceFromJson<T>(
-      Map<String, dynamic> source) {
-    final cronName = source['name'];
-    if (cronName) throw 'Cron service name is empty';
+    Map<String, dynamic> source,
+  ) {
+    final cronName = source['cron']['name'];
+    if (cronName == null) throw 'Cron service name is empty';
     final axsCronService = AXSCronServicesExtension.fromString(cronName);
     return axsCronService;
   }
