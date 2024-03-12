@@ -29,6 +29,7 @@ class MinerRepository {
           showNotification}) async {
     bool ableToClaim = false;
 
+    // handle no mienrs
     final minerList = await getAddressMiners(account.address);
 
     if (minerList.mep1004TokenDetails!.isEmpty) {
@@ -39,6 +40,8 @@ class MinerRepository {
 
     List<Mep1004TokenDetail> minersList = minerList.mep1004TokenDetails ?? [];
 
+    final selectedMiners = getSelectedMiners(minersList, selectedMinerListId);
+
     final mep2542Address = Config.getContractAddress(
       MXCContacts.mep2542,
       _web3Client.network!.chainId,
@@ -46,7 +49,7 @@ class MinerRepository {
 
     final cred = EthPrivateKey.fromHex(account.privateKey);
 
-    for (Mep1004TokenDetail miner in minersList) {
+    for (Mep1004TokenDetail miner in selectedMiners) {
       try {
         showNotification(
           'Mining tokens from Miner #${miner.mep1004TokenId}. ⛏️',
@@ -323,4 +326,10 @@ class MinerRepository {
   Future<void> dispose() async {
     await _web3Client.dispose();
   }
+
+  List<Mep1004TokenDetail> getSelectedMiners(
+          List<Mep1004TokenDetail> minersList, List<String> selectedMiners) =>
+      minersList
+          .where((element) => selectedMiners.contains(element.mep1004TokenId))
+          .toList();
 }
