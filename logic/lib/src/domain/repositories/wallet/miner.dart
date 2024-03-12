@@ -33,7 +33,11 @@ class MinerRepository {
     final minerList = await getAddressMiners(account.address);
 
     if (minerList.mep1004TokenDetails!.isEmpty) {
-      throw 'Looks like this wallet doesn\'t own any miners.';
+      showNotification(
+        'Looks like this wallet doesn\'t own any miners. ℹ️',
+        null,
+      );
+      return false;
     }
 
     // TODO: get selected miner or all out of that list
@@ -48,6 +52,14 @@ class MinerRepository {
     );
 
     final cred = EthPrivateKey.fromHex(account.privateKey);
+
+    if (selectedMiners.isEmpty) {
+      showNotification(
+        'Looks like you haven\'t selected any miners. ℹ️',
+        'Please head over to miner DApp for selecting miners.',
+      );
+      return false;
+    }
 
     for (Mep1004TokenDetail miner in selectedMiners) {
       try {
