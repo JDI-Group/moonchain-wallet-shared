@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:collection/collection.dart';
 import 'package:flutter/widgets.dart';
+import 'package:intl/intl.dart';
 import 'package:mxc_logic/mxc_logic.dart';
 
 class MiningCronServiceDataModel {
@@ -17,10 +18,10 @@ class MiningCronServiceDataModel {
 
   factory MiningCronServiceDataModel.fromMap(Map<String, dynamic> map) {
     return MiningCronServiceDataModel(
-      minersList: List<String>.from(map['minersList']),
-      time: map['time'] != null
-          ? DateTime.fromMillisecondsSinceEpoch(map['time'])
+      minersList: map['minersList'] != null
+          ? List<String>.from(map['minersList'])
           : null,
+      time: map['time'] != null ? DateFormat('HH:mm').parse(map['time']) : null,
     );
   }
   MiningCronServiceDataModel({
@@ -39,10 +40,15 @@ class MiningCronServiceDataModel {
     );
   }
 
+  Map<String, dynamic> toMapWrapper(
+      MiningCronServiceDataModel? miningCronServiceDataModel) {
+    return miningCronServiceDataModel!.toMap();
+  }
+
   Map<String, dynamic> toMap() {
     return {
       'minersList': minersList,
-      'time': time?.millisecondsSinceEpoch,
+      'time': DateFormat('HH:mm').format(time!),
     };
   }
 
