@@ -29,19 +29,28 @@ class MXCSwitchRowItem extends StatelessWidget {
       padding: paddings ?? EdgeInsets.zero,
       child: Row(
         children: [
-          Text(
-            title,
-            style: FontTheme.of(context).body2.primary().copyWith(
-                fontSize: titleStyle?.fontSize,
-                fontWeight: titleStyle?.fontWeight),
-          ),
-          if (textTrailingWidget != null) ...[
-            const SizedBox(
-              width: Sizes.spaceXSmall,
-            ),
-            textTrailingWidget!
-          ],
-          const Spacer(),
+          Expanded(
+              child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Flexible(
+                child: Text(
+                  title,
+                  style: FontTheme.of(context).body2.primary().copyWith(
+                      fontSize: titleStyle?.fontSize,
+                      fontWeight: titleStyle?.fontWeight),
+                  softWrap: false,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              if (textTrailingWidget != null) ...[
+                const SizedBox(
+                  width: Sizes.spaceXSmall,
+                ),
+                textTrailingWidget!
+              ],
+            ],
+          )),
           const SizedBox(
             width: Sizes.spaceXSmall,
           ),
