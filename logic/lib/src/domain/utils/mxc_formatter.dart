@@ -58,13 +58,13 @@ class MXCFormatter {
   static String formatNumberForUI(
     String input,
   ) {
-    String fractionalPart = "";
+    String fractionalPart = '';
     String integerPart = input;
     if (input.contains('.')) {
       final spitedString = input.split('.');
       integerPart = spitedString[0];
       fractionalPart =
-          ".${spitedString[1].substring(0, spitedString[1].length > Config.decimalShowFixed ? Config.decimalShowFixed : spitedString[1].length)}";
+          '.${spitedString[1].substring(0, spitedString[1].length > Config.decimalShowFixed ? Config.decimalShowFixed : spitedString[1].length)}';
     }
     integerPart = intThousandsSeparator(integerPart);
     return '$integerPart$fractionalPart';

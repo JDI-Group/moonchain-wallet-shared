@@ -74,7 +74,7 @@ class Urls {
 
   static const String axsTermsConditions =
       'https://doc.mxc.com/docs/Resources/tns';
-  static const String axsPrivacy = 'https://doc.mxc.com/docs/Resources/Privacy';
+  static const String axsPrivacy = 'assets/pdf/privacy.pdf';
 
   static const String gateio = 'https://gate.io/';
   static const String okx = 'https://www.okx.com/';
