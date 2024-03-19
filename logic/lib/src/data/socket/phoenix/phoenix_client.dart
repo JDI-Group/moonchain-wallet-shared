@@ -44,6 +44,14 @@ class PhoenixClient implements IMXCSocketClient {
   }
 
   @override
+  Stream<PhoenixSocketCloseEvent>? getCloseStream() {
+    if (_socketInstance != null && isConnected()) {
+      return _socketInstance!.closeStream;
+    }
+    return null;
+  }
+
+  @override
   Future<Stream<Message>?> subscribeToEvent(
     String event,
   ) async {
@@ -53,7 +61,9 @@ class PhoenixClient implements IMXCSocketClient {
 
     if (!isConnected()) {
       throw PhoenixSocketNotConnected(
-          Uri.parse(_socketInstance!.endpoint), 'subscribeToEvent');
+        Uri.parse(_socketInstance!.endpoint),
+        'subscribeToEvent',
+      );
     }
 
     final doesChannelExists = _socketInstance!.channels.values

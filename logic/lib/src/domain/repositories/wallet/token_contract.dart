@@ -146,6 +146,10 @@ class TokenContractRepository {
     return _web3Client.getTransactionByHash(hash);
   }
 
+  Stream<dynamic>? getCloseStream() {
+    return _mxcSocketClient.getCloseStream();
+  }
+
   Future<bool> checkConnectionToNetwork() async {
     final isConnected = await _web3Client.isListeningForNetwork();
     return isConnected;

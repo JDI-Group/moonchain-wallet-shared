@@ -10,6 +10,8 @@ abstract class IMXCSocketClient {
     String event,
   );
   String get endpoint;
+
+  Stream<dynamic>? getCloseStream();
 }
 
 class MXCSocketClient {
@@ -29,6 +31,10 @@ class MXCSocketClient {
 
   bool isConnected() {
     return _socketClient!.isConnected();
+  }
+
+  Stream<dynamic>? getCloseStream() {
+    return _socketClient!.getCloseStream();
   }
 
   Future<bool> connect(String web3WebSocketUrl) async {
