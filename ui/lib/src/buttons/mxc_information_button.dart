@@ -4,10 +4,12 @@ import 'package:super_tooltip/super_tooltip.dart';
 
 class MXCInformationButton extends StatelessWidget {
   final List<InlineSpan> texts;
-  MXCInformationButton({
-    Key? key,
-    required this.texts,
-  }) : super(key: key);
+  final TooltipDirection popupDirection;
+  MXCInformationButton(
+      {Key? key,
+      required this.texts,
+      this.popupDirection = TooltipDirection.up})
+      : super(key: key);
 
   final controller = SuperTooltipController();
 
@@ -23,7 +25,7 @@ class MXCInformationButton extends StatelessWidget {
             children: texts),
       ),
       hideTooltipOnTap: true,
-      popupDirection: TooltipDirection.up,
+      popupDirection: popupDirection,
       showBarrier: true,
       showDropBoxFilter: true,
       sigmaX: 5,
