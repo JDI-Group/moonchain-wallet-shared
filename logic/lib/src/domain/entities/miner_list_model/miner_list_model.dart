@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 
+export 'mep1004_token_detail.dart';
 import 'mep1004_token_detail.dart';
 
 class MinerListModel extends Equatable {

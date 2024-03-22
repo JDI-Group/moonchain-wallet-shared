@@ -25,3 +25,6 @@ export 'miner_claim_transaction/miner_claim_transaction.dart';
 export 'miner_claim_epoch_models/miner_claim_epoch_models.dart';
 export 'gas_estimation_models/gas_estimation_models.dart';
 export 'dapp_interaction/dapp_interaction.dart';
+export 'miner_get_claim_rewards/miner_get_claimed_rewards.dart';
+export 'miner_list_model/miner_list_model.dart';
+export 'miner_get_total_claim/miner_get_total_claim.dart';
