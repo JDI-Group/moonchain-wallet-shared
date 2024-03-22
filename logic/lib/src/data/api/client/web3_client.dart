@@ -1,3 +1,4 @@
+import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:http/http.dart';
 import 'package:http_interceptor/http_interceptor.dart';
 import 'package:meta/meta.dart';
@@ -58,4 +59,31 @@ class DatadashClient extends Web3Client {
           LoggingInterceptor(),
         ],
       );
+
+  GraphQLClient? _graphQLClient;
+
+  GraphQLClient get graphQLClient {
+    final chainId = _getNetwork().chainId;
+
+    if (!Config.isMxcChains(chainId)) {
+      throw 'Accessing graphQL for chains other than MXC chains';
+    }
+    final mepUrl = Urls.getMepGraphQlLink(chainId);
+
+    late GraphQLClient finalGraphqlClient;
+
+    if (_graphQLClient == null ||
+        ((_graphQLClient!.link as HttpLink).uri.toString() == mepUrl)) {
+      finalGraphqlClient = GraphQLClient(
+        link: HttpLink(
+          Urls.getMepGraphQlLink(_getNetwork().chainId),
+        ),
+        cache: GraphQLCache(),
+      );
+    } else {
+      finalGraphqlClient = _graphQLClient!;
+    }
+
+    return finalGraphqlClient;
+  }
 }
