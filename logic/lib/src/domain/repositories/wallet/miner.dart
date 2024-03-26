@@ -396,11 +396,11 @@ class MinerRepository {
               int.parse(r.blockTimestamp) > start &&
               int.parse(r.blockTimestamp) < ended)
           .toList();
-      final String fee = plus([
+      final String fee = MXCArray.sumUpListItemsValueBigInt([
         ...rewardsByDay.map((r) => r.feeMXC),
         stats.isNotEmpty ? stats[stats.length - 1].fee : ''
       ]);
-      final String mxc = plus([
+      final String mxc = MXCArray.sumUpListItemsValueBigInt([
         ...rewardsByDay.map((r) => r.valueMXC),
         stats.isNotEmpty ? stats[stats.length - 1].mxc : ''
       ]);
@@ -438,17 +438,19 @@ class MinerRepository {
             .map((e) => ClaimReward.fromMap(e as Map<String, dynamic>))
             .toList();
 
-    final mxc = plus(rewards.map((r) => r.valueMXC).toList());
-    final fee = plus(rewards.map((r) => r.feeMXC).toList());
+    final mxc = MXCArray.sumUpListItemsValueBigInt(
+        rewards.map((r) => r.valueMXC).toList());
+    final fee = MXCArray.sumUpListItemsValueBigInt(
+        rewards.map((r) => r.feeMXC).toList());
 
     return GetTotalClaimResponse(totalMXC: mxc, totalFee: fee);
   }
 
-  void getExpirationDateForEpoch() async {
+  void getExpirationDurationForEpoch() async {
     final chainId = _web3Client.network!.chainId;
     final mep2542Address = Config.getContractAddress(
       MXCContacts.mep2542,
-      _web3Client.network!.chainId,
+      chainId,
     );
 
     final mep2542 = contracts.MEP2542(
@@ -470,21 +472,4 @@ class MinerRepository {
       // return nextEpochDuration;
     }
   }
-}
-
-String plus(List<dynamic> array) {
-  BigInt total = BigInt.from(0);
-  for (var element in array) {
-    if (element != null) {
-      if (element is String && element.isNotEmpty) {
-        if (element.contains('.')) {
-          element = element.split('.')[0];
-        }
-        total += BigInt.parse(element);
-      } else if (element is num) {
-        total += BigInt.from(element);
-      }
-    }
-  }
-  return total.toString();
 }
