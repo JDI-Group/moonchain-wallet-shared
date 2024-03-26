@@ -18,3 +18,17 @@ class MXCTime {
     return time.hour * 60 + time.minute;
   }
 }
+
+extension DateTimeExtension on DateTime {
+  int unix() {
+    return millisecondsSinceEpoch ~/ 1000;
+  }
+
+  static DateTime fromUnix(int unixTimestamp) {
+    return DateTime.fromMillisecondsSinceEpoch(unixTimestamp * 1000);
+  }
+
+  static DateTime fromUnixBigInt(BigInt unixTimestamp) {
+    return fromUnix(unixTimestamp.toInt());
+  }
+}
