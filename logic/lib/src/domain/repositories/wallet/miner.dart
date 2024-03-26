@@ -2,12 +2,12 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:eth_sig_util/util/utils.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:mxc_logic/src/data/api/client/rest_client.dart';
 import 'package:mxc_logic/mxc_logic.dart';
 import 'package:mxc_logic/src/data/api/client/web3_client.dart';
 import 'package:ens_dart/ens_dart.dart' as contracts;
-import 'package:mxc_logic/src/domain/entities/miner_list_model/mep1004_token_detail.dart';
-import 'package:mxc_logic/src/domain/entities/miner_list_model/miner_list_model.dart';
+
 import 'package:mxc_logic/src/domain/repositories/wallet/epoch.dart';
 import 'package:mxc_logic/src/domain/repositories/wallet/token_contract.dart';
 import 'package:web3dart/web3dart.dart';
@@ -332,8 +332,159 @@ class MinerRepository {
   }
 
   List<Mep1004TokenDetail> getSelectedMiners(
-          List<Mep1004TokenDetail> minersList, List<String> selectedMiners) =>
+    List<Mep1004TokenDetail> minersList,
+    List<String> selectedMiners,
+  ) =>
       minersList
           .where((element) => selectedMiners.contains(element.mep1004TokenId))
           .toList();
+
+  Future<List<ClaimEarn>> helperGetClaimRewards(
+    GetClaimRewardsQuery query,
+  ) async {
+    final QueryOptions options = QueryOptions(
+      document: gql(
+        queryClaimedRewards(
+          query.type,
+          query.miners?.map((v) => v.mep1004TokenId!).toList() ?? [],
+        ),
+      ),
+    );
+    final QueryResult result = await _web3Client.graphQLClient.query(options);
+
+    if (result.data == null) {
+      return [];
+    }
+
+    final List<ClaimReward> rewards =
+        (result.data?['claimedRewards'] as List<dynamic>)
+            .map((v) => ClaimReward.fromMap(v))
+            .toList();
+    rewards.sort(
+      (a, b) => int.parse(a.blockTimestamp) - int.parse(b.blockTimestamp),
+    );
+
+    if (rewards.isEmpty) {
+      return [];
+    }
+
+    final fast = DateTime.fromMillisecondsSinceEpoch(
+      int.parse(rewards[0].blockTimestamp) * 1000,
+    );
+    // final dayjs.DayJs fast = dayjs.unix(int.parse(rewards[0].blockTimestamp));
+
+    final last = DateTime.now();
+    // final dayjs.DayJs last = dayjs();
+
+    final int days =
+        ((last.millisecondsSinceEpoch - fast.millisecondsSinceEpoch) / 86400000)
+            .ceil();
+
+    final List<ClaimEarn> stats = [];
+
+    for (int day = 0; day < days; day++) {
+      final times = fast.add(Duration(days: fast.day + day));
+
+      final int start = times.copyWith(day: 0, minute: 0, second: 0).unix();
+      // final int start = times.hour(0).minute(0).second(0).unix();
+
+      final int ended = times.copyWith(day: 23, minute: 59, second: 59).unix();
+      // final int ended = times.hour(23).minute(59).second(59).unix();
+
+      final List<ClaimReward> rewardsByDay = rewards
+          .where((r) =>
+              int.parse(r.blockTimestamp) > start &&
+              int.parse(r.blockTimestamp) < ended)
+          .toList();
+      final String fee = plus([
+        ...rewardsByDay.map((r) => r.feeMXC),
+        stats.isNotEmpty ? stats[stats.length - 1].fee : ''
+      ]);
+      final String mxc = plus([
+        ...rewardsByDay.map((r) => r.valueMXC),
+        stats.isNotEmpty ? stats[stats.length - 1].mxc : ''
+      ]);
+      final List<String> ids =
+          rewardsByDay.map((r) => r.mep1004TokenId).toList();
+      stats.add(ClaimEarn(timestamp: start, fee: fee, ids: ids, mxc: mxc));
+    }
+
+    return stats;
+  }
+
+  Future<GetTotalClaimResponse> helperGetClaimTotal(
+    GetClaimTotalQuery query,
+    String address,
+    List<String> miners,
+  ) async {
+    final queryType = query.type ?? 'total';
+
+    final QueryOptions options = QueryOptions(
+      document: gql(
+        queryClaimTotal(
+          queryType,
+          miners,
+        ),
+      ),
+    );
+    final QueryResult result = await _web3Client.graphQLClient.query(options);
+
+    if (result.data == null) {
+      return GetTotalClaimResponse(totalMXC: '0', totalFee: '0');
+    }
+
+    final List<ClaimReward> rewards =
+        (result.data![mep1004TokenRewardKeys[queryType]] as List<dynamic>)
+            .map((e) => ClaimReward.fromMap(e as Map<String, dynamic>))
+            .toList();
+
+    final mxc = plus(rewards.map((r) => r.valueMXC).toList());
+    final fee = plus(rewards.map((r) => r.feeMXC).toList());
+
+    return GetTotalClaimResponse(totalMXC: mxc, totalFee: fee);
+  }
+
+  void getExpirationDateForEpoch() async {
+    final chainId = _web3Client.network!.chainId;
+    final mep2542Address = Config.getContractAddress(
+      MXCContacts.mep2542,
+      _web3Client.network!.chainId,
+    );
+
+    final mep2542 = contracts.MEP2542(
+      client: _web3Client,
+      address: mep2542Address,
+    );
+
+    final currentEpoch = await mep2542.currentEpoch();
+    final epochReleaseTimeBigInt = await mep2542.epochReleaseTime(currentEpoch);
+    final epochReleaseTime =
+        DateTimeExtension.fromUnixBigInt(epochReleaseTimeBigInt);
+    final epochExpirationTime = epochReleaseTime.add(const Duration(hours: 4));
+    final now = DateTime.now();
+    final nextEpochDuration = epochExpirationTime.difference(now);
+    if (nextEpochDuration.isNegative) {
+      // time past
+    } else {
+      // time left
+      // return nextEpochDuration;
+    }
+  }
+}
+
+String plus(List<dynamic> array) {
+  BigInt total = BigInt.from(0);
+  for (var element in array) {
+    if (element != null) {
+      if (element is String && element.isNotEmpty) {
+        if (element.contains('.')) {
+          element = element.split('.')[0];
+        }
+        total += BigInt.parse(element);
+      } else if (element is num) {
+        total += BigInt.from(element);
+      }
+    }
+  }
+  return total.toString();
 }
