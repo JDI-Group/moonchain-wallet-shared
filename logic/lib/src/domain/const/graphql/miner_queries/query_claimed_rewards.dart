@@ -1,8 +1,8 @@
 import 'package:mxc_logic/mxc_logic.dart';
 
-String getClaimedRewardsQuery(String where) => '''
+String getClaimedRewardsQuery(String whereClause) => '''
     query get_claim_rewards {
-      claimedRewards(where: { $where }) {
+      claimedRewards(where: { $whereClause }) {
         feeMXC
         mep1004TokenId
         valueMXC
@@ -11,12 +11,14 @@ String getClaimedRewardsQuery(String where) => '''
     }
   ''';
 
-String queryClaimedRewards(String type, List<String> ids) {
+String queryClaimedRewards(String type, List<String>? ids) {
+  DateTime lastWeek = DateTime.now().subtract(const Duration(days: 7));
+
   final where = [
-    'mep1004TokenId_in: [${ids.map((id) => '"$id"').join(',')}]',
-    if (type == 'week')
-      'blockTimestamp_gte: ${DateTime.now().subtract(const Duration(days: 7)).unix()}',
+    if (ids != null) 'mep1004TokenId_in: [${ids.join(',')}]',
+    if (type == 'week') 'blockTimestamp_gte: ${lastWeek.unix()}',
   ].join(',');
 
-  return getClaimedRewardsQuery(where);
+  final res = getClaimedRewardsQuery(where);
+  return res;
 }

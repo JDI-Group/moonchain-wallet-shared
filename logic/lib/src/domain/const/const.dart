@@ -1,6 +1,7 @@
 export 'urls.dart';
 export 'config.dart';
 export 'js_channel/js_channel.dart';
+export 'graphql/graphql.dart';
 
 class Const {
   static const String hashToTest =
