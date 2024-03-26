@@ -146,4 +146,12 @@ class Urls {
 
   static String networkL3Bridge(int chainId) =>
       Config.isMXCMainnet(chainId) ? mainnetL3Bridge : testnetL3Bridge;
+
+  static String getMepGraphQlLink(int chainId) =>
+      Config.isMXCMainnet(chainId) ? mepGraphQlMainnet : mepGraphQlGNova;
+
+  static String mepGraphQlMainnet =
+      'https://mxc-graph.mxc.com/subgraphs/name/mxczkevm/mep1004-graph';
+  static String mepGraphQlGNova =
+      'https://mxc-graph-node.mxc.com/subgraphs/name/mxczkevm/mep1004-graph';
 }
