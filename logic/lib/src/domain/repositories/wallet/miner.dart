@@ -22,11 +22,15 @@ class MinerRepository {
   final EpochRepository _epochRepository;
   final TokenContractRepository _tokenContractRepository;
 
-  Future<bool> claimMinersReward(
-      {required List<String> selectedMinerListId,
-      required Account account,
-      required void Function(String title, String? text)
-          showNotification}) async {
+  Future<bool> claimMinersReward({
+    required List<String> selectedMinerListId,
+    required Account account,
+    required void Function(String title, String? text) showNotification,
+    required String Function(
+      String key,
+    )
+        translate,
+  }) async {
     bool ableToClaim = false;
 
     // handle no mienrs
@@ -34,7 +38,7 @@ class MinerRepository {
 
     if (minerList.mep1004TokenDetails!.isEmpty) {
       showNotification(
-        'Looks like this wallet doesn\'t own any miners. ℹ️',
+        translate('no_miners_owned_notification'),
         null,
       );
       return false;
@@ -56,7 +60,8 @@ class MinerRepository {
     for (Mep1004TokenDetail miner in selectedMiners) {
       try {
         showNotification(
-          'Mining tokens from Miner #${miner.mep1004TokenId}. ⛏️',
+          translate('mining_tokens_from_miner')
+              .replaceFirst('{0}', miner.mep1004TokenId!),
           null,
         );
         final erc6551AccountImpl = contracts.Erc6551AccountImpl(
@@ -71,7 +76,8 @@ class MinerRepository {
         if (data == null) {
           // nothing to claim
           showNotification(
-            'Miner #${miner.mep1004TokenId}: No tokens to claim. ℹ️',
+            translate('no_token_to_claim_miner')
+                .replaceFirst('{0}', miner.mep1004TokenId!),
             null,
           );
           continue;
@@ -87,7 +93,7 @@ class MinerRepository {
         );
 
         final verifierSignatureResp =
-            await verifyMerkleProof(verifyMerkleProofRequest);
+            await verifyMerkleProof(verifyMerkleProofRequest, translate);
         final merkleProofData = MXCType.hexToUint8List(
           verifierSignatureResp.claimEncodeFunctionData,
         );
@@ -133,12 +139,14 @@ class MinerRepository {
         ableToClaim = true;
         print('claimMinersReward : $tx');
         showNotification(
-          'Miner #${miner.mep1004TokenId}: Tokens mined successfully. ✅',
+          translate('tokens_mined_successfully_miner')
+              .replaceFirst('{0}', miner.mep1004TokenId!),
           null,
         );
       } catch (e) {
         showNotification(
-          'Miner #${miner.mep1004TokenId}: Token mine failed. ❌',
+          translate('token_mining_failed')
+              .replaceFirst('{0}', miner.mep1004TokenId!),
           e.toString(),
         );
       }
@@ -148,8 +156,11 @@ class MinerRepository {
   }
 
   Future<VerifyMerkleProofResponse> verifyMerkleProof(
-    VerifyMerkleProofRequest verifyMerkleProofRequest,
-  ) async {
+      VerifyMerkleProofRequest verifyMerkleProofRequest,
+      String Function(
+    String key,
+  )
+          translate) async {
     final chainId = _web3Client.network!.chainId;
     final uri = Uri.parse(Urls.postVerifyMerkleProof(chainId));
     final headers = {'accept': 'application/json'};
@@ -161,7 +172,7 @@ class MinerRepository {
     );
 
     if (response.statusCode != 200) {
-      throw 'Error while trying to verify Merkle proof';
+      throw translate('merkle_proof_error');
     }
 
     final verifyMerkleProofResponse =
