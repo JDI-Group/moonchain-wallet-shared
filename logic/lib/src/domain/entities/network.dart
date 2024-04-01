@@ -186,21 +186,21 @@ class Network {
   static List<Network> fixedNetworks() {
     return [
       const Network(
-        logo: 'assets/svg/networks/mxc.svg',
-        web3RpcHttpUrl: 'https://wannsee-rpc.mxc.com',
-        web3RpcWebsocketUrl: 'wss://wannsee-rpc.mxc.com',
+        logo: 'assets/svg/networks/moonchain.svg',
+        web3RpcHttpUrl: 'https://geneva-rpc.moonchain.com',
+        web3RpcWebsocketUrl: 'wss://geneva-rpc.moonchain.com/ws',
         web3WebSocketUrl:
-            'wss://wannsee-explorer-v1.mxc.com/socket/v2/websocket?vsn=2.0.0',
+            'wss://geneva-explorer-v1.moonchain.com/socket/v2/websocket?vsn=2.0.0',
         symbol: 'MXC',
-        explorerUrl: 'https://wannsee-explorer.mxc.com',
+        explorerUrl: 'https://geneva-explorer.moonchain.com',
         enabled: false,
-        label: 'MXC Wannsee Testnet',
-        chainId: 5167003,
+        label: 'Moonchain Testnet',
+        chainId: 5167004,
         isAdded: true,
         networkType: NetworkType.testnet,
       ),
       const Network(
-        logo: 'assets/svg/networks/mxc.svg',
+        logo: 'assets/svg/networks/moonchain.svg',
         web3RpcHttpUrl: 'https://rpc.mxc.com',
         web3RpcWebsocketUrl: 'wss://rpc.mxc.com',
         web3WebSocketUrl:
@@ -208,7 +208,7 @@ class Network {
         symbol: 'MXC',
         explorerUrl: 'https://explorer.mxc.com/',
         enabled: true,
-        label: 'MXC zkEVM Mainnet',
+        label: 'Moonchain Mainnet',
         chainId: 18686,
         isAdded: true,
         networkType: NetworkType.mainnet,
