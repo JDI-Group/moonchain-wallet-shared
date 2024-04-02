@@ -9,15 +9,16 @@ class Config {
   static const String appName = 'AXS';
 
   static const String testnetRouterAddress =
-      '0xCaf6FE52B3b2948EFe7EA72C1ffd0B49C5FB030E';
+      '0x96adb4c80F6c934a20303d4b88f935F967299d5e';
   static const String mainnetRouterAddress =
       '0x757e5af94fC9b3d4035C2e6Cb1fD304F43c0A1A4';
+
   static EnsAddresses testnetEnsAddresses = EnsAddresses(
-    ens: '0x4E7984fF74569a270765EE67792386cBA77D1b01',
-    ensFallbackRegistry: '0x4E7984fF74569a270765EE67792386cBA77D1b01',
-    ensResolver: '0x438b261bEb8D3C500153DD17588E6feC36535312',
-    ensReverseResolver: '0x438b261bEb8D3C500153DD17588E6feC36535312',
-    ensReverseRegistrar: '0x3453c56D41A18147dcb4a92b0B08210F90740a87',
+    ens: '0x9691E2eFb8C7f6d714A7b35da3184b8cB927a415',
+    ensFallbackRegistry: '0x9691E2eFb8C7f6d714A7b35da3184b8cB927a415',
+    ensResolver: '0xd241E9681B22Ae47e94c523d25CDdC1a4960cDC3',
+    ensReverseResolver: '0xd241E9681B22Ae47e94c523d25CDdC1a4960cDC3',
+    ensReverseRegistrar: '0xF7Bb70e1a762AB6CCb7Ca23878fA4315656c3090',
   );
 
   static EnsAddresses mainnetEnsAddresses = EnsAddresses(
@@ -84,19 +85,19 @@ class Config {
 
   // Miner related
   static const String mep2542AddressTestnet =
-      '0xc23832093cEC4306108775468FCCbcA84E19eAEa';
+      '0xf01eceed6319423bCC953889CB8F35E7084df1dF';
   static const String mep2542AddressMainnet =
       '0xBF717fCD0FD99238998d90D3fAA8C015530e85F4';
   static const String erc6551AccountImplTestnet =
-      '0x8ACf9E74D74384d1eae89A522390500B7a9b7426';
+      '0x6c2660e11F64A404FB5023abe668799DCF899d09';
   static const String erc6551AccountImplMainnet =
       '0xaafd9fF2225c8FEa0c616a219a78eD1d9B4CBeF7';
   static const String erc6551RegistryTestnet =
-      '0x71A3998cc4802743A4bBb23385786365BFe0dac1';
+      '0xEF4c00668a22a3C95f98A5D7468773f98c8C431b';
   static const String erc6551RegistryMainnet =
       '0x4c802AFb54Ef4e27429b6Ab87e6C2Da6991Fd4B9';
   static const String mep1004TokenTestnet =
-      '0x5CE293229a794AF03Ec3c95Cfba6b1058D558026';
+      '0x0D589F5EeDF70e17F053CBb93760Db7E418603F6';
   static const String mep1004TokenMainnet =
       '0x8Ff08F39B1F4Ad7dc42E6D63fd25AeE47EA801Ce';
 
