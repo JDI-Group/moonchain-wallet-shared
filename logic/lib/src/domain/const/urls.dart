@@ -35,10 +35,10 @@ class Urls {
 
   static const String mainnetApiBaseUrl = 'https://explorer-v1.mxc.com/api/v2/';
   static const String testnetApiBaseUrl =
-      'https://wannsee-explorer-v1.mxc.com/api/v2/';
+      'https://geneva-explorer-v1.moonchain.com/api/v2/';
 
   static const String chainsList =
-      'https://raw.githubusercontent.com/MXCzkEVM/chains-list/main/chains_list.json';
+      'https://raw.githubusercontent.com/MXCzkEVM/chains-list/main/chains_list_v2.json';
 
   static const String mxcMainnetNftMarketPlace = 'https://nft.mxc.com/';
   static const String mxcTestnetNftMarketPlace = 'https://wannsee-nft.mxc.com/';
@@ -87,7 +87,7 @@ class Urls {
   static String mainnetMns(String name) =>
       'https://mns.mxc.com/$name.mxc/register';
   static String testnetMns(String name) =>
-      'https://wannsee-mns.mxc.com/$name.mxc/register';
+      'https://geneva-mns.moonchain.com/$name.mxc/register';
 
   static String txExplorer(String hash) {
     return 'tx/$hash';
@@ -138,11 +138,6 @@ class Urls {
 
   static const minerDappTestnet = 'https://wannsee-mining.matchx.io/';
   static const minerDappMainnet = 'https://mining.matchx.io/';
-
-  static bool isL3Bridge(String url) {
-    return url.contains('erc20.mxc.com') ||
-        url.contains('wannsee-erc20.mxc.com');
-  }
 
   static String networkL3Bridge(int chainId) =>
       Config.isMXCMainnet(chainId) ? mainnetL3Bridge : testnetL3Bridge;
