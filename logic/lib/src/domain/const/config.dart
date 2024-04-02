@@ -55,7 +55,7 @@ class Config {
   };
 
   static const int mxcMainnetChainId = 18686;
-  static const int mxcTestnetChainId = 5167003;
+  static const int mxcTestnetChainId = 5167004;
   static const int ethereumMainnetChainId = 1;
   static const int ethDecimals = 18;
   static const String mxcSymbol = 'MXC';
@@ -67,6 +67,11 @@ class Config {
   // Used for cancel & speed up
   static double extraGasPercentage = 1.1;
   static double minerClaimTransactionGasMultiply = 1.3;
+  // Miner dApp transactions gas limit
+  static const double minerDAppGasLimit = 750000;
+  static const int h3Resolution = 7;
+
+  static const Duration httpClientTimeOut = Duration(seconds: 30);
 
   static const String erc20TransferMethodId = 'a9059cbb';
 
@@ -77,6 +82,7 @@ class Config {
   static const String mxcAddressEthereum =
       '0x5Ca381bBfb58f0092df149bD3D243b08B9a8386e';
 
+  // Miner related
   static const String mep2542AddressTestnet =
       '0xc23832093cEC4306108775468FCCbcA84E19eAEa';
   static const String mep2542AddressMainnet =
@@ -132,58 +138,17 @@ class Config {
     address: '0xcBCE60BAD702026d6385E5f449e44099A655d14f',
     decimals: 18,
     chainId: mxcMainnetChainId,
-    name: 'Wrap MXC Token',
+    name: 'Wrapped MXC Token',
     symbol: 'WMXC',
   );
   static const Token wMXCTestnet = Token(
-    address: '0x6807F4B0D75c59Ef89f0dbEF9841Fb23fFDF105D',
+    address: '0xa5C0D0d32b41473c581a979dEab01651d1f5Eff5',
     decimals: 18,
     chainId: mxcTestnetChainId,
-    name: 'Wrap MXC Token',
+    name: 'Wrapped MXC Token',
     symbol: 'WMXC',
   );
 
   static double dAppDoubleTapLowerBound = 0;
   static double dAppDoubleTapUpperBound = 200;
-
-  /// The frequency in which background process will be
-  /// executed, NOTE : It's in minutes.
-  static const axsBackgroundServiceInterval = 15;
-
-  static const String axsPeriodicalTask = 'com.mxc.axswallet.periodicalTasks';
-  static const String dappHookTasks = 'com.mxc.axswallet.dappHooksTasks';
-  static const String minerAutoClaimTask =
-      'com.mxc.axswallet.minerAutoClaimTask';
-  // Miner dApp transactions gas limit
-  static const double minerDAppGasLimit = 750000;
-
-  static const int h3Resolution = 7;
-
-  static const Duration httpClientTimeOut = Duration(seconds: 30);
-
-  /// If error happens with these messages then we will need to show receive bottom sheet
-  static List<String> fundErrors = [
-    // User doesn't have enough to pay for native token transfer
-    // Zero native token balance or not enough for fee
-    'gas required exceeds allowance',
-    // Sending more than tokens balance
-    'execution reverted: ERC20: transfer amount exceeds balance',
-    // Sending more than native token balance
-    'insufficient funds for gas * price + value',
-    'insufficient funds for transfer'
-  ];
-
-  static List<String> errorList = [nonceTooLowError];
-
-  static String nonceTooLowError = 'nonce too low';
-
-  static Map<String, String> errorMessageMapper = {
-    nonceTooLowError: 'transaction_finalized'
-  };
-
-  static List<String> ignoredErrors = ['already known'];
-
-  static DateTime defaultTimeForMinerDapp = DateTime(2024, 1, 1, 13, 0, 0);
-
-  static String wifiHooksDataV = 'v1';
 }
