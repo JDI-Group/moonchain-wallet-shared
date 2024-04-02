@@ -11,7 +11,7 @@ class MinerHooksModel {
       final timeString = map['time'];
       time = DateTime.parse(timeString);
     } else {
-      time = Config.defaultTimeForMinerDapp;
+      time = BackgroundExecutionConfig.defaultTimeForMinerDapp;
     }
     return MinerHooksModel(
       enabled: map['enabled'] ?? false,

@@ -30,7 +30,7 @@ class DAppHooksModel {
         wifiHooks: WifiHooksModel(enabled: false),
         minerHooks: MinerHooksModel(
           enabled: false,
-          time: Config.defaultTimeForMinerDapp,
+          time: BackgroundExecutionConfig.defaultTimeForMinerDapp,
           selectedMiners: [],
         ),
       );

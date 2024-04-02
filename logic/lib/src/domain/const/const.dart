@@ -2,6 +2,8 @@ export 'urls.dart';
 export 'config.dart';
 export 'js_channel/js_channel.dart';
 export 'graphql/graphql.dart';
+export 'errors/errors_messages.dart';
+export 'background_exe_config.dart';
 
 class Const {
   static const String hashToTest =
