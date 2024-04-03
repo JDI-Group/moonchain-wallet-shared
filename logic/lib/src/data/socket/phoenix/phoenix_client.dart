@@ -21,14 +21,14 @@ class PhoenixClient implements IMXCSocketClient {
 
   /// Connects and initializes the socket instance if was not initialized before.
   @override
-  Future<bool> connect(String url) async {
+  Future<Stream<dynamic>> connect(String url) async {
     final newSocket = await PhoenixSocket(url).connect();
     if (newSocket != null) {
       _socketInstance == null;
       _socketInstance = newSocket;
-      return true;
+      return _socketInstance!.openStream;
     } else {
-      return false;
+      throw 'Unable to connect to Websocket';
     }
   }
 
@@ -44,15 +44,24 @@ class PhoenixClient implements IMXCSocketClient {
   }
 
   @override
-  Stream<PhoenixSocketCloseEvent>? getCloseStream() {
-    if (_socketInstance != null && isConnected()) {
-      return _socketInstance!.closeStream;
+  Stream<PhoenixSocketOpenEvent> getOpenStream() {
+    if (_socketInstance != null) {
+      return _socketInstance!.openStream;
+    } else {
+      throw 'Unable to connect to Websocket';
     }
-    return null;
   }
 
   @override
-  Future<Stream<Message>?> subscribeToEvent(
+  Stream<PhoenixSocketCloseEvent> getCloseStream() {
+    if (_socketInstance != null && isConnected()) {
+      return _socketInstance!.closeStream;
+    }
+    throw 'Trying to access connection while not connected!';
+  }
+
+  @override
+  Future<Stream<Message>> subscribeToEvent(
     String event,
   ) async {
     if (_socketInstance == null) {

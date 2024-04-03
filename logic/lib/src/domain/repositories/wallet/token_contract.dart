@@ -146,8 +146,16 @@ class TokenContractRepository {
     return _web3Client.getTransactionByHash(hash);
   }
 
+  bool isWebsocketConnected() {
+    return _mxcSocketClient.isConnected();
+  }
+
   Stream<dynamic>? getCloseStream() {
     return _mxcSocketClient.getCloseStream();
+  }
+
+  Stream<dynamic>? getOpenStream() {
+    return _mxcSocketClient.getOpenStream();
   }
 
   Future<bool> checkConnectionToNetwork() async {
@@ -155,7 +163,7 @@ class TokenContractRepository {
     return isConnected;
   }
 
-  Future<bool> connectToWebSocket() async {
+  Future<Stream<dynamic>> connectToWebSocket() async {
     _mxcSocketClient.initialize();
     return await _mxcSocketClient
         .connect(_web3Client.network!.web3WebSocketUrl!);
@@ -165,7 +173,7 @@ class TokenContractRepository {
     _mxcSocketClient.disconnect();
   }
 
-  Future<Stream<dynamic>?> subscribeEvent(
+  Future<Stream<dynamic>> subscribeEvent(
     String event,
   ) async {
     if (Config.isMxcChains(_web3Client.network!.chainId)) {
@@ -173,7 +181,7 @@ class TokenContractRepository {
         event,
       );
     } else {
-      return null;
+      throw 'Websocket subscription requested on other chains!';
     }
   }
 

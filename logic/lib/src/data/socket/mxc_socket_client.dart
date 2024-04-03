@@ -3,15 +3,16 @@ import 'package:mxc_logic/src/data/socket/phoenix/phoenix_client.dart';
 import 'package:phoenix_socket/phoenix_socket.dart';
 
 abstract class IMXCSocketClient {
-  Future<bool> connect(String url);
+  Future<Stream<dynamic>> connect(String url);
   bool isConnected();
   void disconnect();
-  Future<Stream<Message>?> subscribeToEvent(
+  Future<Stream<Message>> subscribeToEvent(
     String event,
   );
   String get endpoint;
 
-  Stream<dynamic>? getCloseStream();
+  Stream<dynamic> getCloseStream();
+  Stream<dynamic> getOpenStream();
 }
 
 class MXCSocketClient {
@@ -30,20 +31,24 @@ class MXCSocketClient {
   }
 
   bool isConnected() {
-    return _socketClient!.isConnected();
+    return _socketClient?.isConnected() ?? false;
   }
 
   Stream<dynamic>? getCloseStream() {
     return _socketClient!.getCloseStream();
   }
 
-  Future<bool> connect(String web3WebSocketUrl) async {
+  Stream<dynamic>? getOpenStream() {
+    return _socketClient!.getOpenStream();
+  }
+
+  Future<Stream<dynamic>> connect(String web3WebSocketUrl) async {
     if (_socketClient!.endpoint.isEmpty) {
       // not connected at all
       return await _socketClient!.connect(web3WebSocketUrl);
     } else if (isConnected() && _socketClient!.endpoint == web3WebSocketUrl) {
       // request to connect to same url
-      return true;
+      return _socketClient!.getOpenStream();
     } else {
       // connect with new url
       _socketClient!.disconnect();
@@ -57,7 +62,7 @@ class MXCSocketClient {
     }
   }
 
-  Future<Stream<Message>?> subscribeToEvent(
+  Future<Stream<Message>> subscribeToEvent(
     String event,
   ) async {
     return _socketClient!.subscribeToEvent(event);
