@@ -22,7 +22,7 @@ class EpochRepository {
     final List<EpochModel> data = <EpochModel>[];
 
     final epoch = await getEpochByReleaseTime();
-    final mep2542Address = Config.getContractAddress(
+    final mep2542Address = ContractAddresses.getContractAddress(
       MXCContacts.mep2542,
       _web3Client.network!.chainId,
     );
@@ -65,7 +65,7 @@ class EpochRepository {
   }
 
   Future<EpochByReleaseTimeModel> getEpochByReleaseTime() async {
-    final mep2542Address = Config.getContractAddress(
+    final mep2542Address = ContractAddresses.getContractAddress(
       MXCContacts.mep2542,
       _web3Client.network!.chainId,
     );

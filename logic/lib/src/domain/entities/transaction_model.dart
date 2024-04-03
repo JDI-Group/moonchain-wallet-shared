@@ -75,7 +75,7 @@ class TransactionModel {
         // }
         // Avoid cancel transaction to be trapped in contract by  && from != to check.
         if (mxcTransaction.decodedInput?.methodId !=
-                Config.erc20TransferMethodId &&
+                ContractAddresses.erc20TransferMethodId &&
             !isCoinTransfer &&
             from != to) {
           // It's contract call
@@ -91,7 +91,7 @@ class TransactionModel {
               logoUri: Config.mxcLogoUri, symbol: Config.mxcName);
 
           if (mxcTransaction.decodedInput?.methodId ==
-              Config.erc20TransferMethodId) {
+              ContractAddresses.erc20TransferMethodId) {
             // It should be token transfer
             if (mxcTransaction.to?.hash != null) {
               transferType = TransferType.erc20;

@@ -268,18 +268,19 @@ class TokenContractRepository {
   Future<String> getName(String address) async {
     try {
       final selectedNetwork = _web3Client.network!;
-      final ensResolverAddress =
-          selectedNetwork.chainId == Config.mxcMainnetChainId
-              ? Config.mainnetEnsAddresses.ensResolver
-              : selectedNetwork.chainId == Config.mxcTestnetChainId
-                  ? Config.testnetEnsAddresses.ensResolver
-                  : null;
+      final ensResolverAddress = Config.isMxcChains(selectedNetwork.chainId)
+          ? ContractAddresses.getContractAddressString(
+              MXCContacts.ensResolver,
+              selectedNetwork.chainId,
+            )
+          : null;
       final ensFallBackRegistryAddress =
-          selectedNetwork.chainId == Config.mxcMainnetChainId
-              ? Config.mainnetEnsAddresses.ensFallbackRegistry
-              : selectedNetwork.chainId == Config.mxcTestnetChainId
-                  ? Config.testnetEnsAddresses.ensFallbackRegistry
-                  : null;
+          Config.isMxcChains(selectedNetwork.chainId)
+              ? ContractAddresses.getContractAddressString(
+                  MXCContacts.ensFallbackRegistry,
+                  selectedNetwork.chainId,
+                )
+              : null;
       if (ensResolverAddress != null && ensFallBackRegistryAddress != null) {
         final ens = contracts.Ens(
                 client: _web3Client,
@@ -305,18 +306,19 @@ class TokenContractRepository {
   Future<String> getAddress(String? name) async {
     try {
       final selectedNetwork = _web3Client.network!;
-      final ensResolverAddress =
-          selectedNetwork.chainId == Config.mxcMainnetChainId
-              ? Config.mainnetEnsAddresses.ensResolver
-              : selectedNetwork.chainId == Config.mxcTestnetChainId
-                  ? Config.testnetEnsAddresses.ensResolver
-                  : null;
+      final ensResolverAddress = Config.isMxcChains(selectedNetwork.chainId)
+          ? ContractAddresses.getContractAddressString(
+              MXCContacts.ensResolver,
+              selectedNetwork.chainId,
+            )
+          : null;
       final ensFallBackRegistryAddress =
-          selectedNetwork.chainId == Config.mxcMainnetChainId
-              ? Config.mainnetEnsAddresses.ensFallbackRegistry
-              : selectedNetwork.chainId == Config.mxcTestnetChainId
-                  ? Config.testnetEnsAddresses.ensFallbackRegistry
-                  : null;
+          Config.isMxcChains(selectedNetwork.chainId)
+              ? ContractAddresses.getContractAddressString(
+                  MXCContacts.ensFallbackRegistry,
+                  selectedNetwork.chainId,
+                )
+              : null;
       if (ensResolverAddress != null && ensFallBackRegistryAddress != null) {
         final ens = contracts.Ens(
                 client: _web3Client,

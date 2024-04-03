@@ -26,11 +26,12 @@ class PricingRepository {
       final tokenBDecimal = token1.decimals!;
       final amountIn = BigInt.from(amount * (pow(10, tokenADecimal)));
       final selectedNetwork = _web3Client.network!;
-      final router = selectedNetwork.chainId == Config.mxcMainnetChainId
-          ? Config.mainnetRouterAddress
-          : selectedNetwork.chainId == Config.mxcTestnetChainId
-              ? Config.testnetRouterAddress
-              : null;
+      final router = Config.isMxcChains(selectedNetwork.chainId)
+          ? ContractAddresses.getContractAddressString(
+              MXCContacts.router,
+              selectedNetwork.chainId,
+            )
+          : null;
       if (router != null) {
         final routerAddress = EthereumAddress.fromHex(router);
 

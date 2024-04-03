@@ -50,7 +50,7 @@ class MinerRepository {
 
     final selectedMiners = getSelectedMiners(minersList, selectedMinerListId);
 
-    final mep2542Address = Config.getContractAddress(
+    final mep2542Address = ContractAddresses.getContractAddress(
       MXCContacts.mep2542,
       _web3Client.network!.chainId,
     );
@@ -184,7 +184,7 @@ class MinerRepository {
     Mep1004TokenDetail miner,
   ) async {
     final chainId = _web3Client.network!.chainId;
-    final mep2542Address = Config.getContractAddress(
+    final mep2542Address = ContractAddresses.getContractAddress(
       MXCContacts.mep2542,
       _web3Client.network!.chainId,
     );
@@ -292,7 +292,7 @@ class MinerRepository {
 
     if (hex == '0x') {
       final chainId = _web3Client.network!.chainId;
-      final erc6551RegistryAddress = Config.getContractAddress(
+      final erc6551RegistryAddress = ContractAddresses.getContractAddress(
         MXCContacts.erc6551Registry,
         chainId,
       );
@@ -301,11 +301,11 @@ class MinerRepository {
         address: erc6551RegistryAddress,
       );
 
-      final erc6551AccountImplAddress = Config.getContractAddress(
+      final erc6551AccountImplAddress = ContractAddresses.getContractAddress(
         MXCContacts.erc6551AccountImpl,
         chainId,
       );
-      final mep1004TokenAddress = Config.getContractAddress(
+      final mep1004TokenAddress = ContractAddresses.getContractAddress(
         MXCContacts.mep1004Token,
         chainId,
       );
@@ -459,7 +459,7 @@ class MinerRepository {
 
   void getExpirationDurationForEpoch() async {
     final chainId = _web3Client.network!.chainId;
-    final mep2542Address = Config.getContractAddress(
+    final mep2542Address = ContractAddresses.getContractAddress(
       MXCContacts.mep2542,
       chainId,
     );
