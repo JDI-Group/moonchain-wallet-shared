@@ -5,3 +5,5 @@ export 'mxc_transaction.dart';
 export 'mxc_formatter.dart';
 export 'mxc_validation.dart';
 export 'mxc_array.dart';
+export 'mxc_path.dart';
+export 'mxc_file.dart';
