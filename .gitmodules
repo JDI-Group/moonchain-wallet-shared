@@ -1,0 +1,3 @@
+[submodule "logic/assets/cache/MEP-1759-DApp-store"]
+	path = logic/assets/cache/MEP-1759-DApp-store
+	url = https://github.com/MXCzkEVM/MEP-1759-DApp-store.git
