@@ -1,6 +1,8 @@
 class Assets {
   static const String mxcLogic = 'mxc_logic';
 
+  static const String dappStorePath =
+      'packages/mxc_logic/assets/cache/MEP-1759-DApp-store/';
   static const String dappStoreJson =
       'packages/$mxcLogic/assets/cache/MEP-1759-DApp-store/dapp-store.json';
   static String dappStore(String dappName) =>

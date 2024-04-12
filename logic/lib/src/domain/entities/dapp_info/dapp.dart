@@ -12,25 +12,28 @@ class Dapp extends Equatable {
   Dapp fromBookmark(Bookmark bookMark) {
     return Dapp(
       app: AppInfo(
-          url: bookMark.url,
-          name: bookMark.title,
-          description: bookMark.description,
-          ageRating: app?.ageRating,
-          developer: app?.developer,
-          localizations: app?.localizations,
-          permissions: app?.permissions,
-          supportedPlatforms: ['android', 'ios'],
-          version: app?.version),
+        url: bookMark.url,
+        name: bookMark.title,
+        description: bookMark.description,
+        ageRating: app?.ageRating,
+        developer: app?.developer,
+        localizations: app?.localizations,
+        permissions: app?.permissions,
+        supportedPlatforms: ['android', 'ios'],
+        version: app?.version,
+      ),
       store: Store(
-          chainid: store?.chainid,
-          mnsid: store?.mnsid,
-          category: store?.category),
+        chainid: store?.chainid,
+        mnsid: store?.mnsid,
+        category: store?.category,
+      ),
       reviewApi: ReviewApi(
-          body: reviewApi?.body,
-          headers: reviewApi?.headers,
-          icons: reviewApi?.icons,
-          method: reviewApi?.method,
-          url: reviewApi?.url),
+        body: reviewApi?.body,
+        headers: reviewApi?.headers,
+        icons: reviewApi?.icons,
+        method: reviewApi?.method,
+        url: reviewApi?.url,
+      ),
     );
   }
 
@@ -57,6 +60,26 @@ class Dapp extends Equatable {
   final AppInfo? app;
   final Store? store;
   final ReviewApi? reviewApi;
+
+  // Appends the given
+  Dapp appendPrefixToIcons(
+    String prefix,
+  ) {
+    return Dapp(
+      app: app,
+      store: store,
+      reviewApi: ReviewApi(
+        body: reviewApi?.body,
+        headers: reviewApi?.headers,
+        icons: reviewApi?.icons?.copyWith(
+          iconLarge: '$prefix${reviewApi?.icons?.iconLarge}',
+          iconSmall: '$prefix${reviewApi?.icons?.iconSmall}',
+        ),
+        method: reviewApi?.method,
+        url: reviewApi?.url,
+      ),
+    );
+  }
 
   Map<String, dynamic> toMap() => {
         'app': app?.toMap(),
