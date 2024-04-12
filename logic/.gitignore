@@ -12,3 +12,7 @@ pubspec.lock
 **.g.dart
 
 .vscode/
+
+# Flutter generated files
+.flutter-plugins
+.flutter-plugins-dependencies
