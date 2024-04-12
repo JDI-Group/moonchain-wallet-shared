@@ -44,3 +44,8 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  assets:
+    - assets/cache/MEP-1759-DApp-store/
+    - assets/cache/MEP-1759-DApp-store/dapp_store/
+    - assets/cache/MEP-1759-DApp-store/mxc_dapps_thumbnails/
