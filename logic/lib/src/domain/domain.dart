@@ -8,4 +8,5 @@ export 'entities/entities.dart';
 export 'repositories/extensions/extensions.dart';
 export 'const/const.dart';
 export 'utils/utils.dart';
+export 'helpers/helpers.dart';
 export 'package:web3dart/web3dart.dart';
