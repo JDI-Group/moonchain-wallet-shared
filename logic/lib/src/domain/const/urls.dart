@@ -53,7 +53,12 @@ class Urls {
   static const String chainsList =
       'https://raw.githubusercontent.com/MXCzkEVM/chains-list/main/chains_list_v2.json';
 
-  static getMXCNftMarketPlace(int chainId) => MXCFunctionHelpers.mxcChainsSeparatedFunctions<String>(chainId: chainId, mainnetFunc: () => mxcMainnetNftMarketPlace, testnetFunc: () => mxcTestnetNftMarketPlace,);
+  static getMXCNftMarketPlace(int chainId) =>
+      MXCFunctionHelpers.mxcChainsSeparatedFunctions<String>(
+        chainId: chainId,
+        mainnetFunc: () => mxcMainnetNftMarketPlace,
+        testnetFunc: () => mxcTestnetNftMarketPlace,
+      );
 
   static const String mxcMainnetNftMarketPlace = 'https://nft.mxc.com/';
   static const String mxcTestnetNftMarketPlace = 'https://wannsee-nft.mxc.com/';

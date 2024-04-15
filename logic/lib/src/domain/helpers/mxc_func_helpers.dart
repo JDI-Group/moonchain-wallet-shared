@@ -47,13 +47,25 @@ class MXCFunctionHelpers {
     }
   }
 
-  static Future<T?> mxcChainsFuncWrapperNullable<T>(
+  static Future<T?> mxcChainsFutureFuncWrapperNullable<T>(
     Future<T?> Function() func,
     int chainId, {
-    T? notSupportChainData,
+    Future<T>? notSupportChainData,
   }) async {
     if (MXCChains.isMXCChains(chainId)) {
       return await func();
+    } else {
+      return notSupportChainData;
+    }
+  }
+
+  static T? mxcChainsFuncWrapperNullable<T>(
+    T? Function() func,
+    int chainId, {
+    T? notSupportChainData,
+  }) {
+    if (MXCChains.isMXCChains(chainId)) {
+      return func();
     } else {
       return notSupportChainData;
     }

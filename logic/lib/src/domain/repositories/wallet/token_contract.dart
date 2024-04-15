@@ -36,7 +36,8 @@ class TokenContractRepository {
   Future<WannseeTransactionsModel?> getTransactionsByAddress(
     String address,
   ) async =>
-      MXCFunctionHelpers.mxcChainsFuncWrapperNullable(
+      MXCFunctionHelpers.mxcChainsFutureFuncWrapperNullable<
+          WannseeTransactionsModel?>(
         () async {
           final selectedNetwork = _web3Client.network!;
           final apiBaseUrl = Urls.getApiBaseUrl(selectedNetwork.chainId);
@@ -80,7 +81,7 @@ class TokenContractRepository {
     String address,
     TokenType tokenType,
   ) async =>
-      MXCFunctionHelpers.mxcChainsFuncWrapperNullable<
+      MXCFunctionHelpers.mxcChainsFutureFuncWrapperNullable<
           WannseeTokenTransfersModel?>(
         () async {
           final selectedNetwork = _web3Client.network!;
@@ -113,7 +114,8 @@ class TokenContractRepository {
   Future<WannseeTransactionModel?> getTransactionByHash(
     String hash,
   ) async =>
-      MXCFunctionHelpers.mxcChainsFuncWrapperNullable<WannseeTransactionModel?>(
+      MXCFunctionHelpers.mxcChainsFutureFuncWrapperNullable<
+          WannseeTransactionModel?>(
         () async {
           final selectedNetwork = _web3Client.network!;
           final apiBaseUrl = Urls.getApiBaseUrl(selectedNetwork.chainId);
