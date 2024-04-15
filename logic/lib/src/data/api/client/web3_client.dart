@@ -65,7 +65,7 @@ class DatadashClient extends Web3Client {
   GraphQLClient get graphQLClient {
     final chainId = _getNetwork().chainId;
 
-    if (!Config.isMxcChains(chainId)) {
+    if (!MXCChains.isMXCChains(chainId)) {
       throw 'Accessing graphQL for chains other than MXC chains!';
     }
     final mepUrl = Urls.getMepGraphQlLink(chainId);

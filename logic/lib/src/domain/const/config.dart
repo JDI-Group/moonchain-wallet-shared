@@ -30,19 +30,7 @@ class Config {
 
   /// It's in days
   static int transactionsHistoryLimit = 7;
-
-  static bool isMxcChains(int chainId) {
-    return chainId == mxcMainnetChainId || chainId == mxcTestnetChainId;
-  }
-
-  static bool isMXCMainnet(int chainId) {
-    return chainId == mxcMainnetChainId;
-  }
-
-  static bool isEthereumMainnet(int chainId) {
-    return chainId == ethereumMainnetChainId;
-  }
-
+  
   static double dAppDoubleTapLowerBound = 0;
   static double dAppDoubleTapUpperBound = 200;
 }

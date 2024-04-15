@@ -26,7 +26,7 @@ class PricingRepository {
       final tokenBDecimal = token1.decimals!;
       final amountIn = BigInt.from(amount * (pow(10, tokenADecimal)));
       final selectedNetwork = _web3Client.network!;
-      final router = Config.isMxcChains(selectedNetwork.chainId)
+      final router = MXCChains.isMXCChains(selectedNetwork.chainId)
           ? ContractAddresses.getContractAddressString(
               MXCContacts.router,
               selectedNetwork.chainId,
@@ -61,7 +61,7 @@ class PricingRepository {
   ) async {
     try {
       final chainId = _web3Client.network!.chainId;
-      if (!Config.isMxcChains(chainId)) {
+      if (!MXCChains.isMXCChains(chainId)) {
         return tokens;
       }
       final xsdToken = Tokens.getXSD(chainId);

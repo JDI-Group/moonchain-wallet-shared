@@ -39,7 +39,7 @@ class ContractAddresses {
       EthereumAddress.fromHex(getContractAddressString(contract, chainId));
 
   static String getContractAddressString(MXCContacts contract, int chainId) =>
-      Config.isMXCMainnet(chainId)
+      MXCChains.isMXCMainnet(chainId)
           ? contractsList[Config.mxcMainnetChainId]![contract]!
           : contractsList[Config.mxcTestnetChainId]![contract]!;
 

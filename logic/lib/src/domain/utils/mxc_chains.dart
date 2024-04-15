@@ -1,7 +1,7 @@
 import 'package:mxc_logic/mxc_logic.dart';
 
 class MXCChains {
-  static bool isMxcChains(int chainId) {
+  static bool isMXCChains(int chainId) {
     return chainId == Config.mxcMainnetChainId ||
         chainId == Config.mxcTestnetChainId;
   }

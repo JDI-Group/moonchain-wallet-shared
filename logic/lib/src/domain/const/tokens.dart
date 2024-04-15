@@ -2,9 +2,9 @@ import 'package:mxc_logic/mxc_logic.dart';
 
 class Tokens {
   static Token getXSD(int chainId) =>
-      Config.isMXCMainnet(chainId) ? xsdMainnet : xsdTestnet;
+      MXCChains.isMXCMainnet(chainId) ? xsdMainnet : xsdTestnet;
   static Token getWMXC(int chainId) =>
-      Config.isMXCMainnet(chainId) ? wMXCMainnet : wMXCTestnet;
+      MXCChains.isMXCMainnet(chainId) ? wMXCMainnet : wMXCTestnet;
 
   static const Token xsdMainnet = Token(
     address: '0x7d2016B09BF46A7CAABD3b45f9e1D6C485A2c729',

@@ -173,7 +173,7 @@ class TokenContractRepository {
   Future<Stream<dynamic>> subscribeEvent(
     String event,
   ) async {
-    if (Config.isMxcChains(_web3Client.network!.chainId)) {
+    if (MXCChains.isMXCChains(_web3Client.network!.chainId)) {
       return _mxcSocketClient.subscribeToEvent(
         event,
       );
@@ -264,14 +264,14 @@ class TokenContractRepository {
   Future<String> getName(String address) async {
     try {
       final selectedNetwork = _web3Client.network!;
-      final ensResolverAddress = Config.isMxcChains(selectedNetwork.chainId)
+      final ensResolverAddress = MXCChains.isMXCChains(selectedNetwork.chainId)
           ? ContractAddresses.getContractAddressString(
               MXCContacts.ensResolver,
               selectedNetwork.chainId,
             )
           : null;
       final ensFallBackRegistryAddress =
-          Config.isMxcChains(selectedNetwork.chainId)
+          MXCChains.isMXCChains(selectedNetwork.chainId)
               ? ContractAddresses.getContractAddressString(
                   MXCContacts.ensFallbackRegistry,
                   selectedNetwork.chainId,
@@ -302,14 +302,14 @@ class TokenContractRepository {
   Future<String> getAddress(String? name) async {
     try {
       final selectedNetwork = _web3Client.network!;
-      final ensResolverAddress = Config.isMxcChains(selectedNetwork.chainId)
+      final ensResolverAddress = MXCChains.isMXCChains(selectedNetwork.chainId)
           ? ContractAddresses.getContractAddressString(
               MXCContacts.ensResolver,
               selectedNetwork.chainId,
             )
           : null;
       final ensFallBackRegistryAddress =
-          Config.isMxcChains(selectedNetwork.chainId)
+          MXCChains.isMXCChains(selectedNetwork.chainId)
               ? ContractAddresses.getContractAddressString(
                   MXCContacts.ensFallbackRegistry,
                   selectedNetwork.chainId,

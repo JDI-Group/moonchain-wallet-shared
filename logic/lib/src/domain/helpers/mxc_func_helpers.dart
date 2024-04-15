@@ -52,7 +52,7 @@ class MXCFunctionHelpers {
     int chainId, {
     T? notSupportChainData,
   }) async {
-    if (MXCChains.isMxcChains(chainId)) {
+    if (MXCChains.isMXCChains(chainId)) {
       return await func();
     } else {
       return notSupportChainData;
@@ -64,7 +64,7 @@ class MXCFunctionHelpers {
     int chainId, {
     T? notSupportChainData,
   }) async {
-    if (MXCChains.isMxcChains(chainId) ||
+    if (MXCChains.isMXCChains(chainId) ||
         MXCChains.isEthereumMainnet(chainId)) {
       return await func();
     } else {

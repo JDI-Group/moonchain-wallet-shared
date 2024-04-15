@@ -13,7 +13,7 @@ class Urls {
       '${baseUrl}transactions/$hash';
 
   static String getTokenListUrl(int chainId) =>
-      MXCFunctionHelpers.chainsSeparatedFunctions(
+      MXCFunctionHelpers.chainsSeparatedFunctions<String>(
         chainId: chainId,
         moonChainFunc: () => mainnetTokenListUrl,
         genevaFunc: () => testnetTokenListUrl,
@@ -53,6 +53,8 @@ class Urls {
   static const String chainsList =
       'https://raw.githubusercontent.com/MXCzkEVM/chains-list/main/chains_list_v2.json';
 
+  static getMXCNftMarketPlace(int chainId) => MXCFunctionHelpers.mxcChainsSeparatedFunctions<String>(chainId: chainId, mainnetFunc: () => mxcMainnetNftMarketPlace, testnetFunc: () => mxcTestnetNftMarketPlace,);
+
   static const String mxcMainnetNftMarketPlace = 'https://nft.mxc.com/';
   static const String mxcTestnetNftMarketPlace = 'https://wannsee-nft.mxc.com/';
   static const String mxcStatus = 'https://mxc.instatus.com/';
@@ -79,7 +81,7 @@ class Urls {
       'https://mining-api.matchx.io/mep2542/getEpochList?page=$page&limit=$pageLimit';
 
   static String mepEpochList(int chainId, int page, int pageLimit) {
-    if (Config.isMXCMainnet(chainId)) {
+    if (MXCChains.isMXCMainnet(chainId)) {
       return mepEpochListMainnet(page, pageLimit);
     }
     return mepEpochListTestnet(page, pageLimit);
@@ -111,12 +113,12 @@ class Urls {
   }
 
   static String addressMinersByChainId(int chainId, String address) =>
-      Config.isMXCMainnet(chainId)
+      MXCChains.isMXCMainnet(chainId)
           ? addressMinersMainnet(address)
           : addressMinersTestnet(address);
 
   static String postMEP2542RewardInfo(int chainId) =>
-      Config.isMXCMainnet(chainId)
+      MXCChains.isMXCMainnet(chainId)
           ? mep2542RewardInfoMainnet
           : mep2542RewardInfoTestnet;
 
@@ -134,7 +136,7 @@ class Urls {
   static const String mep2542RewardInfo = 'mep2542/getMEP2542RewardInfo';
 
   static String postVerifyMerkleProof(int chainId) =>
-      Config.isMXCMainnet(chainId)
+      MXCChains.isMXCMainnet(chainId)
           ? postVerifyMerkleProofMainnet
           : postVerifyMerkleProofTestnet;
 
@@ -153,10 +155,10 @@ class Urls {
   static const minerDappMainnet = 'https://mining.matchx.io/';
 
   static String networkL3Bridge(int chainId) =>
-      Config.isMXCMainnet(chainId) ? mainnetL3Bridge : testnetL3Bridge;
+      MXCChains.isMXCMainnet(chainId) ? mainnetL3Bridge : testnetL3Bridge;
 
   static String getMepGraphQlLink(int chainId) =>
-      Config.isMXCMainnet(chainId) ? mepGraphQlMainnet : mepGraphQlGNova;
+      MXCChains.isMXCMainnet(chainId) ? mepGraphQlMainnet : mepGraphQlGNova;
 
   static String mepGraphQlMainnet =
       'https://mxc-graph.mxc.com/subgraphs/name/mxczkevm/mep1004-graph';
