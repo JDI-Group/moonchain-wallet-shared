@@ -35,36 +35,34 @@ class TokenContractRepository {
 
   Future<WannseeTransactionsModel?> getTransactionsByAddress(
     String address,
-  ) async {
-    final selectedNetwork = _web3Client.network!;
-    final apiBaseUrl = selectedNetwork.chainId == Config.mxcMainnetChainId
-        ? Urls.mainnetApiBaseUrl
-        : selectedNetwork.chainId == Config.mxcTestnetChainId
-            ? Urls.testnetApiBaseUrl
-            : null;
+  ) async =>
+      MXCFunctionHelpers.mxcChainsFuncWrapperNullable(
+        () async {
+          final selectedNetwork = _web3Client.network!;
+          final apiBaseUrl = Urls.getApiBaseUrl(selectedNetwork.chainId);
 
-    if (apiBaseUrl != null) {
-      final response = await _restClient.client.get(
-        Uri.parse(
-          Urls.transactions(apiBaseUrl, address),
-        ),
-        headers: {'accept': 'application/json'},
+          final response = await _restClient.client.get(
+            Uri.parse(
+              Urls.transactions(apiBaseUrl, address),
+            ),
+            headers: {'accept': 'application/json'},
+          );
+          if (response.statusCode == 200) {
+            final txList = WannseeTransactionsModel.fromJson(response.body);
+            return txList;
+          }
+          if (response.statusCode == 404) {
+            // new wallet and nothing is returned
+            final txList = WannseeTransactionsModel(
+              items: const [],
+            );
+            return txList;
+          } else {
+            return null;
+          }
+        },
+        _web3Client.network!.chainId,
       );
-      if (response.statusCode == 200) {
-        final txList = WannseeTransactionsModel.fromJson(response.body);
-        return txList;
-      }
-      if (response.statusCode == 404) {
-        // new wallet and nothing is returned
-        final txList = WannseeTransactionsModel(
-          items: const [],
-        );
-        return txList;
-      } else {
-        return null;
-      }
-    }
-  }
 
   Future<int> getEpochDetails(int chainId) async {
     final res = await _restClient.client
@@ -81,66 +79,65 @@ class TokenContractRepository {
   Future<WannseeTokenTransfersModel?> getTokenTransfersByAddress(
     String address,
     TokenType tokenType,
-  ) async {
-    final selectedNetwork = _web3Client.network!;
-    final apiBaseUrl = selectedNetwork.chainId == Config.mxcMainnetChainId
-        ? Urls.mainnetApiBaseUrl
-        : selectedNetwork.chainId == Config.mxcTestnetChainId
-            ? Urls.testnetApiBaseUrl
-            : null;
+  ) async =>
+      MXCFunctionHelpers.mxcChainsFuncWrapperNullable<
+          WannseeTokenTransfersModel?>(
+        () async {
+          final selectedNetwork = _web3Client.network!;
+          final apiBaseUrl = Urls.getApiBaseUrl(selectedNetwork.chainId);
 
-    if (apiBaseUrl != null) {
-      final response = await _restClient.client.get(
-        Uri.parse(
-          Urls.tokenTransfers(apiBaseUrl, address, tokenType),
-        ),
-        headers: {'accept': 'application/json'},
+          final response = await _restClient.client.get(
+            Uri.parse(
+              Urls.tokenTransfers(apiBaseUrl, address, tokenType),
+            ),
+            headers: {'accept': 'application/json'},
+          );
+          if (response.statusCode == 200) {
+            final txList = WannseeTokenTransfersModel.fromJson(response.body);
+            return txList;
+          }
+          if (response.statusCode == 404) {
+            // new wallet and nothing is returned
+            const txList = WannseeTokenTransfersModel(
+              items: [],
+            );
+            return txList;
+          } else {
+            return null;
+          }
+        },
+        _web3Client.network!.chainId,
       );
-      if (response.statusCode == 200) {
-        final txList = WannseeTokenTransfersModel.fromJson(response.body);
-        return txList;
-      }
-      if (response.statusCode == 404) {
-        // new wallet and nothing is returned
-        const txList = WannseeTokenTransfersModel(
-          items: [],
-        );
-        return txList;
-      } else {
-        return null;
-      }
-    }
-  }
 
   /// If the transaction is successful then not null
   Future<WannseeTransactionModel?> getTransactionByHash(
     String hash,
-  ) async {
-    final selectedNetwork = _web3Client.network!;
-    final apiBaseUrl = selectedNetwork.chainId == Config.mxcMainnetChainId
-        ? Urls.mainnetApiBaseUrl
-        : selectedNetwork.chainId == Config.mxcTestnetChainId
-            ? Urls.testnetApiBaseUrl
-            : null;
+  ) async =>
+      MXCFunctionHelpers.mxcChainsFuncWrapperNullable<WannseeTransactionModel?>(
+        () async {
+          final selectedNetwork = _web3Client.network!;
+          final apiBaseUrl = Urls.getApiBaseUrl(selectedNetwork.chainId);
 
-    if (apiBaseUrl != null) {
-      final response = await _restClient.client.get(
-        Uri.parse(
-          Urls.transaction(apiBaseUrl, hash),
-        ),
-        headers: {'accept': 'application/json'},
+          if (apiBaseUrl != null) {
+            final response = await _restClient.client.get(
+              Uri.parse(
+                Urls.transaction(apiBaseUrl, hash),
+              ),
+              headers: {'accept': 'application/json'},
+            );
+
+            if (response.statusCode == 200) {
+              final txList = WannseeTransactionModel.fromJson(response.body);
+              return txList;
+            } else {
+              return null;
+            }
+          } else {
+            return null;
+          }
+        },
+        _web3Client.network!.chainId,
       );
-
-      if (response.statusCode == 200) {
-        final txList = WannseeTransactionModel.fromJson(response.body);
-        return txList;
-      } else {
-        return null;
-      }
-    } else {
-      return null;
-    }
-  }
 
   Future<TransactionInformation?> getTransactionByHashCustomChain(String hash) {
     return _web3Client.getTransactionByHash(hash);
@@ -185,33 +182,32 @@ class TokenContractRepository {
     }
   }
 
-  Future<DefaultTokens?> getDefaultTokens() async {
-    final selectedNetwork = _web3Client.network!;
-    final tokenListUrl = selectedNetwork.chainId == Config.mxcMainnetChainId
-        ? Urls.mainnetTokenListUrl
-        : selectedNetwork.chainId == Config.mxcTestnetChainId
-            ? Urls.testnetTokenListUrl
-            : selectedNetwork.chainId == 1
-                ? Urls.ethereumMainnetTokenListUrl
-                : null;
-    if (tokenListUrl != null) {
-      final response = await _restClient.client.get(
-        Uri.parse(
-          tokenListUrl,
-        ),
-        headers: {'accept': 'application/json'},
-      );
+  Future<DefaultTokens?> getDefaultTokens() async =>
+      await MXCFunctionHelpers.mxcAndEthereumFuncWrapperNullable<DefaultTokens>(
+        () async {
+          final chainId = _web3Client.network!.chainId;
+          final tokenListUrl = Urls.getTokenListUrl(chainId);
+          final defaultTokens =
+              await MXCFunctionHelpers.apiDataHandler<DefaultTokens>(
+            apiCall: () => _restClient.client.get(
+              Uri.parse(
+                tokenListUrl,
+              ),
+              headers: {'accept': 'application/json'},
+            ),
+            dataParseFunction: (data) => DefaultTokens.fromJson(data),
+            handleFailure: () async {
+              final tokenListJson = await MXCFileHelpers.getTokenList(chainId);
+              final data = DefaultTokens.fromJson(tokenListJson)
+                  .changeAssetsRemoteToLocal();
+              return data;
+            },
+          );
 
-      if (response.statusCode == 200) {
-        final defaultTokens = DefaultTokens.fromJson(response.body);
-        return defaultTokens;
-      } else {
-        return null;
-      }
-    } else {
-      return null;
-    }
-  }
+          return defaultTokens;
+        },
+        _web3Client.network!.chainId,
+      );
 
   Future<List<Token>> getTokensBalance(
     List<Token> tokens,

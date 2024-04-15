@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
+import 'package:mxc_logic/mxc_logic.dart';
 
 import 'token.dart';
 import 'version.dart';
@@ -73,6 +74,20 @@ class DefaultTokens extends Equatable {
       timestamp: timestamp ?? this.timestamp,
       tokens: tokens ?? this.tokens,
       version: version ?? this.version,
+    );
+  }
+
+  DefaultTokens changeAssetsRemoteToLocal() {
+    return copyWith(
+      logoUri: MXCAssetsHelpers.changeTokensRemoteUrlToLocal(logoUri!),
+      tokens: tokens!
+          .map(
+            (e) => e.copyWith(
+              logoUri:
+                  MXCAssetsHelpers.changeTokensRemoteUrlToLocal(e.logoUri!),
+            ),
+          )
+          .toList(),
     );
   }
 

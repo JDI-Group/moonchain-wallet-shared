@@ -1,7 +1,6 @@
 import 'dart:typed_data';
 
 import 'package:mxc_logic/mxc_logic.dart';
-import 'package:mxc_logic/src/domain/const/assets.dart';
 
 class MXCFileHelpers {
   static Future<String> getDAppStoreJson() async {
@@ -14,4 +13,26 @@ class MXCFileHelpers {
     return await MXCFile.readFileFromAssets(fileName);
   }
 
+  static Future<String> getTokenList(int chainId) =>
+      MXCFunctionHelpers.chainsSeparatedFunctions<Future<String>>(
+        chainId: chainId,
+        moonChainFunc: () => _getMoonchainTokenList(),
+        genevaFunc: () => _getGenevaTokenList(),
+        ethereumFunc: () => _getEthereumTokenList(),
+      );
+
+  static Future<String> _getMoonchainTokenList() async {
+    const fileName = Assets.moonchainTokenListPath;
+    return await MXCFile.readFileFromAssets(fileName);
+  }
+
+  static Future<String> _getGenevaTokenList() async {
+    const fileName = Assets.genevaTokenListPath;
+    return await MXCFile.readFileFromAssets(fileName);
+  }
+
+  static Future<String> _getEthereumTokenList() async {
+    const fileName = Assets.ethereumTokenListPath;
+    return await MXCFile.readFileFromAssets(fileName);
+  }
 }

@@ -7,3 +7,4 @@ export 'mxc_validation.dart';
 export 'mxc_array.dart';
 export 'mxc_path.dart';
 export 'mxc_file.dart';
+export 'mxc_chains.dart';
