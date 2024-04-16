@@ -46,4 +46,6 @@ class Web3Repository {
   EpochRepository get epochRepository => EpochRepository(_web3client);
 
   LauncherRepository get launcherRepository => LauncherRepository(_web3client);
+
+  IPFSRepository get ipfsRepository => IPFSRepository(_web3client);
 }

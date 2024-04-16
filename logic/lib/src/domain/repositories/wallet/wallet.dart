@@ -9,3 +9,4 @@ export 'token_contract.dart';
 export 'transaction_controller.dart';
 export 'tweets.dart';
 export 'url_launcher.dart';
+export 'ipfs.dart';

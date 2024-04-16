@@ -197,41 +197,6 @@ class NftContractRepository {
     }
   }
 
-  Future<DefaultIpfsGateways?> getDefaultIpfsGateways() async {
-    final response = await _restClient.client.get(
-      Uri.parse(
-        Urls.defaultIpfsGateway,
-      ),
-      headers: {'accept': 'application/json'},
-    );
-
-    if (response.statusCode == 200) {
-      final defaultIpfsGateways = DefaultIpfsGateways.fromJson(response.body);
-      return defaultIpfsGateways;
-    } else {
-      return null;
-    }
-  }
-
-  Future<bool> checkIpfsGateway(String url) async {
-    try {
-      final response = await _restClient.client.get(
-        Uri.parse(
-          url + Const.hashToTest,
-        ),
-        headers: {'accept': 'application/json'},
-      );
-
-      if (response.statusCode == 200) {
-        return true;
-      } else {
-        return false;
-      }
-    } catch (e) {
-      return false;
-    }
-  }
-
   Future<void> dispose() async {
     await _web3Client.dispose();
   }
