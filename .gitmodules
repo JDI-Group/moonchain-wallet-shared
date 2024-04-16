@@ -7,3 +7,6 @@
 [submodule "logic/assets/cache/ipfs-gateway-list"]
 	path = logic/assets/cache/ipfs-gateway-list
 	url = https://github.com/MXCzkEVM/ipfs-gateway-list.git
+[submodule "logic/assets/cache/mxc-tweets-list"]
+	path = logic/assets/cache/mxc-tweets-list
+	url = https://github.com/MXCzkEVM/mxc-tweets-list.git
