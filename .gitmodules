@@ -4,3 +4,6 @@
 [submodule "logic/assets/cache/wannseeswap-tokenlist"]
 	path = logic/assets/cache/wannseeswap-tokenlist
 	url = https://github.com/MXCzkEVM/wannseeswap-tokenlist.git
+[submodule "logic/assets/cache/ipfs-gateway-list"]
+	path = logic/assets/cache/ipfs-gateway-list
+	url = https://github.com/MXCzkEVM/ipfs-gateway-list.git
