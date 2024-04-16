@@ -17,4 +17,9 @@ class Assets {
   static const String genevaTokenListPath = '${tokenListPath}tokenlist.json';
   static const String ethereumTokenListPath =
       '${tokenListPath}tokenlist-ethereum.json';
+
+  static const String ipfsGatewayListPath =
+      'packages/$mxcLogic/assets/cache/ipfs-gateway-list/';
+  static const String ipfsGatewayListJson = '${ipfsGatewayListPath}ipfs_gateway_list.json';
+
 }

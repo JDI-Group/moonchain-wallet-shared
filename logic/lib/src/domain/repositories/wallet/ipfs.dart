@@ -1,6 +1,6 @@
 import 'package:http/http.dart';
 import 'package:mxc_logic/mxc_logic.dart';
-import 'package:mxc_logic/';
+import 'package:mxc_logic/src/data/api/client/web3_client.dart';
 
 class IPFSRepository {
   IPFSRepository(
@@ -10,8 +10,9 @@ class IPFSRepository {
   final DatadashClient _web3Client;
   final Client _restClient;
 
-  Future<DefaultIpfsGateways?> getDefaultIpfsGateways() {
-    
+  Future<DefaultIpfsGateways?> getDefaultIpfsGatewaysFromLocal() async {
+    final ipfsJson = await MXCFileHelpers.getIpfsGatewayListJson();
+    return DefaultIpfsGateways.fromJson(ipfsJson);
   }
 
   Future<DefaultIpfsGateways?> getDefaultIpfsGateways() async {

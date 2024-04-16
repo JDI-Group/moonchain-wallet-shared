@@ -35,4 +35,9 @@ class MXCFileHelpers {
     const fileName = Assets.ethereumTokenListPath;
     return await MXCFile.readFileFromAssets(fileName);
   }
+
+  static Future<String> getIpfsGatewayListJson() async {
+    const fileName = Assets.ipfsGatewayListJson;
+    return await MXCFile.readFileFromAssets(fileName);
+  }
 }
