@@ -10,25 +10,22 @@ class IPFSRepository {
   final DatadashClient _web3Client;
   final Client _restClient;
 
-  Future<DefaultIpfsGateways?> getDefaultIpfsGatewaysFromLocal() async {
+  Future<DefaultIpfsGateways> getDefaultIpfsGatewaysFromLocal() async {
     final ipfsJson = await MXCFileHelpers.getIpfsGatewayListJson();
     return DefaultIpfsGateways.fromJson(ipfsJson);
   }
 
-  Future<DefaultIpfsGateways?> getDefaultIpfsGateways() async {
-    final response = await _restClient.get(
-      Uri.parse(
-        Urls.defaultIpfsGateway,
+  Future<DefaultIpfsGateways> getDefaultIpfsGateways() async {
+    return await MXCFunctionHelpers.apiDataHandler<DefaultIpfsGateways>(
+      apiCall: () => _restClient.get(
+        Uri.parse(
+          Urls.defaultIpfsGateway,
+        ),
+        headers: {'accept': 'application/json'},
       ),
-      headers: {'accept': 'application/json'},
+      dataParseFunction: DefaultIpfsGateways.fromJson,
+      handleFailure: getDefaultIpfsGatewaysFromLocal,
     );
-
-    if (response.statusCode == 200) {
-      final defaultIpfsGateways = DefaultIpfsGateways.fromJson(response.body);
-      return defaultIpfsGateways;
-    } else {
-      return null;
-    }
   }
 
   Future<bool> checkIpfsGateway(String url) async {

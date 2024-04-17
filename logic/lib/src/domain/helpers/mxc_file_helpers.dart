@@ -37,7 +37,12 @@ class MXCFileHelpers {
   }
 
   static Future<String> getIpfsGatewayListJson() async {
-    const fileName = Assets.ipfsGatewayListJson;
+    const fileName = Assets.ipfsGatewayListJsonPath;
+    return await MXCFile.readFileFromAssets(fileName);
+  }
+
+  static Future<String> getTweetsListJson() async {
+    const fileName = Assets.tweetsListJsonPath;
     return await MXCFile.readFileFromAssets(fileName);
   }
 }
