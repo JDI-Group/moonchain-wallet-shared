@@ -12,15 +12,25 @@ class TweetsRepository {
   final DatadashClient _web3Client;
   final RestClient _restClient;
 
+  Future<DefaultTweets> getDefaultTweetsLocal() async {
+    final response = await MXCFileHelpers.getTweetsListJson();
+    final defaultTweets = DefaultTweets.fromJson(response);
+    return defaultTweets;
+  }
+
   Future<DefaultTweets> getDefaultTweets() async {
-    final response = await _restClient.client.get(
-      Uri.parse(
-        Urls.defaultTweets,
+    final defaultTweets =
+        await MXCFunctionHelpers.apiDataHandler<DefaultTweets>(
+      apiCall: () => _restClient.client.get(
+        Uri.parse(
+          Urls.defaultTweets,
+        ),
+        headers: {'accept': 'application/json'},
       ),
-      headers: {'accept': 'application/json'},
+      dataParseFunction: DefaultTweets.fromJson,
+      handleFailure: getDefaultTweetsLocal,
     );
 
-    final defaultTweets = DefaultTweets.fromJson(response.body);
     return defaultTweets;
   }
 }

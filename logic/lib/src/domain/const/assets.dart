@@ -20,6 +20,11 @@ class Assets {
 
   static const String ipfsGatewayListPath =
       'packages/$mxcLogic/assets/cache/ipfs-gateway-list/';
-  static const String ipfsGatewayListJson = '${ipfsGatewayListPath}ipfs_gateway_list.json';
+  static const String ipfsGatewayListJsonPath =
+      '${ipfsGatewayListPath}ipfs_gateway_list.json';
 
+  static const String tweetsListPath =
+      'packages/$mxcLogic/assets/cache/mxc-tweets-list/';
+  static const String tweetsListJsonPath =
+      '${tweetsListPath}tweets_list_v2.json';
 }

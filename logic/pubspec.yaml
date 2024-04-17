@@ -51,3 +51,5 @@ flutter:
     - assets/cache/MEP-1759-DApp-store/mxc_dapps_thumbnails/
     - assets/cache/wannseeswap-tokenlist/
     - assets/cache/wannseeswap-tokenlist/assets/
+    - assets/cache/ipfs-gateway-list/
+    - assets/cache/mxc-tweets-list/
