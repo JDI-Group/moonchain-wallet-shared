@@ -26,20 +26,22 @@ class ReviewApi extends Equatable {
         icons: data['icons'] == null
             ? null
             : Icons.fromMap(data['icons'] as Map<String, dynamic>),
+        icon: data['icon'],
       );
 
-  const ReviewApi({
-    this.url,
-    this.method,
-    this.headers,
-    this.body,
-    this.icons,
-  });
+  const ReviewApi(
+      {this.url,
+      this.method,
+      this.headers,
+      this.body,
+      this.icons,
+      this.icon});
   final String? url;
   final String? method;
   final Headers? headers;
   final Body? body;
   final Icons? icons;
+  final String? icon;
 
   Map<String, dynamic> toMap() => {
         'url': url,
@@ -47,6 +49,7 @@ class ReviewApi extends Equatable {
         'headers': headers?.toMap(),
         'body': body?.toMap(),
         'icons': icons?.toMap(),
+        'icon': icon
       };
 
   /// `dart:convert`
@@ -60,6 +63,7 @@ class ReviewApi extends Equatable {
     Headers? headers,
     Body? body,
     Icons? icons,
+    String? icon,
   }) {
     return ReviewApi(
       url: url ?? this.url,
@@ -67,6 +71,7 @@ class ReviewApi extends Equatable {
       headers: headers ?? this.headers,
       body: body ?? this.body,
       icons: icons ?? this.icons,
+      icon: icon ?? this.icon
     );
   }
 
@@ -74,5 +79,5 @@ class ReviewApi extends Equatable {
   bool get stringify => true;
 
   @override
-  List<Object?> get props => [url, method, headers, body, icons];
+  List<Object?> get props => [url, method, headers, body, icons, icon];
 }

@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
-import 'package:mxc_logic/src/domain/const/config.dart';
 
 import '../bookmark.dart';
 import 'app.dart';
@@ -33,6 +32,7 @@ class Dapp extends Equatable {
         icons: reviewApi?.icons,
         method: reviewApi?.method,
         url: reviewApi?.url,
+        icon: bookMark.image,
       ),
     );
   }
