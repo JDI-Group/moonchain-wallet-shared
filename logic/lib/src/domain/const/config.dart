@@ -30,7 +30,10 @@ class Config {
 
   /// It's in days
   static int transactionsHistoryLimit = 7;
-  
+
   static double dAppDoubleTapLowerBound = 0;
   static double dAppDoubleTapUpperBound = 200;
+
+  static int edgeScrollingSensitivity = 40;
+  static Duration dragScrollingDuration = const Duration(seconds: 1);
 }
