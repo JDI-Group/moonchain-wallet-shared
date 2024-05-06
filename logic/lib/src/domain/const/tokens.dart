@@ -14,7 +14,7 @@ class Tokens {
     symbol: 'XSD',
   );
   static const Token xsdTestnet = Token(
-    address: '0xB9506A80429Ee619C74D46a3276c622358795e2B',
+    address: '0xD28fce81516DCc53d2E320fd1C78e8449556c4f0',
     decimals: 18,
     chainId: Config.mxcTestnetChainId,
     name: 'XSD Token',
