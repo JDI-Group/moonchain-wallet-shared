@@ -75,6 +75,7 @@ class Dapp extends Equatable {
           iconLarge: '$prefix${reviewApi?.icons?.iconLarge}',
           iconSmall: '$prefix${reviewApi?.icons?.iconSmall}',
         ),
+        icon: reviewApi?.icon != null ? '$prefix${reviewApi?.icon}' : null,
         method: reviewApi?.method,
         url: reviewApi?.url,
       ),

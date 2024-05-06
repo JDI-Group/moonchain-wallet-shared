@@ -29,13 +29,14 @@ class ReviewApi extends Equatable {
         icon: data['icon'],
       );
 
-  const ReviewApi(
-      {this.url,
-      this.method,
-      this.headers,
-      this.body,
-      this.icons,
-      this.icon});
+  const ReviewApi({
+    this.url,
+    this.method,
+    this.headers,
+    this.body,
+    this.icons,
+    this.icon,
+  });
   final String? url;
   final String? method;
   final Headers? headers;
@@ -71,7 +72,7 @@ class ReviewApi extends Equatable {
       headers: headers ?? this.headers,
       body: body ?? this.body,
       icons: icons ?? this.icons,
-      icon: icon ?? this.icon
+      icon: icon ?? this.icon,
     );
   }
 
