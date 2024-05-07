@@ -20,6 +20,14 @@ class FontTheme {
         decoration: TextDecoration.none,
       );
 
+  TextStyle get _baseTextStyleWithoutColor => const TextStyle(
+        package: mxcUiPackageName,
+        fontFamily: 'Roboto',
+        fontWeight: FontWeight.w400,
+        height: 1.33333,
+        decoration: TextDecoration.none,
+      );
+
   TextStylePack get caption1 =>
       TextStylePack(_colorsTheme, _baseTextStyle.copyWith(fontSize: 12));
   TextStylePack get caption2 => TextStylePack(_colorsTheme,
@@ -32,6 +40,9 @@ class FontTheme {
 
   TextStylePack get body1 =>
       TextStylePack(_colorsTheme, _baseTextStyle.copyWith(fontSize: 16));
+  // Without color
+  TextStylePack get body1Cl => TextStylePack(
+      _colorsTheme, _baseTextStyleWithoutColor.copyWith(fontSize: 16));
   TextStylePack get body2 => TextStylePack(_colorsTheme,
       _baseTextStyle.copyWith(fontWeight: FontWeight.w400, fontSize: 18));
 
