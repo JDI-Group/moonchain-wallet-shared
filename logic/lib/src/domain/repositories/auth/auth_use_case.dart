@@ -44,10 +44,11 @@ class AuthUseCase {
     await authCacheRepository?.loadCache();
 
     return Account(
-        name: name,
-        privateKey: authStorageRepository.privateKey!,
-        address: authStorageRepository.publicAddress!,
-        isCustom: true);
+      name: name,
+      privateKey: authStorageRepository.privateKey!,
+      address: authStorageRepository.publicAddress!,
+      isCustom: true,
+    );
   }
 
   void resetNetwork(Network network) async {

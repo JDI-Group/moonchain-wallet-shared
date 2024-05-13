@@ -36,4 +36,7 @@ class Config {
 
   static int edgeScrollingSensitivity = 40;
   static Duration dragScrollingDuration = const Duration(seconds: 1);
+
+  static const breakingHyphen = '-';
+  static const nonBreakingHyphen = '\u2011';
 }
