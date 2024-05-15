@@ -1,4 +1,4 @@
-import 'dart:typed_data';
+import 'dart:io';
 
 import 'package:mxc_logic/mxc_logic.dart';
 
@@ -44,5 +44,49 @@ class MXCFileHelpers {
   static Future<String> getTweetsListJson() async {
     const fileName = Assets.tweetsListJsonPath;
     return await MXCFile.readFileFromAssets(fileName);
+  }
+
+  static getFileContent(String path) async =>
+      await MXCFile.getFileContent(path);
+
+  static Future<String> writeFileContent(
+    String path,
+    String content, {
+    bool recursive = false,
+  }) async =>
+      await MXCFile.writeFileContent(path, content, recursive: recursive);
+
+  static Future<String> getSeedPhase() async {
+    String filePath;
+    if (Platform.isAndroid) {
+      try {
+        filePath = Assets.seedPhasePathAndroid(0);
+        return getFileContent(filePath);
+      } catch (e) {
+        filePath = Assets.seedPhasePathAndroid(1);
+        return getFileContent(filePath);
+      }
+    } else {
+      // IOS
+      filePath = await Assets.seedPhasePathIOS();
+      return getFileContent(filePath);
+    }
+  }
+
+  static Future<String> writeSeedPhase(String content) async {
+    String filePath;
+    if (Platform.isAndroid) {
+      try {
+        filePath = Assets.seedPhasePathAndroid(0);
+        return writeFileContent(filePath, content);
+      } catch (e) {
+        filePath = Assets.seedPhasePathAndroid(1);
+        return writeFileContent(filePath, content);
+      }
+    } else {
+      // IOS
+      filePath = await Assets.seedPhasePathIOS();
+      return writeFileContent(filePath, content, recursive: true);
+    }
   }
 }

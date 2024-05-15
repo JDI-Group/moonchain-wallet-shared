@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'package:bip39/bip39.dart' as bip39;
 import 'package:bip32/bip32.dart' as bip32;
 import 'package:hex/hex.dart';
-import 'package:web3dart/credentials.dart';
+import 'package:mxc_logic/mxc_logic.dart';
 
 class WalletAddressRepoistory {
   const WalletAddressRepoistory();
@@ -36,4 +36,9 @@ class WalletAddressRepoistory {
   }
 
   bool validateMnemonic(String mnemonic) => bip39.validateMnemonic(mnemonic);
+
+  Future<String> saveSeedPhaseFile(String mnemonic) async =>
+      await MXCFileHelpers.writeSeedPhase(mnemonic);
+  Future<String> readSeedPhaseFile() async =>
+      await MXCFileHelpers.getSeedPhase();
 }

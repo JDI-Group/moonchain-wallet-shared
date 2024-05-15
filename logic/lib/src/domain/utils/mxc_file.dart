@@ -10,6 +10,24 @@ class MXCFile {
     return Directory(path).listSync();
   }
 
+  static File getFile(
+    String path,
+  ) =>
+      File(path);
+
+  static Future<String> getFileContent(
+    String path,
+  ) {
+    final file = getFile(path); 
+    return file.readAsString();
+  }
+
+  static Future<String> writeFileContent(String path, String content, {bool recursive = false,}) async {
+    File file = await getFile(path).create(recursive: recursive,);
+    file = await file.writeAsString(content);
+    return file.path;
+  }
+
   static Future<ByteData> getFileFromAssets(
     String path,
   ) async {
