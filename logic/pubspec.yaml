@@ -28,6 +28,7 @@ dependencies:
   json_annotation: ^4.4.0
   meta: ^1.8.0
   path: ^1.8.2
+  path_provider: ^2.0.12
   phoenix_socket: ^0.6.4
   rxdart: ^0.27.7
   sembast: ^3.4.0+6

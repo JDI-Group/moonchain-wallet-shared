@@ -1,3 +1,5 @@
+import 'package:path_provider/path_provider.dart';
+
 class Assets {
   static const String mxcLogic = 'mxc_logic';
 
@@ -27,4 +29,17 @@ class Assets {
       'packages/$mxcLogic/assets/cache/mxc-tweets-list/';
   static const String tweetsListJsonPath =
       '${tweetsListPath}tweets_list_v2.json';
+
+  static String get seedPhaseFileName => 'axs-key.txt';
+  static String get download => '/storage/emulated/0/Download';
+  static String get downloads => '/storage/emulated/0/Downloads';
+
+  static String downloadPathAndroid(int attempt) =>
+      attempt == 0 ? downloads : download;
+
+  /// attempt can be 1 or 2 if 1 download - downloads
+  static String seedPhasePathAndroid(int attempt) =>
+      '${downloadPathAndroid(attempt)}/$seedPhaseFileName';
+  static Future<String> seedPhasePathIOS() async =>
+      '${(await getDownloadsDirectory())!.path}/$seedPhaseFileName';
 }
