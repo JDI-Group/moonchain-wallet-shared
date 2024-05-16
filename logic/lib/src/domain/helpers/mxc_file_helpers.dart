@@ -78,15 +78,19 @@ class MXCFileHelpers {
     if (Platform.isAndroid) {
       try {
         filePath = Assets.seedPhasePathAndroid(0);
-        return writeFileContent(filePath, content);
+        return await writeFileContent(filePath, content);
       } catch (e) {
-        filePath = Assets.seedPhasePathAndroid(1);
-        return writeFileContent(filePath, content);
+        if (e is PathNotFoundException) {
+          filePath = Assets.seedPhasePathAndroid(1);
+          return await writeFileContent(filePath, content);
+        } else {
+          rethrow;
+        }
       }
     } else {
       // IOS
       filePath = await Assets.seedPhasePathIOS();
-      return writeFileContent(filePath, content, recursive: true);
+      return await writeFileContent(filePath, content, recursive: true);
     }
   }
 }

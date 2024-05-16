@@ -35,7 +35,7 @@ class Assets {
   static String get downloads => '/storage/emulated/0/Downloads';
 
   static String downloadPathAndroid(int attempt) =>
-      attempt == 0 ? downloads : download;
+      attempt == 0 ? download : downloads;
 
   /// attempt can be 1 or 2 if 1 download - downloads
   static String seedPhasePathAndroid(int attempt) =>
