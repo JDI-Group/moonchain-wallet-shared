@@ -1,6 +1,4 @@
 import 'dart:io';
-import 'dart:typed_data';
-
 import 'package:flutter/services.dart';
 
 class MXCFile {
@@ -18,12 +16,18 @@ class MXCFile {
   static Future<String> getFileContent(
     String path,
   ) {
-    final file = getFile(path); 
+    final file = getFile(path);
     return file.readAsString();
   }
 
-  static Future<String> writeFileContent(String path, String content, {bool recursive = false,}) async {
-    File file = await getFile(path).create(recursive: recursive,);
+  static Future<String> writeFileContent(
+    String path,
+    String content, {
+    bool recursive = false,
+  }) async {
+    File file = await getFile(path).create(
+      recursive: recursive,
+    );
     file = await file.writeAsString(content);
     return file.path;
   }

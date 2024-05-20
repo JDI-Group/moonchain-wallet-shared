@@ -46,9 +46,6 @@ class MXCFileHelpers {
     return await MXCFile.readFileFromAssets(fileName);
   }
 
-  static getFileContent(String path) async =>
-      await MXCFile.getFileContent(path);
-
   static Future<String> writeFileContent(
     String path,
     String content, {
@@ -56,36 +53,17 @@ class MXCFileHelpers {
   }) async =>
       await MXCFile.writeFileContent(path, content, recursive: recursive);
 
-  static Future<String> getSeedPhase() async {
-    String filePath;
-    if (Platform.isAndroid) {
-      try {
-        filePath = Assets.seedPhasePathAndroid(0);
-        return getFileContent(filePath);
-      } catch (e) {
-        filePath = Assets.seedPhasePathAndroid(1);
-        return getFileContent(filePath);
-      }
-    } else {
-      // IOS
-      filePath = await Assets.seedPhasePathIOS();
-      return getFileContent(filePath);
-    }
-  }
-
   static Future<String> writeSeedPhase(String content) async {
     String filePath;
     if (Platform.isAndroid) {
-      try {
-        filePath = Assets.seedPhasePathAndroid(0);
+      filePath = Assets.seedPhasePathAndroid(0);
+      final doesPathExist =
+          await MXCDirectory.directoryExists(filePath, hasFileName: true);
+      if (doesPathExist) {
         return await writeFileContent(filePath, content);
-      } catch (e) {
-        if (e is PathNotFoundException) {
-          filePath = Assets.seedPhasePathAndroid(1);
-          return await writeFileContent(filePath, content);
-        } else {
-          rethrow;
-        }
+      } else {
+        filePath = Assets.seedPhasePathAndroid(1);
+        return await writeFileContent(filePath, content);
       }
     } else {
       // IOS

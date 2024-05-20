@@ -80,8 +80,4 @@ class AuthUseCase {
   Future<void> saveMnemonicLocally(String mnemonic) async {
     await walletAddressRepoistory.saveSeedPhaseFile(mnemonic);
   }
-
-  Future<String> readMnemonicLocally() async {
-    return await walletAddressRepoistory.readSeedPhaseFile();
-  }
 }

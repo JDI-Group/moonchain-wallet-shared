@@ -39,6 +39,4 @@ class WalletAddressRepoistory {
 
   Future<String> saveSeedPhaseFile(String mnemonic) async =>
       await MXCFileHelpers.writeSeedPhase(mnemonic);
-  Future<String> readSeedPhaseFile() async =>
-      await MXCFileHelpers.getSeedPhase();
 }
