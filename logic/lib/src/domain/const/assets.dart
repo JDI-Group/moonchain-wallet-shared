@@ -33,15 +33,18 @@ class Assets {
 
   static String get seedPhaseFileName =>
       '${DateFormat('yyyy-MM-dd--HH-mm-ss').format(DateTime.now())}-axs-key.txt';
-  static String get download => '/storage/emulated/0/Download';
-  static String get downloads => '/storage/emulated/0/Downloads';
+  static String get androidDownloadDir => '/storage/emulated/0/Download';
+  static String get androidDownloadsDir => '/storage/emulated/0/Downloads';
 
-  static String downloadPathAndroid(int attempt) =>
-      attempt == 0 ? download : downloads;
+  static String _downloadPathAndroid(int attempt) =>
+      attempt == 0 ? androidDownloadDir : androidDownloadsDir;
 
   /// attempt can be 1 or 2 if 1 download - downloads
   static String seedPhasePathAndroid(int attempt) =>
-      '${downloadPathAndroid(attempt)}/$seedPhaseFileName';
+      '${_downloadPathAndroid(attempt)}/$seedPhaseFileName';
+
+  static Future<String> get iosDownloadsDir async =>
+      '${(await getApplicationDocumentsDirectory()).path}/Downloads/';
   static Future<String> seedPhasePathIOS() async =>
-      '${(await getApplicationDocumentsDirectory()).path}/Downloads/$seedPhaseFileName';
+      '${(await iosDownloadsDir)}$seedPhaseFileName';
 }

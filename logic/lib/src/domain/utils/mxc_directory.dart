@@ -6,10 +6,25 @@ class MXCDirectory {
     String path, {
     bool hasFileName = false,
   }) async {
-    if (hasFileName) {
-      path = pathTool.dirname(path);
-    }
+    path = hasFileNameHandler(hasFileName, path);
     Directory directory = Directory(path);
     return await directory.exists();
+  }
+
+  static Future<Directory> createDirectory(
+    String path, {
+    bool hasFileName = false,
+  }) async {
+    path = hasFileNameHandler(hasFileName, path);
+    Directory directory = Directory(path);
+    return await directory.create();
+  }
+
+  static String hasFileNameHandler(bool hasFileName, String path) {
+    if (hasFileName) {
+      return pathTool.dirname(path);
+    } else {
+      return path;
+    }
   }
 }

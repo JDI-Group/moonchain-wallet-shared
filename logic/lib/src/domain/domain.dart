@@ -10,3 +10,4 @@ export 'const/const.dart';
 export 'utils/utils.dart';
 export 'helpers/helpers.dart';
 export 'package:web3dart/web3dart.dart';
+export 'use_cases/use_cases.dart';
