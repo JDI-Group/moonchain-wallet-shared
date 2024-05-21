@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 
 class Assets {
@@ -30,7 +31,8 @@ class Assets {
   static const String tweetsListJsonPath =
       '${tweetsListPath}tweets_list_v2.json';
 
-  static String get seedPhaseFileName => 'axs-key.txt';
+  static String get seedPhaseFileName =>
+      '${DateFormat('yyyy-MM-dd--HH-mm-ss').format(DateTime.now())}-axs-key.txt';
   static String get download => '/storage/emulated/0/Download';
   static String get downloads => '/storage/emulated/0/Downloads';
 
@@ -41,5 +43,5 @@ class Assets {
   static String seedPhasePathAndroid(int attempt) =>
       '${downloadPathAndroid(attempt)}/$seedPhaseFileName';
   static Future<String> seedPhasePathIOS() async =>
-      '${(await getDownloadsDirectory())!.path}/$seedPhaseFileName';
+      '${(await getApplicationDocumentsDirectory()).path}/Downloads/$seedPhaseFileName';
 }
