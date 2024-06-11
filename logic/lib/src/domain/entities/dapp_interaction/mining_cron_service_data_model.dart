@@ -7,7 +7,8 @@ import 'package:mxc_logic/mxc_logic.dart';
 
 class MiningCronServiceDataModel {
   factory MiningCronServiceDataModel.fromDAppHooksData(
-      DAppHooksModel dappHooksModel) {
+    DAppHooksModel dappHooksModel,
+  ) {
     return MiningCronServiceDataModel(
       minersList: dappHooksModel.minerHooks.selectedMiners,
       time: dappHooksModel.minerHooks.time,

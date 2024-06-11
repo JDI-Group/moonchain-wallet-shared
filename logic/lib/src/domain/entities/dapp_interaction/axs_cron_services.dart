@@ -1,14 +1,13 @@
-import 'dart:convert';
 
-import 'dapp_interaction.dart';
-
-enum AXSCronServices { miningAutoClaimCron }
+enum AXSCronServices { miningAutoClaimCron, blueberryRingCron }
 
 extension AXSCronServicesExtension on AXSCronServices {
   static AXSCronServices fromString(String value) {
     switch (value) {
       case 'miningAutoClaimCron':
         return AXSCronServices.miningAutoClaimCron;
+      case 'blueberryRingCron':
+        return AXSCronServices.blueberryRingCron;        
       default:
         throw 'Unknown service';
     }
