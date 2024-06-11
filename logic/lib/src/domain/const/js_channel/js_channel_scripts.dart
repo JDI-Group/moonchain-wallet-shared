@@ -13,6 +13,13 @@ class JSChannelScripts {
         window.dispatchEvent(event);
       ''';
 
+  static String axsBluetoothObjectInjectScript() => '''
+var requestDeviceFunction = async function(options) {
+window.axs?.callHandler('requestDevice', { cron: { name: 'blueberryRingCron', data: options } })
+}
+navigator.bluetooth = { requestDevice: requestDeviceFunction }
+''';
+
   static String axsWalletJSHandler(
     String axsWalletJSObjectName,
     String eventName,
