@@ -14,10 +14,11 @@ class JSChannelScripts {
       ''';
 
   static String axsBluetoothObjectInjectScript() => '''
-var requestDeviceFunction = async function(options) {
-window.axs?.callHandler('requestDevice', { cron: { name: 'blueberryRingCron', data: options } })
-}
-navigator.bluetooth = { requestDevice: requestDeviceFunction }
+var requestDeviceFunction = async function (options) {
+  var resp = await window.axs?.callHandler("requestDevice", options);
+  return resp;
+};
+navigator.bluetooth = { requestDevice: requestDeviceFunction };
 ''';
 
   static String axsWalletJSHandler(
