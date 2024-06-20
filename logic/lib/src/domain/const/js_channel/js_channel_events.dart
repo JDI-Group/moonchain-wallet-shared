@@ -26,4 +26,7 @@ class JSChannelEvents {
   static const String bluetoothRemoteGATTServerGetPrimaryService = 'BluetoothRemoteGATTServer.getPrimaryService';
   // .disconnect
   // .getPrimaryServices
+
+  // BluetoothRemoteGATTCharacteristic
+  static const String bluetoothRemoteGATTCharacteristicStartNotifications = 'BluetoothRemoteGATTCharacteristic.startNotifications';
 }
