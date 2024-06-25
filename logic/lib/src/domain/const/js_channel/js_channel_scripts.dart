@@ -13,14 +13,6 @@ class JSChannelScripts {
         window.dispatchEvent(event);
       ''';
 
-  static String axsBluetoothObjectInjectScript() => '''
-var requestDeviceFunction = async function (options) {
-  var resp = await window.axs?.callHandler("requestDevice", options);
-  return resp;
-};
-navigator.bluetooth = { requestDevice: requestDeviceFunction };
-''';
-
   static String axsWalletJSHandler(
     String axsWalletJSObjectName,
     String eventName,
