@@ -29,4 +29,5 @@ class JSChannelEvents {
 
   // BluetoothRemoteGATTCharacteristic
   static const String bluetoothRemoteGATTCharacteristicStartNotifications = 'BluetoothRemoteGATTCharacteristic.startNotifications';
+  static const String bluetoothRemoteGATTCharacteristicStopNotifications = 'BluetoothRemoteGATTCharacteristic.stopNotifications';
 }
