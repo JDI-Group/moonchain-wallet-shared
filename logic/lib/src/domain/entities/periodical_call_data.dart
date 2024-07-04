@@ -104,15 +104,20 @@ PeriodicalCallDuration getPeriodicalCallDurationFromInt(int duration) {
 
 class PeriodicalCallData {
   factory PeriodicalCallData.getDefault() => PeriodicalCallData(
-      serviceEnabled: false,
-      lowBalanceLimit: 1000,
-      expectedTransactionFee: 300,
-      lasEpoch: 0,
-      expectedEpochOccurrence: 6,
-      duration: 15,
-      lowBalanceLimitEnabled: false,
-      expectedTransactionFeeEnabled: false,
-      expectedEpochOccurrenceEnabled: false);
+        serviceEnabled: false,
+        lowBalanceLimit: 1000,
+        expectedTransactionFee: 300,
+        lasEpoch: 0,
+        expectedEpochOccurrence: 6,
+        duration: 15,
+        lowBalanceLimitEnabled: false,
+        expectedTransactionFeeEnabled: false,
+        expectedEpochOccurrenceEnabled: false,
+        activityReminderEnabled: false,
+        sleepInsightEnabled: false,
+        heartAlertEnabled: false,
+        lowBatteryEnabled: false,
+      );
   factory PeriodicalCallData.fromJson(String source) =>
       PeriodicalCallData.fromMap(json.decode(source));
 
@@ -129,6 +134,10 @@ class PeriodicalCallData {
           map['expectedTransactionFeeEnabled'] ?? false,
       expectedEpochOccurrenceEnabled:
           map['expectedEpochOccurrenceEnabled'] ?? false,
+      activityReminderEnabled: map['activityReminderEnabled'] ?? false,
+      sleepInsightEnabled: map['sleepInsightEnabled'] ?? false,
+      heartAlertEnabled: map['heartAlertEnabled'] ?? false,
+      lowBatteryEnabled: map['lowBatteryEnabled'] ?? false,
     );
   }
   PeriodicalCallData({
@@ -141,6 +150,10 @@ class PeriodicalCallData {
     required this.lowBalanceLimitEnabled,
     required this.expectedTransactionFeeEnabled,
     required this.expectedEpochOccurrenceEnabled,
+    required this.activityReminderEnabled,
+    required this.sleepInsightEnabled,
+    required this.heartAlertEnabled,
+    required this.lowBatteryEnabled,
   });
 
   // In MXC
@@ -159,6 +172,11 @@ class PeriodicalCallData {
   bool expectedTransactionFeeEnabled;
   bool expectedEpochOccurrenceEnabled;
 
+  bool activityReminderEnabled;
+  bool sleepInsightEnabled;
+  bool heartAlertEnabled;
+  bool lowBatteryEnabled;
+
   PeriodicalCallData copyWith({
     bool? serviceEnabled,
     double? lowBalanceLimit,
@@ -169,6 +187,10 @@ class PeriodicalCallData {
     bool? lowBalanceLimitEnabled,
     bool? expectedTransactionFeeEnabled,
     bool? expectedEpochOccurrenceEnabled,
+    bool? activityReminderEnabled,
+    bool? sleepInsightEnabled,
+    bool? heartAlertEnabled,
+    bool? lowBatteryEnabled,
   }) {
     return PeriodicalCallData(
       serviceEnabled: serviceEnabled ?? this.serviceEnabled,
@@ -185,6 +207,11 @@ class PeriodicalCallData {
           expectedTransactionFeeEnabled ?? this.expectedTransactionFeeEnabled,
       expectedEpochOccurrenceEnabled:
           expectedEpochOccurrenceEnabled ?? this.expectedEpochOccurrenceEnabled,
+      activityReminderEnabled:
+          activityReminderEnabled ?? this.activityReminderEnabled,
+      sleepInsightEnabled: sleepInsightEnabled ?? this.sleepInsightEnabled,
+      heartAlertEnabled: heartAlertEnabled ?? this.heartAlertEnabled,
+      lowBatteryEnabled: lowBatteryEnabled ?? this.lowBatteryEnabled,
     );
   }
 
@@ -199,6 +226,10 @@ class PeriodicalCallData {
       'lowBalanceLimitEnabled': lowBalanceLimitEnabled,
       'expectedTransactionFeeEnabled': expectedTransactionFeeEnabled,
       'expectedEpochOccurrenceEnabled': expectedEpochOccurrenceEnabled,
+      'activityReminderEnabled': activityReminderEnabled,
+      'sleepInsightEnabled': sleepInsightEnabled,
+      'heartAlertEnabled': heartAlertEnabled,
+      'lowBatteryEnabled': lowBatteryEnabled,
     };
   }
 
@@ -206,7 +237,7 @@ class PeriodicalCallData {
 
   @override
   String toString() {
-    return 'PeriodicalCallData(serviceEnabled: $serviceEnabled, lowBalanceLimit: $lowBalanceLimit, expectedTransactionFee: $expectedTransactionFee, lasEpoch: $lasEpoch, expectedEpochOccurrence: $expectedEpochOccurrence, duration: $duration, lowBalanceLimitEnabled: $lowBalanceLimitEnabled, expectedTransactionFeeEnabled: $expectedTransactionFeeEnabled, expectedEpochOccurrenceEnabled: $expectedEpochOccurrenceEnabled)';
+    return 'PeriodicalCallData(serviceEnabled: $serviceEnabled, lowBalanceLimit: $lowBalanceLimit, expectedTransactionFee: $expectedTransactionFee, lasEpoch: $lasEpoch, expectedEpochOccurrence: $expectedEpochOccurrence, duration: $duration, lowBalanceLimitEnabled: $lowBalanceLimitEnabled, expectedTransactionFeeEnabled: $expectedTransactionFeeEnabled, expectedEpochOccurrenceEnabled: $expectedEpochOccurrenceEnabled, activityReminderEnabled: $activityReminderEnabled, sleepInsightEnabled: $sleepInsightEnabled, heartAlertEnabled: $heartAlertEnabled, lowBatteryEnabled: $lowBatteryEnabled,)';
   }
 
   @override
@@ -222,7 +253,12 @@ class PeriodicalCallData {
         other.duration == duration &&
         other.lowBalanceLimitEnabled == lowBalanceLimitEnabled &&
         other.expectedTransactionFeeEnabled == expectedTransactionFeeEnabled &&
-        other.expectedEpochOccurrenceEnabled == expectedEpochOccurrenceEnabled;
+        other.expectedEpochOccurrenceEnabled ==
+            expectedEpochOccurrenceEnabled &&
+        other.activityReminderEnabled == activityReminderEnabled &&
+        other.sleepInsightEnabled == sleepInsightEnabled &&
+        other.heartAlertEnabled == heartAlertEnabled &&
+        other.lowBatteryEnabled == lowBatteryEnabled;
   }
 
   @override
@@ -235,6 +271,10 @@ class PeriodicalCallData {
         duration.hashCode ^
         lowBalanceLimitEnabled.hashCode ^
         expectedTransactionFeeEnabled.hashCode ^
-        expectedEpochOccurrenceEnabled.hashCode;
+        expectedEpochOccurrenceEnabled.hashCode ^
+        activityReminderEnabled.hashCode ^
+        sleepInsightEnabled.hashCode ^
+        heartAlertEnabled.hashCode ^
+        lowBatteryEnabled.hashCode;
   }
 }
