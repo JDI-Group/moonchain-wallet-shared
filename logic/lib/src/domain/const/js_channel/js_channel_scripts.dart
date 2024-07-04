@@ -4,7 +4,11 @@ class JSChannelScripts {
   static String axsWalletObjectInjectScript(
     String axsWalletJSObjectName,
   ) =>
-      'window.$axsWalletJSObjectName = { callHandler: window.flutter_inappwebview.callHandler }';
+      '''
+(function(){
+window.$axsWalletJSObjectName = { callHandler: window.flutter_inappwebview.callHandler }
+}) ();
+''';
   static String axsWalletReadyInjectScript(
     String axsReadyEvent,
   ) =>
@@ -35,8 +39,11 @@ class JSChannelScripts {
                 isMetaMask: true
               }
             }''';
-  static const String clipboardHandlerScript =
-      'javascript:navigator.clipboard.writeText = (msg) => { return window.flutter_inappwebview?.callHandler("${JSChannelEvents.axsWalletCopyClipboard}", msg); }';
+  static const String clipboardHandlerScript = '''
+(function(){
+    javascript:navigator.clipboard.writeText = (msg) => { return window.flutter_inappwebview?.callHandler("${JSChannelEvents.axsWalletCopyClipboard}", msg); }
+}) ();
+      ''';
 
   static const String overScrollScript = '''
       var pStart = { x: 0, y: 0 };
