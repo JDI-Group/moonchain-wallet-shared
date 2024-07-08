@@ -13,8 +13,10 @@ window.$axsWalletJSObjectName = { callHandler: window.flutter_inappwebview.callH
     String axsReadyEvent,
   ) =>
       '''
+(function(){
         const event = new CustomEvent('$axsReadyEvent', {});
         window.dispatchEvent(event);
+}) ();
       ''';
 
   static String axsWalletJSHandler(
@@ -22,7 +24,11 @@ window.$axsWalletJSObjectName = { callHandler: window.flutter_inappwebview.callH
     String eventName,
     Map<String, dynamic> data,
   ) =>
-      'window.$axsWalletJSObjectName.callHandler(\'$eventName\', $data)';
+      '''
+(function(){
+window.$axsWalletJSObjectName.callHandler(\'$eventName\', $data)
+}) ();
+''';
 
   static String walletProviderInfoScript(
     int chainId,
