@@ -93,7 +93,7 @@ class Urls {
   }
 
   static const String axsTermsConditions =
-      'https://doc.mxc.com/docs/Resources/tns';
+      'https://doc.moonchain.com/docs/Resources/tns/';
   static const String axsPrivacy = 'assets/pdf/privacy.pdf';
 
   static const String gateio = 'https://gate.io/';
