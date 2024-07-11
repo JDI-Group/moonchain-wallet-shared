@@ -3,8 +3,8 @@ class BackgroundExecutionConfig {
   /// executed, NOTE : It's in minutes.
   static const axsBackgroundServiceInterval = 15;
 
-  static const String axsPeriodicalTask = 'com.mxc.axswallet.periodicalTasks';
-  static const String dappHookTasks = 'com.mxc.axswallet.dappHooksTasks';
+  static const String notificationsTask = 'com.mxc.axswallet.notificationsTask';
+  static const String wifiHooksTask = 'com.mxc.axswallet.wifiHooksTask';
   static const String minerAutoClaimTask =
       'com.mxc.axswallet.minerAutoClaimTask';
 
