@@ -49,7 +49,7 @@ class EpochRepository {
       final epochReleaseTime = epochReleaseTimes[i];
       final expired = DateTime.now().millisecondsSinceEpoch ~/ 1000 -
               epochReleaseTime.toInt() >
-          3600 * 24;
+          3600 * 24 * 7;
 
       data.add(
         EpochModel(
