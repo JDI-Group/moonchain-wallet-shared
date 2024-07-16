@@ -61,7 +61,8 @@ class Urls {
       );
 
   static const String mxcMainnetNftMarketPlace = 'https://nft.mxc.com/';
-  static const String mxcTestnetNftMarketPlace = 'https://wannsee-nft.mxc.com/';
+  static const String mxcTestnetNftMarketPlace =
+      'https://geneva-nft.moonchain.com/';
   static const String mxcStatus = 'https://mxc.instatus.com/';
 
   static const String dappRoot =
@@ -81,7 +82,7 @@ class Urls {
 
   /// Used to retrieve the latest epoch details
   static String mepEpochListTestnet(int page, int pageLimit) =>
-      'https://wannsee-mining-api.matchx.io/mep2542/getEpochList?page=$page&limit=$pageLimit';
+      'https://geneva-mining-api.matchx.io/mep2542/getEpochList?page=$page&limit=$pageLimit';
   static String mepEpochListMainnet(int page, int pageLimit) =>
       'https://mining-api.matchx.io/mep2542/getEpochList?page=$page&limit=$pageLimit';
 
@@ -102,7 +103,7 @@ class Urls {
   static const String cryptocom = 'https://crypto.com/';
 
   static const String mainnetL3Bridge = 'https://erc20.mxc.com/';
-  static const String testnetL3Bridge = 'https://wannsee-erc20.mxc.com/';
+  static const String testnetL3Bridge = 'https://geneva-erc20.moonchain.com/';
 
   static String mainnetMns(String name) =>
       'https://mns.mxc.com/$name.mxc/register';
@@ -153,10 +154,10 @@ class Urls {
   static const String verifyMerkleProof = 'api/verifier/verifyMerkleProof';
 
   static const String minerDappApiTestnet =
-      'https://wannsee-mining-api.matchx.io/';
+      'https://geneva-mining-api.matchx.io/';
   static const String minerDappApiMainnet = 'https://mining-api.matchx.io/';
 
-  static const minerDappTestnet = 'https://wannsee-mining.matchx.io/';
+  static const minerDappTestnet = 'https://geneva-mining.matchx.io/';
   static const minerDappMainnet = 'https://mining.matchx.io/';
 
   static String networkL3Bridge(int chainId) =>
