@@ -6,7 +6,14 @@ class JSChannelScripts {
   ) =>
       '''
 (function(){
-window.$axsWalletJSObjectName = { callHandler: window.flutter_inappwebview.callHandler }
+  const axsJSChannelCallHandler = async (eventName, data) => {
+    const response = await window.axs?.callHandler(eventName, data);
+    if (response.status !== undefined && response.status === "failed") {
+      throw response.message;
+    }
+    return response;
+  };
+window.$axsWalletJSObjectName = { callHandler: window.flutter_inappwebview.callHandler,  callHandlerWrapper: axsJSChannelCallHandler,}
 }) ();
 ''';
   static String axsWalletReadyInjectScript(
