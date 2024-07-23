@@ -7,6 +7,8 @@ class BackgroundExecutionConfig {
   static const String wifiHooksTask = 'com.mxc.axswallet.wifiHooksTask';
   static const String minerAutoClaimTask =
       'com.mxc.axswallet.minerAutoClaimTask';
+  static const String blueberryAutoSyncTask =
+      'com.mxc.axswallet.blueberryAutoSyncTask';
 
   static DateTime defaultTimeForMinerDapp = DateTime(2024, 1, 1, 13, 0, 0);
 
