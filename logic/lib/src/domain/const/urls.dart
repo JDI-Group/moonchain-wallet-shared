@@ -164,10 +164,25 @@ class Urls {
       MXCChains.isMXCMainnet(chainId) ? mainnetL3Bridge : testnetL3Bridge;
 
   static String getMepGraphQlLink(int chainId) =>
-      MXCChains.isMXCMainnet(chainId) ? mepGraphQlMainnet : mepGraphQlGNova;
+      MXCChains.isMXCMainnet(chainId) ? mepGraphQlMainnet : mepGraphQlGeneva;
 
   static String mepGraphQlMainnet =
       'https://mxc-graph.mxc.com/subgraphs/name/mxczkevm/mep1004-graph';
-  static String mepGraphQlGNova =
+  static String mepGraphQlGeneva =
       'https://mxc-graph-node.mxc.com/subgraphs/name/mxczkevm/mep1004-graph';
+
+  static String getBlueberryRingDapp(int chainId) =>
+      MXCFunctionHelpers.mxcChainsSeparatedFunctions(
+        chainId: chainId,
+        mainnetFunc: () => mainnetApiBaseUrl,
+        testnetFunc: () => testnetApiBaseUrl,
+      );
+
+  // Ring
+  static const String mainnetBlueberryRingDapp =
+      'https://app.blueberryring.com/';
+  static const String testnetBlueberryRingDapp =
+      'https://testnet.blueberryring.com/';
+
+  static const blueberryRingDappClaim = 'api/claim';
 }
