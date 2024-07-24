@@ -8,7 +8,8 @@ enum MXCContacts {
   ensResolver,
   ensFallbackRegistry,
   router,
-  doitDevice
+  doitDevice,
+  health
 }
 
 class ContractAddresses {
@@ -54,6 +55,7 @@ class ContractAddresses {
       MXCContacts.ensResolver: testnetEnsAddresses.ensResolver,
       MXCContacts.ensFallbackRegistry: testnetEnsAddresses.ensFallbackRegistry,
       MXCContacts.doitDevice: doitRingDeviceTestnet,
+      MXCContacts.health: healthTestnet,
     },
     Config.mxcMainnetChainId: {
       MXCContacts.mep2542: mep2542AddressMainnet,
@@ -64,6 +66,7 @@ class ContractAddresses {
       MXCContacts.ensResolver: mainnetEnsAddresses.ensResolver,
       MXCContacts.ensFallbackRegistry: mainnetEnsAddresses.ensFallbackRegistry,
       MXCContacts.doitDevice: doitRingDeviceMainnet,
+      MXCContacts.health: healthMainnet,
     }
   };
 
@@ -100,4 +103,9 @@ class ContractAddresses {
       '0x9502a58f6e7D8d9C47E3745B0cA87b7E6520A371';
   static const String doitRingDeviceMainnet =
       '0x5e22fc878eE4ff25364233ecF3e3833E13542abC';
+
+  static const String healthTestnet =
+      '0x32346b84F49C64caDdd5a286beB502CbBacF8063';
+  static const String healthMainnet =
+      '0xCCf37D21cD46D57D071f3e45Ecbd81c27769e5CB';
 }
