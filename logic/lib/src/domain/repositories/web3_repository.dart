@@ -43,6 +43,10 @@ class Web3Repository {
   MinerRepository get minerRepository =>
       MinerRepository(_web3client, epochRepository, tokenContract);
 
+  BlueberryRingRepository get blueberryRingRepository => BlueberryRingRepository(
+        _web3client,
+      );
+
   EpochRepository get epochRepository => EpochRepository(_web3client);
 
   LauncherRepository get launcherRepository => LauncherRepository(_web3client);
