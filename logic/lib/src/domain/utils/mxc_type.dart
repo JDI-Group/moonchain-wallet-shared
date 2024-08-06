@@ -10,16 +10,23 @@ class MXCType {
     return hexToBytes(value);
   }
 
+  static String hexToString(String value) {
+    final bytes = hexToBytes(value);
+    return String.fromCharCodes(bytes);
+  }
+
   static String uint8ListToString(
     Uint8List value, {
     bool include0x = false,
     int? forcePadLength,
     bool padToEvenLength = false,
   }) {
-    return bytesToHex(value,
-        include0x: include0x,
-        forcePadLength: forcePadLength,
-        padToEvenLength: padToEvenLength);
+    return bytesToHex(
+      value,
+      include0x: include0x,
+      forcePadLength: forcePadLength,
+      padToEvenLength: padToEvenLength,
+    );
   }
 
   static BigInt stringToBigInt(String value) {
