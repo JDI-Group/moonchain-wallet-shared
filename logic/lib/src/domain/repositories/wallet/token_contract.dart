@@ -545,6 +545,16 @@ class TokenContractRepository {
     return result;
   }
 
+  // Used both for signMessage and signPersonalMessage
+  String signMessage({required String privateKey, required String message}) {
+    final result = EthSigUtil.signMessage(
+      message: Uint8List.fromList(message.codeUnits),
+      privateKeyInBytes: Uint8List.fromList(privateKey.codeUnits),
+      privateKey: privateKey,
+    );
+    return result;
+  }
+
   Future<TransactionReceipt?> getTransactionReceipt(String hash) async {
     return await _web3Client.getTransactionReceipt(hash);
   }
