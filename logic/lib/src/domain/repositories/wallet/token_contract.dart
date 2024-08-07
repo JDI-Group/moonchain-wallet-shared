@@ -549,7 +549,6 @@ class TokenContractRepository {
   String signMessage({required String privateKey, required String message}) {
     final result = EthSigUtil.signMessage(
       message: Uint8List.fromList(message.codeUnits),
-      privateKeyInBytes: Uint8List.fromList(privateKey.codeUnits),
       privateKey: privateKey,
     );
     return result;
