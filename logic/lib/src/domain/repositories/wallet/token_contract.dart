@@ -545,14 +545,18 @@ class TokenContractRepository {
     return result;
   }
 
-  // Used both for signMessage and signPersonalMessage
-  String signMessage({required String privateKey, required String message}) {
-    final result = EthSigUtil.signMessage(
-      message: Uint8List.fromList(message.codeUnits),
-      privateKey: privateKey,
-    );
-    return result;
-  }
+  String signMessage({required String privateKey, required String message}) =>
+      EthSigUtil.signMessage(
+        message: MXCType.hexToUint8List(message),
+        privateKey: privateKey,
+      );
+
+  String signPersonalMessage(
+          {required String privateKey, required String message}) =>
+      EthSigUtil.signPersonalMessage(
+        message: MXCType.hexToUint8List(message),
+        privateKey: privateKey,
+      );
 
   Future<TransactionReceipt?> getTransactionReceipt(String hash) async {
     return await _web3Client.getTransactionReceipt(hash);
