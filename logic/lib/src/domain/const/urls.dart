@@ -93,9 +93,9 @@ class Urls {
     return mepEpochListTestnet(page, pageLimit);
   }
 
-  static const String axsTermsConditions =
+  static const String mxcWalletTermsConditions =
       'https://doc.moonchain.com/docs/Resources/tns/';
-  static const String axsPrivacy = 'assets/pdf/privacy.pdf';
+  static const String mxcWalletPrivacy = 'assets/pdf/privacy.pdf';
 
   static const String gateio = 'https://gate.io/';
   static const String okx = 'https://www.okx.com/';

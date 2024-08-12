@@ -1,7 +1,7 @@
 class BackgroundExecutionConfig {
   /// The frequency in which background process will be
   /// executed, NOTE : It's in minutes.
-  static const axsBackgroundServiceInterval = 15;
+  static const mxcWalletBackgroundServiceInterval = 15;
 
   static const String notificationsTask = 'com.mxc.axswallet.notificationsTask';
   static const String wifiHooksTask = 'com.mxc.axswallet.wifiHooksTask';

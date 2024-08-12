@@ -51,7 +51,7 @@ Future<bool?> showInformationalBottomSheet(
               key: const ValueKey('okButton'),
               title: translate('ok'),
               onTap: () => Navigator.of(context).pop(false),
-              size: AxsButtonSize.xl,
+              size: MXCWalletButtonSize.xl,
             ),
           ],
         ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mxc_ui/mxc_ui.dart';
 
-enum AxsButtonType {
+enum MXCWalletButtonType {
   primaryWhite,
   secondaryWhite,
   plainWhite,
@@ -12,7 +12,7 @@ enum AxsButtonType {
   warning,
 }
 
-enum AxsButtonSize { xl, xxl }
+enum MXCWalletButtonSize { xl, xxl }
 
 class MxcButton extends StatefulWidget {
   /// [key] marked as required, because it's often needed for testing purposes
@@ -20,8 +20,8 @@ class MxcButton extends StatefulWidget {
       {required Key? key,
       required this.title,
       required this.onTap,
-      this.type = AxsButtonType.primary,
-      this.size = AxsButtonSize.xxl,
+      this.type = MXCWalletButtonType.primary,
+      this.size = MXCWalletButtonSize.xxl,
       this.width,
       this.titleColor,
       this.color,
@@ -35,8 +35,8 @@ class MxcButton extends StatefulWidget {
       {required Key? key,
       required this.title,
       required this.onTap,
-      this.type = AxsButtonType.primaryWhite,
-      this.size = AxsButtonSize.xxl,
+      this.type = MXCWalletButtonType.primaryWhite,
+      this.size = MXCWalletButtonSize.xxl,
       this.width,
       this.titleColor,
       this.color,
@@ -50,8 +50,8 @@ class MxcButton extends StatefulWidget {
       {required Key? key,
       required this.title,
       required this.onTap,
-      this.type = AxsButtonType.secondaryWhite,
-      this.size = AxsButtonSize.xxl,
+      this.type = MXCWalletButtonType.secondaryWhite,
+      this.size = MXCWalletButtonSize.xxl,
       this.width,
       this.titleColor,
       this.color = Colors.transparent,
@@ -65,8 +65,8 @@ class MxcButton extends StatefulWidget {
       {required Key? key,
       required this.title,
       required this.onTap,
-      this.type = AxsButtonType.plainWhite,
-      this.size = AxsButtonSize.xxl,
+      this.type = MXCWalletButtonType.plainWhite,
+      this.size = MXCWalletButtonSize.xxl,
       this.width,
       this.titleColor,
       this.color = Colors.transparent,
@@ -80,8 +80,8 @@ class MxcButton extends StatefulWidget {
       {required Key? key,
       required this.title,
       required this.onTap,
-      this.type = AxsButtonType.primary,
-      this.size = AxsButtonSize.xxl,
+      this.type = MXCWalletButtonType.primary,
+      this.size = MXCWalletButtonSize.xxl,
       this.width,
       this.titleColor,
       this.color,
@@ -95,8 +95,8 @@ class MxcButton extends StatefulWidget {
       {required Key? key,
       required this.title,
       required this.onTap,
-      this.type = AxsButtonType.secondary,
-      this.size = AxsButtonSize.xxl,
+      this.type = MXCWalletButtonType.secondary,
+      this.size = MXCWalletButtonSize.xxl,
       this.width,
       this.titleColor,
       this.color = Colors.transparent,
@@ -110,8 +110,8 @@ class MxcButton extends StatefulWidget {
       {required Key? key,
       required this.title,
       required this.onTap,
-      this.type = AxsButtonType.plain,
-      this.size = AxsButtonSize.xxl,
+      this.type = MXCWalletButtonType.plain,
+      this.size = MXCWalletButtonSize.xxl,
       this.width,
       this.titleColor,
       this.color = Colors.transparent,
@@ -125,8 +125,8 @@ class MxcButton extends StatefulWidget {
       {required Key? key,
       required this.title,
       required this.onTap,
-      this.type = AxsButtonType.pass,
-      this.size = AxsButtonSize.xxl,
+      this.type = MXCWalletButtonType.pass,
+      this.size = MXCWalletButtonSize.xxl,
       this.width,
       this.titleColor,
       this.color,
@@ -140,8 +140,8 @@ class MxcButton extends StatefulWidget {
       {required Key? key,
       required this.title,
       required this.onTap,
-      this.type = AxsButtonType.warning,
-      this.size = AxsButtonSize.xxl,
+      this.type = MXCWalletButtonType.warning,
+      this.size = MXCWalletButtonSize.xxl,
       this.width,
       this.titleColor,
       this.color,
@@ -155,8 +155,8 @@ class MxcButton extends StatefulWidget {
       {required Key? key,
       required this.title,
       required this.onTap,
-      this.type = AxsButtonType.warning,
-      this.size = AxsButtonSize.xxl,
+      this.type = MXCWalletButtonType.warning,
+      this.size = MXCWalletButtonSize.xxl,
       this.width,
       this.titleColor,
       this.color = Colors.transparent,
@@ -166,8 +166,8 @@ class MxcButton extends StatefulWidget {
       this.titleSize})
       : super(key: key);
 
-  final AxsButtonType type;
-  final AxsButtonSize size;
+  final MXCWalletButtonType type;
+  final MXCWalletButtonSize size;
   final String title;
   final Color? titleColor;
   final Color? color;
@@ -179,15 +179,15 @@ class MxcButton extends StatefulWidget {
   final double? titleSize;
 
   @override
-  _AxsButtonState createState() => _AxsButtonState();
+  _MXCButtonState createState() => _MXCButtonState();
 }
 
-class _AxsButtonState extends State<MxcButton> with TickerProviderStateMixin {
+class _MXCButtonState extends State<MxcButton> with TickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _scaleAnimate;
   bool _isTappedDown = false;
 
-  double getHeight() => widget.size == AxsButtonSize.xl ? 44 : 60;
+  double getHeight() => widget.size == MXCWalletButtonSize.xl ? 44 : 60;
 
   Color getButtonBgColor() {
     if (widget.onTap == null) {
@@ -199,13 +199,13 @@ class _AxsButtonState extends State<MxcButton> with TickerProviderStateMixin {
     }
 
     switch (widget.type) {
-      case AxsButtonType.primary:
+      case MXCWalletButtonType.primary:
         return ColorsTheme.of(context).btnBgBlue;
-      case AxsButtonType.primaryWhite:
+      case MXCWalletButtonType.primaryWhite:
         return ColorsTheme.of(context).btnBgWhite;
-      case AxsButtonType.pass:
+      case MXCWalletButtonType.pass:
         return ColorsTheme.of(context).systemStatusActive;
-      case AxsButtonType.warning:
+      case MXCWalletButtonType.warning:
         return ColorsTheme.of(context).buttonCritical;
       default:
         return Colors.transparent;
@@ -222,17 +222,17 @@ class _AxsButtonState extends State<MxcButton> with TickerProviderStateMixin {
     }
 
     switch (widget.type) {
-      case AxsButtonType.primary:
+      case MXCWalletButtonType.primary:
         return ColorsTheme.of(context).btnBgBlue;
-      case AxsButtonType.primaryWhite:
+      case MXCWalletButtonType.primaryWhite:
         return ColorsTheme.of(context).btnBgWhite;
-      case AxsButtonType.secondary:
+      case MXCWalletButtonType.secondary:
         return ColorsTheme.of(context).btnSecondaryBlue;
-      case AxsButtonType.secondaryWhite:
+      case MXCWalletButtonType.secondaryWhite:
         return ColorsTheme.of(context).borderWhite100;
-      case AxsButtonType.pass:
+      case MXCWalletButtonType.pass:
         return ColorsTheme.of(context).systemStatusActive;
-      case AxsButtonType.warning:
+      case MXCWalletButtonType.warning:
         return ColorsTheme.of(context).buttonCritical;
       default:
         return Colors.transparent;
@@ -249,18 +249,18 @@ class _AxsButtonState extends State<MxcButton> with TickerProviderStateMixin {
     }
 
     switch (widget.type) {
-      case AxsButtonType.primary:
+      case MXCWalletButtonType.primary:
         return ColorsTheme.of(context).btnTextInvert2;
-      case AxsButtonType.primaryWhite:
+      case MXCWalletButtonType.primaryWhite:
         return ColorsTheme.of(context).textBlack100;
-      case AxsButtonType.secondary:
+      case MXCWalletButtonType.secondary:
         return ColorsTheme.of(context).btnSecondaryBlue;
-      case AxsButtonType.secondaryWhite:
-      case AxsButtonType.plainWhite:
+      case MXCWalletButtonType.secondaryWhite:
+      case MXCWalletButtonType.plainWhite:
         return ColorsTheme.of(context).textWhite;
-      case AxsButtonType.pass:
+      case MXCWalletButtonType.pass:
         return ColorsTheme.of(context).textBlack200;
-      case AxsButtonType.warning:
+      case MXCWalletButtonType.warning:
         return ColorsTheme.of(context).textCritical;
       default:
         return Colors.transparent;

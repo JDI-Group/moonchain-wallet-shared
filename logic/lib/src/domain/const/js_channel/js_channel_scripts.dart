@@ -54,7 +54,7 @@ window.$axsWalletJSObjectName.callHandler(\'$eventName\', $data)
             }''';
   static const String clipboardHandlerScript = '''
 (function(){
-    javascript:navigator.clipboard.writeText = (msg) => { return window.flutter_inappwebview?.callHandler("${JSChannelEvents.axsWalletCopyClipboard}", msg); }
+    javascript:navigator.clipboard.writeText = (msg) => { return window.flutter_inappwebview?.callHandler("${JSChannelEvents.mxcWalletCopyClipboard}", msg); }
 }) ();
       ''';
 
@@ -90,9 +90,9 @@ window.$axsWalletJSObjectName.callHandler(\'$eventName\', $data)
         var changeY = pStart.y - pStop.y;
         var changeX = pStart.x - pStop.x;
         if (isPullDown(changeY, changeX)) {
-          window.flutter_inappwebview?.callHandler("${JSChannelEvents.axsWalletScrollDetector}", true);
+          window.flutter_inappwebview?.callHandler("${JSChannelEvents.mxcWalletScrollDetector}", true);
         } else if (isPullUp(changeY, changeX)) {
-          window.flutter_inappwebview?.callHandler("${JSChannelEvents.axsWalletScrollDetector}", false);
+          window.flutter_inappwebview?.callHandler("${JSChannelEvents.mxcWalletScrollDetector}", false);
         }
       }
 
