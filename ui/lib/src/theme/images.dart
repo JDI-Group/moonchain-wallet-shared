@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mxc_ui/mxc_ui.dart';
 import 'package:provider/provider.dart';
 
@@ -33,15 +34,12 @@ class ImagesTheme {
         'assets/images/splash/mxc.png',
         package: mxcUiPackageName,
       );
-  ImageProvider get bitcoin => const AssetImage(
-        'assets/images/bitcoin.png',
+
+  ImageProvider get appTextLogo  => const AssetImage(
+        'assets/images/splash/app_text_logo.png',
         package: mxcUiPackageName,
       );
 
-  ImageProvider get sliderPlaceHolder => const AssetImage(
-        'assets/images/slider_placeholder.png',
-        package: mxcUiPackageName,
-      );
 }
 
 class ImagesThemeDark extends ImagesTheme {
