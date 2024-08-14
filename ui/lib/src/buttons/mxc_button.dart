@@ -12,160 +12,176 @@ enum MXCWalletButtonType {
   warning,
 }
 
+enum MXCWalletButtonEdgeType {
+  hard,
+  soft,
+}
+
 enum MXCWalletButtonSize { xl, xxl }
 
 class MxcButton extends StatefulWidget {
   /// [key] marked as required, because it's often needed for testing purposes
-  const MxcButton(
-      {required Key? key,
-      required this.title,
-      required this.onTap,
-      this.type = MXCWalletButtonType.primary,
-      this.size = MXCWalletButtonSize.xxl,
-      this.width,
-      this.titleColor,
-      this.color,
-      this.borderColor,
-      this.icon,
-      this.iconSize,
-      this.titleSize})
-      : super(key: key);
+  const MxcButton({
+    required Key? key,
+    required this.title,
+    required this.onTap,
+    this.type = MXCWalletButtonType.primary,
+    this.size = MXCWalletButtonSize.xxl,
+    this.width,
+    this.titleColor,
+    this.color,
+    this.borderColor,
+    this.icon,
+    this.iconSize,
+    this.titleSize,
+    this.edgeType = MXCWalletButtonEdgeType.soft,
+  }) : super(key: key);
 
-  const MxcButton.primaryWhite(
-      {required Key? key,
-      required this.title,
-      required this.onTap,
-      this.type = MXCWalletButtonType.primaryWhite,
-      this.size = MXCWalletButtonSize.xxl,
-      this.width,
-      this.titleColor,
-      this.color,
-      this.borderColor,
-      this.icon,
-      this.iconSize,
-      this.titleSize})
-      : super(key: key);
+  const MxcButton.primaryWhite({
+    required Key? key,
+    required this.title,
+    required this.onTap,
+    this.type = MXCWalletButtonType.primaryWhite,
+    this.size = MXCWalletButtonSize.xxl,
+    this.width,
+    this.titleColor,
+    this.color,
+    this.borderColor,
+    this.icon,
+    this.iconSize,
+    this.titleSize,
+    this.edgeType = MXCWalletButtonEdgeType.soft,
+  }) : super(key: key);
 
-  const MxcButton.secondaryWhite(
-      {required Key? key,
-      required this.title,
-      required this.onTap,
-      this.type = MXCWalletButtonType.secondaryWhite,
-      this.size = MXCWalletButtonSize.xxl,
-      this.width,
-      this.titleColor,
-      this.color = Colors.transparent,
-      this.borderColor,
-      this.icon,
-      this.iconSize,
-      this.titleSize})
-      : super(key: key);
+  const MxcButton.secondaryWhite({
+    required Key? key,
+    required this.title,
+    required this.onTap,
+    this.type = MXCWalletButtonType.secondaryWhite,
+    this.size = MXCWalletButtonSize.xxl,
+    this.width,
+    this.titleColor,
+    this.color = Colors.transparent,
+    this.borderColor,
+    this.icon,
+    this.iconSize,
+    this.titleSize,
+    this.edgeType = MXCWalletButtonEdgeType.soft,
+  }) : super(key: key);
 
-  const MxcButton.plainWhite(
-      {required Key? key,
-      required this.title,
-      required this.onTap,
-      this.type = MXCWalletButtonType.plainWhite,
-      this.size = MXCWalletButtonSize.xxl,
-      this.width,
-      this.titleColor,
-      this.color = Colors.transparent,
-      this.borderColor,
-      this.icon,
-      this.iconSize,
-      this.titleSize})
-      : super(key: key);
+  const MxcButton.plainWhite({
+    required Key? key,
+    required this.title,
+    required this.onTap,
+    this.type = MXCWalletButtonType.plainWhite,
+    this.size = MXCWalletButtonSize.xxl,
+    this.width,
+    this.titleColor,
+    this.color = Colors.transparent,
+    this.borderColor,
+    this.icon,
+    this.iconSize,
+    this.titleSize,
+    this.edgeType = MXCWalletButtonEdgeType.soft,
+  }) : super(key: key);
 
-  const MxcButton.primary(
-      {required Key? key,
-      required this.title,
-      required this.onTap,
-      this.type = MXCWalletButtonType.primary,
-      this.size = MXCWalletButtonSize.xxl,
-      this.width,
-      this.titleColor,
-      this.color,
-      this.borderColor,
-      this.icon,
-      this.iconSize,
-      this.titleSize})
-      : super(key: key);
+  const MxcButton.primary({
+    required Key? key,
+    required this.title,
+    required this.onTap,
+    this.type = MXCWalletButtonType.primary,
+    this.size = MXCWalletButtonSize.xxl,
+    this.width,
+    this.titleColor,
+    this.color,
+    this.borderColor,
+    this.icon,
+    this.iconSize,
+    this.titleSize,
+    this.edgeType = MXCWalletButtonEdgeType.soft,
+  }) : super(key: key);
 
-  const MxcButton.secondary(
-      {required Key? key,
-      required this.title,
-      required this.onTap,
-      this.type = MXCWalletButtonType.secondary,
-      this.size = MXCWalletButtonSize.xxl,
-      this.width,
-      this.titleColor,
-      this.color = Colors.transparent,
-      this.borderColor,
-      this.icon,
-      this.iconSize,
-      this.titleSize})
-      : super(key: key);
+  const MxcButton.secondary({
+    required Key? key,
+    required this.title,
+    required this.onTap,
+    this.type = MXCWalletButtonType.secondary,
+    this.size = MXCWalletButtonSize.xxl,
+    this.width,
+    this.titleColor,
+    this.color = Colors.transparent,
+    this.borderColor,
+    this.icon,
+    this.iconSize,
+    this.titleSize,
+    this.edgeType = MXCWalletButtonEdgeType.soft,
+  }) : super(key: key);
 
-  const MxcButton.plain(
-      {required Key? key,
-      required this.title,
-      required this.onTap,
-      this.type = MXCWalletButtonType.plain,
-      this.size = MXCWalletButtonSize.xxl,
-      this.width,
-      this.titleColor,
-      this.color = Colors.transparent,
-      this.borderColor,
-      this.icon,
-      this.iconSize,
-      this.titleSize})
-      : super(key: key);
+  const MxcButton.plain({
+    required Key? key,
+    required this.title,
+    required this.onTap,
+    this.type = MXCWalletButtonType.plain,
+    this.size = MXCWalletButtonSize.xxl,
+    this.width,
+    this.titleColor,
+    this.color = Colors.transparent,
+    this.borderColor,
+    this.icon,
+    this.iconSize,
+    this.titleSize,
+    this.edgeType = MXCWalletButtonEdgeType.soft,
+  }) : super(key: key);
 
-  const MxcButton.primaryPass(
-      {required Key? key,
-      required this.title,
-      required this.onTap,
-      this.type = MXCWalletButtonType.pass,
-      this.size = MXCWalletButtonSize.xxl,
-      this.width,
-      this.titleColor,
-      this.color,
-      this.borderColor,
-      this.icon,
-      this.iconSize,
-      this.titleSize})
-      : super(key: key);
+  const MxcButton.primaryPass({
+    required Key? key,
+    required this.title,
+    required this.onTap,
+    this.type = MXCWalletButtonType.pass,
+    this.size = MXCWalletButtonSize.xxl,
+    this.width,
+    this.titleColor,
+    this.color,
+    this.borderColor,
+    this.icon,
+    this.iconSize,
+    this.titleSize,
+    this.edgeType = MXCWalletButtonEdgeType.soft,
+  }) : super(key: key);
 
-  const MxcButton.primaryWarning(
-      {required Key? key,
-      required this.title,
-      required this.onTap,
-      this.type = MXCWalletButtonType.warning,
-      this.size = MXCWalletButtonSize.xxl,
-      this.width,
-      this.titleColor,
-      this.color,
-      this.borderColor,
-      this.icon,
-      this.iconSize,
-      this.titleSize})
-      : super(key: key);
+  const MxcButton.primaryWarning({
+    required Key? key,
+    required this.title,
+    required this.onTap,
+    this.type = MXCWalletButtonType.warning,
+    this.size = MXCWalletButtonSize.xxl,
+    this.width,
+    this.titleColor,
+    this.color,
+    this.borderColor,
+    this.icon,
+    this.iconSize,
+    this.titleSize,
+    this.edgeType = MXCWalletButtonEdgeType.soft,
+  }) : super(key: key);
 
-  const MxcButton.secondaryWarning(
-      {required Key? key,
-      required this.title,
-      required this.onTap,
-      this.type = MXCWalletButtonType.warning,
-      this.size = MXCWalletButtonSize.xxl,
-      this.width,
-      this.titleColor,
-      this.color = Colors.transparent,
-      this.borderColor,
-      this.icon,
-      this.iconSize,
-      this.titleSize})
-      : super(key: key);
+  const MxcButton.secondaryWarning({
+    required Key? key,
+    required this.title,
+    required this.onTap,
+    this.type = MXCWalletButtonType.warning,
+    this.size = MXCWalletButtonSize.xxl,
+    this.width,
+    this.titleColor,
+    this.color = Colors.transparent,
+    this.borderColor,
+    this.icon,
+    this.iconSize,
+    this.titleSize,
+    this.edgeType = MXCWalletButtonEdgeType.soft,
+  }) : super(key: key);
 
+  final MXCWalletButtonEdgeType edgeType;
   final MXCWalletButtonType type;
   final MXCWalletButtonSize size;
   final String title;
@@ -317,6 +333,10 @@ class _MXCButtonState extends State<MxcButton> with TickerProviderStateMixin {
 
   void endAnimate() => setState(() => _isTappedDown = false);
 
+  BorderRadius getBorderRadius() => widget.edgeType == MXCWalletButtonEdgeType.soft
+            ? BorderRadius.circular(40)
+            : BorderRadius.zero;
+
   @override
   Widget build(BuildContext context) {
     return Transform.scale(
@@ -327,7 +347,7 @@ class _MXCButtonState extends State<MxcButton> with TickerProviderStateMixin {
           : 1.0,
       child: Material(
         color: getButtonBgColor(),
-        borderRadius: BorderRadius.circular(40),
+        borderRadius: getBorderRadius(),
         child: GestureDetector(
           onTap: widget.onTap,
           onTapDown: (_) => startAnimate(),
@@ -337,7 +357,7 @@ class _MXCButtonState extends State<MxcButton> with TickerProviderStateMixin {
             width: widget.width,
             height: getHeight(),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(40),
+              borderRadius: getBorderRadius(),
               border: Border.all(
                 width: 2,
                 color: getBorderColor(),
@@ -358,7 +378,7 @@ class _MXCButtonState extends State<MxcButton> with TickerProviderStateMixin {
                 Text(
                   widget.title,
                   textAlign: TextAlign.center,
-                  style: FontTheme.of(context).body1().copyWith(
+                  style: FontTheme.of(context).body2().copyWith(
                         fontSize: widget.titleSize,
                         fontWeight: FontWeight.w600,
                         color: getTitleColor(),
