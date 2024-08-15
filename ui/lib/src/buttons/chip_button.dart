@@ -6,27 +6,33 @@ enum ChipButtonStates {
   activeState,
   inactiveState,
   disabled,
-  danger
+  danger,
+}
+
+enum MXCChipsEdgeType {
+  hard,
+  soft,
 }
 
 class MxcChipButton extends StatelessWidget {
-  const MxcChipButton(
-      {required Key? key,
-      required this.onTap,
-      required this.title,
-      this.buttonState = ChipButtonStates.defaultState,
-      this.backgroundColor,
-      this.textSpace,
-      this.shadowRadius,
-      this.iconColor,
-      this.textStyle,
-      this.height,
-      this.width,
-      this.alignIconStart,
-      this.contentPadding,
-      this.iconData,
-      this.iconSize})
-      : super(key: key);
+  const MxcChipButton({
+    required Key? key,
+    required this.onTap,
+    required this.title,
+    this.buttonState = ChipButtonStates.defaultState,
+    this.backgroundColor,
+    this.textSpace,
+    this.shadowRadius,
+    this.iconColor,
+    this.textStyle,
+    this.height,
+    this.width,
+    this.alignIconStart,
+    this.contentPadding,
+    this.iconData,
+    this.iconSize,
+    this.mxcChipsEdgeType = MXCChipsEdgeType.soft,
+  }) : super(key: key);
 
   final ChipButtonStates buttonState;
   final VoidCallback? onTap;
@@ -42,42 +48,57 @@ class MxcChipButton extends StatelessWidget {
   final IconData? iconData;
   final bool? alignIconStart;
   final double? iconSize;
+  final MXCChipsEdgeType mxcChipsEdgeType;
 
   @override
   Widget build(BuildContext context) {
-    BoxDecoration resolveButtonDecoration(ChipButtonStates buttonState) {
+    BorderRadiusGeometry getBorderRadius(MXCChipsEdgeType mxcChipsEdgeType) {
+      switch (mxcChipsEdgeType) {
+        case MXCChipsEdgeType.hard:
+          return const BorderRadius.all(Radius.zero);
+        case MXCChipsEdgeType.soft:
+          return const BorderRadius.all(Radius.circular(40));
+      }
+    }
+
+    BoxDecoration resolveButtonDecoration(
+      ChipButtonStates buttonState,
+      MXCChipsEdgeType mxcChipsEdgeType,
+    ) {
       switch (buttonState) {
         case ChipButtonStates.activeState:
           return BoxDecoration(
             color: backgroundColor ?? ColorsTheme.of(context).chipBgActive,
-            borderRadius: BorderRadius.circular(40),
+            borderRadius: getBorderRadius(mxcChipsEdgeType),
           );
         case ChipButtonStates.inactiveState:
           return BoxDecoration(
-              color: backgroundColor ?? Colors.transparent,
-              borderRadius: BorderRadius.circular(40),
-              border: Border.all(
-                color: ColorsTheme.of(context).chipBorderInactive,
-              ));
+            color: backgroundColor ?? Colors.transparent,
+            borderRadius: getBorderRadius(mxcChipsEdgeType),
+            border: Border.all(
+              color: ColorsTheme.of(context).chipBorderInactive,
+            ),
+          );
         case ChipButtonStates.defaultState:
           return BoxDecoration(
             color: backgroundColor ??
                 ColorsTheme.of(context).chipDefaultBackground,
-            borderRadius: BorderRadius.circular(40),
+            borderRadius: getBorderRadius(mxcChipsEdgeType),
           );
         case ChipButtonStates.disabled:
           return BoxDecoration(
             color:
                 backgroundColor ?? ColorsTheme.of(context).backgroundDisabled,
-            borderRadius: BorderRadius.circular(40),
+            borderRadius: getBorderRadius(mxcChipsEdgeType),
           );
         case ChipButtonStates.danger:
           return BoxDecoration(
-              color: backgroundColor ?? Colors.transparent,
-              borderRadius: BorderRadius.circular(40),
-              border: Border.all(
-                color: ColorsTheme.of(context).mainRed,
-              ));
+            color: backgroundColor ?? Colors.transparent,
+            borderRadius: getBorderRadius(mxcChipsEdgeType),
+            border: Border.all(
+              color: ColorsTheme.of(context).mainRed,
+            ),
+          );
       }
     }
 
@@ -152,7 +173,7 @@ class MxcChipButton extends StatelessWidget {
         width: width,
         padding: contentPadding ??
             const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-        decoration: resolveButtonDecoration(buttonState),
+        decoration: resolveButtonDecoration(buttonState, mxcChipsEdgeType),
         child: iconData == null
             ? Text(
                 title,
