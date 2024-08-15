@@ -12,6 +12,6 @@ export 'src/text_field.dart';
 export 'src/drop_down.dart';
 export 'src/app_bar.dart';
 export 'src/app_bar_evenly.dart';
-export 'src/icons.dart';
+export 'src/mxc_icons.dart';
 
 const mxcUiPackageName = 'mxc_ui';
