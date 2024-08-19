@@ -24,7 +24,7 @@ class MXCDropDown extends StatelessWidget {
             end: Sizes.spaceSmall,
             start: Sizes.spaceNormal),
         decoration: BoxDecoration(
-            color: ColorsTheme.of(context).screenBackground,
+            color: ColorsTheme.of(context).darkGray,
             border: Border.all(color: ColorsTheme.of(context).borderGrey3),
             borderRadius: const BorderRadius.all(Radius.circular(10))),
         child: Row(
@@ -56,7 +56,7 @@ class MXCDropDown extends StatelessWidget {
                     const EdgeInsetsDirectional.only(start: Sizes.spaceNormal),
                 child: Icon(
                   Icons.arrow_drop_down_rounded,
-                  size: 24,
+                  size: Sizes.space4XLarge,
                   color: ColorsTheme.of(context).iconPrimary,
                 ),
               ),

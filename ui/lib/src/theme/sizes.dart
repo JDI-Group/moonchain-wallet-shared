@@ -13,4 +13,9 @@ abstract class Sizes {
   static const double space5XLarge = 48;
   static const double space6XLarge = 56;
   static const double space7XLarge = 64;
+  static const double space8XLarge = 72;
+  static const double space9XLarge = 80;
+  static const double space10XLarge = 88;
+  static const double space11XLarge = 100;
+  static const double space12XLarge = 110;
 }
