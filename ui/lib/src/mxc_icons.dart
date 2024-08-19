@@ -62,6 +62,9 @@ class MxcIcons {
   static const IconData warning = IconData(0xe822, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData wechat = IconData(0xe823, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData wechat_favorites = IconData(0xe824, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData check_mark = IconData(0xe825, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData warning_1 = IconData(0xe826, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData shield = IconData(0xe827, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData lock = IconData(0xe829, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData safety = IconData(0xe82a, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData trash = IconData(0xe82c, fontFamily: _kFontFam, fontPackage: _kFontPkg);
