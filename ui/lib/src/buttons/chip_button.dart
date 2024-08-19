@@ -32,6 +32,7 @@ class MxcChipButton extends StatelessWidget {
     this.iconData,
     this.iconSize,
     this.mxcChipsEdgeType = MXCChipsEdgeType.soft,
+    this.primaryColor,
   }) : super(key: key);
 
   final ChipButtonStates buttonState;
@@ -49,6 +50,7 @@ class MxcChipButton extends StatelessWidget {
   final bool? alignIconStart;
   final double? iconSize;
   final MXCChipsEdgeType mxcChipsEdgeType;
+  final Color? primaryColor;
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +70,7 @@ class MxcChipButton extends StatelessWidget {
       switch (buttonState) {
         case ChipButtonStates.activeState:
           return BoxDecoration(
-            color: backgroundColor ?? ColorsTheme.of(context).chipBgActive,
+            color: backgroundColor ?? primaryColor ?? ColorsTheme.of(context).chipBgActive,
             borderRadius: getBorderRadius(mxcChipsEdgeType),
           );
         case ChipButtonStates.inactiveState:
@@ -76,7 +78,7 @@ class MxcChipButton extends StatelessWidget {
             color: backgroundColor ?? Colors.transparent,
             borderRadius: getBorderRadius(mxcChipsEdgeType),
             border: Border.all(
-              color: ColorsTheme.of(context).chipBorderInactive,
+              color: primaryColor ?? ColorsTheme.of(context).chipBorderInactive,
             ),
           );
         case ChipButtonStates.defaultState:
@@ -114,7 +116,7 @@ class MxcChipButton extends StatelessWidget {
               );
         case ChipButtonStates.inactiveState:
           return FontTheme.of(context).subtitle2().copyWith(
-                color: ColorsTheme.of(context).chipTextInactive,
+                color: primaryColor ?? ColorsTheme.of(context).chipTextInactive,
                 fontWeight: FontWeight.w500,
               );
         case ChipButtonStates.defaultState:
