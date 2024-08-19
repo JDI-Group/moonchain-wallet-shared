@@ -22,6 +22,7 @@ class ColorsTheme {
   final screenBackground = const Color(0xFFF1F2F4);
   Color get secondaryBackground => white100;
   Color get backgroundGrey6 => grey6;
+  Color get backgroundLightGrey => const Color(0XFF212529);
 
   //primary
   final primary = const Color(0xFF0F46F4);
@@ -37,6 +38,9 @@ class ColorsTheme {
   final primary400 = const Color(0xFF6386F8);
   final primary500 = const Color(0xFF7795F9);
   final primary600 = const Color(0xFF8AA4F9);
+
+  final darkBlue = const Color(0xff0E1629);
+  final charcoalGray = const Color(0xff333333);
 
   // Border color
   Color get borderPrimary100 => primary100;
@@ -68,6 +72,7 @@ class ColorsTheme {
   final primaryBackground = const Color(0xFFEBEFF2);
   // final secondaryBackground = Colors.white;
   final white = Colors.white;
+
   Color get cardBackground => white100;
 
   // indicator
@@ -90,9 +95,20 @@ class ColorsTheme {
   final mxcPurple200 = const Color(0xFFDECAFD);
   final mxcPurple100 = const Color(0xFFF4EFFC);
 
+  final bluePrimary = const Color(0XFF478DE0);
+
   final btcOrange = const Color(0xFFF7931A);
 
-  final greenMain = const Color(0xFF30A78B);
+  final warningShadow = const Color(0XFFFFD426);
+
+  final warning = const Color(0xFFD29621);
+
+  final errorShadow = const Color(0XFFF04248);
+  final error = const Color(0XFFF04349);
+
+  final greenMain = const Color(0xFF1FB857);
+  final greenSuccess = const Color(0XFF00DF80);
+  final successShadow = const Color(0XFF00DF80);
 
   final grey1 = const Color(0xFF8E8E93);
   final grey2 = const Color(0xFFAEAEB2);
@@ -100,6 +116,10 @@ class ColorsTheme {
   final grey4 = const Color(0xFFD1D1D6);
   final grey5 = const Color(0xFFE5E5EA);
   final grey6 = const Color(0xFFF2F2F7);
+
+  final lightGray = const Color(0XFFC8C5C5);
+
+  final darkGray = const Color(0xFF131618);
 
   Color get white500 => white100;
   final white400 = const Color(0x52FFFFFF);
@@ -118,7 +138,7 @@ class ColorsTheme {
   Color get blackInvert => white100;
 
   // layerSheet
-  Color get layerSheetBackground => white100;
+  Color get layerSheetBackground => darkGray;
 
   // border
   Color get borderWhiteInvert => whiteInvert;
@@ -131,7 +151,7 @@ class ColorsTheme {
   Color get chipTextBlack => blackInvert;
   Color get chipIconBlack => blackInvert;
 
-  Color get chipDefaultBackground => grey4;
+  Color get chipDefaultBackground => darkGray;
 
   Color get chipBorder => whiteInvert;
 
@@ -165,7 +185,7 @@ class ColorsTheme {
   final disabledButtonText = const Color(0xFF5F6366);
   final textDisabled = const Color(0xFFA4A7AD);
 
-  Color get textError => const Color(0xFFD22D2D);
+  Color get textError => const Color(0xFFD32740);
   Color get textSecondary => const Color(0xFF74767B);
   Color get textPrimary => black100;
   Color get textWhite => white100;
@@ -180,7 +200,7 @@ class ColorsTheme {
   Color get textGrey2 => grey2;
   Color get textWhiteInvert => whiteInvert;
   Color get textBlackInvert => blackInvert;
-  Color get textCritical => mainRed;
+  Color get textCritical => saturatedRed;
 
   // button
   final backgroundDisabled = const Color(0xFFE3E3E5);
@@ -189,7 +209,7 @@ class ColorsTheme {
   final primaryButton = const Color(0xFFFFFFFF);
   final chipDefaultBg = const Color(0xFFE5E5EA);
   final disabledButton = const Color(0xFF323233);
-  Color get buttonCritical => mainRed;
+  Color get buttonCritical => saturatedRed;
 
   Color get buttonWhiteInvert => whiteInvert;
   Color get buttonBlackInvert => blackInvert;
@@ -197,6 +217,7 @@ class ColorsTheme {
   // tip
   final mainGreen = const Color(0xFF10C469);
   final mainRed = const Color(0xFFD22D2D);
+  final saturatedRed = const Color(0xffD32740);
   final systemStatusActive = const Color(0xFF63C174);
   final systemStatusInActive = const Color(0xFFEC5E41);
   final systemStatusNotCritical = const Color(0xFFDB9036);
@@ -244,6 +265,12 @@ class ColorsThemeDark implements ColorsTheme {
 
   @override
   final primary600 = const Color(0xFFC7D3F9);
+
+  @override
+  final darkBlue = const Color(0xff0E1629);
+
+  @override
+  final charcoalGray = const Color(0xff333333);
 
   // Border color
   @override
@@ -308,10 +335,16 @@ class ColorsThemeDark implements ColorsTheme {
   Color get screenBackground => grey6;
 
   @override
+  final lightGray = const Color(0XFFC8C5C5);
+
+  @override
   Color get secondaryBackground => grey6;
 
   @override
   Color get backgroundGrey6 => grey6;
+
+  @override
+  Color get backgroundLightGrey => const Color(0XFF212529);
 
   // background
   @override
@@ -370,10 +403,31 @@ class ColorsThemeDark implements ColorsTheme {
   final mxcPurple100 = const Color(0xFF242228);
 
   @override
+  final bluePrimary = const Color(0XFF478DE0);
+
+  @override
   final btcOrange = const Color(0xFFF7931A);
 
   @override
+  final warningShadow = const Color(0XFFFFD426);
+
+  @override
+  final warning = const Color(0xFFD29621);
+
+  @override
+  final errorShadow = const Color(0XFFF04248);
+
+  @override
+  final error = const Color(0XFFF04349);
+
+  @override
   Color get greenMain => const Color(0xFF30A78B);
+
+  @override
+  Color get greenSuccess => const Color(0XFF00DF80);
+
+  @override
+  Color get successShadow => const Color(0XFF00DF80);
 
   @override
   final grey1 = const Color(0xFF8E8E93);
@@ -392,6 +446,9 @@ class ColorsThemeDark implements ColorsTheme {
 
   @override
   final grey6 = const Color(0xFF1C1C1E);
+
+  @override
+  final darkGray = const Color(0xFF131618);
 
   @override
   final white500 = const Color(0x29FFFFFF);
@@ -428,7 +485,7 @@ class ColorsThemeDark implements ColorsTheme {
 
   // layer sheet
   @override
-  Color get layerSheetBackground => const Color(0xFF2C2C2E);
+  Color get layerSheetBackground => darkGray;
 
   // border
   @override
@@ -451,7 +508,7 @@ class ColorsThemeDark implements ColorsTheme {
   Color get chipIconBlack => blackInvert;
 
   @override
-  Color get chipDefaultBackground => grey4;
+  Color get chipDefaultBackground => darkGray;
 
   @override
   Color get chipBorder => whiteInvert;
@@ -534,7 +591,7 @@ class ColorsThemeDark implements ColorsTheme {
   Color get textDisabled => const Color(0xFF5F6366);
 
   @override
-  Color get textError => const Color(0xFFFC8383);
+  Color get textError => const Color(0xFFD32740);
 
   @override
   Color get textSecondary => const Color(0xFFA5A6AC);
@@ -579,7 +636,7 @@ class ColorsThemeDark implements ColorsTheme {
   Color get textBlackInvert => blackInvert;
 
   @override
-  Color get textCritical => mainRed;
+  Color get textCritical => saturatedRed;
 
   // button
   @override
@@ -601,7 +658,7 @@ class ColorsThemeDark implements ColorsTheme {
   final disabledButton = const Color(0xFF323233);
 
   @override
-  Color get buttonCritical => mainRed;
+  Color get buttonCritical => saturatedRed;
 
   @override
   Color get buttonWhiteInvert => const Color(0xFFFFFFFF);
@@ -615,6 +672,9 @@ class ColorsThemeDark implements ColorsTheme {
 
   @override
   Color get mainRed => const Color(0xFFFF7878);
+
+  @override
+  Color get saturatedRed => const Color(0xFFD32740);
 
   @override
   Color get systemStatusActive => const Color(0xFF63C174);
