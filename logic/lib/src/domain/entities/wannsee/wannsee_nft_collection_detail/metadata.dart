@@ -21,16 +21,20 @@ class Metadata extends Equatable {
   final bool? isRealWorldNft;
   final String? name;
 
-  factory Metadata.fromMap(Map<String, dynamic> data) => Metadata(
-        attributes: (data['attributes'] as List<dynamic>?)
-            ?.map((dynamic e) => Attribute.fromMap(e as Map<String, dynamic>))
-            .toList(),
-        description: data['description'] as String?,
-        externalLink: data['external_link'] as String?,
-        image: data['image'] as String?,
-        isRealWorldNft: data['isRealWorldNFT'] as bool?,
-        name: data['name'] as String?,
-      );
+  factory Metadata.fromMap(Map<String, dynamic> data) {
+    final finalData = Metadata(
+      attributes: (data['attributes'] as List<dynamic>?)
+    ?.whereType<Map<String, dynamic>>() // Filter to only Map<String, dynamic>
+    .map((e) => Attribute.fromMap(e))
+    .toList(),
+      description: data['description'] as String?,
+      externalLink: data['external_link'] as String?,
+      image: data['image'] as String?,
+      isRealWorldNft: data['isRealWorldNFT'] as bool?,
+      name: data['name'] as String?,
+    );
+    return finalData;
+  }
 
   Map<String, dynamic> toMap() => <String, dynamic>{
         'attributes': attributes?.map((e) => e.toMap()).toList(),
