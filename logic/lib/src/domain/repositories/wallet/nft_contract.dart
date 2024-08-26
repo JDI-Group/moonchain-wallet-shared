@@ -167,7 +167,7 @@ class NftContractRepository {
           );
 
           if (tokenAddress == hexagonNamingAddress) {
-            final hexlified = hexlify(BigInt.parse(tokenInstance.id!));
+            final hexlified = MXCType.hexlify(BigInt.parse(tokenInstance.id!));
             final color = MXCColors.getColorFromH3Id(hexlified);
             final hexString = MXCColors.colorToHexString(color);
             tokenInstance = tokenInstance.copyWith(imageUrl: hexString);
@@ -240,8 +240,4 @@ class NftContractRepository {
   Future<void> dispose() async {
     await _web3Client.dispose();
   }
-}
-
-String hexlify(BigInt dec) {
-  return '0x0' + dec.toRadixString(16);
 }

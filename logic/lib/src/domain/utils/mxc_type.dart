@@ -41,4 +41,9 @@ class MXCType {
     List<int> utf8Bytes = value.codeUnits;
     return Uint8List.fromList(utf8Bytes);
   }
+
+  // Used to change the token id of NFT to hex
+  static String hexlify(BigInt dec) {
+    return '0x0' + dec.toRadixString(16);
+  }
 }
