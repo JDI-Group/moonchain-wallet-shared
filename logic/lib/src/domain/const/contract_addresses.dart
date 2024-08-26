@@ -9,7 +9,8 @@ enum MXCContacts {
   ensFallbackRegistry,
   router,
   doitDevice,
-  health
+  health,
+  hexagonNaming,
 }
 
 class ContractAddresses {
@@ -56,6 +57,7 @@ class ContractAddresses {
       MXCContacts.ensFallbackRegistry: testnetEnsAddresses.ensFallbackRegistry,
       MXCContacts.doitDevice: doitRingDeviceTestnet,
       MXCContacts.health: healthTestnet,
+      MXCContacts.hexagonNaming: hexagonNamingTestnet
     },
     Config.mxcMainnetChainId: {
       MXCContacts.mep2542: mep2542AddressMainnet,
@@ -67,6 +69,7 @@ class ContractAddresses {
       MXCContacts.ensFallbackRegistry: mainnetEnsAddresses.ensFallbackRegistry,
       MXCContacts.doitDevice: doitRingDeviceMainnet,
       MXCContacts.health: healthMainnet,
+      MXCContacts.hexagonNaming: hexagonNamingMainnet
     }
   };
 
@@ -108,4 +111,10 @@ class ContractAddresses {
       '0x32346b84F49C64caDdd5a286beB502CbBacF8063';
   static const String healthMainnet =
       '0xCCf37D21cD46D57D071f3e45Ecbd81c27769e5CB';
+
+  // MEP1002NT
+  static const String hexagonNamingTestnet =
+      '0xe5f46E29D91BeBa5C58a83f8558d912820FaC267';
+  static const String hexagonNamingMainnet =
+      '0x7407459464741c17F8341D7EAFED5a4A5d9303b4';
 }
