@@ -8,6 +8,6 @@ class Nft {
 
   final String address;
   final int tokenId;
-  final String image;
+  final String? image;
   final String name;
 }

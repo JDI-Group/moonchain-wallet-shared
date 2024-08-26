@@ -3,7 +3,8 @@ import 'package:ens_dart/ens_dart.dart' as contracts;
 import 'package:mxc_logic/src/data/api/client/rest_client.dart';
 import 'package:mxc_logic/mxc_logic.dart';
 import 'package:mxc_logic/src/data/api/client/web3_client.dart';
-import 'package:mxc_logic/src/domain/const/const.dart';
+import 'package:mxc_logic/src/domain/entities/wannsee/wannsee_nft_collection_detail/item.dart';
+import 'package:mxc_logic/src/domain/utils/mxc_urls.dart';
 import 'package:web3dart/web3dart.dart';
 
 class NftContractRepository {
@@ -110,94 +111,137 @@ class NftContractRepository {
     }
   }
 
-  Future<List<Nft>?> getNftsByAddress(
+  Future<List<Nft>> getNftsByAddress(
     String address,
+    String ipfsGateWay,
   ) async {
-    try {
-      final List<Nft> finalList = [];
+    final List<Nft> finalList = [];
 
-      final selectedNetwork = _web3Client.network!;
-      final apiBaseUrl = selectedNetwork.chainId == Config.mxcMainnetChainId
-          ? Urls.mainnetApiBaseUrl
-          : selectedNetwork.chainId == Config.mxcTestnetChainId
-              ? Urls.testnetApiBaseUrl
-              : null;
+    final selectedNetwork = _web3Client.network!;
+    final currentChainId = selectedNetwork.chainId;
+    final apiBaseUrl = Urls.getApiBaseUrl(currentChainId);
 
-      if (apiBaseUrl != null) {
+    final response = await _restClient.client.get(
+      Uri.parse(
+        Urls.tokens(apiBaseUrl, address, TokenType.erc_721),
+      ),
+      headers: {'accept': 'application/json'},
+    );
+
+    if (response.statusCode == 200) {
+      final addressCollections =
+          WannseeAddressTokensList.fromJson(response.body);
+
+      for (int i = 0; i < addressCollections.items!.length; i++) {
+        final collectionItem = addressCollections.items![i];
+        final tokenAddress = collectionItem.token!.address!;
         final response = await _restClient.client.get(
           Uri.parse(
-            Urls.tokens(apiBaseUrl, address, TokenType.erc_721),
+            Urls.tokenInstances(
+              apiBaseUrl,
+              tokenAddress,
+              TokenType.erc_721,
+            ),
           ),
           headers: {'accept': 'application/json'},
         );
 
-        if (response.statusCode == 200) {
-          final addressCollections =
-              WannseeAddressTokensList.fromJson(response.body);
+        if (response.statusCode != 200) {
+          continue;
+        }
+        final collectionDetail =
+            WannseeNftCollectionDetail.fromJson(response.body);
+        final currentCollectionNfts = collectionDetail.items!
+            .where(
+              (element) => element.owner!.hash!.toLowerCase() == address,
+            )
+            .toList();
 
-          for (int i = 0; i < addressCollections.items!.length; i++) {
-            final tokenAddress = addressCollections.items![i].token!.address!;
-            final response = await _restClient.client.get(
-              Uri.parse(
-                Urls.tokenInstances(
-                    apiBaseUrl, tokenAddress, TokenType.erc_721),
-              ),
-              headers: {'accept': 'application/json'},
-            );
+        for (int i = 0; i < currentCollectionNfts.length; i++) {
+          Item tokenInstance = currentCollectionNfts[i];
 
-            if (response.statusCode == 200) {
-              final collectionDetail =
-                  WannseeNftCollectionDetail.fromJson(response.body);
-              final currentCollectionNfts = collectionDetail.items!
-                  .where((element) =>
-                      element.owner!.hash!.toLowerCase() == address)
-                  .toList();
+          final hexagonNamingAddress =
+              ContractAddresses.getContractAddressString(
+            MXCContacts.hexagonNaming,
+            currentChainId,
+          );
 
-              for (int i = 0; i < currentCollectionNfts.length; i++) {
-                final tokenInstance = currentCollectionNfts[i];
+          if (tokenAddress == hexagonNamingAddress) {
+            final hexlified = hexlify(BigInt.parse(tokenInstance.id!));
+            final color = MXCColors.getColorFromH3Id(hexlified);
+            final hexString = MXCColors.colorToHexString(color);
+            tokenInstance = tokenInstance.copyWith(imageUrl: hexString);
+          } else if (tokenInstance.imageUrl == null) {
+            try {
+              final erc721Contract = contracts.Erc721(
+                address: EthereumAddress.fromHex(tokenAddress),
+                client: _web3Client,
+              );
+              final tokenId = BigInt.parse(tokenInstance.id!);
+              final tokenMetaDataUrl = await erc721Contract.tokenURI(tokenId);
+              final cid = MXCUrls.extractCIDFromUrl(tokenMetaDataUrl);
 
-                if (tokenInstance.token == null ||
-                    tokenInstance.token!.address == null ||
-                    tokenInstance.imageUrl == null ||
-                    tokenInstance.id == null ||
-                    tokenInstance.token!.name == null) {
-                  throw Exception('NFT Data fetch error.');
-                }
+              final metaDataUrl = '$ipfsGateWay$cid';
 
-                final collectionAddress = tokenInstance.token!.address!;
-                final tokenId = int.parse(tokenInstance.id!);
-                final image = tokenInstance.imageUrl!;
-                final name = tokenInstance.token!.name!;
+              final response = await _restClient.client.get(
+                Uri.parse(
+                  metaDataUrl,
+                ),
+                headers: {'accept': 'application/json'},
+              );
 
-                final nft = Nft(
-                  address: collectionAddress,
-                  tokenId: tokenId,
-                  image: image,
-                  name: name,
-                );
-
-                finalList.add(nft);
+              if (response.statusCode != 200) {
+                continue;
               }
-            } else {
-              return null;
+
+              final metaData = WannseeTokenMetaData.fromJson(response.body);
+
+              // IPFS gateway get metaData
+              // MetaData parse
+              tokenInstance = tokenInstance.copyWith(imageUrl: metaData.image);
+            } catch (e) {
+              continue;
             }
           }
-          return finalList;
-        }
 
-        if (response.statusCode == 404) {
-          // new wallet
-          return [];
-        } else {
-          return null;
+          final ensAddress = ContractAddresses.getContractAddressString(
+              MXCContacts.ensFallbackRegistry, currentChainId,);
+          if ((tokenInstance.imageUrl == null || tokenAddress == ensAddress) ||
+              tokenInstance.token == null ||
+              tokenInstance.token!.address == null ||
+              tokenInstance.id == null ||
+              tokenInstance.token!.name == null) {
+            continue;
+          }
+
+          final collectionAddress = tokenInstance.token!.address!;
+          final tokenId = int.parse(tokenInstance.id!);
+          final String? image = tokenInstance.imageUrl;
+          final name = tokenInstance.token!.name!;
+
+          final nft = Nft(
+            address: collectionAddress,
+            tokenId: tokenId,
+            image: image,
+            name: name,
+          );
+
+          finalList.add(nft);
         }
       }
-    } catch (e) {
-      throw e.toString();
+      return finalList;
+    } else if (response.statusCode == 404) {
+      return [];
+    } else {
+      throw 'Error while trying to fetch NFTs!';
     }
   }
 
   Future<void> dispose() async {
     await _web3Client.dispose();
   }
+}
+
+String hexlify(BigInt dec) {
+  return '0x0' + dec.toRadixString(16);
 }
