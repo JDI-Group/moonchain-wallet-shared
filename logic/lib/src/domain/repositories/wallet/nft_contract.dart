@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:typed_data';
 import 'package:ens_dart/ens_dart.dart' as contracts;
+import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:mxc_logic/src/data/api/client/rest_client.dart';
 import 'package:mxc_logic/mxc_logic.dart';
 import 'package:mxc_logic/src/data/api/client/web3_client.dart';
@@ -204,9 +206,7 @@ class NftContractRepository {
             }
           }
 
-          final ensAddress = ContractAddresses.getContractAddressString(
-              MXCContacts.ensFallbackRegistry, currentChainId,);
-          if ((tokenInstance.imageUrl == null || tokenAddress == ensAddress) ||
+          if (tokenInstance.imageUrl == null ||
               tokenInstance.token == null ||
               tokenInstance.token!.address == null ||
               tokenInstance.id == null ||
@@ -235,6 +235,57 @@ class NftContractRepository {
     } else {
       throw 'Error while trying to fetch NFTs!';
     }
+  }
+
+  Future<List<Nft>> getERC_11_55TokensByAddress(
+    String address,
+    String ipfsGateWay,
+  ) async {
+    final selectedNetwork = _web3Client.network!;
+    final currentChainId = selectedNetwork.chainId;
+    final mnsSubGraphsUri = Urls.getMNSSubGraphsUrl(currentChainId);
+
+    final graphQLClient =
+        _web3Client.graphQLClient.copyWith(link: HttpLink(mnsSubGraphsUri));
+
+    final QueryOptions options = QueryOptions(
+      document: gql(
+        queryDomainNames(),
+      ),
+    );
+    final QueryResult result = await graphQLClient.query(options);
+
+    if (result.data == null) {
+      return [];
+    }
+
+    final response = DomainNamesQueryResponse.fromMap(result.data!);
+
+    final addressDomains = response.domains
+        .where((element) => element.wrappedDomain.owner.id == address)
+        .toList();
+
+    final List<Nft> finalList = addressDomains.map((e) {
+      final nameWrapperAddress = ContractAddresses.getContractAddressString(
+        MXCContacts.nameWrapper,
+        currentChainId,
+      );
+
+      String hexString = e.id.replaceFirst('0x', '');
+      final tokenId = BigInt.parse(hexString, radix: 16).toInt();
+      final image = e.name;
+      const name = 'MNS';
+
+      final nft = Nft(
+        address: nameWrapperAddress,
+        tokenId: tokenId,
+        image: image,
+        name: name,
+      );
+      return nft;
+    }).toList();
+
+    return finalList;
   }
 
   Future<void> dispose() async {
