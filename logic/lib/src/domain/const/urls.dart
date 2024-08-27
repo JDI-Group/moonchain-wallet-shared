@@ -185,4 +185,25 @@ class Urls {
       'https://testnet.blueberryring.com/';
 
   static const blueberryRingDappClaim = 'api/claim';
+
+  static Uri getMNSSubGraphsUri(int chainId) =>
+      getUri(getMNSSubGraphsUrl(chainId));
+
+  static String getMNSSubGraphsUrl(int chainId) =>
+      getMXCGraphNodeUrl(chainId) + mnsSubGraphs;
+
+  static String getMXCGraphNodeUrl(int chainId) =>
+      MXCFunctionHelpers.mxcChainsSeparatedFunctions(
+        chainId: chainId,
+        mainnetFunc: () => mainnetMXCGraphNode,
+        testnetFunc: () => testnetMXCGraphNode,
+      );
+
+  static const String mainnetMXCGraphNode = 'https://mxc-graph.mxc.com/';
+  static const String testnetMXCGraphNode =
+      'https://geneva-graph-node.moonchain.com/';
+
+  static const String mnsSubGraphs = 'subgraphs/name/mnsdomains/mns';
+
+  static Uri getUri(String url) => Uri.parse(url);
 }

@@ -281,11 +281,11 @@ class TokenContractRepository {
               : null;
       if (ensResolverAddress != null && ensFallBackRegistryAddress != null) {
         final ens = contracts.Ens(
-                client: _web3Client,
-                address: EthereumAddress.fromHex(ensResolverAddress),
-                ensFallBackRegistryAddress:
-                    EthereumAddress.fromHex(ensFallBackRegistryAddress))
-            .withAddress(address);
+          client: _web3Client,
+          address: EthereumAddress.fromHex(ensResolverAddress),
+          ensFallBackRegistryAddress:
+              EthereumAddress.fromHex(ensFallBackRegistryAddress),
+        ).withAddress(address);
         final name = await ens.getName();
 
         return name;
