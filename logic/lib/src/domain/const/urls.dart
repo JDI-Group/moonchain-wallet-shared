@@ -185,10 +185,7 @@ class Urls {
       'https://testnet.blueberryring.com/';
 
   static const blueberryRingDappClaim = 'api/claim';
-
-  static Uri getMNSSubGraphsUri(int chainId) =>
-      getUri(getMNSSubGraphsUrl(chainId));
-
+  
   static String getMNSSubGraphsUrl(int chainId) =>
       getMXCGraphNodeUrl(chainId) + mnsSubGraphs;
 

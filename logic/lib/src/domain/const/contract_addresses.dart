@@ -11,6 +11,7 @@ enum MXCContacts {
   doitDevice,
   health,
   hexagonNaming,
+  nameWrapper,
 }
 
 class ContractAddresses {
@@ -57,7 +58,8 @@ class ContractAddresses {
       MXCContacts.ensFallbackRegistry: testnetEnsAddresses.ensFallbackRegistry,
       MXCContacts.doitDevice: doitRingDeviceTestnet,
       MXCContacts.health: healthTestnet,
-      MXCContacts.hexagonNaming: hexagonNamingTestnet
+      MXCContacts.hexagonNaming: hexagonNamingTestnet,
+      MXCContacts.nameWrapper: nameWrapperTestnet,
     },
     Config.mxcMainnetChainId: {
       MXCContacts.mep2542: mep2542AddressMainnet,
@@ -69,7 +71,8 @@ class ContractAddresses {
       MXCContacts.ensFallbackRegistry: mainnetEnsAddresses.ensFallbackRegistry,
       MXCContacts.doitDevice: doitRingDeviceMainnet,
       MXCContacts.health: healthMainnet,
-      MXCContacts.hexagonNaming: hexagonNamingMainnet
+      MXCContacts.hexagonNaming: hexagonNamingMainnet,
+      MXCContacts.nameWrapper: nameWrapperMainnet,
     }
   };
 
@@ -117,4 +120,8 @@ class ContractAddresses {
       '0xe5f46E29D91BeBa5C58a83f8558d912820FaC267';
   static const String hexagonNamingMainnet =
       '0x7407459464741c17F8341D7EAFED5a4A5d9303b4';
+
+  // This is used to identify the MNS 1155 tokens 
+  static const String nameWrapperTestnet = '0xCE5e3c318BFC7c2dee486cF7c62Ba95feFd6d2bD';
+  static const String nameWrapperMainnet = '0xD1B70f92b310c3Fa95b83dB436E00a53e1f1f5d5';
 }
