@@ -20,16 +20,6 @@ class ImagesTheme {
   }
 
   // Splash
-  ImageProvider get axs => const AssetImage(
-        'assets/images/splash/axs.png',
-        package: mxcUiPackageName,
-      );
-
-  ImageProvider get axsWithTitle => const AssetImage(
-        'assets/images/splash/axs-with-title.png',
-        package: mxcUiPackageName,
-      );
-
   ImageProvider get mxc => const AssetImage(
         'assets/images/splash/mxc.png',
         package: mxcUiPackageName,

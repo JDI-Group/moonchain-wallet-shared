@@ -14,8 +14,10 @@ import 'package:web3dart/web3dart.dart';
 
 class MinerRepository {
   MinerRepository(
-      this._web3Client, this._epochRepository, this._tokenContractRepository)
-      : _restClient = RestClient();
+    this._web3Client,
+    this._epochRepository,
+    this._tokenContractRepository,
+  ) : _restClient = RestClient();
 
   final DatadashClient _web3Client;
   final RestClient _restClient;
