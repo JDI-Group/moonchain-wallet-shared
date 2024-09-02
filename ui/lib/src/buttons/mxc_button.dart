@@ -216,11 +216,11 @@ class _MXCButtonState extends State<MxcButton> with TickerProviderStateMixin {
 
     switch (widget.type) {
       case MXCWalletButtonType.primary:
-        return ColorsTheme.of(context).btnBgBlue;
+        return ColorsTheme.of(context).buttonBlue;
       case MXCWalletButtonType.primaryWhite:
         return ColorsTheme.of(context).btnBgWhite;
       case MXCWalletButtonType.pass:
-        return ColorsTheme.of(context).systemStatusActive;
+        return ColorsTheme.of(context).buttonGreen;
       case MXCWalletButtonType.warning:
         return ColorsTheme.of(context).buttonCritical;
       default:
@@ -333,9 +333,10 @@ class _MXCButtonState extends State<MxcButton> with TickerProviderStateMixin {
 
   void endAnimate() => setState(() => _isTappedDown = false);
 
-  BorderRadius getBorderRadius() => widget.edgeType == MXCWalletButtonEdgeType.soft
-            ? BorderRadius.circular(40)
-            : BorderRadius.zero;
+  BorderRadius getBorderRadius() =>
+      widget.edgeType == MXCWalletButtonEdgeType.soft
+          ? BorderRadius.circular(40)
+          : BorderRadius.zero;
 
   @override
   Widget build(BuildContext context) {
