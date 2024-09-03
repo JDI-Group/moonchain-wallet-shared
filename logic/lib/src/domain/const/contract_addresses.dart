@@ -12,6 +12,7 @@ enum MXCContacts {
   health,
   hexagonNaming,
   nameWrapper,
+  storage,
 }
 
 class ContractAddresses {
@@ -60,6 +61,7 @@ class ContractAddresses {
       MXCContacts.health: healthTestnet,
       MXCContacts.hexagonNaming: hexagonNamingTestnet,
       MXCContacts.nameWrapper: nameWrapperTestnet,
+      MXCContacts.storage: storageTestnet,
     },
     Config.mxcMainnetChainId: {
       MXCContacts.mep2542: mep2542AddressMainnet,
@@ -73,6 +75,7 @@ class ContractAddresses {
       MXCContacts.health: healthMainnet,
       MXCContacts.hexagonNaming: hexagonNamingMainnet,
       MXCContacts.nameWrapper: nameWrapperMainnet,
+      MXCContacts.storage: storageMainnet,
     }
   };
 
@@ -121,7 +124,14 @@ class ContractAddresses {
   static const String hexagonNamingMainnet =
       '0x7407459464741c17F8341D7EAFED5a4A5d9303b4';
 
-  // This is used to identify the MNS 1155 tokens 
-  static const String nameWrapperTestnet = '0xCE5e3c318BFC7c2dee486cF7c62Ba95feFd6d2bD';
-  static const String nameWrapperMainnet = '0xD1B70f92b310c3Fa95b83dB436E00a53e1f1f5d5';
+  // This is used to identify the MNS 1155 tokens
+  static const String nameWrapperTestnet =
+      '0xCE5e3c318BFC7c2dee486cF7c62Ba95feFd6d2bD';
+  static const String nameWrapperMainnet =
+      '0xD1B70f92b310c3Fa95b83dB436E00a53e1f1f5d5';
+
+  static const String storageTestnet =
+      '0xbbEA47162279eDFe16e6D93Cd7B18d978F81Bc94';
+  static const String storageMainnet =
+      '0x5799df5BF8D85c92d7a9bF2fACe408c67A9A345E';
 }
