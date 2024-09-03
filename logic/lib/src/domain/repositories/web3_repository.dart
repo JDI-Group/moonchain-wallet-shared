@@ -26,7 +26,7 @@ class Web3Repository {
   TransactionControllerRepository get transactionController =>
       TransactionControllerRepository(_web3client);
 
-  NftContractRepository get nftContract => NftContractRepository(_web3client);
+  NftContractRepository get nftContract => NftContractRepository(_web3client, storageContractRepository, minerRepository,);
 
   TweetsRepository get tweetsRepository => TweetsRepository(_web3client);
 

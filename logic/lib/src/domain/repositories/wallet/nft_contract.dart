@@ -6,16 +6,22 @@ import 'package:mxc_logic/src/data/api/client/rest_client.dart';
 import 'package:mxc_logic/mxc_logic.dart';
 import 'package:mxc_logic/src/data/api/client/web3_client.dart';
 import 'package:mxc_logic/src/domain/entities/wannsee/wannsee_nft_collection_detail/item.dart';
+import 'package:mxc_logic/src/domain/repositories/wallet/wallet.dart';
 import 'package:mxc_logic/src/domain/utils/mxc_urls.dart';
 import 'package:web3dart/web3dart.dart';
 
 class NftContractRepository {
   NftContractRepository(
     this._web3Client,
+    this._storageContractRepository,
+    this._minerRepository,
   ) : _restClient = RestClient();
 
   final DatadashClient _web3Client;
   final RestClient _restClient;
+
+  final StorageContractRepository _storageContractRepository;
+  final MinerRepository _minerRepository;
 
   Future<bool> checkConnectionToNetwork() async {
     final isConnected = await _web3Client.isListeningForNetwork();
@@ -168,11 +174,30 @@ class NftContractRepository {
             currentChainId,
           );
 
+          final mep1004Address = ContractAddresses.getContractAddressString(
+            MXCContacts.mep1004Token,
+            currentChainId,
+          );
+
+          final tokenId = tokenInstance.id!;
+
           if (tokenAddress == hexagonNamingAddress) {
-            final hexlified = MXCType.hexlify(BigInt.parse(tokenInstance.id!));
+            final hexlified = MXCType.hexlify(BigInt.parse(tokenId));
             final color = MXCColors.getColorFromH3Id(hexlified);
             final hexString = MXCColors.colorToHexString(color);
             tokenInstance = tokenInstance.copyWith(imageUrl: hexString);
+          } else if (tokenAddress == mep1004Address) {
+            String avatar = await getMinerAvatar(tokenId);
+            if (avatar.isEmpty) {
+              final miners = await _minerRepository.getAddressMiners(address);
+              final thisMiner = miners.mep1004TokenDetails!
+                  .firstWhere((element) => element.mep1004TokenId == tokenId);
+              final isM2X = thisMiner.sncode!.contains('M2X');
+              final imageIndex = int.parse(thisMiner.imageIndex!);
+              // An API to get miner data
+              avatar = getMinerAvatarLocal(isM2X, imageIndex);
+            }
+            tokenInstance = tokenInstance.copyWith(imageUrl: avatar);
           } else if (tokenInstance.imageUrl == null) {
             try {
               final erc721Contract = contracts.Erc721(
@@ -206,8 +231,7 @@ class NftContractRepository {
             }
           }
 
-          if (tokenInstance.imageUrl == null ||
-              tokenInstance.token == null ||
+          if (tokenInstance.token == null ||
               tokenInstance.token!.address == null ||
               tokenInstance.id == null ||
               tokenInstance.token!.name == null) {
@@ -215,13 +239,13 @@ class NftContractRepository {
           }
 
           final collectionAddress = tokenInstance.token!.address!;
-          final tokenId = int.parse(tokenInstance.id!);
+          final tokenIdInt = int.parse(tokenId);
           final String? image = tokenInstance.imageUrl;
           final name = tokenInstance.token!.name!;
 
           final nft = Nft(
             address: collectionAddress,
-            tokenId: tokenId,
+            tokenId: tokenIdInt,
             image: image,
             name: name,
           );
@@ -237,7 +261,7 @@ class NftContractRepository {
     }
   }
 
-  Future<List<Nft>> getERC_11_55TokensByAddress(
+  Future<List<Nft>> getDomainsByAddress(
     String address,
     String ipfsGateWay,
   ) async {
@@ -274,7 +298,7 @@ class NftContractRepository {
       String hexString = e.id.replaceFirst('0x', '');
       final tokenId = BigInt.parse(hexString, radix: 16).toInt();
       final image = e.name;
-      const name = 'MNS';
+      const name = 'Domains';
 
       final nft = Nft(
         address: nameWrapperAddress,
@@ -286,6 +310,38 @@ class NftContractRepository {
     }).toList();
 
     return finalList;
+  }
+
+  Future<String> getMinerAvatar(String tokenId) async {
+    final chainId = _web3Client.network!.chainId;
+    final storageAddress = ContractAddresses.getContractAddress(
+      MXCContacts.storage,
+      chainId,
+    );
+
+    final storageContract =
+        contracts.Storage(client: _web3Client, address: storageAddress);
+    final avatar = await storageContract.getItem('mep1004_$tokenId', 'avatar');
+
+    return avatar;
+  }
+
+  String getMinerAvatarLocal(bool isM2X, int imageIndex) {
+    late List<String> images;
+    if (isM2X) {
+      images = [
+        'assets/image/miners/miner_skin_m2pro.webp',
+        'assets/image/miners/miner_skin_camo.webp',
+        'assets/image/miners/miner_skin_lava.webp',
+      ];
+    } else {
+      images = [
+        'assets/image/miners/miner_skin_neo.webp',
+        'assets/image/miners/miner_skin_halloween.webp',
+      ];
+    }
+
+    return images[imageIndex];
   }
 
   Future<void> dispose() async {
