@@ -52,4 +52,6 @@ class Web3Repository {
   LauncherRepository get launcherRepository => LauncherRepository(_web3client);
 
   IPFSRepository get ipfsRepository => IPFSRepository(_web3client);
+
+  StorageContractRepository get storageContractRepository => StorageContractRepository(_web3client);
 }
