@@ -39,6 +39,9 @@ class ColorsTheme {
   final primary500 = const Color(0xFF7795F9);
   final primary600 = const Color(0xFF8AA4F9);
 
+  final primaryBlue = const Color(0XFF478DE0);
+  Color get buttonBlue => primaryBlue;
+
   final darkBlue = const Color(0xff0E1629);
   final charcoalGray = const Color(0xff333333);
 
@@ -214,6 +217,9 @@ class ColorsTheme {
   Color get buttonWhiteInvert => whiteInvert;
   Color get buttonBlackInvert => blackInvert;
 
+  final primaryGreen = const Color(0XFF1FB857);
+  Color get buttonGreen => primaryGreen;
+
   // tip
   final mainGreen = const Color(0xFF10C469);
   final mainRed = const Color(0xFFD22D2D);
@@ -265,6 +271,12 @@ class ColorsThemeDark implements ColorsTheme {
 
   @override
   final primary600 = const Color(0xFFC7D3F9);
+
+  @override
+  final primaryBlue = const Color(0XFF478DE0);
+
+  @override
+  Color get buttonBlue => primaryBlue;
 
   @override
   final darkBlue = const Color(0xff0E1629);
@@ -665,6 +677,12 @@ class ColorsThemeDark implements ColorsTheme {
 
   @override
   Color get buttonBlackInvert => const Color(0xFF25282B);
+
+  @override
+  final primaryGreen = const Color(0XFF1FB857);
+
+  @override
+  Color get buttonGreen => primaryGreen;
 
   // tip
   @override
