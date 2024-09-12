@@ -66,6 +66,11 @@ class FontTheme {
 
   TextStylePack get h8 => TextStylePack(_colorsTheme,
       _baseTextStyle.copyWith(fontSize: 8, fontWeight: FontWeight.w500));
+
+  TextStylePack get logo => TextStylePack(
+      _colorsTheme,
+      _baseTextStyle.copyWith(
+          fontSize: 24, fontWeight: FontWeight.w400, fontFamily: 'SpaceX'));
 }
 
 class TextStylePack {
