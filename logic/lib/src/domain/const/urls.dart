@@ -101,6 +101,10 @@ class Urls {
   static const String okx = 'https://www.okx.com/';
   static const String kucoin = 'https://www.kucoin.com/';
   static const String cryptocom = 'https://crypto.com/';
+  static const String bitget = 'https://bitget.com/';
+  static const String bitmart = 'https://www.bitmart.com/en-US/';
+  static const String htx = 'https://www.htx.com/';
+
 
   static const String mainnetL3Bridge = 'https://erc20.mxc.com/';
   static const String testnetL3Bridge = 'https://geneva-erc20.moonchain.com/';
