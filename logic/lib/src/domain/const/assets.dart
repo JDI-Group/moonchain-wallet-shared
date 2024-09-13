@@ -32,7 +32,7 @@ class Assets {
       '${tweetsListPath}tweets_list_v2.json';
 
   static String get seedPhaseFileName =>
-      '${DateFormat('yyyy-MM-dd--HH-mm-ss').format(DateTime.now())}-axs-key.txt';
+      '${DateFormat('yyyy-MM-dd--HH-mm-ss').format(DateTime.now())}-moonchain-key.txt';
   static String get androidDownloadDir => '/storage/emulated/0/Download';
   static String get androidDownloadsDir => '/storage/emulated/0/Downloads';
 
