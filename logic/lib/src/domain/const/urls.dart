@@ -78,7 +78,8 @@ class Urls {
   // MXC support
   static const String mxcZendesk = 'https://mxcfoundation.zendesk.com/hc/en-gb';
   static const String mxcKnowledgeHub = 'https://www.mxc.org/blog#technology';
-  static const String mxcDesignDocs = 'https://doc.mxc.com/docs/intro';
+  static const String moonchainDesignDocs =
+      'https://doc.moonchain.com/docs/intro/';
 
   /// Used to retrieve the latest epoch details
   static String mepEpochListTestnet(int page, int pageLimit) =>
@@ -104,7 +105,6 @@ class Urls {
   static const String bitget = 'https://bitget.com/';
   static const String bitmart = 'https://www.bitmart.com/en-US/';
   static const String htx = 'https://www.htx.com/';
-
 
   static const String mainnetL3Bridge = 'https://erc20.mxc.com/';
   static const String testnetL3Bridge = 'https://geneva-erc20.moonchain.com/';
@@ -189,7 +189,7 @@ class Urls {
       'https://testnet.blueberryring.com/';
 
   static const blueberryRingDappClaim = 'api/claim';
-  
+
   static String getMNSSubGraphsUrl(int chainId) =>
       getMXCGraphNodeUrl(chainId) + mnsSubGraphs;
 
