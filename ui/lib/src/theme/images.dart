@@ -24,12 +24,6 @@ class ImagesTheme {
         'assets/images/splash/mxc.png',
         package: mxcUiPackageName,
       );
-
-  ImageProvider get appTextLogo  => const AssetImage(
-        'assets/images/splash/app_text_logo.png',
-        package: mxcUiPackageName,
-      );
-
 }
 
 class ImagesThemeDark extends ImagesTheme {
