@@ -110,7 +110,7 @@ class Urls {
   static const String testnetL3Bridge = 'https://geneva-erc20.moonchain.com/';
 
   static String mainnetMns(String name) =>
-      'https://mns.mxc.com/$name.mxc/register';
+      'https://mns.moonchain.com/$name.mxc/register';
   static String testnetMns(String name) =>
       'https://geneva-mns.moonchain.com/$name.mxc/register';
 
