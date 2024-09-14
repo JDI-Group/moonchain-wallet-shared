@@ -77,7 +77,7 @@ class Urls {
 
   // MXC support
   static const String mxcZendesk = 'https://mxcfoundation.zendesk.com/hc/en-gb';
-  static const String mxcKnowledgeHub = 'https://www.mxc.org/blog#technology';
+  static const String moonchainWebsite = 'https://moonchain.com/';
   static const String moonchainDesignDocs =
       'https://doc.moonchain.com/docs/intro/';
 
