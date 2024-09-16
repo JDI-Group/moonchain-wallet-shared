@@ -194,7 +194,7 @@ class MxcAppBar extends StatelessWidget {
           ),
           if (action != null)
             SizedBox(
-              width: 32,
+              width: 48,
               child: action,
             ),
         ],
