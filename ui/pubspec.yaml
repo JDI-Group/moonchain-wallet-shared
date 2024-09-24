@@ -37,6 +37,3 @@ flutter:
     - family: SpaceX
       fonts:
         - asset: assets/fonts/SpaceX.ttf
-  assets:
-    - assets/images/app/
-    - assets/images/splash/
