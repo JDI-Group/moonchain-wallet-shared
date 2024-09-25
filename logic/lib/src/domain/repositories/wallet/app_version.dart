@@ -1,7 +1,8 @@
 import 'package:http/http.dart';
 import 'package:mxc_logic/mxc_logic.dart';
 import 'package:yaml/yaml.dart';
-import 'package:your_package_name/src/domain/const/urls.dart'; // Make sure to import the Urls class
+import 'package:mxc_logic/src/data/api/client/web3_client.dart';
+import 'package:mxc_logic/src/domain/const/urls.dart';
 
 class AppVersionRepository {
   AppVersionRepository(
