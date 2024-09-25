@@ -1,7 +1,7 @@
 import 'package:http/http.dart';
 import 'package:mxc_logic/mxc_logic.dart';
-import 'package:mxc_logic/src/data/api/client/web3_client.dart';
-import 'package:mxc_logic/src/domain/const/urls.dart';
+import 'package:yaml/yaml.dart';
+import 'package:your_package_name/src/domain/const/urls.dart'; // Make sure to import the Urls class
 
 class AppVersionRepository {
   AppVersionRepository(
@@ -11,22 +11,31 @@ class AppVersionRepository {
   final DatadashClient _web3Client;
   final Client _restClient;
 
-  Future<bool> checkLatestVersion(
-    String appSecret,
-    String groupId,
-    String appVersion,
-  ) async {
+  Future<bool> checkLatestVersion(String appVersion) async {
     final res = await _restClient.get(
-      Uri.parse(
-        Urls.getLatestVersion(appSecret, groupId),
-      ),
-      headers: {'accept': 'application/json'},
+      Uri.parse(Urls.latestVersionYaml),
+      headers: {'accept': 'text/plain'},
     );
 
-    final app = AppVersion.fromJson(res.body);
-    final latestVersion = int.parse(app.version!);
-    final currentVersion = int.parse(appVersion);
+    if (res.statusCode != 200) {
+      throw Exception('Failed to fetch version information');
+    }
 
-    return latestVersion > currentVersion;
+    final yamlDoc = loadYaml(res.body);
+    final latestVersion = yamlDoc['version'] as String;
+
+    return _isNewVersionAvailable(latestVersion, appVersion);
+  }
+
+  bool _isNewVersionAvailable(String latestVersion, String currentVersion) {
+    final latest = latestVersion.split('.').map(int.parse).toList();
+    final current = currentVersion.split('.').map(int.parse).toList();
+
+    for (int i = 0; i < 3; i++) {
+      if (latest[i] > current[i]) return true;
+      if (latest[i] < current[i]) return false;
+    }
+
+    return false;
   }
 }
