@@ -36,8 +36,12 @@ class Urls {
   static const String dapp =
       'https://raw.githubusercontent.com/MXCzkEVM/MEP-1759-DApp-store/main/dapp_store';
 
-  static String getLatestVersion(String appSecret, String groupId) =>
-      'https://api.appcenter.ms/v0.1/public/sdk/apps/$appSecret/distribution_groups/$groupId/releases/latest';
+  // Remove the following method:
+  // static String getLatestVersion(String appSecret, String groupId) =>
+  //     'https://api.appcenter.ms/v0.1/public/sdk/apps/$appSecret/distribution_groups/$groupId/releases/latest';
+
+  // Add this new static constant:
+  static const String latestVersionYaml = 'https://raw.githubusercontent.com/MXCzkEVM/moonchain-wallet/refs/heads/main/pubspec.yaml';
 
   static String getApiBaseUrl(int chainId) =>
       MXCFunctionHelpers.mxcChainsSeparatedFunctions(
