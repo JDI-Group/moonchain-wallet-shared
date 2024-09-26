@@ -13,22 +13,33 @@ class AppVersionRepository {
   final Client _restClient;
 
   Future<bool> checkLatestVersion(String appVersion) async {
-    final res = await _restClient.get(
-      Uri.parse(Urls.latestVersionYaml),
-      headers: {'accept': 'text/plain'},
-    );
+    try {
+      final res = await _restClient.get(
+        Uri.parse(Urls.latestVersionYaml),
+        headers: {'accept': 'text/plain'},
+      ).timeout(const Duration(seconds: 10));
 
-    if (res.statusCode != 200) {
-      throw Exception('Failed to fetch version information');
+      if (res.statusCode != 200) {
+        throw Exception('Failed to fetch version information. Status code: ${res.statusCode}');
+      }
+
+      print('YAML content: ${res.body}'); // Debug log
+
+      final yamlDoc = loadYaml(res.body);
+      print('Parsed YAML: $yamlDoc'); // Debug log
+
+      final latestVersion = yamlDoc['version'] as String;
+      print('Latest version: $latestVersion'); // Debug log
+
+      return _isNewVersionAvailable(latestVersion, appVersion);
+    } catch (e) {
+      print('Error checking app version: $e');
+      return false;
     }
-
-    final yamlDoc = loadYaml(res.body);
-    final latestVersion = yamlDoc['version'] as String;
-
-    return _isNewVersionAvailable(latestVersion, appVersion);
   }
 
   bool _isNewVersionAvailable(String latestVersion, String currentVersion) {
+    print('Comparing versions - Latest: $latestVersion, Current: $currentVersion'); // Debug log
     final latest = latestVersion.split('.').map(int.parse).toList();
     final current = currentVersion.split('.').map(int.parse).toList();
 
