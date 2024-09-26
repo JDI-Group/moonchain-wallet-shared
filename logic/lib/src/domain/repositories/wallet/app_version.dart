@@ -35,15 +35,14 @@ class AppVersionRepository {
   }
 
   bool _isNewVersionAvailable(String latestVersion, String currentVersion) {
-    // Convert the semantic version to a comparable integer
-    int latestCode = _versionToCode(latestVersion);
-    int currentCode = int.parse(currentVersion);
+    List<int> latest = latestVersion.split('.').map(int.parse).toList();
+    List<int> current = currentVersion.split('.').map(int.parse).toList();
 
-    return latestCode > currentCode;
-  }
+    for (int i = 0; i < 3; i++) {
+      if (latest[i] > current[i]) return true;
+      if (latest[i] < current[i]) return false;
+    }
 
-  int _versionToCode(String version) {
-    List<int> parts = version.split('.').map(int.parse).toList();
-    return parts[0] * 10000 + parts[1] * 100 + parts[2];
+    return false;
   }
 }
