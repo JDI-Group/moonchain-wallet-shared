@@ -12,7 +12,7 @@ class AppVersionRepository {
   final DatadashClient _web3Client;
   final Client _restClient;
 
-  Future<bool> checkLatestVersion(String appVersion) async {
+  Future<bool> checkLatestVersion(String currentVersion) async {
     try {
       final res = await _restClient.get(
         Uri.parse(Urls.latestVersionYaml),
@@ -23,15 +23,12 @@ class AppVersionRepository {
         throw Exception('Failed to fetch version information. Status code: ${res.statusCode}');
       }
 
-      print('YAML content: ${res.body}'); // Debug log
-
       final yamlDoc = loadYaml(res.body);
-      print('Parsed YAML: $yamlDoc'); // Debug log
-
       final latestVersion = yamlDoc['version'] as String;
-      print('Latest version: $latestVersion'); // Debug log
 
-      return _isNewVersionAvailable(latestVersion, appVersion);
+      print('Comparing versions - Latest: $latestVersion, Current: $currentVersion');
+
+      return _isNewVersionAvailable(latestVersion, currentVersion);
     } catch (e) {
       print('Error checking app version: $e');
       return false;
@@ -39,15 +36,15 @@ class AppVersionRepository {
   }
 
   bool _isNewVersionAvailable(String latestVersion, String currentVersion) {
-    print('Comparing versions - Latest: $latestVersion, Current: $currentVersion'); // Debug log
-    final latest = latestVersion.split('.').map(int.parse).toList();
-    final current = currentVersion.split('.').map(int.parse).toList();
+    // Convert the semantic version to a comparable integer
+    int latestCode = _versionToCode(latestVersion);
+    int currentCode = int.parse(currentVersion);
 
-    for (int i = 0; i < 3; i++) {
-      if (latest[i] > current[i]) return true;
-      if (latest[i] < current[i]) return false;
-    }
+    return latestCode > currentCode;
+  }
 
-    return false;
+  int _versionToCode(String version) {
+    List<int> parts = version.split('.').map(int.parse).toList();
+    return parts[0] * 10000 + parts[1] * 100 + parts[2];
   }
 }
