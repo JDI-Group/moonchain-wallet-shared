@@ -4,12 +4,12 @@ class BackgroundExecutionConfig {
   static const mxcWalletBackgroundServiceInterval = 15;
 
   static const String notificationsTask =
-      'com.mxc.moonchainWallet.notificationsTask';
-  static const String wifiHooksTask = 'com.mxc.moonchainWallet.wifiHooksTask';
+      'com.moonchain.mxc.notificationsTask';
+  static const String wifiHooksTask = 'com.moonchain.mxc.wifiHooksTask';
   static const String minerAutoClaimTask =
-      'com.mxc.moonchainWallet.minerAutoClaimTask';
+      'com.moonchain.mxc.minerAutoClaimTask';
   static const String blueberryAutoSyncTask =
-      'com.mxc.moonchainWallet.blueberryAutoSyncTask';
+      'com.moonchain.mxc.blueberryAutoSyncTask';
 
   static DateTime defaultTimeForMinerDapp = DateTime(2024, 1, 1, 13, 0, 0);
 
