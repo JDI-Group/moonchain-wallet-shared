@@ -3,8 +3,6 @@ import 'package:web3dart/web3dart.dart';
 
 class Config {
   // App related config
-  static const String appName = 'AXS';
-
   static const int mxcMainnetChainId = 18686;
   static const int mxcTestnetChainId = 5167004;
   static const int ethereumMainnetChainId = 1;
@@ -39,4 +37,8 @@ class Config {
 
   static const breakingHyphen = '-';
   static const nonBreakingHyphen = '\u2011';
+
+  // Google drive config 
+  static const googleDriveFolderName = 'MoonBase';
+  static const googleDriveFolderMime = 'application/vnd.google-apps.folder';
 }
