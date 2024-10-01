@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:mxc_logic/mxc_logic.dart';
+import 'package:path_provider/path_provider.dart';
 
 class MXCFileHelpers {
   static Future<String> getDAppStoreJson() async {
@@ -53,6 +54,7 @@ class MXCFileHelpers {
   }) async =>
       await MXCFile.writeFileContent(path, content, recursive: recursive);
 
+  // Writes to permanent file (Based on the OS) and returns the path
   static Future<String> writeSeedPhase(String content) async {
     String filePath;
     if (Platform.isAndroid) {
@@ -70,5 +72,18 @@ class MXCFileHelpers {
       filePath = await Assets.seedPhasePathIOS();
       return await writeFileContent(filePath, content, recursive: true);
     }
+  }
+
+  // Writes to temp file and returns the file
+  static Future<File> writeToTempFile(
+    String content,
+  ) async {
+    final tempDir = await getTemporaryDirectory();
+    final fileName = Assets.tempSeedPhaseFileName;
+
+    final fullPath = '${tempDir.path}/$fileName';
+    File file = await File(fullPath).create();
+    await file.writeAsString(content);
+    return file;
   }
 }
