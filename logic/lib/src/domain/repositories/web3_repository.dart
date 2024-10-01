@@ -1,6 +1,7 @@
 import 'package:mxc_logic/mxc_logic.dart';
 import 'package:mxc_logic/src/data/api/client/web3_client.dart';
 import 'package:mxc_logic/src/data/data.dart';
+import 'package:mxc_logic/src/domain/repositories/wallet/google_drive.dart';
 
 import 'wallet/wallet.dart';
 import 'wallet/wallet_address.dart';
@@ -54,4 +55,6 @@ class Web3Repository {
   IPFSRepository get ipfsRepository => IPFSRepository(_web3client);
 
   StorageContractRepository get storageContractRepository => StorageContractRepository(_web3client);
+
+  GoogleDriveRepository get googleDriveRepository => GoogleDriveRepository(_web3client);
 }
