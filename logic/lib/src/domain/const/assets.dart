@@ -33,6 +33,10 @@ class Assets {
 
   static String get seedPhaseFileName =>
       '${DateFormat('yyyy-MM-dd--HH-mm-ss').format(DateTime.now())}-moonchain-key.txt';
+  // The name is const because while loading 
+  // we need the exact name to check wether the file exists or not 
+  static String get tempSeedPhaseFileName => 'moonchain-key.txt';
+
   static String get androidDownloadDir => '/storage/emulated/0/Download';
   static String get androidDownloadsDir => '/storage/emulated/0/Downloads';
 
