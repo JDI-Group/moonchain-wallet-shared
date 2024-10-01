@@ -19,6 +19,7 @@ dependencies:
   eth_sig_util: ^0.0.9
   flutter:
     sdk: flutter
+  googleapis: ^11.0.0
   graphql: ^5.1.3
   graphql_flutter: ^5.1.2
   hex: ^0.2.0
