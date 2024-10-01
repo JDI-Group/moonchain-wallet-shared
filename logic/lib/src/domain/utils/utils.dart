@@ -10,3 +10,4 @@ export 'mxc_file.dart';
 export 'mxc_chains.dart';
 export 'mxc_directory.dart';
 export 'mxc_colors.dart';
+export 'google_drive_file.dart';
