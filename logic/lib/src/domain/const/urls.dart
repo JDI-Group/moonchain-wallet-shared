@@ -64,7 +64,7 @@ class Urls {
         testnetFunc: () => mxcTestnetNftMarketPlace,
       );
 
-  static const String mxcMainnetNftMarketPlace = 'https://nft.mxc.com/';
+  static const String mxcMainnetNftMarketPlace = 'https://nft.moonchain.com/';
   static const String mxcTestnetNftMarketPlace =
       'https://geneva-nft.moonchain.com/';
   static const String mxcStatus = 'https://mxc.instatus.com/';
@@ -110,7 +110,7 @@ class Urls {
   static const String bitmart = 'https://www.bitmart.com/en-US/';
   static const String htx = 'https://www.htx.com/';
 
-  static const String mainnetL3Bridge = 'https://erc20.mxc.com/';
+  static const String mainnetL3Bridge = 'https://erc20.moonchain.com/';
   static const String testnetL3Bridge = 'https://geneva-erc20.moonchain.com/';
 
   static String mainnetMns(String name) =>
