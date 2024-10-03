@@ -36,6 +36,7 @@ class Assets {
   // The name is const because while loading 
   // we need the exact name to check wether the file exists or not 
   static String get tempSeedPhaseFileName => 'moonchain-key.txt';
+  static Future<String> get tempSeedPhraseFilePath async => (await getTemporaryDirectory()).path;
 
   static String get androidDownloadDir => '/storage/emulated/0/Download';
   static String get androidDownloadsDir => '/storage/emulated/0/Downloads';
