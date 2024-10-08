@@ -22,12 +22,11 @@ class GoogleDriveRepository {
   GoogleDriveFileUtils get _googleDriveFileUtils =>
       GoogleDriveFileUtils(driveApi!);
 
-  Future<void> initGoogleAuthHeaders(
-      Map<String, String>? _googleAuthHeaders) async {
-    _googleAuthHeaders = _googleAuthHeaders;
-  }
-
-  Future<void> uploadBackup(String mnemonic) async {
+  Future<void> uploadBackup(
+    String mnemonic,
+    Map<String, String>? googleAuthHeaders,
+  ) async {
+    _googleAuthHeaders = googleAuthHeaders;
     final localFile = await MXCFileHelpers.writeToTempFile(mnemonic);
 
     final File gDriveFile = File();
@@ -50,11 +49,10 @@ class GoogleDriveRepository {
     );
   }
 
-  Future<String> readBackupFile() async {
-    // final localFile = await MXCFileHelpers.writeToTempFile();
-
-    // final File gDriveFile = File();
-    // gDriveFile.name = basename(localFile.absolute.path);
+  Future<String> readBackupFile(
+    Map<String, String>? googleAuthHeaders,
+  ) async {
+    _googleAuthHeaders = googleAuthHeaders;
 
     final fileName = Assets.tempSeedPhaseFileName;
 

@@ -48,10 +48,10 @@ class GoogleDriveFileUtils {
       $fields: 'files(id, name, mimeType, parents)',
     );
 
-    if (driveFileList.files == null || driveFileList.files!.isEmpty) {
-      return null;
+    if (driveFileList.files != null && driveFileList.files!.isNotEmpty) {
+      return driveFileList.files!.first;
     }
 
-    return driveFileList.files!.first;
+    return null;
   }
 }
