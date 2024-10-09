@@ -43,6 +43,6 @@ class Config {
   static const googleDriveFolderMime = 'application/vnd.google-apps.folder';
 
   // ICloud config 
-  static const iCloudContainerId = '';
+  static const iCloudContainerId = 'iCloud.moonchain.mxc';
   static const iCloudFolderName = 'MoonBase';
 }
