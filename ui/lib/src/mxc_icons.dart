@@ -73,7 +73,7 @@ class MxcIcons {
   static const IconData down_arrow = IconData(0xe82f, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData left_arrow = IconData(0xe830, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData google_drive = IconData(0xe831, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData icloud = IconData(0xe832, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData icloud = IconData(0xe833, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData network_status = IconData(0xe83d, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData clipboard = IconData(0xe84a, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData down_dir = IconData(0xe887, fontFamily: _kFontFam, fontPackage: _kFontPkg);
