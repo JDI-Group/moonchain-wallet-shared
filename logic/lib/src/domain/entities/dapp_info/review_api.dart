@@ -27,7 +27,7 @@ class ReviewApi extends Equatable {
             ? null
             : Icons.fromMap(data['icons'] as Map<String, dynamic>),
         icon: data['icon'],
-        iconV2: data['icon_v2'],
+        iconV2: data['iconV2'],
       );
 
   const ReviewApi({
@@ -54,7 +54,7 @@ class ReviewApi extends Equatable {
         'body': body?.toMap(),
         'icons': icons?.toMap(),
         'icon': icon,
-        'icon_v2': iconV2,
+        'iconV2': iconV2,
       };
 
   /// `dart:convert`

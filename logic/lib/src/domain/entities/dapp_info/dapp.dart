@@ -22,6 +22,7 @@ class Dapp extends Equatable {
         permissions: app?.permissions,
         supportedPlatforms: ['android', 'ios'],
         version: app?.version,
+        providerType: app?.providerType,
       ),
       store: Store(
         chainid: store?.chainid,
