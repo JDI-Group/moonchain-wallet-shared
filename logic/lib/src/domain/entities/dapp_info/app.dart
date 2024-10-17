@@ -6,6 +6,25 @@ import 'developer.dart';
 import 'localizations.dart';
 import 'permissions.dart';
 
+enum ProviderType { native, thirdParty }
+
+extension ProviderTypeExtension on ProviderType {
+  static ProviderType fromString(String value) {
+    switch (value) {
+      case 'native':
+        return ProviderType.native;
+      case 'thirdParty':
+        return ProviderType.thirdParty;
+      default:
+        throw Exception('Unknown provider type');
+    }
+  }
+
+  String toJson() {
+    return name;
+  }
+}
+
 class AppInfo extends Equatable {
   /// `dart:convert`
   ///
@@ -31,6 +50,9 @@ class AppInfo extends Equatable {
                 data['localizations'] as Map<String, dynamic>),
         ageRating: data['ageRating'] as String?,
         supportedPlatforms: data['supportedPlatforms'] as List<dynamic>?,
+        providerType: data['providerType'] == null
+            ? null
+            : ProviderTypeExtension.fromString(data['providerType']),
       );
 
   const AppInfo({
@@ -43,6 +65,7 @@ class AppInfo extends Equatable {
     this.localizations,
     this.ageRating,
     this.supportedPlatforms,
+    this.providerType,
   });
   final String? name;
   final String? url;
@@ -53,6 +76,7 @@ class AppInfo extends Equatable {
   final Localizations? localizations;
   final String? ageRating;
   final List<dynamic>? supportedPlatforms;
+  final ProviderType? providerType;
 
   Map<String, dynamic> toMap() => {
         'name': name,
@@ -64,6 +88,7 @@ class AppInfo extends Equatable {
         'localizations': localizations?.toMap(),
         'ageRating': ageRating,
         'supportedPlatforms': supportedPlatforms,
+        'providerType': providerType,
       };
 
   /// `dart:convert`
@@ -81,6 +106,7 @@ class AppInfo extends Equatable {
     Localizations? localizations,
     String? ageRating,
     List<String>? supportedPlatforms,
+    ProviderType? providerType,
   }) {
     return AppInfo(
       name: name ?? this.name,
@@ -92,6 +118,7 @@ class AppInfo extends Equatable {
       localizations: localizations ?? this.localizations,
       ageRating: ageRating ?? this.ageRating,
       supportedPlatforms: supportedPlatforms ?? this.supportedPlatforms,
+      providerType: providerType ?? this.providerType
     );
   }
 
@@ -110,6 +137,7 @@ class AppInfo extends Equatable {
       localizations,
       ageRating,
       supportedPlatforms,
+      providerType,
     ];
   }
 }
