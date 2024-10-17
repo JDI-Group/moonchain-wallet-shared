@@ -7,6 +7,8 @@ import 'app.dart';
 import 'review_api.dart';
 import 'store.dart';
 
+export 'app.dart';
+
 class Dapp extends Equatable {
   Dapp fromBookmark(Bookmark bookMark) {
     return Dapp(
@@ -33,6 +35,7 @@ class Dapp extends Equatable {
         method: reviewApi?.method,
         url: reviewApi?.url,
         icon: bookMark.image,
+        iconV2: bookMark.image,
       ),
     );
   }
@@ -76,6 +79,8 @@ class Dapp extends Equatable {
           iconSmall: '$prefix${reviewApi?.icons?.iconSmall}',
         ),
         icon: reviewApi?.icon != null ? '$prefix${reviewApi?.icon}' : null,
+        iconV2:
+            reviewApi?.iconV2 != null ? '$prefix${reviewApi?.iconV2}' : null,
         method: reviewApi?.method,
         url: reviewApi?.url,
       ),
