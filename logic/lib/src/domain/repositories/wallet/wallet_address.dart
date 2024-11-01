@@ -27,12 +27,12 @@ class WalletAddressRepoistory {
   }
 
   String getPublicAddress(String privateKey) {
-    return EthPrivateKey.fromHex(privateKey).address.hex;
+    return EthPrivateKey.fromHex(privateKey).address.hexEip55;
   }
 
   String getPublicAddressFromMnemonic(String mnemonic) {
     final privateKey = getPrivateKey(mnemonic);
-    return EthPrivateKey.fromHex(privateKey).address.hex;
+    return EthPrivateKey.fromHex(privateKey).address.hexEip55;
   }
 
   bool validateMnemonic(String mnemonic) => bip39.validateMnemonic(mnemonic);

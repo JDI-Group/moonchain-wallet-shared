@@ -40,7 +40,7 @@ class NftContractRepository {
           contracts.EnsNft(address: addressValue, client: _web3Client);
       final result = await ensNft.ownerOf(tokenIdValue);
 
-      return result.hex;
+      return result.hexEip55;
     } catch (e) {
       throw e.toString();
     }

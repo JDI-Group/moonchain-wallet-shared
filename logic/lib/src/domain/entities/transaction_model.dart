@@ -187,7 +187,7 @@ class TransactionModel {
     final txStatus = receipt.status == true
         ? TransactionStatus.done
         : TransactionStatus.pending;
-    final txType = receipt.from!.hex == walletAddress
+    final txType = receipt.from!.hexEip55 == walletAddress
         ? TransactionType.sent
         : TransactionType.received;
     // When the receipt is available no need to have these props, since these props are used for
@@ -206,8 +206,8 @@ class TransactionModel {
       value: '0',
       token: token,
       action: null,
-      // from: from?.hex,
-      // to: to?.hex,
+      // from: from?.hexEip55,
+      // to: to?.hexEip55,
       // feePerGas: feePerGas.toDouble(), gasLimit: gasLimit,
     );
   }
@@ -237,8 +237,8 @@ class TransactionModel {
       value: '0',
       token: token,
       action: null,
-      from: from.hex,
-      to: to?.hex,
+      from: from.hexEip55,
+      to: to?.hexEip55,
       feePerGas: feePerGas.getInWei.toDouble(),
       data: data,
       gasLimit: gasLimit,
@@ -282,8 +282,8 @@ class TransactionModel {
       value: value,
       token: token ?? const Token(),
       action: null,
-      from: from?.hex,
-      to: to.hex,
+      from: from?.hexEip55,
+      to: to.hexEip55,
       feePerGas: feePerGas,
       data: data,
       gasLimit: gasLimit,

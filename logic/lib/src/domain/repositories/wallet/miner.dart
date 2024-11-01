@@ -113,7 +113,7 @@ class MinerRepository {
 
         final gasEstimation =
             await _tokenContractRepository.estimateGasFeeForContractCall(
-          from: cred.address.hex,
+          from: cred.address.hexEip55,
           to: miner.erc6551Addr!,
           data: function.encodeCall(params),
         );

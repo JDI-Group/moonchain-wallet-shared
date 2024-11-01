@@ -326,7 +326,7 @@ class TokenContractRepository {
             .withName(name);
         final address = await ens.getAddress();
 
-        return address.hex;
+        return address.hexEip55;
       }
 
       throw Exception('Ens addresses missing.');
@@ -415,7 +415,7 @@ class TokenContractRepository {
     if (from != null) fromAddress = EthereumAddress.fromHex(from);
     final cred = EthPrivateKey.fromHex(privateKey);
     estimatedGasFee ??= await estimateGasFee(
-      from: from ?? cred.address.hex,
+      from: from ?? cred.address.hexEip55,
       to: to,
       data: data,
       value: amount,
@@ -477,7 +477,7 @@ class TokenContractRepository {
         value: amount.getInWei.toDouble().toString(),
         data: MXCType.uint8ListToString(
           getTokenTransferData(
-            tokenHash.hex,
+            tokenHash.hexEip55,
             toAddress,
             tokenAmount,
           ),
@@ -496,6 +496,8 @@ class TokenContractRepository {
     EthereumAddress toAddress,
     BigInt amount,
   ) {
+    final address = EthereumAddress.fromHex(tokenHash);
+    address.hexEip55;
     final erc20Token = contracts.EnsToken(
       address: EthereumAddress.fromHex(tokenHash),
       client: _web3Client,
