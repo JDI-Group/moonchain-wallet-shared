@@ -80,7 +80,7 @@ class Urls {
   static const String emailApp = 'mailto:';
 
   // MXC support
-  static const String mxcZendesk = 'https://mxcfoundation.zendesk.com/hc/en-gb';
+  static const String moonchainSupportBot= 'https://t.me/MoonchainSupport_bot';
   static const String moonchainWebsite = 'https://moonchain.com/';
   static const String moonchainDesignDocs =
       'https://doc.moonchain.com/docs/intro/';
