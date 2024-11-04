@@ -6,7 +6,7 @@ class DomainNamesQueryResponse {
 
   factory DomainNamesQueryResponse.fromMap(Map<String, dynamic> map) {
     return DomainNamesQueryResponse(
-      domains: List<Domain>.from(map['domains']?.map((x) => Domain.fromMap(x))),
+      domains:(map['domains'] as List<dynamic>?) == null ? [] : List<Domain>.from( (map['domains'] as List<dynamic>).where((element) => (element as Map<String, dynamic>)['wrappedDomain'] != null,).map((x) => Domain.fromMap(x))),
     );
   }
   DomainNamesQueryResponse({
