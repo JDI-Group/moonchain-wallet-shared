@@ -84,7 +84,7 @@ class TransactionModel {
         } else {
           type = mxcTransaction.checkForTransactionType(
             walletAddress,
-            mxcTransaction.from!.hash!.toLowerCase(),
+            mxcTransaction.from!.hash!,
           );
           value = mxcTransaction.value ?? '0';
           token = token.copyWith(
@@ -111,7 +111,9 @@ class TransactionModel {
         timeStamp = mxcTransaction.timestamp!;
 
         type = mxcTransaction.checkForTransactionType(
-            walletAddress, mxcTransaction.from!.hash!.toLowerCase());
+          walletAddress,
+          mxcTransaction.from!.hash!,
+        );
         value = mxcTransaction.value ?? '0';
       } else if (mxcTransaction.txTypes == null &&
           mxcTransaction.tokenTransfers != null &&

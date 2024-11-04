@@ -1,12 +1,9 @@
 import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
+import 'package:mxc_logic/mxc_logic.dart';
 import 'package:mxc_logic/src/domain/entities/wannsee/wannsee_transactions_model/decoded_input.dart';
 
-import '../../transaction_model.dart';
-import '../wannsee_models.dart';
-
-import '../shared/shared.dart';
 import 'fee.dart';
 
 class WannseeTransactionModel extends Equatable {
@@ -265,7 +262,7 @@ class WannseeTransactionModel extends Equatable {
     String userAddress,
     String currentTxFromHash,
   ) {
-    if (currentTxFromHash == userAddress) {
+    if (EthereumAddress.fromHex(currentTxFromHash) == EthereumAddress.fromHex(userAddress)) {
       return TransactionType.sent;
     } else {
       return TransactionType.received;
