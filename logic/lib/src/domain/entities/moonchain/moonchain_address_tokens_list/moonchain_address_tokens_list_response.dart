@@ -4,20 +4,29 @@ import 'package:equatable/equatable.dart';
 
 import 'item.dart';
 
-class WannseeAddressTokensList extends Equatable {
-  const WannseeAddressTokensList({this.items, this.nextPageParams});
+class MoonchainAddressTokensListResponse extends Equatable {
 
-  final List<Item>? items;
-  final dynamic nextPageParams;
+  /// `dart:convert`
+  ///
+  /// Parses the string and returns the resulting Json object as [MoonchainAddressTokensListResponse].
+  factory MoonchainAddressTokensListResponse.fromJson(String data) {
+    return MoonchainAddressTokensListResponse.fromMap(
+        json.decode(data) as Map<String, dynamic>);
+  }
 
-  factory WannseeAddressTokensList.fromMap(Map<String, dynamic> data) {
-    return WannseeAddressTokensList(
+  factory MoonchainAddressTokensListResponse.fromMap(
+      Map<String, dynamic> data) {
+    return MoonchainAddressTokensListResponse(
       items: (data['items'] as List<dynamic>?)
           ?.map((dynamic e) => Item.fromMap(e as Map<String, dynamic>))
           .toList(),
       nextPageParams: data['next_page_params'] as dynamic,
     );
   }
+  const MoonchainAddressTokensListResponse({this.items, this.nextPageParams});
+
+  final List<Item>? items;
+  final dynamic nextPageParams;
 
   Map<String, dynamic> toMap() => <String, dynamic>{
         'items': items?.map((e) => e.toMap()).toList(),
@@ -26,22 +35,14 @@ class WannseeAddressTokensList extends Equatable {
 
   /// `dart:convert`
   ///
-  /// Parses the string and returns the resulting Json object as [WannseeAddressTokensList].
-  factory WannseeAddressTokensList.fromJson(String data) {
-    return WannseeAddressTokensList.fromMap(
-        json.decode(data) as Map<String, dynamic>);
-  }
-
-  /// `dart:convert`
-  ///
-  /// Converts [WannseeAddressTokensList] to a JSON string.
+  /// Converts [MoonchainAddressTokensListResponse] to a JSON string.
   String toJson() => json.encode(toMap());
 
-  WannseeAddressTokensList copyWith({
+  MoonchainAddressTokensListResponse copyWith({
     List<Item>? items,
     dynamic nextPageParams,
   }) {
-    return WannseeAddressTokensList(
+    return MoonchainAddressTokensListResponse(
       items: items ?? this.items,
       nextPageParams: nextPageParams ?? this.nextPageParams,
     );

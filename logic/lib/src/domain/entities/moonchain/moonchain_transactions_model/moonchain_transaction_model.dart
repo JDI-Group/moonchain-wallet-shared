@@ -2,85 +2,23 @@ import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 import 'package:mxc_logic/mxc_logic.dart';
-import 'package:mxc_logic/src/domain/entities/wannsee/wannsee_transactions_model/decoded_input.dart';
+import 'package:mxc_logic/src/domain/entities/moonchain/moonchain_transactions_model/decoded_input.dart';import 'decoded_input.dart';
+
 
 import 'fee.dart';
 
-class WannseeTransactionModel extends Equatable {
-  final DateTime? timestamp;
-  final Fee? fee;
-  final String? gasLimit;
-  final int? block;
-  final String? status;
-  final String? method;
-  final int? confirmations;
-  final int? type;
-  final dynamic exchangeRate;
-  final To? to;
-  final String? txBurntFee;
-  final String? maxFeePerGas;
-  final String? result;
-  final String? hash;
-  final String? gasPrice;
-  final String? priorityFee;
-  final String? baseFeePerGas;
-  final From? from;
-  List<TokenTransfer>? tokenTransfers;
-  final List<String>? txTypes;
-  final String? gasUsed;
-  final dynamic createdContract;
-  final int? position;
-  final int? nonce;
-  final bool? hasErrorInInternalTxs;
-  final List<dynamic>? actions;
-  final DecodedInput? decodedInput;
-  final bool? tokenTransfersOverflow;
-  final String? rawInput;
-  String? value;
-  final String? maxPriorityFeePerGas;
-  final dynamic revertReason;
-  final List<double>? confirmationDuration;
-  final dynamic txTag;
+class MoonchainTransactionModel extends Equatable {
 
-  WannseeTransactionModel({
-    this.timestamp,
-    this.fee,
-    this.gasLimit,
-    this.block,
-    this.status,
-    this.method,
-    this.confirmations,
-    this.type,
-    this.exchangeRate,
-    this.to,
-    this.txBurntFee,
-    this.maxFeePerGas,
-    this.result,
-    this.hash,
-    this.gasPrice,
-    this.priorityFee,
-    this.baseFeePerGas,
-    this.from,
-    this.tokenTransfers,
-    this.txTypes,
-    this.gasUsed,
-    this.createdContract,
-    this.position,
-    this.nonce,
-    this.hasErrorInInternalTxs,
-    this.actions,
-    this.decodedInput,
-    this.tokenTransfersOverflow,
-    this.rawInput,
-    this.value,
-    this.maxPriorityFeePerGas,
-    this.revertReason,
-    this.confirmationDuration,
-    this.txTag,
-  });
+  /// `dart:convert`
+  ///
+  /// Parses the string and returns the resulting Json object as [MoonchainTransactionModel].
+  factory MoonchainTransactionModel.fromJson(String data) {
+    return MoonchainTransactionModel.fromMap(
+        json.decode(data) as Map<String, dynamic>);
+  }
 
-  factory WannseeTransactionModel.fromMap(Map<String, dynamic> data) {
-    return WannseeTransactionModel(
+  factory MoonchainTransactionModel.fromMap(Map<String, dynamic> data) {
+    return MoonchainTransactionModel(
       timestamp: data['timestamp'] == null
           ? null
           : DateTime.parse(data['timestamp'] as String),
@@ -132,6 +70,77 @@ class WannseeTransactionModel extends Equatable {
     );
   }
 
+  MoonchainTransactionModel({
+    this.timestamp,
+    this.fee,
+    this.gasLimit,
+    this.block,
+    this.status,
+    this.method,
+    this.confirmations,
+    this.type,
+    this.exchangeRate,
+    this.to,
+    this.txBurntFee,
+    this.maxFeePerGas,
+    this.result,
+    this.hash,
+    this.gasPrice,
+    this.priorityFee,
+    this.baseFeePerGas,
+    this.from,
+    this.tokenTransfers,
+    this.txTypes,
+    this.gasUsed,
+    this.createdContract,
+    this.position,
+    this.nonce,
+    this.hasErrorInInternalTxs,
+    this.actions,
+    this.decodedInput,
+    this.tokenTransfersOverflow,
+    this.rawInput,
+    this.value,
+    this.maxPriorityFeePerGas,
+    this.revertReason,
+    this.confirmationDuration,
+    this.txTag,
+  });
+  final DateTime? timestamp;
+  final Fee? fee;
+  final String? gasLimit;
+  final int? block;
+  final String? status;
+  final String? method;
+  final int? confirmations;
+  final int? type;
+  final dynamic exchangeRate;
+  final To? to;
+  final String? txBurntFee;
+  final String? maxFeePerGas;
+  final String? result;
+  final String? hash;
+  final String? gasPrice;
+  final String? priorityFee;
+  final String? baseFeePerGas;
+  final From? from;
+  final List<TokenTransfer>? tokenTransfers;
+  final List<String>? txTypes;
+  final String? gasUsed;
+  final dynamic createdContract;
+  final int? position;
+  final int? nonce;
+  final bool? hasErrorInInternalTxs;
+  final List<dynamic>? actions;
+  final DecodedInput? decodedInput;
+  final bool? tokenTransfersOverflow;
+  final String? rawInput;
+  String? value;
+  final String? maxPriorityFeePerGas;
+  final dynamic revertReason;
+  final List<double>? confirmationDuration;
+  final dynamic txTag;
+
   Map<String, dynamic> toMap() => <String, dynamic>{
         'timestamp': timestamp?.toIso8601String(),
         'fee': fee?.toMap(),
@@ -171,18 +180,10 @@ class WannseeTransactionModel extends Equatable {
 
   /// `dart:convert`
   ///
-  /// Parses the string and returns the resulting Json object as [WannseeTransactionModel].
-  factory WannseeTransactionModel.fromJson(String data) {
-    return WannseeTransactionModel.fromMap(
-        json.decode(data) as Map<String, dynamic>);
-  }
-
-  /// `dart:convert`
-  ///
-  /// Converts [WannseeTransactionModel] to a JSON string.
+  /// Converts [MoonchainTransactionModel] to a JSON string.
   String toJson() => json.encode(toMap());
 
-  WannseeTransactionModel copyWith({
+  MoonchainTransactionModel copyWith({
     DateTime? timestamp,
     Fee? fee,
     String? gasLimit,
@@ -218,7 +219,7 @@ class WannseeTransactionModel extends Equatable {
     List<double>? confirmationDuration,
     dynamic txTag,
   }) {
-    return WannseeTransactionModel(
+    return MoonchainTransactionModel(
       timestamp: timestamp ?? this.timestamp,
       fee: fee ?? this.fee,
       gasLimit: gasLimit ?? this.gasLimit,
@@ -262,7 +263,8 @@ class WannseeTransactionModel extends Equatable {
     String userAddress,
     String currentTxFromHash,
   ) {
-    if (EthereumAddress.fromHex(currentTxFromHash) == EthereumAddress.fromHex(userAddress)) {
+    if (EthereumAddress.fromHex(currentTxFromHash) ==
+        EthereumAddress.fromHex(userAddress)) {
       return TransactionType.sent;
     } else {
       return TransactionType.received;

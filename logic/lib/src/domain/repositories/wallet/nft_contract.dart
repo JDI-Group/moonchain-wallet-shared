@@ -5,7 +5,7 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:mxc_logic/src/data/api/client/rest_client.dart';
 import 'package:mxc_logic/mxc_logic.dart';
 import 'package:mxc_logic/src/data/api/client/web3_client.dart';
-import 'package:mxc_logic/src/domain/entities/wannsee/wannsee_nft_collection_detail/item.dart';
+import 'package:mxc_logic/src/domain/entities/moonchain/moonchain_nft_collection_detail_response/item.dart';
 import 'package:mxc_logic/src/domain/repositories/wallet/wallet.dart';
 import 'package:mxc_logic/src/domain/utils/mxc_urls.dart';
 import 'package:web3dart/web3dart.dart';
@@ -68,7 +68,7 @@ class NftContractRepository {
 
         if (metaDataResponse.statusCode == 200) {
           final tokenMetaData =
-              WannseeTokenMetaData.fromJson(metaDataResponse.body);
+              MoonchainTokenMetaDataResponse.fromJson(metaDataResponse.body);
 
           final name = await ensNft.name();
 
@@ -138,7 +138,7 @@ class NftContractRepository {
 
     if (response.statusCode == 200) {
       final addressCollections =
-          WannseeAddressTokensList.fromJson(response.body);
+          MoonchainAddressTokensListResponse.fromJson(response.body);
 
       for (int i = 0; i < addressCollections.items!.length; i++) {
         final collectionItem = addressCollections.items![i];
@@ -158,7 +158,7 @@ class NftContractRepository {
           continue;
         }
         final collectionDetail =
-            WannseeNftCollectionDetail.fromJson(response.body);
+            MoonchainNftCollectionDetailResponse.fromJson(response.body);
         final currentCollectionNfts = collectionDetail.items!
             .where(
               (element) => element.owner!.hash!.toLowerCase() == address,
@@ -221,7 +221,8 @@ class NftContractRepository {
                 continue;
               }
 
-              final metaData = WannseeTokenMetaData.fromJson(response.body);
+              final metaData =
+                  MoonchainTokenMetaDataResponse.fromJson(response.body);
 
               // IPFS gateway get metaData
               // MetaData parse

@@ -17,7 +17,7 @@ enum TransactionActions { cancel, speedUp, cancelSpeedUp, speedUpCancel }
 
 class TransactionModel {
   factory TransactionModel.fromMXCTransaction(
-    WannseeTransactionModel mxcTransaction,
+    MoonchainTransactionModel mxcTransaction,
     String walletAddress,
   ) {
     String? value = '0';

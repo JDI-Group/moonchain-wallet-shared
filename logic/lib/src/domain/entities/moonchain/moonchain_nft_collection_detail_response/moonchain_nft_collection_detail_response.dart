@@ -4,14 +4,15 @@ import 'package:equatable/equatable.dart';
 
 import 'item.dart';
 
-class WannseeNftCollectionDetail extends Equatable {
+class MoonchainNftCollectionDetailResponse extends Equatable {
   final List<Item>? items;
   final dynamic nextPageParams;
 
-  const WannseeNftCollectionDetail({this.items, this.nextPageParams});
+  const MoonchainNftCollectionDetailResponse({this.items, this.nextPageParams});
 
-  factory WannseeNftCollectionDetail.fromMap(Map<String, dynamic> data) {
-    return WannseeNftCollectionDetail(
+  factory MoonchainNftCollectionDetailResponse.fromMap(
+      Map<String, dynamic> data) {
+    return MoonchainNftCollectionDetailResponse(
       items: (data['items'] as List<dynamic>?)
           ?.map((dynamic e) => Item.fromMap(e as Map<String, dynamic>))
           .toList(),
@@ -26,22 +27,22 @@ class WannseeNftCollectionDetail extends Equatable {
 
   /// `dart:convert`
   ///
-  /// Parses the string and returns the resulting Json object as [WannseeNftCollectionDetail].
-  factory WannseeNftCollectionDetail.fromJson(String data) {
-    return WannseeNftCollectionDetail.fromMap(
+  /// Parses the string and returns the resulting Json object as [MoonchainNftCollectionDetailResponse].
+  factory MoonchainNftCollectionDetailResponse.fromJson(String data) {
+    return MoonchainNftCollectionDetailResponse.fromMap(
         json.decode(data) as Map<String, dynamic>);
   }
 
   /// `dart:convert`
   ///
-  /// Converts [WannseeNftCollectionDetail] to a JSON string.
+  /// Converts [MoonchainNftCollectionDetailResponse] to a JSON string.
   String toJson() => json.encode(toMap());
 
-  WannseeNftCollectionDetail copyWith({
+  MoonchainNftCollectionDetailResponse copyWith({
     List<Item>? items,
     dynamic nextPageParams,
   }) {
-    return WannseeNftCollectionDetail(
+    return MoonchainNftCollectionDetailResponse(
       items: items ?? this.items,
       nextPageParams: nextPageParams ?? this.nextPageParams,
     );

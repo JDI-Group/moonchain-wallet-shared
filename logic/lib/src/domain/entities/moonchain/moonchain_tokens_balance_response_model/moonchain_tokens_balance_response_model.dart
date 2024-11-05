@@ -4,20 +4,28 @@ import 'package:equatable/equatable.dart';
 
 import 'item.dart';
 
-class WannseeTokensBalanceModel extends Equatable {
-  final List<TokenItem>? items;
-  final dynamic nextPageParams;
+class MoonchainTokensBalanceResponseModel extends Equatable {
 
-  const WannseeTokensBalanceModel({this.items, this.nextPageParams});
+  /// `dart:convert`
+  ///
+  /// Parses the string and returns the resulting Json object as [MoonchainTokensBalanceResponseModel].
+  factory MoonchainTokensBalanceResponseModel.fromJson(String data) {
+    return MoonchainTokensBalanceResponseModel.fromMap(
+        json.decode(data) as Map<String, dynamic>);
+  }
 
-  factory WannseeTokensBalanceModel.fromMap(Map<String, dynamic> data) {
-    return WannseeTokensBalanceModel(
+  factory MoonchainTokensBalanceResponseModel.fromMap(Map<String, dynamic> data) {
+    return MoonchainTokensBalanceResponseModel(
       items: (data['items'] as List<dynamic>?)
           ?.map((dynamic e) => TokenItem.fromMap(e as Map<String, dynamic>))
           .toList(),
       nextPageParams: data['next_page_params'] as dynamic,
     );
   }
+
+  const MoonchainTokensBalanceResponseModel({this.items, this.nextPageParams});
+  final List<TokenItem>? items;
+  final dynamic nextPageParams;
 
   Map<String, dynamic> toMap() => <String, dynamic>{
         'items': items?.map((e) => e.toMap()).toList(),
@@ -26,22 +34,14 @@ class WannseeTokensBalanceModel extends Equatable {
 
   /// `dart:convert`
   ///
-  /// Parses the string and returns the resulting Json object as [WannseeTokensBalanceModel].
-  factory WannseeTokensBalanceModel.fromJson(String data) {
-    return WannseeTokensBalanceModel.fromMap(
-        json.decode(data) as Map<String, dynamic>);
-  }
-
-  /// `dart:convert`
-  ///
-  /// Converts [WannseeTokensBalanceModel] to a JSON string.
+  /// Converts [MoonchainTokensBalanceResponseModel] to a JSON string.
   String toJson() => json.encode(toMap());
 
-  WannseeTokensBalanceModel copyWith({
+  MoonchainTokensBalanceResponseModel copyWith({
     List<TokenItem>? items,
     dynamic nextPageParams,
   }) {
-    return WannseeTokensBalanceModel(
+    return MoonchainTokensBalanceResponseModel(
       items: items ?? this.items,
       nextPageParams: nextPageParams ?? this.nextPageParams,
     );

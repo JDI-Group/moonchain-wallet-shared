@@ -33,11 +33,11 @@ class TokenContractRepository {
     return await _web3Client.getTransactionCount(address, atBlock: atBlock);
   }
 
-  Future<WannseeTransactionsModel?> getTransactionsByAddress(
+  Future<MoonchainTransactionsModel?> getTransactionsByAddress(
     String address,
   ) async =>
       MXCFunctionHelpers.mxcChainsFutureFuncWrapperNullable<
-          WannseeTransactionsModel?>(
+          MoonchainTransactionsModel?>(
         () async {
           final selectedNetwork = _web3Client.network!;
           final apiBaseUrl = Urls.getApiBaseUrl(selectedNetwork.chainId);
@@ -49,12 +49,12 @@ class TokenContractRepository {
             headers: {'accept': 'application/json'},
           );
           if (response.statusCode == 200) {
-            final txList = WannseeTransactionsModel.fromJson(response.body);
+            final txList = MoonchainTransactionsModel.fromJson(response.body);
             return txList;
           }
           if (response.statusCode == 404) {
             // new wallet and nothing is returned
-            final txList = WannseeTransactionsModel(
+            final txList = MoonchainTransactionsModel(
               items: const [],
             );
             return txList;
@@ -77,12 +77,12 @@ class TokenContractRepository {
     return epochNumber;
   }
 
-  Future<WannseeTokenTransfersModel?> getTokenTransfersByAddress(
+  Future<MoonchainTokenTransfersResponseModel?> getTokenTransfersByAddress(
     String address,
     TokenType tokenType,
   ) async =>
       MXCFunctionHelpers.mxcChainsFutureFuncWrapperNullable<
-          WannseeTokenTransfersModel?>(
+          MoonchainTokenTransfersResponseModel?>(
         () async {
           final selectedNetwork = _web3Client.network!;
           final apiBaseUrl = Urls.getApiBaseUrl(selectedNetwork.chainId);
@@ -94,12 +94,13 @@ class TokenContractRepository {
             headers: {'accept': 'application/json'},
           );
           if (response.statusCode == 200) {
-            final txList = WannseeTokenTransfersModel.fromJson(response.body);
+            final txList =
+                MoonchainTokenTransfersResponseModel.fromJson(response.body);
             return txList;
           }
           if (response.statusCode == 404) {
             // new wallet and nothing is returned
-            const txList = WannseeTokenTransfersModel(
+            const txList = MoonchainTokenTransfersResponseModel(
               items: [],
             );
             return txList;
@@ -111,11 +112,11 @@ class TokenContractRepository {
       );
 
   /// If the transaction is successful then not null
-  Future<WannseeTransactionModel?> getTransactionByHash(
+  Future<MoonchainTransactionModel?> getTransactionByHash(
     String hash,
   ) async =>
       MXCFunctionHelpers.mxcChainsFutureFuncWrapperNullable<
-          WannseeTransactionModel?>(
+          MoonchainTransactionModel?>(
         () async {
           final selectedNetwork = _web3Client.network!;
           final apiBaseUrl = Urls.getApiBaseUrl(selectedNetwork.chainId);
@@ -129,7 +130,7 @@ class TokenContractRepository {
             );
 
             if (response.statusCode == 200) {
-              final txList = WannseeTransactionModel.fromJson(response.body);
+              final txList = MoonchainTransactionModel.fromJson(response.body);
               return txList;
             } else {
               return null;

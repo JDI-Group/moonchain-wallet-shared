@@ -4,8 +4,8 @@ import 'package:equatable/equatable.dart';
 
 import 'attribute.dart';
 
-class WannseeTokenMetaData extends Equatable {
-  const WannseeTokenMetaData({
+class MoonchainTokenMetaDataResponse extends Equatable {
+  const MoonchainTokenMetaDataResponse({
     this.image,
     this.name,
     this.externalLink,
@@ -21,8 +21,8 @@ class WannseeTokenMetaData extends Equatable {
   final List<Attribute>? attributes;
   final bool? isRealWorldNft;
 
-  factory WannseeTokenMetaData.fromMap(Map<String, dynamic> data) {
-    return WannseeTokenMetaData(
+  factory MoonchainTokenMetaDataResponse.fromMap(Map<String, dynamic> data) {
+    return MoonchainTokenMetaDataResponse(
       image: data['image'] as String?,
       name: data['name'] as String?,
       externalLink: data['external_link'] as String?,
@@ -45,18 +45,18 @@ class WannseeTokenMetaData extends Equatable {
 
   /// `dart:convert`
   ///
-  /// Parses the string and returns the resulting Json object as [WannseeTokenMetaData].
-  factory WannseeTokenMetaData.fromJson(String data) {
-    return WannseeTokenMetaData.fromMap(
+  /// Parses the string and returns the resulting Json object as [MoonchainTokenMetaDataResponse].
+  factory MoonchainTokenMetaDataResponse.fromJson(String data) {
+    return MoonchainTokenMetaDataResponse.fromMap(
         json.decode(data) as Map<String, dynamic>);
   }
 
   /// `dart:convert`
   ///
-  /// Converts [WannseeTokenMetaData] to a JSON string.
+  /// Converts [MoonchainTokenMetaDataResponse] to a JSON string.
   String toJson() => json.encode(toMap());
 
-  WannseeTokenMetaData copyWith({
+  MoonchainTokenMetaDataResponse copyWith({
     String? image,
     String? name,
     String? externalLink,
@@ -64,7 +64,7 @@ class WannseeTokenMetaData extends Equatable {
     List<Attribute>? attributes,
     bool? isRealWorldNft,
   }) {
-    return WannseeTokenMetaData(
+    return MoonchainTokenMetaDataResponse(
       image: image ?? this.image,
       name: name ?? this.name,
       externalLink: externalLink ?? this.externalLink,
