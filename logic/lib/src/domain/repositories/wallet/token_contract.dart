@@ -29,7 +29,7 @@ class TokenContractRepository {
   }
 
   Future<int> getAddressNonce(EthereumAddress address,
-      {BlockNum? atBlock}) async {
+      {BlockNum? atBlock,}) async {
     return await _web3Client.getTransactionCount(address, atBlock: atBlock);
   }
 
@@ -54,8 +54,8 @@ class TokenContractRepository {
           }
           if (response.statusCode == 404) {
             // new wallet and nothing is returned
-            final txList = MoonchainTransactionsModel(
-              items: const [],
+            final txList = const MoonchainTransactionsModel(
+              items: [],
             );
             return txList;
           } else {
@@ -121,24 +121,20 @@ class TokenContractRepository {
           final selectedNetwork = _web3Client.network!;
           final apiBaseUrl = Urls.getApiBaseUrl(selectedNetwork.chainId);
 
-          if (apiBaseUrl != null) {
-            final response = await _restClient.client.get(
-              Uri.parse(
-                Urls.transaction(apiBaseUrl, hash),
-              ),
-              headers: {'accept': 'application/json'},
-            );
+          final response = await _restClient.client.get(
+            Uri.parse(
+              Urls.transaction(apiBaseUrl, hash),
+            ),
+            headers: {'accept': 'application/json'},
+          );
 
-            if (response.statusCode == 200) {
-              final txList = MoonchainTransactionModel.fromJson(response.body);
-              return txList;
-            } else {
-              return null;
-            }
+          if (response.statusCode == 200) {
+            final txList = MoonchainTransactionModel.fromJson(response.body);
+            return txList;
           } else {
             return null;
           }
-        },
+                },
         _web3Client.network!.chainId,
       );
 
@@ -230,7 +226,7 @@ class TokenContractRepository {
           final tokenBalanceResponse = await ensToken.balanceOf(address);
           // making number human understandable
           final double tokenBalance = MxcAmount.convertWithTokenDecimal(
-              tokenBalanceResponse.toDouble(), tokenDecimal);
+              tokenBalanceResponse.toDouble(), tokenDecimal,);
           tokens[i] = token.copyWith(balance: tokenBalance);
         } else {
           // native token
@@ -323,7 +319,7 @@ class TokenContractRepository {
                 client: _web3Client,
                 address: EthereumAddress.fromHex(ensResolverAddress),
                 ensFallBackRegistryAddress:
-                    EthereumAddress.fromHex(ensFallBackRegistryAddress))
+                    EthereumAddress.fromHex(ensFallBackRegistryAddress),)
             .withName(name);
         final address = await ens.getAddress();
 
@@ -555,7 +551,7 @@ class TokenContractRepository {
       );
 
   String signPersonalMessage(
-          {required String privateKey, required String message}) =>
+          {required String privateKey, required String message,}) =>
       EthSigUtil.signPersonalMessage(
         message: MXCType.hexToUint8List(message),
         privateKey: privateKey,
@@ -566,7 +562,7 @@ class TokenContractRepository {
   }
 
   ContractFunction getContractFunction(
-      DeployedContract contract, int functionIndex, String signature) {
+      DeployedContract contract, int functionIndex, String signature,) {
     final selectedFunction = contract.abi.functions[0];
     assert(checkSignature(selectedFunction, signature));
     return selectedFunction;

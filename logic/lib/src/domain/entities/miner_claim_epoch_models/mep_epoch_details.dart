@@ -41,7 +41,7 @@ class EpochDetails {
       this.memberCount,
       this.rewardMerkleRoot,
       this.onlineStatusBytes,
-      this.publicBlockNumber});
+      this.publicBlockNumber,});
   String? epochNumber;
   String? createBlockNumber;
   String? createTime;

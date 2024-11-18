@@ -13,7 +13,7 @@ class GetClaimRewardsQuery {
       type: map['type'] ?? '',
       miners: map['miners'] != null
           ? List<Mep1004TokenDetail>.from(
-              map['miners']?.map((x) => Mep1004TokenDetail.fromMap(x)))
+              map['miners']?.map((x) => Mep1004TokenDetail.fromMap(x)),)
           : null,
     );
   }

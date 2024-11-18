@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:http/http.dart';
 import 'package:mxc_logic/src/data/api/client/rest_client.dart';
 import 'package:mxc_logic/src/domain/const/const.dart';
 import 'package:mxc_logic/src/domain/entities/chains_list/chains_list.dart';

@@ -6,8 +6,6 @@ import 'en.dart';
 import 'es.dart';
 
 class Localizations extends Equatable {
-  final En? en;
-  final Es? es;
 
   const Localizations({this.en, this.es});
 
@@ -20,17 +18,19 @@ class Localizations extends Equatable {
             : Es.fromMap(data['es'] as Map<String, dynamic>),
       );
 
-  Map<String, dynamic> toMap() => {
-        'en': en?.toMap(),
-        'es': es?.toMap(),
-      };
-
   /// `dart:convert`
   ///
   /// Parses the string and returns the resulting Json object as [Localizations].
   factory Localizations.fromJson(String data) {
     return Localizations.fromMap(json.decode(data) as Map<String, dynamic>);
   }
+  final En? en;
+  final Es? es;
+
+  Map<String, dynamic> toMap() => {
+        'en': en?.toMap(),
+        'es': es?.toMap(),
+      };
 
   /// `dart:convert`
   ///

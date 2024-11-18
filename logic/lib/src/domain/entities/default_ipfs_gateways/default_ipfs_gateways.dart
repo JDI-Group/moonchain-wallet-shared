@@ -24,7 +24,7 @@ class DefaultIpfsGateways extends Equatable {
   /// Parses the string and returns the resulting Json object as [DefaultIpfsGateways].
   factory DefaultIpfsGateways.fromJson(String data) {
     return DefaultIpfsGateways.fromMap(
-        json.decode(data) as Map<String, dynamic>);
+        json.decode(data) as Map<String, dynamic>,);
   }
 
   final String? name;

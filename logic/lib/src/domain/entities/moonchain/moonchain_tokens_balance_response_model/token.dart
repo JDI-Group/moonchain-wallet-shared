@@ -3,14 +3,6 @@ import 'dart:convert';
 import 'package:equatable/equatable.dart';
 
 class Token extends Equatable {
-  final String? address;
-  final String? decimals;
-  final dynamic exchangeRate;
-  final String? holders;
-  final String? name;
-  final String? symbol;
-  final String? totalSupply;
-  final String? type;
 
   const Token({
     this.address,
@@ -34,6 +26,21 @@ class Token extends Equatable {
         type: data['type'] as String?,
       );
 
+  /// `dart:convert`
+  ///
+  /// Parses the string and returns the resulting Json object as [Token].
+  factory Token.fromJson(String data) {
+    return Token.fromMap(json.decode(data) as Map<String, dynamic>);
+  }
+  final String? address;
+  final String? decimals;
+  final dynamic exchangeRate;
+  final String? holders;
+  final String? name;
+  final String? symbol;
+  final String? totalSupply;
+  final String? type;
+
   Map<String, dynamic> toMap() => <String, dynamic>{
         'address': address,
         'decimals': decimals,
@@ -44,13 +51,6 @@ class Token extends Equatable {
         'total_supply': totalSupply,
         'type': type,
       };
-
-  /// `dart:convert`
-  ///
-  /// Parses the string and returns the resulting Json object as [Token].
-  factory Token.fromJson(String data) {
-    return Token.fromMap(json.decode(data) as Map<String, dynamic>);
-  }
 
   /// `dart:convert`
   ///

@@ -10,36 +10,6 @@ import 'store.dart';
 export 'app.dart';
 
 class Dapp extends Equatable {
-  Dapp fromBookmark(Bookmark bookMark) {
-    return Dapp(
-      app: AppInfo(
-        url: bookMark.url,
-        name: bookMark.title,
-        description: bookMark.description,
-        ageRating: app?.ageRating,
-        developer: app?.developer,
-        localizations: app?.localizations,
-        permissions: app?.permissions,
-        supportedPlatforms: ['android', 'ios'],
-        version: app?.version,
-        providerType: app?.providerType,
-      ),
-      store: Store(
-        chainid: store?.chainid,
-        mnsid: store?.mnsid,
-        category: store?.category,
-      ),
-      reviewApi: ReviewApi(
-        body: reviewApi?.body,
-        headers: reviewApi?.headers,
-        icons: reviewApi?.icons,
-        method: reviewApi?.method,
-        url: reviewApi?.url,
-        icon: bookMark.image,
-        iconV2: bookMark.image,
-      ),
-    );
-  }
 
   /// `dart:convert`
   ///
@@ -61,6 +31,36 @@ class Dapp extends Equatable {
       );
 
   const Dapp({this.app, this.store, this.reviewApi});
+  Dapp fromBookmark(Bookmark bookMark) {
+    return Dapp(
+      app: AppInfo(
+        url: bookMark.url,
+        name: bookMark.title,
+        description: bookMark.description,
+        ageRating: app?.ageRating,
+        developer: app?.developer,
+        localizations: app?.localizations,
+        permissions: app?.permissions,
+        supportedPlatforms: const ['android', 'ios'],
+        version: app?.version,
+        providerType: app?.providerType,
+      ),
+      store: Store(
+        chainid: store?.chainid,
+        mnsid: store?.mnsid,
+        category: store?.category,
+      ),
+      reviewApi: ReviewApi(
+        body: reviewApi?.body,
+        headers: reviewApi?.headers,
+        icons: reviewApi?.icons,
+        method: reviewApi?.method,
+        url: reviewApi?.url,
+        icon: bookMark.image,
+        iconV2: bookMark.image,
+      ),
+    );
+  }
   final AppInfo? app;
   final Store? store;
   final ReviewApi? reviewApi;

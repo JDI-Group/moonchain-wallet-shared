@@ -5,8 +5,6 @@ import 'package:equatable/equatable.dart';
 import 'item.dart';
 
 class MoonchainNftCollectionDetailResponse extends Equatable {
-  final List<Item>? items;
-  final dynamic nextPageParams;
 
   const MoonchainNftCollectionDetailResponse({this.items, this.nextPageParams});
 
@@ -20,11 +18,6 @@ class MoonchainNftCollectionDetailResponse extends Equatable {
     );
   }
 
-  Map<String, dynamic> toMap() => <String, dynamic>{
-        'items': items?.map((e) => e.toMap()).toList(),
-        'next_page_params': nextPageParams,
-      };
-
   /// `dart:convert`
   ///
   /// Parses the string and returns the resulting Json object as [MoonchainNftCollectionDetailResponse].
@@ -32,6 +25,13 @@ class MoonchainNftCollectionDetailResponse extends Equatable {
     return MoonchainNftCollectionDetailResponse.fromMap(
         json.decode(data) as Map<String, dynamic>);
   }
+  final List<Item>? items;
+  final dynamic nextPageParams;
+
+  Map<String, dynamic> toMap() => <String, dynamic>{
+        'items': items?.map((e) => e.toMap()).toList(),
+        'next_page_params': nextPageParams,
+      };
 
   /// `dart:convert`
   ///

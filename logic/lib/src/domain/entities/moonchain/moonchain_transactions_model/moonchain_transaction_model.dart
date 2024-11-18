@@ -14,7 +14,7 @@ class MoonchainTransactionModel extends Equatable {
   /// Parses the string and returns the resulting Json object as [MoonchainTransactionModel].
   factory MoonchainTransactionModel.fromJson(String data) {
     return MoonchainTransactionModel.fromMap(
-        json.decode(data) as Map<String, dynamic>);
+        json.decode(data) as Map<String, dynamic>,);
   }
 
   factory MoonchainTransactionModel.fromMap(Map<String, dynamic> data) {

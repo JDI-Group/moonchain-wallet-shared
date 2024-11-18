@@ -15,14 +15,14 @@ class MoonchainTransactionsModel extends Equatable {
   /// Parses the string and returns the resulting Json object as [MoonchainTransactionsModel].
   factory MoonchainTransactionsModel.fromJson(String data) {
     return MoonchainTransactionsModel.fromMap(
-        json.decode(data) as Map<String, dynamic>);
+        json.decode(data) as Map<String, dynamic>,);
   }
 
   factory MoonchainTransactionsModel.fromMap(Map<String, dynamic> data) {
     return MoonchainTransactionsModel(
       items: (data['items'] as List<dynamic>?)
           ?.map((dynamic e) =>
-              MoonchainTransactionModel.fromMap(e as Map<String, dynamic>))
+              MoonchainTransactionModel.fromMap(e as Map<String, dynamic>),)
           .toList(),
       nextPageParams: data['next_page_params'] as dynamic,
     );

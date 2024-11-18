@@ -8,7 +8,7 @@ class Mep1004TokenDetail extends Equatable {
   /// Parses the string and returns the resulting Json object as [Mep1004TokenDetail].
   factory Mep1004TokenDetail.fromJson(String data) {
     return Mep1004TokenDetail.fromMap(
-        json.decode(data) as Map<String, dynamic>);
+        json.decode(data) as Map<String, dynamic>,);
   }
 
   factory Mep1004TokenDetail.fromMap(Map<String, dynamic> data) {

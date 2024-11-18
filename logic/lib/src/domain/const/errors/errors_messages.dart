@@ -8,7 +8,7 @@ class ErrorMessages {
     'execution reverted: ERC20: transfer amount exceeds balance',
     // Sending more than native token balance
     'insufficient funds for gas * price + value',
-    'insufficient funds for transfer'
+    'insufficient funds for transfer',
   ];
 
   static List<String> errorList = [nonceTooLowError];
@@ -16,7 +16,7 @@ class ErrorMessages {
   static String nonceTooLowError = 'nonce too low';
 
   static Map<String, String> errorMessageMapper = {
-    nonceTooLowError: 'transaction_finalized'
+    nonceTooLowError: 'transaction_finalized',
   };
 
   static List<String> ignoredErrors = ['already known'];

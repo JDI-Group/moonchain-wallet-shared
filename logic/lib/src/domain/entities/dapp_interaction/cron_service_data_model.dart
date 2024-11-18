@@ -4,6 +4,18 @@ import 'package:flutter/widgets.dart';
 import 'package:mxc_logic/mxc_logic.dart';
 
 class CronServiceDataModel<T> {
+
+  factory CronServiceDataModel.fromDAppHooksData(
+    AXSCronServices cronService,
+    DAppHooksModel dappHooksModel,
+    T data,
+  ) {
+    return CronServiceDataModel(
+      name: cronService.name,
+      data: data,
+      enabled: dappHooksModel.minerHooks.enabled,
+    );
+  }
   factory CronServiceDataModel.fromJson(
     String source,
     T Function(Map<String, dynamic>) dataFromMap,
@@ -29,18 +41,6 @@ class CronServiceDataModel<T> {
   String? name;
   bool? enabled;
   T? data;
-
-  factory CronServiceDataModel.fromDAppHooksData(
-    AXSCronServices cronService,
-    DAppHooksModel dappHooksModel,
-    T data,
-  ) {
-    return CronServiceDataModel(
-      name: cronService.name,
-      data: data,
-      enabled: dappHooksModel.minerHooks.enabled,
-    );
-  }
 
   CronServiceDataModel<T> copyWith({
     ValueGetter<String?>? name,

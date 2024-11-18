@@ -47,7 +47,7 @@ class AppInfo extends Equatable {
         localizations: data['localizations'] == null
             ? null
             : Localizations.fromMap(
-                data['localizations'] as Map<String, dynamic>),
+                data['localizations'] as Map<String, dynamic>,),
         ageRating: data['ageRating'] as String?,
         supportedPlatforms: data['supportedPlatforms'] as List<dynamic>?,
         providerType: data['providerType'] == null
@@ -118,7 +118,7 @@ class AppInfo extends Equatable {
       localizations: localizations ?? this.localizations,
       ageRating: ageRating ?? this.ageRating,
       supportedPlatforms: supportedPlatforms ?? this.supportedPlatforms,
-      providerType: providerType ?? this.providerType
+      providerType: providerType ?? this.providerType,
     );
   }
 

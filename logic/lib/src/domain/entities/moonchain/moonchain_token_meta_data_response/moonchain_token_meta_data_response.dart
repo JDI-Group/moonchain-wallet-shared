@@ -5,6 +5,27 @@ import 'package:equatable/equatable.dart';
 import 'attribute.dart';
 
 class MoonchainTokenMetaDataResponse extends Equatable {
+
+  factory MoonchainTokenMetaDataResponse.fromMap(Map<String, dynamic> data) {
+    return MoonchainTokenMetaDataResponse(
+      image: data['image'] as String?,
+      name: data['name'] as String?,
+      externalLink: data['external_link'] as String?,
+      description: data['description'] as String?,
+      attributes: (data['attributes'] as List<dynamic>?)
+          ?.map((dynamic e) => Attribute.fromMap(e as Map<String, dynamic>))
+          .toList(),
+      isRealWorldNft: data['isRealWorldNFT'] as bool?,
+    );
+  }
+
+  /// `dart:convert`
+  ///
+  /// Parses the string and returns the resulting Json object as [MoonchainTokenMetaDataResponse].
+  factory MoonchainTokenMetaDataResponse.fromJson(String data) {
+    return MoonchainTokenMetaDataResponse.fromMap(
+        json.decode(data) as Map<String, dynamic>);
+  }
   const MoonchainTokenMetaDataResponse({
     this.image,
     this.name,
@@ -21,19 +42,6 @@ class MoonchainTokenMetaDataResponse extends Equatable {
   final List<Attribute>? attributes;
   final bool? isRealWorldNft;
 
-  factory MoonchainTokenMetaDataResponse.fromMap(Map<String, dynamic> data) {
-    return MoonchainTokenMetaDataResponse(
-      image: data['image'] as String?,
-      name: data['name'] as String?,
-      externalLink: data['external_link'] as String?,
-      description: data['description'] as String?,
-      attributes: (data['attributes'] as List<dynamic>?)
-          ?.map((dynamic e) => Attribute.fromMap(e as Map<String, dynamic>))
-          .toList(),
-      isRealWorldNft: data['isRealWorldNFT'] as bool?,
-    );
-  }
-
   Map<String, dynamic> toMap() => <String, dynamic>{
         'image': image,
         'name': name,
@@ -42,14 +50,6 @@ class MoonchainTokenMetaDataResponse extends Equatable {
         'attributes': attributes?.map((e) => e.toMap()).toList(),
         'isRealWorldNFT': isRealWorldNft,
       };
-
-  /// `dart:convert`
-  ///
-  /// Parses the string and returns the resulting Json object as [MoonchainTokenMetaDataResponse].
-  factory MoonchainTokenMetaDataResponse.fromJson(String data) {
-    return MoonchainTokenMetaDataResponse.fromMap(
-        json.decode(data) as Map<String, dynamic>);
-  }
 
   /// `dart:convert`
   ///

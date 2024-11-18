@@ -24,7 +24,7 @@ class DatadashSetupStore extends GlobalCacheStore {
       'label': e.label,
       'chainId': e.chainId,
       'isAdded': e.isAdded,
-      'networkType': e.networkType.name
+      'networkType': e.networkType.name,
     },
     deserializer: (e) => Network(
       logo: e['logo'],

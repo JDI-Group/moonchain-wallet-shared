@@ -3,6 +3,24 @@ import 'dart:convert';
 import 'package:equatable/equatable.dart';
 
 class Owner extends Equatable {
+
+  factory Owner.fromMap(Map<String, dynamic> data) => Owner(
+        hash: data['hash'] as String?,
+        implementationName: data['implementation_name'] as dynamic,
+        isContract: data['is_contract'] as bool?,
+        isVerified: data['is_verified'] as dynamic,
+        name: data['name'] as dynamic,
+        privateTags: data['private_tags'] as List<dynamic>?,
+        publicTags: data['public_tags'] as List<dynamic>?,
+        watchlistNames: data['watchlist_names'] as List<dynamic>?,
+      );
+
+  /// `dart:convert`
+  ///
+  /// Parses the string and returns the resulting Json object as [Owner].
+  factory Owner.fromJson(String data) {
+    return Owner.fromMap(json.decode(data) as Map<String, dynamic>);
+  }
   const Owner({
     this.hash,
     this.implementationName,
@@ -23,17 +41,6 @@ class Owner extends Equatable {
   final List<dynamic>? publicTags;
   final List<dynamic>? watchlistNames;
 
-  factory Owner.fromMap(Map<String, dynamic> data) => Owner(
-        hash: data['hash'] as String?,
-        implementationName: data['implementation_name'] as dynamic,
-        isContract: data['is_contract'] as bool?,
-        isVerified: data['is_verified'] as dynamic,
-        name: data['name'] as dynamic,
-        privateTags: data['private_tags'] as List<dynamic>?,
-        publicTags: data['public_tags'] as List<dynamic>?,
-        watchlistNames: data['watchlist_names'] as List<dynamic>?,
-      );
-
   Map<String, dynamic> toMap() => <String, dynamic>{
         'hash': hash,
         'implementation_name': implementationName,
@@ -44,13 +51,6 @@ class Owner extends Equatable {
         'public_tags': publicTags,
         'watchlist_names': watchlistNames,
       };
-
-  /// `dart:convert`
-  ///
-  /// Parses the string and returns the resulting Json object as [Owner].
-  factory Owner.fromJson(String data) {
-    return Owner.fromMap(json.decode(data) as Map<String, dynamic>);
-  }
 
   /// `dart:convert`
   ///

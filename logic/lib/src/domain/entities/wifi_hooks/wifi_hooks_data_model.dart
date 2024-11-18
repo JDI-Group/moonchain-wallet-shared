@@ -23,7 +23,7 @@ class WifiHooksDataModel {
       {required this.version,
       required this.hexagonId,
       required this.wifiList,
-      required this.os});
+      required this.os,});
   String version;
   String hexagonId;
   String os;

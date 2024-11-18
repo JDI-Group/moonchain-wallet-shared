@@ -24,7 +24,7 @@ class PhoenixSocketNotInitialized extends PhoenixException {
             url,
             'Phoenix socket not initialized, Try initializing with connect method.',
             source,
-            statusCode: statusCode);
+            statusCode: statusCode,);
 }
 
 class PhoenixSocketNotConnected extends PhoenixException {
@@ -33,7 +33,7 @@ class PhoenixSocketNotConnected extends PhoenixException {
     Object? source, {
     int? statusCode,
   }) : super(url, 'Phoenix socket not connected', source,
-            statusCode: statusCode);
+            statusCode: statusCode,);
 }
 
 class PhoenixSocketJoinChannelError extends PhoenixException {

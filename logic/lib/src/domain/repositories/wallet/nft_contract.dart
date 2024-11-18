@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:typed_data';
 import 'package:ens_dart/ens_dart.dart' as contracts;
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:mxc_logic/src/data/api/client/rest_client.dart';
@@ -8,7 +7,6 @@ import 'package:mxc_logic/src/data/api/client/web3_client.dart';
 import 'package:mxc_logic/src/domain/entities/moonchain/moonchain_nft_collection_detail_response/item.dart';
 import 'package:mxc_logic/src/domain/repositories/wallet/wallet.dart';
 import 'package:mxc_logic/src/domain/utils/mxc_urls.dart';
-import 'package:web3dart/web3dart.dart';
 
 class NftContractRepository {
   NftContractRepository(

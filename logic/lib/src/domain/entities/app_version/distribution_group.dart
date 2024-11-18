@@ -3,11 +3,6 @@ import 'dart:convert';
 import 'package:equatable/equatable.dart';
 
 class DistributionGroup extends Equatable {
-  final String? id;
-  final String? name;
-  final String? origin;
-  final String? displayName;
-  final bool? isPublic;
 
   const DistributionGroup({
     this.id,
@@ -27,6 +22,18 @@ class DistributionGroup extends Equatable {
     );
   }
 
+  /// `dart:convert`
+  ///
+  /// Parses the string and returns the resulting Json object as [DistributionGroup].
+  factory DistributionGroup.fromJson(String data) {
+    return DistributionGroup.fromMap(json.decode(data) as Map<String, dynamic>);
+  }
+  final String? id;
+  final String? name;
+  final String? origin;
+  final String? displayName;
+  final bool? isPublic;
+
   Map<String, dynamic> toMap() => {
         'id': id,
         'name': name,
@@ -34,13 +41,6 @@ class DistributionGroup extends Equatable {
         'display_name': displayName,
         'is_public': isPublic,
       };
-
-  /// `dart:convert`
-  ///
-  /// Parses the string and returns the resulting Json object as [DistributionGroup].
-  factory DistributionGroup.fromJson(String data) {
-    return DistributionGroup.fromMap(json.decode(data) as Map<String, dynamic>);
-  }
 
   /// `dart:convert`
   ///

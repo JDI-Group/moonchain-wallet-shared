@@ -8,16 +8,6 @@ import 'token.dart';
 import 'total.dart';
 
 class TokenTransfer extends Equatable {
-  final String? blockHash;
-  From? from;
-  final String? logIndex;
-  final dynamic method;
-  final DateTime? timestamp;
-  To? to;
-  final Token? token;
-  final Total? total;
-  final String? txHash;
-  final String? type;
 
   TokenTransfer({
     this.blockHash,
@@ -55,6 +45,23 @@ class TokenTransfer extends Equatable {
         type: data['type'] as String?,
       );
 
+  /// `dart:convert`
+  ///
+  /// Parses the string and returns the resulting Json object as [TokenTransfer].
+  factory TokenTransfer.fromJson(String data) {
+    return TokenTransfer.fromMap(json.decode(data) as Map<String, dynamic>);
+  }
+  final String? blockHash;
+  From? from;
+  final String? logIndex;
+  final dynamic method;
+  final DateTime? timestamp;
+  To? to;
+  final Token? token;
+  final Total? total;
+  final String? txHash;
+  final String? type;
+
   Map<String, dynamic> toMap() => <String, dynamic>{
         'block_hash': blockHash,
         'from': from?.toMap(),
@@ -67,13 +74,6 @@ class TokenTransfer extends Equatable {
         'tx_hash': txHash,
         'type': type,
       };
-
-  /// `dart:convert`
-  ///
-  /// Parses the string and returns the resulting Json object as [TokenTransfer].
-  factory TokenTransfer.fromJson(String data) {
-    return TokenTransfer.fromMap(json.decode(data) as Map<String, dynamic>);
-  }
 
   /// `dart:convert`
   ///

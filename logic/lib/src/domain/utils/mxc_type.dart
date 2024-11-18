@@ -44,6 +44,6 @@ class MXCType {
 
   // Used to change the token id of NFT to hex
   static String hexlify(BigInt dec) {
-    return '0x0' + dec.toRadixString(16);
+    return '0x0${dec.toRadixString(16)}';
   }
 }

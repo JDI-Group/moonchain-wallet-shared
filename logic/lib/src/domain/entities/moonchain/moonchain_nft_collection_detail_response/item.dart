@@ -7,6 +7,30 @@ import 'owner.dart';
 import 'token.dart';
 
 class Item extends Equatable {
+
+  factory Item.fromMap(Map<String, dynamic> data) => Item(
+        animationUrl: data['animation_url'] as dynamic,
+        externalAppUrl: data['external_app_url'] as dynamic,
+        id: data['id'] as String?,
+        imageUrl: data['image_url'] as String?,
+        isUnique: data['is_unique'] as bool?,
+        metadata: data['metadata'] == null
+            ? null
+            : Metadata.fromMap(data['metadata'] as Map<String, dynamic>),
+        owner: data['owner'] == null
+            ? null
+            : Owner.fromMap(data['owner'] as Map<String, dynamic>),
+        token: data['token'] == null
+            ? null
+            : Token.fromMap(data['token'] as Map<String, dynamic>),
+      );
+
+  /// `dart:convert`
+  ///
+  /// Parses the string and returns the resulting Json object as [Item].
+  factory Item.fromJson(String data) {
+    return Item.fromMap(json.decode(data) as Map<String, dynamic>);
+  }
   const Item({
     this.animationUrl,
     this.externalAppUrl,
@@ -27,23 +51,6 @@ class Item extends Equatable {
   final Owner? owner;
   final Token? token;
 
-  factory Item.fromMap(Map<String, dynamic> data) => Item(
-        animationUrl: data['animation_url'] as dynamic,
-        externalAppUrl: data['external_app_url'] as dynamic,
-        id: data['id'] as String?,
-        imageUrl: data['image_url'] as String?,
-        isUnique: data['is_unique'] as bool?,
-        metadata: data['metadata'] == null
-            ? null
-            : Metadata.fromMap(data['metadata'] as Map<String, dynamic>),
-        owner: data['owner'] == null
-            ? null
-            : Owner.fromMap(data['owner'] as Map<String, dynamic>),
-        token: data['token'] == null
-            ? null
-            : Token.fromMap(data['token'] as Map<String, dynamic>),
-      );
-
   Map<String, dynamic> toMap() => <String, dynamic>{
         'animation_url': animationUrl,
         'external_app_url': externalAppUrl,
@@ -54,13 +61,6 @@ class Item extends Equatable {
         'owner': owner?.toMap(),
         'token': token?.toMap(),
       };
-
-  /// `dart:convert`
-  ///
-  /// Parses the string and returns the resulting Json object as [Item].
-  factory Item.fromJson(String data) {
-    return Item.fromMap(json.decode(data) as Map<String, dynamic>);
-  }
 
   /// `dart:convert`
   ///

@@ -32,7 +32,7 @@ class AuthUseCase {
         name: '${index + 1}',
         privateKey: authStorageRepository.privateKey!,
         address: authStorageRepository.publicAddress!,
-        isCustom: false);
+        isCustom: false,);
   }
 
   Future<Account> addCustomAccount(String name, String privateKey) async {

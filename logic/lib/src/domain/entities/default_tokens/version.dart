@@ -3,9 +3,6 @@ import 'dart:convert';
 import 'package:equatable/equatable.dart';
 
 class Version extends Equatable {
-  final int? major;
-  final int? minor;
-  final int? patch;
 
   const Version({this.major, this.minor, this.patch});
 
@@ -15,18 +12,21 @@ class Version extends Equatable {
         patch: data['patch'] as int?,
       );
 
-  Map<String, dynamic> toMap() => <String, dynamic>{
-        'major': major,
-        'minor': minor,
-        'patch': patch,
-      };
-
   /// `dart:convert`
   ///
   /// Parses the string and returns the resulting Json object as [Version].
   factory Version.fromJson(String data) {
     return Version.fromMap(json.decode(data) as Map<String, dynamic>);
   }
+  final int? major;
+  final int? minor;
+  final int? patch;
+
+  Map<String, dynamic> toMap() => <String, dynamic>{
+        'major': major,
+        'minor': minor,
+        'patch': patch,
+      };
 
   /// `dart:convert`
   ///

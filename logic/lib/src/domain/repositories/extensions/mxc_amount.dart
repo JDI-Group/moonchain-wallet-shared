@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'package:mxc_logic/src/domain/const/config.dart';
 import 'package:web3dart/web3dart.dart';
 
 class MxcAmount extends EtherAmount {

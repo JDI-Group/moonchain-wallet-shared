@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:equatable/equatable.dart';
 
 class Body extends Equatable {
-  final String? mnsId;
 
   const Body({this.mnsId});
 
@@ -11,16 +10,17 @@ class Body extends Equatable {
         mnsId: data['mnsId'] as String?,
       );
 
-  Map<String, dynamic> toMap() => {
-        'mnsId': mnsId,
-      };
-
   /// `dart:convert`
   ///
   /// Parses the string and returns the resulting Json object as [Body].
   factory Body.fromJson(String data) {
     return Body.fromMap(json.decode(data) as Map<String, dynamic>);
   }
+  final String? mnsId;
+
+  Map<String, dynamic> toMap() => {
+        'mnsId': mnsId,
+      };
 
   /// `dart:convert`
   ///

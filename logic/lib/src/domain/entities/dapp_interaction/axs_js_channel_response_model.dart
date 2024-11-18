@@ -17,7 +17,7 @@ class AXSJSChannelResponseModel<T> {
   ) {
     return AXSJSChannelResponseModel<T>(
       status: AXSJSChannelResponseStatusExtension.fromString(
-          map['status'] as String),
+          map['status'] as String,),
       message: map['message'],
       data: map['data'] != null
           ? CronServiceDataModel<T>.fromMap(map['data'], dataFromMap)

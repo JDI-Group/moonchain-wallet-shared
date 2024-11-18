@@ -7,12 +7,6 @@ import 'token.dart';
 import 'version.dart';
 
 class DefaultTokens extends Equatable {
-  final String? name;
-  final String? logoUri;
-  final List<String>? keywords;
-  final DateTime? timestamp;
-  final List<Token>? tokens;
-  final Version? version;
 
   const DefaultTokens({
     this.name,
@@ -38,6 +32,19 @@ class DefaultTokens extends Equatable {
             : Version.fromMap(data['version'] as Map<String, dynamic>),
       );
 
+  /// `dart:convert`
+  ///
+  /// Parses the string and returns the resulting Json object as [DefaultTokens].
+  factory DefaultTokens.fromJson(String data) {
+    return DefaultTokens.fromMap(json.decode(data) as Map<String, dynamic>);
+  }
+  final String? name;
+  final String? logoUri;
+  final List<String>? keywords;
+  final DateTime? timestamp;
+  final List<Token>? tokens;
+  final Version? version;
+
   Map<String, dynamic> toMap() => <String, dynamic>{
         'name': name,
         'logoURI': logoUri,
@@ -46,13 +53,6 @@ class DefaultTokens extends Equatable {
         'tokens': tokens?.map((e) => e.toMap()).toList(),
         'version': version?.toMap(),
       };
-
-  /// `dart:convert`
-  ///
-  /// Parses the string and returns the resulting Json object as [DefaultTokens].
-  factory DefaultTokens.fromJson(String data) {
-    return DefaultTokens.fromMap(json.decode(data) as Map<String, dynamic>);
-  }
 
   /// `dart:convert`
   ///

@@ -54,7 +54,7 @@ class BlueberryRingRepository {
   }
 
   Future<PostClaimResponseModel> postClaim(
-      PostClaimRequestModel requestData) async {
+      PostClaimRequestModel requestData,) async {
     print('postClaim:requestData : $requestData');
     final chainId = _web3Client.network!.chainId;
     final response = await _restClient.post(

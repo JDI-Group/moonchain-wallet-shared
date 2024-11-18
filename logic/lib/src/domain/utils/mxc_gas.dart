@@ -93,7 +93,9 @@ class MXCGas {
       priorityFeePerGas,
     );
     return TransactionPriorityFeeEstimation(
-        maxFeePerGas: maxFeePerGas, maxPriorityFeePerGas: maxPriorityFeePerGas);
+      maxFeePerGas: maxFeePerGas,
+      maxPriorityFeePerGas: maxPriorityFeePerGas,
+    );
   }
 
   /// This function will get current transaction max fee per gas & max priority fee per gas and will add extraGasPercentage to these properties.
@@ -110,7 +112,9 @@ class MXCGas {
       priorityFeePerGas,
     );
     return TransactionPriorityFeeEstimation(
-        maxFeePerGas: maxFeePerGas, maxPriorityFeePerGas: maxPriorityFeePerGas);
+      maxFeePerGas: maxFeePerGas,
+      maxPriorityFeePerGas: maxPriorityFeePerGas,
+    );
   }
 
   /// This function will return max fee per gas based on the given gas price & current max fee per gas.

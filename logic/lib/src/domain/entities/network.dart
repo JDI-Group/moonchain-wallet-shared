@@ -15,7 +15,7 @@ class Network {
   }
 
   factory Network.fromAddEthereumChain(
-      AddEthereumChain addEthereumChain, int chainId) {
+      AddEthereumChain addEthereumChain, int chainId,) {
     String logo = addEthereumChain.iconUrls?.isNotEmpty ?? false
         ? addEthereumChain.iconUrls![0]
         : 'assets/svg/networks/unknown.svg';
@@ -96,7 +96,7 @@ class Network {
       String? label,
       int? chainId,
       bool? isAdded,
-      NetworkType? networkType}) {
+      NetworkType? networkType,}) {
     return Network(
         logo: logo ?? this.logo,
         web3RpcHttpUrl: web3RpcHttpUrl ?? this.web3RpcHttpUrl,
@@ -108,7 +108,7 @@ class Network {
         label: label ?? this.label,
         chainId: chainId ?? this.chainId,
         isAdded: isAdded ?? this.isAdded,
-        networkType: networkType ?? this.networkType);
+        networkType: networkType ?? this.networkType,);
   }
 
   Map<String, dynamic> toMap() => {
@@ -260,7 +260,7 @@ class Network {
         chainId: 11155111,
         isAdded: false,
         networkType: NetworkType.testnet,
-      )
+      ),
     ];
   }
 }

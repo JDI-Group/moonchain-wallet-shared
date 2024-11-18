@@ -3,9 +3,6 @@ import 'dart:convert';
 import 'package:equatable/equatable.dart';
 
 class Store extends Equatable {
-  final String? mnsid;
-  final String? category;
-  final int? chainid;
 
   const Store({this.mnsid, this.category, this.chainid});
 
@@ -15,18 +12,21 @@ class Store extends Equatable {
         chainid: int.parse((data['chainid'] as String?) ?? '0'),
       );
 
-  Map<String, dynamic> toMap() => {
-        'mnsid': mnsid,
-        'category': category,
-        'chainid': chainid,
-      };
-
   /// `dart:convert`
   ///
   /// Parses the string and returns the resulting Json object as [Store].
   factory Store.fromJson(String data) {
     return Store.fromMap(json.decode(data) as Map<String, dynamic>);
   }
+  final String? mnsid;
+  final String? category;
+  final int? chainid;
+
+  Map<String, dynamic> toMap() => {
+        'mnsid': mnsid,
+        'category': category,
+        'chainid': chainid,
+      };
 
   /// `dart:convert`
   ///

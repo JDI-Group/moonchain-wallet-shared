@@ -86,6 +86,6 @@ class MXCTransaction {
         maxPriorityFeePerGas: priorityFee,
         value: value,
         nonce: nonce,
-        maxGas: gasLimit);
+        maxGas: gasLimit,);
   }
 }

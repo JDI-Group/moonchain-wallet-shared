@@ -3,8 +3,6 @@ import 'dart:convert';
 import 'package:equatable/equatable.dart';
 
 class Owner extends Equatable {
-  final String? name;
-  final String? displayName;
 
   const Owner({this.name, this.displayName});
 
@@ -13,17 +11,19 @@ class Owner extends Equatable {
         displayName: data['display_name'] as String?,
       );
 
-  Map<String, dynamic> toMap() => {
-        'name': name,
-        'display_name': displayName,
-      };
-
   /// `dart:convert`
   ///
   /// Parses the string and returns the resulting Json object as [Owner].
   factory Owner.fromJson(String data) {
     return Owner.fromMap(json.decode(data) as Map<String, dynamic>);
   }
+  final String? name;
+  final String? displayName;
+
+  Map<String, dynamic> toMap() => {
+        'name': name,
+        'display_name': displayName,
+      };
 
   /// `dart:convert`
   ///

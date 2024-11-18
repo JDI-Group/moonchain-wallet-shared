@@ -1,6 +1,17 @@
 import 'dart:convert';
 
 class VerifyMerkleProofRequest {
+
+  factory VerifyMerkleProofRequest.fromMap(Map<String, dynamic> map) {
+    return VerifyMerkleProofRequest(
+      encodeFunctionData: map['encodeFunctionData'] ?? '',
+      spender: map['spender'] ?? '',
+      to: map['to'] ?? '',
+    );
+  }
+
+  factory VerifyMerkleProofRequest.fromJson(String source) =>
+      VerifyMerkleProofRequest.fromMap(json.decode(source));
   VerifyMerkleProofRequest({
     required this.encodeFunctionData,
     required this.spender,
@@ -30,18 +41,7 @@ class VerifyMerkleProofRequest {
     };
   }
 
-  factory VerifyMerkleProofRequest.fromMap(Map<String, dynamic> map) {
-    return VerifyMerkleProofRequest(
-      encodeFunctionData: map['encodeFunctionData'] ?? '',
-      spender: map['spender'] ?? '',
-      to: map['to'] ?? '',
-    );
-  }
-
   String toJson() => json.encode(toMap());
-
-  factory VerifyMerkleProofRequest.fromJson(String source) =>
-      VerifyMerkleProofRequest.fromMap(json.decode(source));
 
   @override
   String toString() =>

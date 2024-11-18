@@ -1,5 +1,4 @@
 import 'package:mxc_logic/mxc_logic.dart';
-import 'package:web3dart/web3dart.dart';
 
 class Config {
   // App related config

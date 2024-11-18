@@ -21,7 +21,7 @@ class TransactionModel {
     String walletAddress,
   ) {
     String? value = '0';
-    Token token = Token();
+    Token token = const Token();
     DateTime? timeStamp = mxcTransaction.timestamp;
     String hash = mxcTransaction.hash ?? 'Unknown';
     TransactionType type = TransactionType.sent;
@@ -88,7 +88,7 @@ class TransactionModel {
           );
           value = mxcTransaction.value ?? '0';
           token = token.copyWith(
-              logoUri: Config.mxcLogoUri, symbol: Config.mxcName);
+              logoUri: Config.mxcLogoUri, symbol: Config.mxcName,);
 
           if (mxcTransaction.decodedInput?.methodId ==
               ContractAddresses.erc20TransferMethodId) {
@@ -121,11 +121,11 @@ class TransactionModel {
                   .indexWhere((element) => element.type == 'token_transfer') !=
               -1) {
         token = token.copyWith(
-            symbol: mxcTransaction.tokenTransfers![0].token!.name!);
+            symbol: mxcTransaction.tokenTransfers![0].token!.name!,);
 
         if (mxcTransaction.tokenTransfers?[0].token?.name != null) {
           token = token.copyWith(
-              address: mxcTransaction.tokenTransfers?[0].token?.address);
+              address: mxcTransaction.tokenTransfers?[0].token?.address,);
         }
 
         timeStamp = mxcTransaction.tokenTransfers?[0].timestamp;
@@ -183,7 +183,7 @@ class TransactionModel {
 
   // In this state the tx
   factory TransactionModel.fromTransactionReceipt(
-      TransactionReceipt receipt, String walletAddress, Token token) {
+      TransactionReceipt receipt, String walletAddress, Token token,) {
     final txHash = bytesToHex(receipt.transactionHash, include0x: true);
     final timeStamp = DateTime.now();
     final txStatus = receipt.status == true
@@ -302,7 +302,7 @@ class TransactionModel {
           : null,
       hash: map['hash'],
       status: TransactionStatus.values.firstWhere(
-          (status) => status.toString().split('.').last == map['status']),
+          (status) => status.toString().split('.').last == map['status'],),
       type: TransactionType.values
           .firstWhere((type) => type.toString().split('.').last == map['type']),
       value: map['value'],

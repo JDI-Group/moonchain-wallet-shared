@@ -1,9 +1,7 @@
 import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:http/http.dart';
 import 'package:http_interceptor/http_interceptor.dart';
 import 'package:meta/meta.dart';
 import 'package:mxc_logic/mxc_logic.dart';
-import 'package:web3dart/web3dart.dart';
 import 'package:web_socket_channel/io.dart';
 
 class LoggingInterceptor implements InterceptorContract {

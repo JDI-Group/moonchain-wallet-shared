@@ -3,14 +3,6 @@ import 'dart:convert';
 import 'package:equatable/equatable.dart';
 
 class From extends Equatable {
-  final String? hash;
-  final dynamic implementationName;
-  final bool? isContract;
-  final dynamic isVerified;
-  final dynamic name;
-  final List<dynamic>? privateTags;
-  final List<dynamic>? publicTags;
-  final List<dynamic>? watchlistNames;
 
   const From({
     this.hash,
@@ -34,6 +26,21 @@ class From extends Equatable {
         watchlistNames: data['watchlist_names'] as List<dynamic>?,
       );
 
+  /// `dart:convert`
+  ///
+  /// Parses the string and returns the resulting Json object as [From].
+  factory From.fromJson(String data) {
+    return From.fromMap(json.decode(data) as Map<String, dynamic>);
+  }
+  final String? hash;
+  final dynamic implementationName;
+  final bool? isContract;
+  final dynamic isVerified;
+  final dynamic name;
+  final List<dynamic>? privateTags;
+  final List<dynamic>? publicTags;
+  final List<dynamic>? watchlistNames;
+
   Map<String, dynamic> toMap() => <String, dynamic>{
         'hash': hash,
         'implementation_name': implementationName,
@@ -44,13 +51,6 @@ class From extends Equatable {
         'public_tags': publicTags,
         'watchlist_names': watchlistNames,
       };
-
-  /// `dart:convert`
-  ///
-  /// Parses the string and returns the resulting Json object as [From].
-  factory From.fromJson(String data) {
-    return From.fromMap(json.decode(data) as Map<String, dynamic>);
-  }
 
   /// `dart:convert`
   ///

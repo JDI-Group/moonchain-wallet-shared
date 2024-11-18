@@ -6,38 +6,6 @@ import 'distribution_group.dart';
 import 'owner.dart';
 
 class AppVersion extends Equatable {
-  final String? appName;
-  final String? appDisplayName;
-  final String? appOs;
-  final String? appIconUrl;
-  final String? releaseNotesUrl;
-  final Owner? owner;
-  final bool? isExternalBuild;
-  final String? origin;
-  final int? id;
-  final String? version;
-  final String? shortVersion;
-  final int? size;
-  final String? minOs;
-  final String? androidMinApiLevel;
-  final dynamic deviceFamily;
-  final String? bundleIdentifier;
-  final String? fingerprint;
-  final DateTime? uploadedAt;
-  final String? downloadUrl;
-  final String? installUrl;
-  final bool? mandatoryUpdate;
-  final bool? enabled;
-  final String? fileExtension;
-  final bool? isLatest;
-  final String? releaseNotes;
-  final dynamic isUdidProvisioned;
-  final dynamic canResign;
-  final List<String>? packageHashes;
-  final String? destinationType;
-  final String? status;
-  final String? distributionGroupId;
-  final List<DistributionGroup>? distributionGroups;
 
   const AppVersion({
     this.appName,
@@ -115,6 +83,45 @@ class AppVersion extends Equatable {
         // 		.toList(),
       );
 
+  /// `dart:convert`
+  ///
+  /// Parses the string and returns the resulting Json object as [AppVersion].
+  factory AppVersion.fromJson(String data) {
+    return AppVersion.fromMap(json.decode(data) as Map<String, dynamic>);
+  }
+  final String? appName;
+  final String? appDisplayName;
+  final String? appOs;
+  final String? appIconUrl;
+  final String? releaseNotesUrl;
+  final Owner? owner;
+  final bool? isExternalBuild;
+  final String? origin;
+  final int? id;
+  final String? version;
+  final String? shortVersion;
+  final int? size;
+  final String? minOs;
+  final String? androidMinApiLevel;
+  final dynamic deviceFamily;
+  final String? bundleIdentifier;
+  final String? fingerprint;
+  final DateTime? uploadedAt;
+  final String? downloadUrl;
+  final String? installUrl;
+  final bool? mandatoryUpdate;
+  final bool? enabled;
+  final String? fileExtension;
+  final bool? isLatest;
+  final String? releaseNotes;
+  final dynamic isUdidProvisioned;
+  final dynamic canResign;
+  final List<String>? packageHashes;
+  final String? destinationType;
+  final String? status;
+  final String? distributionGroupId;
+  final List<DistributionGroup>? distributionGroups;
+
   Map<String, dynamic> toMap() => {
         'app_name': appName,
         'app_display_name': appDisplayName,
@@ -150,13 +157,6 @@ class AppVersion extends Equatable {
         'distribution_groups':
             distributionGroups?.map((e) => e.toMap()).toList(),
       };
-
-  /// `dart:convert`
-  ///
-  /// Parses the string and returns the resulting Json object as [AppVersion].
-  factory AppVersion.fromJson(String data) {
-    return AppVersion.fromMap(json.decode(data) as Map<String, dynamic>);
-  }
 
   /// `dart:convert`
   ///

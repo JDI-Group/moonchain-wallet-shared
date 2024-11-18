@@ -3,7 +3,6 @@ import 'package:ens_dart/ens_dart.dart' as contracts;
 import 'package:mxc_logic/src/data/api/client/rest_client.dart';
 import 'package:mxc_logic/mxc_logic.dart';
 import 'package:mxc_logic/src/data/api/client/web3_client.dart';
-import 'package:web3dart/web3dart.dart';
 
 class EpochRepository {
   EpochRepository(

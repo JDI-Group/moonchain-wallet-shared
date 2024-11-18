@@ -1,7 +1,5 @@
 import 'dart:convert';
 import 'package:collection/collection.dart';
-import 'package:mxc_logic/mxc_logic.dart';
-import 'package:intl/intl.dart';
 
 class RewardDetailsModel {
   factory RewardDetailsModel.fromJson(String source) =>

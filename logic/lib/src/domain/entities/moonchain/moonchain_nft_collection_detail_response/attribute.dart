@@ -3,20 +3,11 @@ import 'dart:convert';
 import 'package:equatable/equatable.dart';
 
 class Attribute extends Equatable {
-  const Attribute({this.traitType, this.value});
-
-  final String? traitType;
-  final String? value;
 
   factory Attribute.fromMap(Map<String, dynamic> data) => Attribute(
         traitType: data['trait_type'] as String?,
         value: data['value'] as String?,
       );
-
-  Map<String, dynamic> toMap() => <String, dynamic>{
-        'trait_type': traitType,
-        'value': value,
-      };
 
   /// `dart:convert`
   ///
@@ -24,6 +15,15 @@ class Attribute extends Equatable {
   factory Attribute.fromJson(String data) {
     return Attribute.fromMap(json.decode(data) as Map<String, dynamic>);
   }
+  const Attribute({this.traitType, this.value});
+
+  final String? traitType;
+  final String? value;
+
+  Map<String, dynamic> toMap() => <String, dynamic>{
+        'trait_type': traitType,
+        'value': value,
+      };
 
   /// `dart:convert`
   ///

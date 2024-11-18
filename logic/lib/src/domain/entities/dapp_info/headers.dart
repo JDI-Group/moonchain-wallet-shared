@@ -3,8 +3,6 @@ import 'dart:convert';
 import 'package:equatable/equatable.dart';
 
 class Headers extends Equatable {
-  final String? authorization;
-  final String? contentType;
 
   const Headers({this.authorization, this.contentType});
 
@@ -13,17 +11,19 @@ class Headers extends Equatable {
         contentType: data['Content-Type'] as String?,
       );
 
-  Map<String, dynamic> toMap() => {
-        'Authorization': authorization,
-        'Content-Type': contentType,
-      };
-
   /// `dart:convert`
   ///
   /// Parses the string and returns the resulting Json object as [Headers].
   factory Headers.fromJson(String data) {
     return Headers.fromMap(json.decode(data) as Map<String, dynamic>);
   }
+  final String? authorization;
+  final String? contentType;
+
+  Map<String, dynamic> toMap() => {
+        'Authorization': authorization,
+        'Content-Type': contentType,
+      };
 
   /// `dart:convert`
   ///

@@ -3,8 +3,6 @@ import 'dart:convert';
 import 'package:equatable/equatable.dart';
 
 class Total extends Equatable {
-  final String? decimals;
-  final String? value;
 
   const Total({this.decimals, this.value});
 
@@ -13,17 +11,19 @@ class Total extends Equatable {
         value: data['value'] as String?,
       );
 
-  Map<String, dynamic> toMap() => <String, dynamic>{
-        'decimals': decimals,
-        'value': value,
-      };
-
   /// `dart:convert`
   ///
   /// Parses the string and returns the resulting Json object as [Total].
   factory Total.fromJson(String data) {
     return Total.fromMap(json.decode(data) as Map<String, dynamic>);
   }
+  final String? decimals;
+  final String? value;
+
+  Map<String, dynamic> toMap() => <String, dynamic>{
+        'decimals': decimals,
+        'value': value,
+      };
 
   /// `dart:convert`
   ///

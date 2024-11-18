@@ -5,21 +5,6 @@ import 'package:equatable/equatable.dart';
 import 'attribute.dart';
 
 class Metadata extends Equatable {
-  const Metadata({
-    this.attributes,
-    this.description,
-    this.externalLink,
-    this.image,
-    this.isRealWorldNft,
-    this.name,
-  });
-
-  final List<Attribute>? attributes;
-  final String? description;
-  final String? externalLink;
-  final String? image;
-  final bool? isRealWorldNft;
-  final String? name;
 
   factory Metadata.fromMap(Map<String, dynamic> data) {
     final finalData = Metadata(
@@ -36,6 +21,28 @@ class Metadata extends Equatable {
     return finalData;
   }
 
+  /// `dart:convert`
+  ///
+  /// Parses the string and returns the resulting Json object as [Metadata].
+  factory Metadata.fromJson(String data) {
+    return Metadata.fromMap(json.decode(data) as Map<String, dynamic>);
+  }
+  const Metadata({
+    this.attributes,
+    this.description,
+    this.externalLink,
+    this.image,
+    this.isRealWorldNft,
+    this.name,
+  });
+
+  final List<Attribute>? attributes;
+  final String? description;
+  final String? externalLink;
+  final String? image;
+  final bool? isRealWorldNft;
+  final String? name;
+
   Map<String, dynamic> toMap() => <String, dynamic>{
         'attributes': attributes?.map((e) => e.toMap()).toList(),
         'description': description,
@@ -44,13 +51,6 @@ class Metadata extends Equatable {
         'isRealWorldNFT': isRealWorldNft,
         'name': name,
       };
-
-  /// `dart:convert`
-  ///
-  /// Parses the string and returns the resulting Json object as [Metadata].
-  factory Metadata.fromJson(String data) {
-    return Metadata.fromMap(json.decode(data) as Map<String, dynamic>);
-  }
 
   /// `dart:convert`
   ///

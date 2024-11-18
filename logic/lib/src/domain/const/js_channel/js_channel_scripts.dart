@@ -33,7 +33,7 @@ window.$axsWalletJSObjectName = { callHandler: window.flutter_inappwebview.callH
   ) =>
       '''
 (function(){
-window.$axsWalletJSObjectName.callHandler(\'$eventName\', $data)
+window.$axsWalletJSObjectName.callHandler('${eventName}', $data)
 }) ();
 ''';
 

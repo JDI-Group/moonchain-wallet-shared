@@ -1,4 +1,3 @@
-import 'package:web3dart/web3dart.dart';
 
 export 'exceptions.dart';
 export 'entities/common.dart';

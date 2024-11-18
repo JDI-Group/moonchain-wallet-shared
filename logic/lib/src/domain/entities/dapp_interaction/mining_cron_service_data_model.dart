@@ -42,7 +42,7 @@ class MiningCronServiceDataModel {
   }
 
   Map<String, dynamic> toMapWrapper(
-      MiningCronServiceDataModel? miningCronServiceDataModel) {
+      MiningCronServiceDataModel? miningCronServiceDataModel,) {
     return miningCronServiceDataModel!.toMap();
   }
 

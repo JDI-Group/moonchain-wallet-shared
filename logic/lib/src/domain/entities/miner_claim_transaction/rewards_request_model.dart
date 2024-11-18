@@ -33,7 +33,7 @@ class RewardsRequestModel {
   Map<String, dynamic> toMap() {
     return {
       'token': token.map((e) => e.toString() as dynamic).toList().toString(),
-      'amount': amount.map((e) => e.toString() as dynamic).toList().toString()
+      'amount': amount.map((e) => e.toString() as dynamic).toList().toString(),
     };
   }
 

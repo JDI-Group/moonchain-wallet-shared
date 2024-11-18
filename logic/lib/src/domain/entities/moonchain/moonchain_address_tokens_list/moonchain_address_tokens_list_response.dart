@@ -11,11 +11,11 @@ class MoonchainAddressTokensListResponse extends Equatable {
   /// Parses the string and returns the resulting Json object as [MoonchainAddressTokensListResponse].
   factory MoonchainAddressTokensListResponse.fromJson(String data) {
     return MoonchainAddressTokensListResponse.fromMap(
-        json.decode(data) as Map<String, dynamic>);
+        json.decode(data) as Map<String, dynamic>,);
   }
 
   factory MoonchainAddressTokensListResponse.fromMap(
-      Map<String, dynamic> data) {
+      Map<String, dynamic> data,) {
     return MoonchainAddressTokensListResponse(
       items: (data['items'] as List<dynamic>?)
           ?.map((dynamic e) => Item.fromMap(e as Map<String, dynamic>))

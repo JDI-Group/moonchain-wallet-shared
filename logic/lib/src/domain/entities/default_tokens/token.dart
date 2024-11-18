@@ -3,6 +3,25 @@ import 'dart:convert';
 import 'package:equatable/equatable.dart';
 
 class Token extends Equatable {
+
+  factory Token.fromMap(Map<String, dynamic> data) => Token(
+        chainId: data['chainId'] as int?,
+        address: data['address'] as String?,
+        name: data['name'] as String?,
+        symbol: data['symbol'] as String?,
+        decimals: data['decimals'] as int?,
+        logoUri: data['logoURI'] as String?,
+        balance: data['balance'] == null ? 0.0 : data['balance'] as double,
+        balancePrice:
+            data['balancePrice'] == null ? 0.0 : data['balancePrice'] as double,
+      );
+
+  /// `dart:convert`
+  ///
+  /// Parses the string and returns the resulting Json object as [Token].
+  factory Token.fromJson(String data) {
+    return Token.fromMap(json.decode(data) as Map<String, dynamic>);
+  }
   const Token({
     this.chainId,
     this.address,
@@ -23,18 +42,6 @@ class Token extends Equatable {
   final double? balance;
   final double? balancePrice;
 
-  factory Token.fromMap(Map<String, dynamic> data) => Token(
-        chainId: data['chainId'] as int?,
-        address: data['address'] as String?,
-        name: data['name'] as String?,
-        symbol: data['symbol'] as String?,
-        decimals: data['decimals'] as int?,
-        logoUri: data['logoURI'] as String?,
-        balance: data['balance'] == null ? 0.0 : data['balance'] as double,
-        balancePrice:
-            data['balancePrice'] == null ? 0.0 : data['balancePrice'] as double,
-      );
-
   Map<String, dynamic> toMap() => <String, dynamic>{
         'chainId': chainId,
         'address': address,
@@ -43,15 +50,8 @@ class Token extends Equatable {
         'decimals': decimals,
         'logoURI': logoUri,
         'balance': balance,
-        'balancePrice': balancePrice
+        'balancePrice': balancePrice,
       };
-
-  /// `dart:convert`
-  ///
-  /// Parses the string and returns the resulting Json object as [Token].
-  factory Token.fromJson(String data) {
-    return Token.fromMap(json.decode(data) as Map<String, dynamic>);
-  }
 
   /// `dart:convert`
   ///
@@ -76,7 +76,7 @@ class Token extends Equatable {
         decimals: decimals ?? this.decimals,
         logoUri: logoUri ?? this.logoUri,
         balance: balance ?? this.balance,
-        balancePrice: balancePrice ?? this.balancePrice);
+        balancePrice: balancePrice ?? this.balancePrice,);
   }
 
   @override
@@ -89,7 +89,7 @@ class Token extends Equatable {
       decimals,
       logoUri,
       balance,
-      balancePrice
+      balancePrice,
     ];
   }
 }

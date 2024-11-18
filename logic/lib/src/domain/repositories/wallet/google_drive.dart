@@ -37,7 +37,7 @@ class GoogleDriveRepository {
 
     if (existingFile != null) {
       await driveApi!.files.update(gDriveFile, existingFile.id!,
-          uploadMedia: Media(localFile.openRead(), localFile.lengthSync()));
+          uploadMedia: Media(localFile.openRead(), localFile.lengthSync()),);
       return;
     }
 

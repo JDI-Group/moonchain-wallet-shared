@@ -3,6 +3,26 @@ import 'dart:convert';
 import 'package:equatable/equatable.dart';
 
 class Token extends Equatable {
+
+  factory Token.fromMap(Map<String, dynamic> data) => Token(
+        address: data['address'] as String?,
+        circulatingMarketCap: data['circulating_market_cap'] as dynamic,
+        decimals: data['decimals'] as String?,
+        exchangeRate: data['exchange_rate'] as dynamic,
+        holders: data['holders'] as String?,
+        iconUrl: data['icon_url'] as dynamic,
+        name: data['name'] as String?,
+        symbol: data['symbol'] as String?,
+        totalSupply: data['total_supply'] as String?,
+        type: data['type'] as String?,
+      );
+
+  /// `dart:convert`
+  ///
+  /// Parses the string and returns the resulting Json object as [Token].
+  factory Token.fromJson(String data) {
+    return Token.fromMap(json.decode(data) as Map<String, dynamic>);
+  }
   const Token({
     this.address,
     this.circulatingMarketCap,
@@ -27,19 +47,6 @@ class Token extends Equatable {
   final String? totalSupply;
   final String? type;
 
-  factory Token.fromMap(Map<String, dynamic> data) => Token(
-        address: data['address'] as String?,
-        circulatingMarketCap: data['circulating_market_cap'] as dynamic,
-        decimals: data['decimals'] as String?,
-        exchangeRate: data['exchange_rate'] as dynamic,
-        holders: data['holders'] as String?,
-        iconUrl: data['icon_url'] as dynamic,
-        name: data['name'] as String?,
-        symbol: data['symbol'] as String?,
-        totalSupply: data['total_supply'] as String?,
-        type: data['type'] as String?,
-      );
-
   Map<String, dynamic> toMap() => <String, dynamic>{
         'address': address,
         'circulating_market_cap': circulatingMarketCap,
@@ -52,13 +59,6 @@ class Token extends Equatable {
         'total_supply': totalSupply,
         'type': type,
       };
-
-  /// `dart:convert`
-  ///
-  /// Parses the string and returns the resulting Json object as [Token].
-  factory Token.fromJson(String data) {
-    return Token.fromMap(json.decode(data) as Map<String, dynamic>);
-  }
 
   /// `dart:convert`
   ///

@@ -42,7 +42,7 @@ class BlueberryRingCronServiceDataModel {
   }
 
   Map<String, dynamic> toMapWrapper(
-      BlueberryRingCronServiceDataModel? miningCronServiceDataModel) {
+      BlueberryRingCronServiceDataModel? miningCronServiceDataModel,) {
     return miningCronServiceDataModel!.toMap();
   }
 

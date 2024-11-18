@@ -71,7 +71,7 @@ class TransactionControllerRepository {
     );
 
     transactionData = TransactionModel.fromTransaction(
-        speedUpTransaction, toSpeedUpTransaction.token);
+        speedUpTransaction, toSpeedUpTransaction.token,);
 
     final result = await _web3Client.sendTransaction(
       cred,
@@ -84,7 +84,7 @@ class TransactionControllerRepository {
         hash: result,
         value: toSpeedUpTransaction.transferType == TransferType.erc20
             ? toSpeedUpTransaction.value
-            : transactionData.value);
+            : transactionData.value,);
 
     return transactionData;
   }

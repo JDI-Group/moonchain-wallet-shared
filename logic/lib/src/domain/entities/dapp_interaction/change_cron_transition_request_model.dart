@@ -10,7 +10,7 @@ class ChangeCronTransitionRequestModel<T> extends CronServiceDataModel<T> {
 
   // Add this factory constructor
   factory ChangeCronTransitionRequestModel.fromJson(
-          String source, T Function(Map<String, dynamic>) dataFromMap) =>
+          String source, T Function(Map<String, dynamic>) dataFromMap,) =>
       ChangeCronTransitionRequestModel<T>.fromMap(
         json.decode(source),
         dataFromMap,

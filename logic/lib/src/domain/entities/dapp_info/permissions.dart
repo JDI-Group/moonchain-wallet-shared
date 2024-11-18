@@ -3,11 +3,6 @@ import 'dart:convert';
 import 'package:equatable/equatable.dart';
 
 class Permissions extends Equatable {
-  final String? notifications;
-  final String? camera;
-  final String? storage;
-  final String? clipboard;
-  final String? location;
 
   const Permissions({
     this.notifications,
@@ -25,6 +20,18 @@ class Permissions extends Equatable {
         location: data['location'] as String?,
       );
 
+  /// `dart:convert`
+  ///
+  /// Parses the string and returns the resulting Json object as [Permissions].
+  factory Permissions.fromJson(String data) {
+    return Permissions.fromMap(json.decode(data) as Map<String, dynamic>);
+  }
+  final String? notifications;
+  final String? camera;
+  final String? storage;
+  final String? clipboard;
+  final String? location;
+
   Map<String, dynamic> toMap() => {
         'notifications': notifications,
         'camera': camera,
@@ -32,13 +39,6 @@ class Permissions extends Equatable {
         'clipboard': clipboard,
         'location': location,
       };
-
-  /// `dart:convert`
-  ///
-  /// Parses the string and returns the resulting Json object as [Permissions].
-  factory Permissions.fromJson(String data) {
-    return Permissions.fromMap(json.decode(data) as Map<String, dynamic>);
-  }
 
   /// `dart:convert`
   ///

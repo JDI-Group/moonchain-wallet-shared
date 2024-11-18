@@ -1,9 +1,6 @@
 import 'package:chopper/chopper.dart';
 
 class DecodedInput {
-  String? methodCall;
-  String? methodId;
-  List<Parameters>? parameters;
 
   DecodedInput({this.methodCall, this.methodId, this.parameters});
 
@@ -19,22 +16,22 @@ class DecodedInput {
       }
     }
   }
+  String? methodCall;
+  String? methodId;
+  List<Parameters>? parameters;
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['method_call'] = this.methodCall;
-    data['method_id'] = this.methodId;
-    if (this.parameters != null) {
-      data['parameters'] = this.parameters!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['method_call'] = methodCall;
+    data['method_id'] = methodId;
+    if (parameters != null) {
+      data['parameters'] = parameters!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class Parameters {
-  String? name;
-  String? type;
-  String? value;
 
   Parameters({this.name, this.type, this.value});
 
@@ -45,12 +42,15 @@ class Parameters {
         ? json['value'][0]
         : json['value'];
   }
+  String? name;
+  String? type;
+  String? value;
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['type'] = this.type;
-    data['value'] = this.value;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['name'] = name;
+    data['type'] = type;
+    data['value'] = value;
     return data;
   }
 }

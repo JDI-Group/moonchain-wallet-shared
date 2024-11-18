@@ -5,12 +5,6 @@ import 'package:equatable/equatable.dart';
 import 'token.dart';
 
 class Item extends Equatable {
-  const Item({this.token, this.tokenId, this.tokenInstance, this.value});
-
-  final Token? token;
-  final dynamic tokenId;
-  final dynamic tokenInstance;
-  final String? value;
 
   factory Item.fromMap(Map<String, dynamic> data) => Item(
         token: data['token'] == null
@@ -21,19 +15,25 @@ class Item extends Equatable {
         value: data['value'] as String?,
       );
 
-  Map<String, dynamic> toMap() => <String, dynamic>{
-        'token': token?.toMap(),
-        'token_id': tokenId,
-        'token_instance': tokenInstance,
-        'value': value,
-      };
-
   /// `dart:convert`
   ///
   /// Parses the string and returns the resulting Json object as [Item].
   factory Item.fromJson(String data) {
     return Item.fromMap(json.decode(data) as Map<String, dynamic>);
   }
+  const Item({this.token, this.tokenId, this.tokenInstance, this.value});
+
+  final Token? token;
+  final dynamic tokenId;
+  final dynamic tokenInstance;
+  final String? value;
+
+  Map<String, dynamic> toMap() => <String, dynamic>{
+        'token': token?.toMap(),
+        'token_id': tokenId,
+        'token_instance': tokenInstance,
+        'value': value,
+      };
 
   /// `dart:convert`
   ///

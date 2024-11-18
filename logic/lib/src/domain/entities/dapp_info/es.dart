@@ -3,8 +3,6 @@ import 'dart:convert';
 import 'package:equatable/equatable.dart';
 
 class Es extends Equatable {
-  final String? name;
-  final String? description;
 
   const Es({this.name, this.description});
 
@@ -13,17 +11,19 @@ class Es extends Equatable {
         description: data['description'] as String?,
       );
 
-  Map<String, dynamic> toMap() => {
-        'name': name,
-        'description': description,
-      };
-
   /// `dart:convert`
   ///
   /// Parses the string and returns the resulting Json object as [Es].
   factory Es.fromJson(String data) {
     return Es.fromMap(json.decode(data) as Map<String, dynamic>);
   }
+  final String? name;
+  final String? description;
+
+  Map<String, dynamic> toMap() => {
+        'name': name,
+        'description': description,
+      };
 
   /// `dart:convert`
   ///

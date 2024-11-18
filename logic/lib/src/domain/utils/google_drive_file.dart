@@ -19,7 +19,7 @@ class GoogleDriveFileUtils {
 
     final found = await driveApi.files.list(
       q: "mimeType = '$folderMime' and name = '$folderName'",
-      $fields: "files(id, name)",
+      $fields: 'files(id, name)',
     );
     final files = found.files;
 

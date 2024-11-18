@@ -3,11 +3,6 @@ import 'dart:convert';
 import 'package:equatable/equatable.dart';
 
 class Icons extends Equatable {
-  final String? iconSmall;
-  final String? iconLarge;
-  final String? namedhexagon;
-  final String? lease;
-  final bool? islarge;
 
   const Icons({
     this.iconSmall,
@@ -25,6 +20,18 @@ class Icons extends Equatable {
         islarge: data['islarge'] as bool?,
       );
 
+  /// `dart:convert`
+  ///
+  /// Parses the string and returns the resulting Json object as [Icons].
+  factory Icons.fromJson(String data) {
+    return Icons.fromMap(json.decode(data) as Map<String, dynamic>);
+  }
+  final String? iconSmall;
+  final String? iconLarge;
+  final String? namedhexagon;
+  final String? lease;
+  final bool? islarge;
+
   Map<String, dynamic> toMap() => {
         'iconSmall': iconSmall,
         'iconLarge': iconLarge,
@@ -32,13 +39,6 @@ class Icons extends Equatable {
         'lease': lease,
         'islarge': islarge,
       };
-
-  /// `dart:convert`
-  ///
-  /// Parses the string and returns the resulting Json object as [Icons].
-  factory Icons.fromJson(String data) {
-    return Icons.fromMap(json.decode(data) as Map<String, dynamic>);
-  }
 
   /// `dart:convert`
   ///

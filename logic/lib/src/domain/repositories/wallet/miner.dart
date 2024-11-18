@@ -162,7 +162,7 @@ class MinerRepository {
       String Function(
     String key,
   )
-          translate) async {
+          translate,) async {
     final chainId = _web3Client.network!.chainId;
     final uri = Uri.parse(Urls.postVerifyMerkleProof(chainId));
     final headers = {'accept': 'application/json'};
@@ -407,15 +407,15 @@ class MinerRepository {
       final List<ClaimReward> rewardsByDay = rewards
           .where((r) =>
               int.parse(r.blockTimestamp) > start &&
-              int.parse(r.blockTimestamp) < ended)
+              int.parse(r.blockTimestamp) < ended,)
           .toList();
       final String fee = MXCArray.sumUpListItemsValueBigInt([
         ...rewardsByDay.map((r) => r.feeMXC),
-        stats.isNotEmpty ? stats[stats.length - 1].fee : ''
+        stats.isNotEmpty ? stats[stats.length - 1].fee : '',
       ]);
       final String mxc = MXCArray.sumUpListItemsValueBigInt([
         ...rewardsByDay.map((r) => r.valueMXC),
-        stats.isNotEmpty ? stats[stats.length - 1].mxc : ''
+        stats.isNotEmpty ? stats[stats.length - 1].mxc : '',
       ]);
       final List<String> ids =
           rewardsByDay.map((r) => r.mep1004TokenId).toList();
@@ -452,9 +452,9 @@ class MinerRepository {
             .toList();
 
     final mxc = MXCArray.sumUpListItemsValueBigInt(
-        rewards.map((r) => r.valueMXC).toList());
+        rewards.map((r) => r.valueMXC).toList(),);
     final fee = MXCArray.sumUpListItemsValueBigInt(
-        rewards.map((r) => r.feeMXC).toList());
+        rewards.map((r) => r.feeMXC).toList(),);
 
     return GetTotalClaimResponse(totalMXC: mxc, totalFee: fee);
   }

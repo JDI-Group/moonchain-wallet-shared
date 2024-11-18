@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:mxc_logic/mxc_logic.dart';
 import 'package:mxc_logic/src/domain/entities/dapp_hooks/blueberry_ring_hooks_model.dart';
 
-import 'wifi_hooks_model.dart';
 
 class DAppHooksModel {
   factory DAppHooksModel.fromJson(String source) =>

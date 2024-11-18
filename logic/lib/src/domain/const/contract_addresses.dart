@@ -76,7 +76,7 @@ class ContractAddresses {
       MXCContacts.hexagonNaming: hexagonNamingMainnet,
       MXCContacts.nameWrapper: nameWrapperMainnet,
       MXCContacts.storage: storageMainnet,
-    }
+    },
   };
 
   static const String erc20TransferMethodId = 'a9059cbb';
