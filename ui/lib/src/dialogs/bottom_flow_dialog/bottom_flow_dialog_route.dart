@@ -117,8 +117,7 @@ class BottomFlowDialogPageRoute<T> extends PageRoute<T>
     Animation<double> secondaryAnimation,
     Widget child,
   ) {
-    final bool linearTransition =
-        CupertinoRouteTransitionMixin.isPopGestureInProgress(this);
+    final bool linearTransition = (this as PageRoute).popGestureInProgress;
     final positionAnimation = linearTransition
         ? animation
         : CurvedAnimation(
