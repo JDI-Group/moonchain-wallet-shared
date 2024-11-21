@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:equatable/equatable.dart';
 import 'package:mxc_logic/mxc_logic.dart';
 
-import 'token.dart';
 import 'version.dart';
 
 class DefaultTokens extends Equatable {

@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:mxc_logic/mxc_logic.dart';
 import 'package:web3dart/crypto.dart';
-import 'package:web3dart/web3dart.dart';
 
 enum TransactionType { sent, received, contractCall, all, unknown }
 

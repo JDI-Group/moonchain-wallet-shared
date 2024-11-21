@@ -24,7 +24,7 @@ class MoonchainTokenMetaDataResponse extends Equatable {
   /// Parses the string and returns the resulting Json object as [MoonchainTokenMetaDataResponse].
   factory MoonchainTokenMetaDataResponse.fromJson(String data) {
     return MoonchainTokenMetaDataResponse.fromMap(
-        json.decode(data) as Map<String, dynamic>);
+        json.decode(data) as Map<String, dynamic>,);
   }
   const MoonchainTokenMetaDataResponse({
     this.image,

@@ -6,7 +6,6 @@ import 'moonchain_transaction_model.dart';
 
 export 'moonchain_transaction_model.dart';
 
-import '../shared/shared.dart';
 
 class MoonchainTransactionsModel extends Equatable {
 

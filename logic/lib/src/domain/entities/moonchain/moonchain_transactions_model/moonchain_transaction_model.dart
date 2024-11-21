@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 import 'package:mxc_logic/mxc_logic.dart';
-import 'package:mxc_logic/src/domain/entities/moonchain/moonchain_transactions_model/decoded_input.dart';import 'decoded_input.dart';
+import 'package:mxc_logic/src/domain/entities/moonchain/moonchain_transactions_model/decoded_input.dart';
 
 
 import 'fee.dart';

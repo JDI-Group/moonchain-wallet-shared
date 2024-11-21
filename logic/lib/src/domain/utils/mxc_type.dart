@@ -1,9 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:flutter/material.dart';
 import 'package:web3dart/crypto.dart';
-import 'package:convert/convert.dart' show hex;
-import 'package:eth_sig_util/util/utils.dart' as utils;
 
 class MXCType {
   static Uint8List hexToUint8List(String value) {

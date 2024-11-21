@@ -9,7 +9,7 @@ class MoonchainNftCollectionDetailResponse extends Equatable {
   const MoonchainNftCollectionDetailResponse({this.items, this.nextPageParams});
 
   factory MoonchainNftCollectionDetailResponse.fromMap(
-      Map<String, dynamic> data) {
+      Map<String, dynamic> data,) {
     return MoonchainNftCollectionDetailResponse(
       items: (data['items'] as List<dynamic>?)
           ?.map((dynamic e) => Item.fromMap(e as Map<String, dynamic>))
@@ -23,7 +23,7 @@ class MoonchainNftCollectionDetailResponse extends Equatable {
   /// Parses the string and returns the resulting Json object as [MoonchainNftCollectionDetailResponse].
   factory MoonchainNftCollectionDetailResponse.fromJson(String data) {
     return MoonchainNftCollectionDetailResponse.fromMap(
-        json.decode(data) as Map<String, dynamic>);
+        json.decode(data) as Map<String, dynamic>,);
   }
   final List<Item>? items;
   final dynamic nextPageParams;

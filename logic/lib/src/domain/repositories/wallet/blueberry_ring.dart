@@ -6,7 +6,6 @@ import 'package:mxc_logic/src/data/api/client/web3_client.dart';
 import 'package:ens_dart/ens_dart.dart' as contracts;
 import 'package:web3dart/crypto.dart';
 
-import 'package:web3dart/web3dart.dart';
 
 class BlueberryRingRepository {
   BlueberryRingRepository(

@@ -1,7 +1,6 @@
 import 'dart:typed_data';
 
 import 'package:mxc_logic/mxc_logic.dart';
-import 'package:web3dart/web3dart.dart';
 
 class MXCTransaction {
   static Transaction buildSpeedUpTransactionFromTransactionModel(

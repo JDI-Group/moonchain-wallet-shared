@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:mxc_logic/mxc_logic.dart';
-import 'package:web3dart/web3dart.dart';
 
 class MXCGas {
   // estimated gas fee = from blockchain with getGasPrice method on web3dart

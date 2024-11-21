@@ -54,7 +54,7 @@ class TokenContractRepository {
           }
           if (response.statusCode == 404) {
             // new wallet and nothing is returned
-            final txList = const MoonchainTransactionsModel(
+            const txList = MoonchainTransactionsModel(
               items: [],
             );
             return txList;

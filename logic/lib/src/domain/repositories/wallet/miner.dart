@@ -10,7 +10,6 @@ import 'package:ens_dart/ens_dart.dart' as contracts;
 
 import 'package:mxc_logic/src/domain/repositories/wallet/epoch.dart';
 import 'package:mxc_logic/src/domain/repositories/wallet/token_contract.dart';
-import 'package:web3dart/web3dart.dart';
 
 class MinerRepository {
   MinerRepository(
