@@ -1,18 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:mxc_ui/mxc_ui.dart';
+import 'package:mxc_ui/src/bottom_sheets/base_bottom_sheet.dart';
 
 Future<bool?> showInformationalBottomSheet(
-    BuildContext context, List<InlineSpan> texts) {
-  String translate(String text) => FlutterI18n.translate(context, text);
-
-  return showModalBottomSheet<bool>(
+    BuildContext context, List<InlineSpan> texts) async {
+  return showBaseBottomSheet(
     context: context,
-    useRootNavigator: true,
-    isScrollControlled: true,
-    backgroundColor: Colors.transparent,
-    useSafeArea: true,
-    builder: (BuildContext context) => Container(
+    content: InformationWidget(
+      texts: texts,
+    ),
+  );
+}
+
+class InformationWidget extends StatelessWidget {
+  final List<InlineSpan> texts;
+  const InformationWidget({super.key, required this.texts});
+
+  @override
+  Widget build(BuildContext context) {
+    String translate(String text) => FlutterI18n.translate(context, text);
+
+    return Container(
       padding: const EdgeInsets.only(
           top: Sizes.spaceNormal, bottom: Sizes.space3XLarge),
       decoration: BoxDecoration(
@@ -56,6 +65,6 @@ Future<bool?> showInformationalBottomSheet(
           ],
         ),
       ),
-    ),
-  );
+    );
+  }
 }
