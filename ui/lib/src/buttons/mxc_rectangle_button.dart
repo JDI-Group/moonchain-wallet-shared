@@ -182,7 +182,7 @@ class _MxcCircleIconButton extends MXCRectangleButton {
       String? title,
       Color? color,
       TextStyle? titleStyle,
-      double? this.iconSize,
+      this.iconSize,
       double? textSpace,
       double? shadowRadius,
       Color? iconFillColor})
