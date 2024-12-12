@@ -11,7 +11,8 @@ Future<T?> showBaseBottomSheet<T>({
   List<Widget>? widgets,
   Widget? content,
   bool isDismissible = true,
-  bool enableDrag = true
+  bool enableDrag = true,
+  Color? bottomSheetBackgroundColor,
 }) {
   assert(
       ((widgets != null && bottomSheetTitle != null) || content != null) &&
@@ -29,7 +30,7 @@ Future<T?> showBaseBottomSheet<T>({
     useSafeArea: true,
     builder: (BuildContext context) => ConstrainedBox(
       constraints: BoxConstraints(
-        maxHeight: MediaQuery.of(context).size.height * 0.95,
+        maxHeight: MediaQuery.of(context).size.height * 0.9,
       ),
       child: Container(
         padding: const EdgeInsets.only(
@@ -38,39 +39,40 @@ Future<T?> showBaseBottomSheet<T>({
             right: Sizes.spaceNormal,
             left: Sizes.spaceNormal),
         decoration: BoxDecoration(
-          color: ColorsTheme.of(context).layerSheetBackground,
+          color: bottomSheetBackgroundColor ??
+              ColorsTheme.of(context).layerSheetBackground,
           borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(20),
             topRight: Radius.circular(20),
           ),
         ),
-        child: content ??
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsetsDirectional.only(
-                      start: Sizes.spaceNormal,
-                      end: Sizes.spaceNormal,
-                      bottom: Sizes.space2XLarge),
-                  child: MxcAppBarEvenly.title(
+        child: Container(
+          padding: const EdgeInsetsDirectional.only(
+              start: Sizes.spaceSmall,
+              end: Sizes.spaceSmall,
+              bottom: Sizes.space2XLarge),
+          child: content ??
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  MxcAppBarEvenly.title(
                     titleText: translate(bottomSheetTitle!),
                     action: hasCloseButton
                         ? Container(
                             alignment: Alignment.centerRight,
                             child: InkWell(
-                              child: const Icon(Icons.close, size: 30),
+                              child: const Icon(Icons.close, size: 24),
                               onTap: () => Navigator.of(context)
                                   .pop(closeButtonReturnValue),
                             ),
                           )
                         : null,
                   ),
-                ),
-                ...widgets!
-              ],
-            ),
+                  ...widgets!
+                ],
+              ),
+        ),
       ),
     ),
   );

@@ -13,5 +13,6 @@ export 'src/drop_down.dart';
 export 'src/app_bar.dart';
 export 'src/app_bar_evenly.dart';
 export 'src/mxc_icons.dart';
+export 'src/bottom_sheets/bottom_sheets.dart';
 
 const mxcUiPackageName = 'mxc_ui';
