@@ -14,6 +14,21 @@ class MXCTime {
     return difference;
   }
 
+  static bool isDateOnToday(
+    DateTime date,
+  ) {
+    final now = DateTime.now();
+    return isDateOnSpecificDay(date, now);
+  }
+
+  static bool isDateOnSpecificDay(DateTime date, DateTime targetDay) {
+    final isTargetDay = targetDay.year == date.year &&
+        targetDay.month == date.month &&
+        targetDay.day == date.day;
+
+    return isTargetDay;
+  }
+
   static int timeOfDayInMinutes(TimeOfDay time) {
     return time.hour * 60 + time.minute;
   }
