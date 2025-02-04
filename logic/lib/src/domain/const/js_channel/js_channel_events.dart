@@ -58,4 +58,7 @@ class JSChannelEvents {
   static const String
       bluetoothRemoteGATTCharacteristicWriteValueWithoutResponse =
       'BluetoothRemoteGATTCharacteristic.writeValueWithoutResponse';
+
+  // Front-End required events 
+  static const String getCookies = 'getCookies';
 }
