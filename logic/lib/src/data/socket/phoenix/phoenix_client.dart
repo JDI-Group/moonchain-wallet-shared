@@ -61,6 +61,14 @@ class PhoenixClient implements IMXCSocketClient {
   }
 
   @override
+  Stream<PhoenixSocketErrorEvent> getErrorStream() {
+    if (_socketInstance != null && isConnected()) {
+      return _socketInstance!.errorStream;
+    }
+    throw 'Trying to access connection while not connected!';
+  }
+
+  @override
   Future<Stream<Message>> subscribeToEvent(
     String event,
   ) async {

@@ -149,6 +149,10 @@ class TokenContractRepository {
     return _mxcSocketClient.getCloseStream();
   }
 
+  Stream<dynamic>? getErrorStream() {
+    return _mxcSocketClient.getErrorStream();
+  }
+
   Stream<dynamic>? getOpenStream() {
     return _mxcSocketClient.getOpenStream();
   }

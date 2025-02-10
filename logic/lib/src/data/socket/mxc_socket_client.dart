@@ -13,6 +13,7 @@ abstract class IMXCSocketClient {
 
   Stream<dynamic> getCloseStream();
   Stream<dynamic> getOpenStream();
+  Stream<dynamic> getErrorStream();
 }
 
 class MXCSocketClient {
@@ -36,6 +37,10 @@ class MXCSocketClient {
 
   Stream<dynamic>? getCloseStream() {
     return _socketClient!.getCloseStream();
+  }
+
+  Stream<dynamic>? getErrorStream() {
+    return _socketClient!.getErrorStream();
   }
 
   Stream<dynamic>? getOpenStream() {
