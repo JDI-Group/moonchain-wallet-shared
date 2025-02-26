@@ -42,6 +42,17 @@ class MXCFormatter {
     return formattedString;
   }
 
+  // Example 984766546546546546546548494313898765 => 98476..98765
+  static String formatLongText(String inputString, {int? nCharacters}) {
+    if (inputString.isEmpty) return inputString;
+    // Handle if text is short
+    if (nCharacters != null) if (inputString.length <= (nCharacters * 2)) return inputString;
+
+    String formattedString =
+        '${inputString.substring(0, nCharacters ?? 4)}...${inputString.substring(inputString.length - (nCharacters ?? 4))}';
+    return formattedString;
+  }
+
   static String convertWeiToEth(String inputString, int tokenDecimal) {
     // 10^18 = 1000000000000000000 but we want to have up to 2 digits accuracy
     if (double.parse(inputString).toDouble() < 1000000000000000) {
