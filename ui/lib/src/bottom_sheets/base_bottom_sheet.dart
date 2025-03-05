@@ -57,7 +57,8 @@ Future<T?> showBaseBottomSheet<T>({
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   MxcAppBarEvenly.title(
-                    titleText: translate(bottomSheetTitle!),
+                    titleText: translate(bottomSheetTitle!)[0].toUpperCase() +
+                        translate(bottomSheetTitle).substring(1),
                     action: hasCloseButton
                         ? Container(
                             alignment: Alignment.centerRight,
