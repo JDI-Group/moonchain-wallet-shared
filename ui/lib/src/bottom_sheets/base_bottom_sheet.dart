@@ -19,7 +19,7 @@ Future<T?> showBaseBottomSheet<T>({
           (!((widgets != null && bottomSheetTitle != null) && content != null)),
       "Only one of content or widgets should be specified.");
   String translate(String text) => FlutterI18n.translate(context, text);
-  String translatedTitle = translate(bottomSheetTitle!); 
+  String translatedTitle = translate(bottomSheetTitle ?? ""); 
   String capitalizedTitle = translatedTitle[0].toUpperCase() + translatedTitle.substring(1); 
   return showModalBottomSheet<T>(
     context: context,
