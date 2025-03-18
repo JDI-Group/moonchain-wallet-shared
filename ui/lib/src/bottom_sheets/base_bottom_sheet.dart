@@ -6,6 +6,7 @@ Future<T?> showBaseBottomSheet<T>({
   required BuildContext context,
   bool hasCloseButton = true,
   bool? closeButtonReturnValue,
+
   /// Has translation so just pass the key
   String? bottomSheetTitle,
   List<Widget>? widgets,
@@ -19,8 +20,14 @@ Future<T?> showBaseBottomSheet<T>({
           (!((widgets != null && bottomSheetTitle != null) && content != null)),
       "Only one of content or widgets should be specified.");
   String translate(String text) => FlutterI18n.translate(context, text);
-  String translatedTitle = translate(bottomSheetTitle ?? ""); 
-  String capitalizedTitle = translatedTitle[0].toUpperCase() + translatedTitle.substring(1); 
+
+  String? title;
+  if (bottomSheetTitle != null) {
+    String translatedTitle = translate(bottomSheetTitle);
+    title =
+        translatedTitle[0].toUpperCase() + translatedTitle.substring(1);
+  }
+
   return showModalBottomSheet<T>(
     context: context,
     useRootNavigator: true,
@@ -58,7 +65,7 @@ Future<T?> showBaseBottomSheet<T>({
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   MxcAppBarEvenly.title(
-                    titleText: capitalizedTitle,
+                    titleText: title ?? "",
                     action: hasCloseButton
                         ? Container(
                             alignment: Alignment.centerRight,
