@@ -41,7 +41,8 @@ class Urls {
   //     'https://api.appcenter.ms/v0.1/public/sdk/apps/$appSecret/distribution_groups/$groupId/releases/latest';
 
   // Add this new static constant:
-  static const String latestVersionYaml = 'https://raw.githubusercontent.com/MXCzkEVM/moonchain-wallet/refs/heads/main/pubspec.yaml';
+  static const String latestVersionYaml =
+      'https://raw.githubusercontent.com/MXCzkEVM/moonchain-wallet/refs/heads/main/pubspec.yaml';
 
   static String getApiBaseUrl(int chainId) =>
       MXCFunctionHelpers.mxcChainsSeparatedFunctions(
@@ -80,7 +81,7 @@ class Urls {
   static const String emailApp = 'mailto:';
 
   // MXC support
-  static const String moonchainSupportBot= 'https://t.me/MoonchainSupport_bot';
+  static const String moonchainSupportBot = 'https://t.me/MoonchainSupport_bot';
   static const String moonchainWebsite = 'https://moonchain.com/';
   static const String moonchainDesignDocs =
       'https://doc.moonchain.com/docs/intro/';
@@ -110,8 +111,8 @@ class Urls {
   static const String bitmart = 'https://www.bitmart.com/en-US/';
   static const String htx = 'https://www.htx.com/';
 
-  static const String mainnetL3Bridge = 'https://erc20.moonchain.com/';
-  static const String testnetL3Bridge = 'https://geneva-erc20.moonchain.com/';
+  static const String mainnetJannowitz = 'https://jannowitz.moonchain.com/';
+  static const String testnetJannowitz = 'https://geneva-bridge.moonchain.com/';
 
   static String mainnetMns(String name) =>
       'https://mns.moonchain.com/$name.mxc/register';
@@ -168,8 +169,8 @@ class Urls {
   static const minerDappTestnet = 'https://geneva-mining.matchx.io/';
   static const minerDappMainnet = 'https://mining.matchx.io/';
 
-  static String networkL3Bridge(int chainId) =>
-      MXCChains.isMXCMainnet(chainId) ? mainnetL3Bridge : testnetL3Bridge;
+  static String networkJannowitz(int chainId) =>
+      MXCChains.isMXCMainnet(chainId) ? mainnetJannowitz : testnetJannowitz;
 
   static String getMepGraphQlLink(int chainId) =>
       MXCChains.isMXCMainnet(chainId) ? mepGraphQlMainnet : mepGraphQlGeneva;
