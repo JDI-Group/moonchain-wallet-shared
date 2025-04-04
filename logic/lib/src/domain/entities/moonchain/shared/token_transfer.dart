@@ -27,7 +27,7 @@ class TokenTransfer extends Equatable {
         from: data['from'] == null
             ? null
             : From.fromMap(data['from'] as Map<String, dynamic>),
-        logIndex: data['log_index'] as String?,
+        logIndex: data['log_index'] as int?,
         method: data['method'] as dynamic,
         timestamp: data['timestamp'] == null
             ? null
@@ -53,7 +53,7 @@ class TokenTransfer extends Equatable {
   }
   final String? blockHash;
   From? from;
-  final String? logIndex;
+  final int? logIndex;
   final dynamic method;
   final DateTime? timestamp;
   To? to;
@@ -83,7 +83,7 @@ class TokenTransfer extends Equatable {
   TokenTransfer copyWith({
     String? blockHash,
     From? from,
-    String? logIndex,
+    int? logIndex,
     dynamic method,
     DateTime? timestamp,
     To? to,
