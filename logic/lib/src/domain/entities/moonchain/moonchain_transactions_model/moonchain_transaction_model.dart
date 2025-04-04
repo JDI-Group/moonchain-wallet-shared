@@ -4,17 +4,16 @@ import 'package:equatable/equatable.dart';
 import 'package:mxc_logic/mxc_logic.dart';
 import 'package:mxc_logic/src/domain/entities/moonchain/moonchain_transactions_model/decoded_input.dart';
 
-
 import 'fee.dart';
 
 class MoonchainTransactionModel extends Equatable {
-
   /// `dart:convert`
   ///
   /// Parses the string and returns the resulting Json object as [MoonchainTransactionModel].
   factory MoonchainTransactionModel.fromJson(String data) {
     return MoonchainTransactionModel.fromMap(
-        json.decode(data) as Map<String, dynamic>,);
+      json.decode(data) as Map<String, dynamic>,
+    );
   }
 
   factory MoonchainTransactionModel.fromMap(Map<String, dynamic> data) {
@@ -48,7 +47,8 @@ class MoonchainTransactionModel extends Equatable {
       tokenTransfers: (data['token_transfers'] as List<dynamic>?)
           ?.map((dynamic e) => TokenTransfer.fromMap(e as Map<String, dynamic>))
           .toList(),
-      txTypes: (data['tx_types'] as List<dynamic>?)?.cast<String>(),
+      transactionTypes:
+          (data['transaction_types'] as List<dynamic>?)?.cast<String>(),
       gasUsed: data['gas_used'] as String?,
       createdContract: data['created_contract'] as dynamic,
       position: data['position'] as int?,
@@ -66,7 +66,7 @@ class MoonchainTransactionModel extends Equatable {
       confirmationDuration: (data['confirmation_duration'] as List<dynamic>?)
           ?.map<double>((dynamic item) => double.parse(item.toString()))
           .toList(),
-      txTag: data['tx_tag'] as dynamic,
+      transactionTag: data['transaction_tag'] as dynamic,
     );
   }
 
@@ -90,7 +90,7 @@ class MoonchainTransactionModel extends Equatable {
     this.baseFeePerGas,
     this.from,
     this.tokenTransfers,
-    this.txTypes,
+    this.transactionTypes,
     this.gasUsed,
     this.createdContract,
     this.position,
@@ -104,7 +104,7 @@ class MoonchainTransactionModel extends Equatable {
     this.maxPriorityFeePerGas,
     this.revertReason,
     this.confirmationDuration,
-    this.txTag,
+    this.transactionTag,
   });
   final DateTime? timestamp;
   final Fee? fee;
@@ -125,7 +125,7 @@ class MoonchainTransactionModel extends Equatable {
   final String? baseFeePerGas;
   final From? from;
   final List<TokenTransfer>? tokenTransfers;
-  final List<String>? txTypes;
+  final List<String>? transactionTypes;
   final String? gasUsed;
   final dynamic createdContract;
   final int? position;
@@ -139,7 +139,7 @@ class MoonchainTransactionModel extends Equatable {
   final String? maxPriorityFeePerGas;
   final dynamic revertReason;
   final List<double>? confirmationDuration;
-  final dynamic txTag;
+  final dynamic transactionTag;
 
   Map<String, dynamic> toMap() => <String, dynamic>{
         'timestamp': timestamp?.toIso8601String(),
@@ -161,7 +161,7 @@ class MoonchainTransactionModel extends Equatable {
         'base_fee_per_gas': baseFeePerGas,
         'from': from?.toMap(),
         'token_transfers': tokenTransfers?.map((e) => e.toMap()).toList(),
-        'tx_types': txTypes,
+        'transaction_types': transactionTypes,
         'gas_used': gasUsed,
         'created_contract': createdContract,
         'position': position,
@@ -175,7 +175,7 @@ class MoonchainTransactionModel extends Equatable {
         'max_priority_fee_per_gas': maxPriorityFeePerGas,
         'revert_reason': revertReason,
         'confirmation_duration': confirmationDuration,
-        'tx_tag': txTag,
+        'transaction_tag': transactionTag,
       };
 
   /// `dart:convert`
@@ -239,7 +239,7 @@ class MoonchainTransactionModel extends Equatable {
       baseFeePerGas: baseFeePerGas ?? this.baseFeePerGas,
       from: from ?? this.from,
       tokenTransfers: tokenTransfers ?? this.tokenTransfers,
-      txTypes: txTypes ?? this.txTypes,
+      transactionTypes: txTypes ?? this.transactionTypes,
       gasUsed: gasUsed ?? this.gasUsed,
       createdContract: createdContract ?? this.createdContract,
       position: position ?? this.position,
@@ -255,7 +255,7 @@ class MoonchainTransactionModel extends Equatable {
       maxPriorityFeePerGas: maxPriorityFeePerGas ?? this.maxPriorityFeePerGas,
       revertReason: revertReason ?? this.revertReason,
       confirmationDuration: confirmationDuration ?? this.confirmationDuration,
-      txTag: txTag ?? this.txTag,
+      transactionTag: txTag ?? this.transactionTag,
     );
   }
 
@@ -293,7 +293,7 @@ class MoonchainTransactionModel extends Equatable {
       baseFeePerGas,
       from,
       tokenTransfers,
-      txTypes,
+      transactionTypes,
       gasUsed,
       createdContract,
       position,
@@ -307,7 +307,7 @@ class MoonchainTransactionModel extends Equatable {
       maxPriorityFeePerGas,
       revertReason,
       confirmationDuration,
-      txTag,
+      transactionTag,
     ];
   }
 }

@@ -8,7 +8,6 @@ import 'token.dart';
 import 'total.dart';
 
 class TokenTransfer extends Equatable {
-
   TokenTransfer({
     this.blockHash,
     this.from,
@@ -18,7 +17,7 @@ class TokenTransfer extends Equatable {
     this.to,
     this.token,
     this.total,
-    this.txHash,
+    this.transactionHash,
     this.type,
   });
 
@@ -41,7 +40,7 @@ class TokenTransfer extends Equatable {
         total: data['total'] == null
             ? null
             : Total.fromMap(data['total'] as Map<String, dynamic>),
-        txHash: data['tx_hash'] as String?,
+        transactionHash: data['transaction_hash'] as String?,
         type: data['type'] as String?,
       );
 
@@ -59,7 +58,7 @@ class TokenTransfer extends Equatable {
   To? to;
   final Token? token;
   final Total? total;
-  final String? txHash;
+  final String? transactionHash;
   final String? type;
 
   Map<String, dynamic> toMap() => <String, dynamic>{
@@ -71,7 +70,7 @@ class TokenTransfer extends Equatable {
         'to': to?.toMap(),
         'token': token?.toMap(),
         'total': total?.toMap(),
-        'tx_hash': txHash,
+        'transaction_hash': transactionHash,
         'type': type,
       };
 
@@ -89,7 +88,7 @@ class TokenTransfer extends Equatable {
     To? to,
     Token? token,
     Total? total,
-    String? txHash,
+    String? transactionHash,
     String? type,
   }) {
     return TokenTransfer(
@@ -101,7 +100,7 @@ class TokenTransfer extends Equatable {
       to: to ?? this.to,
       token: token ?? this.token,
       total: total ?? this.total,
-      txHash: txHash ?? this.txHash,
+      transactionHash: transactionHash ?? this.transactionHash,
       type: type ?? this.type,
     );
   }
@@ -117,7 +116,7 @@ class TokenTransfer extends Equatable {
       to,
       token,
       total,
-      txHash,
+      transactionHash,
       type,
     ];
   }

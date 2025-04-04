@@ -51,7 +51,7 @@ class Urls {
         testnetFunc: () => testnetApiBaseUrl,
       );
 
-  static const String mainnetApiBaseUrl = 'https://explorer-v1.mxc.com/api/v2/';
+  static const String mainnetApiBaseUrl = 'https://explorer-v1.moonchain.com/api/v2/';
   static const String testnetApiBaseUrl =
       'https://geneva-explorer-v1.moonchain.com/api/v2/';
 

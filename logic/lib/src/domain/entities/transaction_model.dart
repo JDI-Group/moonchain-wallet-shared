@@ -47,7 +47,7 @@ class TransactionModel {
         final time = DateTime.now();
         timeStamp = time;
         final isCoinTransfer =
-            mxcTransaction.txTypes!.contains('coin_transfer');
+            mxcTransaction.transactionTypes!.contains('coin_transfer');
 
         // Getting tx info to tx model for speed up & cancel operation
         from = mxcTransaction.from?.hash;
@@ -87,7 +87,9 @@ class TransactionModel {
           );
           value = mxcTransaction.value ?? '0';
           token = token.copyWith(
-              logoUri: Config.mxcLogoUri, symbol: Config.mxcName,);
+            logoUri: Config.mxcLogoUri,
+            symbol: Config.mxcName,
+          );
 
           if (mxcTransaction.decodedInput?.methodId ==
               ContractAddresses.erc20TransferMethodId) {
@@ -102,8 +104,8 @@ class TransactionModel {
             }
           }
         }
-      } else if (mxcTransaction.txTypes != null &&
-          mxcTransaction.txTypes!.contains('coin_transfer')) {
+      } else if (mxcTransaction.transactionTypes != null &&
+          mxcTransaction.transactionTypes!.contains('coin_transfer')) {
         token =
             token.copyWith(logoUri: Config.mxcLogoUri, symbol: Config.mxcName);
 
@@ -114,29 +116,31 @@ class TransactionModel {
           mxcTransaction.from!.hash!,
         );
         value = mxcTransaction.value ?? '0';
-      } else if (mxcTransaction.txTypes == null &&
+      } else if (mxcTransaction.transactionTypes == null &&
           mxcTransaction.tokenTransfers != null &&
           mxcTransaction.tokenTransfers!
                   .indexWhere((element) => element.type == 'token_transfer') !=
               -1) {
         token = token.copyWith(
-            symbol: mxcTransaction.tokenTransfers![0].token!.name!,);
+          symbol: mxcTransaction.tokenTransfers![0].token!.name!,
+        );
 
         if (mxcTransaction.tokenTransfers?[0].token?.name != null) {
           token = token.copyWith(
-              address: mxcTransaction.tokenTransfers?[0].token?.address,);
+            address: mxcTransaction.tokenTransfers?[0].token?.address,
+          );
         }
 
         timeStamp = mxcTransaction.tokenTransfers?[0].timestamp;
 
         value = mxcTransaction.tokenTransfers![0].total!.value ?? '0';
-        hash = mxcTransaction.tokenTransfers![0].txHash ?? 'Unknown';
+        hash = mxcTransaction.tokenTransfers![0].transactionHash ?? 'Unknown';
         type = mxcTransaction.checkForTransactionType(
           walletAddress,
           mxcTransaction.tokenTransfers![0].from!.hash!.toLowerCase(),
         );
-      } else if (mxcTransaction.txTypes != null &&
-          mxcTransaction.txTypes!.contains('contract_call')) {
+      } else if (mxcTransaction.transactionTypes != null &&
+          mxcTransaction.transactionTypes!.contains('contract_call')) {
         timeStamp = mxcTransaction.timestamp!;
         type = TransactionType.contractCall;
         value = mxcTransaction.txBurntFee;
@@ -182,7 +186,10 @@ class TransactionModel {
 
   // In this state the tx
   factory TransactionModel.fromTransactionReceipt(
-      TransactionReceipt receipt, String walletAddress, Token token,) {
+    TransactionReceipt receipt,
+    String walletAddress,
+    Token token,
+  ) {
     final txHash = bytesToHex(receipt.transactionHash, include0x: true);
     final timeStamp = DateTime.now();
     final txStatus = receipt.status == true
@@ -301,7 +308,8 @@ class TransactionModel {
           : null,
       hash: map['hash'],
       status: TransactionStatus.values.firstWhere(
-          (status) => status.toString().split('.').last == map['status'],),
+        (status) => status.toString().split('.').last == map['status'],
+      ),
       type: TransactionType.values
           .firstWhere((type) => type.toString().split('.').last == map['type']),
       value: map['value'],
