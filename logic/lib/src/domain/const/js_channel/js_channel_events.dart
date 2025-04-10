@@ -6,6 +6,7 @@ class JSChannelEvents {
       'changeCronTransitionStatus';
   static const String getSystemInfoEvent = 'getSystemInfo';
   static const String goToAdvancedSettingsEvent = 'goToAdvancedSettings';
+  static const String scanQRCodeEvent = 'scanQRCode';
 
   static const String mxcWalletCopyClipboard = 'mxc-wallet-copy-clipboard';
   static const String mxcWalletScrollDetector = 'mxc-wallet-scroll-detector';
