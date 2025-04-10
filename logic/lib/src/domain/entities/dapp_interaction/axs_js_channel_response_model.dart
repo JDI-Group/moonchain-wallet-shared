@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/widgets.dart';
 import 'dapp_interaction.dart';
 
-
 class AXSJSChannelResponseModel<T> {
   factory AXSJSChannelResponseModel.fromJson(
     String source,
@@ -17,7 +16,8 @@ class AXSJSChannelResponseModel<T> {
   ) {
     return AXSJSChannelResponseModel<T>(
       status: AXSJSChannelResponseStatusExtension.fromString(
-          map['status'] as String,),
+        map['status'] as String,
+      ),
       message: map['message'],
       data: map['data'] != null
           ? CronServiceDataModel<T>.fromMap(map['data'], dataFromMap)
@@ -45,11 +45,14 @@ class AXSJSChannelResponseModel<T> {
     );
   }
 
-  Map<String, dynamic> toMap(Map<String, dynamic> Function(T?) dataToMap) {
+  Map<String, dynamic> toMap(
+    Map<String, dynamic> Function(T?) dataToMap, {
+    Map<String, dynamic>? mappedData,
+  }) {
     return {
       'status': status.name,
       'message': message,
-      'data': data?.toMap(dataToMap),
+      'data': mappedData ?? data?.toMap(dataToMap),
     };
   }
 
