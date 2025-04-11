@@ -205,7 +205,7 @@ class Network {
         web3WebSocketUrl:
             'wss://explorer-v1.mxc.com/socket/v2/websocket?vsn=2.0.0',
         symbol: 'MXC',
-        explorerUrl: 'https://explorer.mxc.com/',
+        explorerUrl: 'https://explorer.moonchain.com/',
         enabled: true,
         label: 'Moonchain Mainnet',
         chainId: 18686,
