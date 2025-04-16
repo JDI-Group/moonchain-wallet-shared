@@ -81,6 +81,13 @@ class MXCFormatter {
     return '$integerPart$fractionalPart';
   }
 
+  // Will read the double from thousand separated String
+  // To be more specific the return String of formatNumberForUI
+  static double readDoubleFromFormattedString(String input) {
+    final format = NumberFormat.decimalPattern();
+    return format.parse(input).toDouble();
+  }
+
   static String localTime(DateTime time) {
     final localTime = time.toLocal();
     final month = localTime.month.toString().padLeft(2, '0');
