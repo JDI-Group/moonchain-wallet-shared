@@ -70,11 +70,17 @@ class PricingRepository {
         if (currentToken.balance == 0.0) continue;
         if (currentToken.address != null) {
           try {
-            final balancePrice = await getAmountsOut(
-              currentToken.balance!,
-              currentToken,
-              xsdToken,
-            );
+            // First if will handle in case the token is the XSD token
+            final balancePrice = MXCCompare.isEqualEthereumAddressFromString(
+              currentToken.address!,
+              xsdToken.address!,
+            )
+                ? currentToken.balance
+                : await getAmountsOut(
+                    currentToken.balance!,
+                    currentToken,
+                    xsdToken,
+                  );
             tokens[i] = currentToken.copyWith(balancePrice: balancePrice);
           } catch (e) {
             continue;

@@ -12,3 +12,4 @@ export 'mxc_directory.dart';
 export 'mxc_colors.dart';
 export 'google_drive_file.dart';
 export 'js_channel_utils.dart';
+export 'mxc_compare.dart';
