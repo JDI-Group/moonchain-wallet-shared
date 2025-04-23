@@ -454,6 +454,8 @@ class _MxcNonFormTextFieldState extends State<_MxcNonFormTextField> {
                     Expanded(
                       child: Scrollbar(
                         child: TextField(
+                          // This should be defined on the parent widget
+                          scrollController: PrimaryScrollController.maybeOf(context),
                           readOnly: widget.readOnly,
                           keyboardType: widget.keyboardType,
                           focusNode: focusNode,
@@ -841,6 +843,8 @@ class _MxcMiniNonFormTextFieldState extends State<_MxcMiniNonFormTextField> {
             Border.all(color: getColorBorder(), width: isThickBorder() ? 2 : 1),
       ),
       child: TextField(
+        // This should be defined on the parent widget
+        scrollController: PrimaryScrollController.maybeOf(context),
         focusNode: focusNode,
         controller: widget.controller,
         cursorColor: getColorFont(),
