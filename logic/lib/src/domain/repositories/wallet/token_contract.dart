@@ -27,8 +27,10 @@ class TokenContractRepository {
     return _web3Client.getBalance(data);
   }
 
-  Future<int> getAddressNonce(EthereumAddress address,
-      {BlockNum? atBlock,}) async {
+  Future<int> getAddressNonce(
+    EthereumAddress address, {
+    BlockNum? atBlock,
+  }) async {
     return await _web3Client.getTransactionCount(address, atBlock: atBlock);
   }
 
@@ -133,7 +135,7 @@ class TokenContractRepository {
           } else {
             return null;
           }
-                },
+        },
         _web3Client.network!.chainId,
       );
 
@@ -229,7 +231,9 @@ class TokenContractRepository {
           final tokenBalanceResponse = await ensToken.balanceOf(address);
           // making number human understandable
           final double tokenBalance = MxcAmount.convertWithTokenDecimal(
-              tokenBalanceResponse.toDouble(), tokenDecimal,);
+            tokenBalanceResponse.toDouble(),
+            tokenDecimal,
+          );
           tokens[i] = token.copyWith(balance: tokenBalance);
         } else {
           // native token
@@ -263,35 +267,33 @@ class TokenContractRepository {
     }
   }
 
-  Future<String> getName(String address) async {
+  // Return null if the address does not have a ENS name
+  // Otherwise It's error or a String
+  Future<String?> getName(String address) async {
     try {
       final selectedNetwork = _web3Client.network!;
-      final ensResolverAddress = MXCChains.isMXCChains(selectedNetwork.chainId)
-          ? ContractAddresses.getContractAddressString(
-              MXCContacts.ensResolver,
-              selectedNetwork.chainId,
-            )
-          : null;
-      final ensFallBackRegistryAddress =
-          MXCChains.isMXCChains(selectedNetwork.chainId)
-              ? ContractAddresses.getContractAddressString(
-                  MXCContacts.ensFallbackRegistry,
-                  selectedNetwork.chainId,
-                )
-              : null;
-      if (ensResolverAddress != null && ensFallBackRegistryAddress != null) {
-        final ens = contracts.Ens(
-          client: _web3Client,
-          address: EthereumAddress.fromHex(ensResolverAddress),
-          ensFallBackRegistryAddress:
-              EthereumAddress.fromHex(ensFallBackRegistryAddress),
-        ).withAddress(address);
-        final name = await ens.getName();
-
-        return name;
+      if (!MXCChains.isMXCChains(selectedNetwork.chainId)) {
+        return null;
       }
+      final ensResolverAddress = ContractAddresses.getContractAddressString(
+        MXCContacts.ensResolver,
+        selectedNetwork.chainId,
+      );
+      final ensFallBackRegistryAddress =
+          ContractAddresses.getContractAddressString(
+        MXCContacts.ensFallbackRegistry,
+        selectedNetwork.chainId,
+      );
 
-      throw Exception('Ens addresses missing.');
+      final ens = contracts.Ens(
+        client: _web3Client,
+        address: EthereumAddress.fromHex(ensResolverAddress),
+        ensFallBackRegistryAddress:
+            EthereumAddress.fromHex(ensFallBackRegistryAddress),
+      ).withAddress(address);
+      final name = await ens.getName();
+
+      return name;
     } catch (e) {
       throw e.toString();
     }
@@ -319,11 +321,11 @@ class TokenContractRepository {
               : null;
       if (ensResolverAddress != null && ensFallBackRegistryAddress != null) {
         final ens = contracts.Ens(
-                client: _web3Client,
-                address: EthereumAddress.fromHex(ensResolverAddress),
-                ensFallBackRegistryAddress:
-                    EthereumAddress.fromHex(ensFallBackRegistryAddress),)
-            .withName(name);
+          client: _web3Client,
+          address: EthereumAddress.fromHex(ensResolverAddress),
+          ensFallBackRegistryAddress:
+              EthereumAddress.fromHex(ensFallBackRegistryAddress),
+        ).withName(name);
         final address = await ens.getAddress();
 
         return address.hexEip55;
@@ -553,8 +555,10 @@ class TokenContractRepository {
         privateKey: privateKey,
       );
 
-  String signPersonalMessage(
-          {required String privateKey, required String message,}) =>
+  String signPersonalMessage({
+    required String privateKey,
+    required String message,
+  }) =>
       EthSigUtil.signPersonalMessage(
         message: MXCType.hexToUint8List(message),
         privateKey: privateKey,
@@ -565,7 +569,10 @@ class TokenContractRepository {
   }
 
   ContractFunction getContractFunction(
-      DeployedContract contract, int functionIndex, String signature,) {
+    DeployedContract contract,
+    int functionIndex,
+    String signature,
+  ) {
     final selectedFunction = contract.abi.functions[0];
     assert(checkSignature(selectedFunction, signature));
     return selectedFunction;
