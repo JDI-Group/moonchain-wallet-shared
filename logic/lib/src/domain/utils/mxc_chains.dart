@@ -6,6 +6,10 @@ class MXCChains {
         chainId == Config.mxcTestnetChainId;
   }
 
+  static bool isMXCChainsPlusEthereum(int chainId) {
+    return isMXCChains(chainId) || isEthereumMainnet(chainId);
+  }
+
   static bool isMXCMainnet(int chainId) {
     return chainId == Config.mxcMainnetChainId;
   }

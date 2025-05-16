@@ -20,6 +20,21 @@ class Urls {
         ethereumFunc: () => ethereumMainnetTokenListUrl,
       );
 
+  static String getTokenListRepoUrl(int chainId) =>
+      MXCFunctionHelpers.chainsSeparatedFunctions<String>(
+        chainId: chainId,
+        moonChainFunc: () => mainnetTokenListRepoUrl,
+        genevaFunc: () => testnetTokenListRepoUrl,
+        ethereumFunc: () => ethereumMainnetTokenListRepoUrl,
+      );
+
+  static const String mainnetTokenListRepoUrl =
+      'https://github.com/MXCzkEVM/wannseeswap-tokenlist/blob/main/tokenlist-mainnet.json';
+  static const String testnetTokenListRepoUrl =
+      'https://github.com/MXCzkEVM/wannseeswap-tokenlist/blob/main/tokenlist.json';
+  static const String ethereumMainnetTokenListRepoUrl =
+      'https://github.com/MXCzkEVM/wannseeswap-tokenlist/blob/main/tokenlist-ethereum.json';
+
   static const String mainnetTokenListUrl =
       'https://raw.githubusercontent.com/MXCzkEVM/wannseeswap-tokenlist/main/tokenlist-mainnet.json';
   static const String testnetTokenListUrl =
@@ -51,7 +66,8 @@ class Urls {
         testnetFunc: () => testnetApiBaseUrl,
       );
 
-  static const String mainnetApiBaseUrl = 'https://explorer-v1.moonchain.com/api/v2/';
+  static const String mainnetApiBaseUrl =
+      'https://explorer-v1.moonchain.com/api/v2/';
   static const String testnetApiBaseUrl =
       'https://geneva-explorer-v1.moonchain.com/api/v2/';
 
