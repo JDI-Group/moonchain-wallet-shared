@@ -4,6 +4,8 @@ import 'package:mxc_logic/src/data/socket/phoenix/phoenix_exception.dart';
 import 'package:mxc_logic/src/data/socket/mxc_socket_client.dart';
 import 'package:phoenix_socket/phoenix_socket.dart';
 
+import '../../../domain/const/const.dart';
+
 class PhoenixClient implements IMXCSocketClient {
   PhoenixClient._internal();
 
@@ -22,7 +24,11 @@ class PhoenixClient implements IMXCSocketClient {
   /// Connects and initializes the socket instance if was not initialized before.
   @override
   Future<Stream<dynamic>> connect(String url) async {
-    final newSocket = await PhoenixSocket(url).connect();
+    final newSocket = await PhoenixSocket(
+      url,
+      socketOptions:
+          const PhoenixSocketOptions(timeout: Config.httpClientTimeOut),
+    ).connect();
     if (newSocket != null) {
       _socketInstance == null;
       _socketInstance = newSocket;
