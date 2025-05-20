@@ -20,6 +20,7 @@ class Config {
   static const int h3Resolution = 7;
 
   static const Duration httpClientTimeOut = Duration(seconds: 30);
+  static const Duration weakInternetConnectionCheckDuration = Duration(minutes: 2);
 
   // Numbers fixed decimals
   static int decimalShowFixed = 3;
