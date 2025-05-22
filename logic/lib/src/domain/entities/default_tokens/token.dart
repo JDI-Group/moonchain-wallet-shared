@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:equatable/equatable.dart';
 
 class Token extends Equatable {
-
   factory Token.fromMap(Map<String, dynamic> data) => Token(
         chainId: data['chainId'] as int?,
         address: data['address'] as String?,
@@ -69,14 +68,15 @@ class Token extends Equatable {
     double? balancePrice,
   }) {
     return Token(
-        chainId: chainId ?? this.chainId,
-        address: address ?? this.address,
-        name: name ?? this.name,
-        symbol: symbol ?? this.symbol,
-        decimals: decimals ?? this.decimals,
-        logoUri: logoUri ?? this.logoUri,
-        balance: balance ?? this.balance,
-        balancePrice: balancePrice ?? this.balancePrice,);
+      chainId: chainId ?? this.chainId,
+      address: address ?? this.address,
+      name: name ?? this.name,
+      symbol: symbol ?? this.symbol,
+      decimals: decimals ?? this.decimals,
+      logoUri: logoUri ?? this.logoUri,
+      balance: balance ?? this.balance,
+      balancePrice: balancePrice ?? this.balancePrice,
+    );
   }
 
   @override

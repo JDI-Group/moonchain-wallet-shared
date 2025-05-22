@@ -54,6 +54,7 @@ class DatadashClient extends Web3Client {
 
   Network? get network => _getNetwork();
   Client get restClient => InterceptedClient.build(
+        requestTimeout: Config.httpClientTimeOut,
         interceptors: [
           LoggingInterceptor(),
         ],
