@@ -199,9 +199,13 @@ class Urls {
   static String getBlueberryRingDapp(int chainId) =>
       MXCFunctionHelpers.mxcChainsSeparatedFunctions(
         chainId: chainId,
-        mainnetFunc: () => mainnetApiBaseUrl,
-        testnetFunc: () => testnetApiBaseUrl,
+        mainnetFunc: () => mainnetBlueberryRingDapp,
+        testnetFunc: () => testnetBlueberryRingDapp,
       );
+
+  // Ring dapp urls
+  static List<String> getRingDappUrls() =>
+      [mainnetBlueberryRingDapp, testnetBlueberryRingDapp];
 
   // Ring
   static const String mainnetBlueberryRingDapp =
