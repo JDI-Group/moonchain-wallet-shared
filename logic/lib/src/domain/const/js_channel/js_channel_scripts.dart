@@ -98,8 +98,6 @@ window.$axsWalletJSObjectName.callHandler('$eventName', $data)
 
       function isPullDown(dY, dX) {
         // methods of checking slope, length, direction of line created by swipe action
-        console.log(dY);
-        console.log(dX );
         return (
           dY < 0 &&
           ((Math.abs(dX) <= 100 && Math.abs(dY) >= 100 ) ||
@@ -109,8 +107,6 @@ window.$axsWalletJSObjectName.callHandler('$eventName', $data)
 
       function isPullUp(dY, dX) {
         // Check if the gesture is a pull-up
-        console.log(dY);
-        console.log(dX);
         return (
           dY > 0 &&
           ((Math.abs(dX) <= 100 && Math.abs(dY) >= 100) ||
