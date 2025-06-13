@@ -249,22 +249,18 @@ class TokenContractRepository {
     return tokens;
   }
 
-  Future<Token?> getToken(String address) async {
-    try {
-      final data = EthereumAddress.fromHex(address);
-      final ensToken = contracts.EnsToken(client: _web3Client, address: data);
-      final symbol = await ensToken.symbol();
-      final decimals = await ensToken.decimals();
+  Future<Token> getToken(String address) async {
+    final data = EthereumAddress.fromHex(address);
+    final ensToken = contracts.EnsToken(client: _web3Client, address: data);
+    final symbol = await ensToken.symbol();
+    final decimals = await ensToken.decimals();
 
-      return Token(
-        address: address,
-        name: symbol,
-        symbol: symbol,
-        decimals: decimals.toInt(),
-      );
-    } catch (e) {
-      throw Exception(e.toString());
-    }
+    return Token(
+      address: address,
+      name: symbol,
+      symbol: symbol,
+      decimals: decimals.toInt(),
+    );
   }
 
   // Return null if the address does not have a ENS name
