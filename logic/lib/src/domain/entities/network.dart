@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-
 import 'entities.dart';
 
 enum NetworkType { testnet, mainnet, custom }
@@ -14,7 +13,9 @@ class Network {
   }
 
   factory Network.fromAddEthereumChain(
-      AddEthereumChain addEthereumChain, int chainId,) {
+    AddEthereumChain addEthereumChain,
+    int chainId,
+  ) {
     String logo = addEthereumChain.iconUrls?.isNotEmpty ?? false
         ? addEthereumChain.iconUrls![0]
         : 'assets/svg/networks/unknown.svg';
@@ -84,30 +85,32 @@ class Network {
   final bool isAdded;
   final NetworkType networkType;
 
-  Network copyWith(
-      {String? logo,
-      String? web3RpcHttpUrl,
-      String? web3RpcWebsocketUrl,
-      String? web3WebSocketUrl,
-      String? symbol,
-      String? explorerUrl,
-      bool? enabled,
-      String? label,
-      int? chainId,
-      bool? isAdded,
-      NetworkType? networkType,}) {
+  Network copyWith({
+    String? logo,
+    String? web3RpcHttpUrl,
+    String? web3RpcWebsocketUrl,
+    String? web3WebSocketUrl,
+    String? symbol,
+    String? explorerUrl,
+    bool? enabled,
+    String? label,
+    int? chainId,
+    bool? isAdded,
+    NetworkType? networkType,
+  }) {
     return Network(
-        logo: logo ?? this.logo,
-        web3RpcHttpUrl: web3RpcHttpUrl ?? this.web3RpcHttpUrl,
-        web3RpcWebsocketUrl: web3RpcWebsocketUrl ?? this.web3RpcWebsocketUrl,
-        web3WebSocketUrl: web3WebSocketUrl ?? this.web3WebSocketUrl,
-        symbol: symbol ?? this.symbol,
-        explorerUrl: explorerUrl ?? this.explorerUrl,
-        enabled: enabled ?? this.enabled,
-        label: label ?? this.label,
-        chainId: chainId ?? this.chainId,
-        isAdded: isAdded ?? this.isAdded,
-        networkType: networkType ?? this.networkType,);
+      logo: logo ?? this.logo,
+      web3RpcHttpUrl: web3RpcHttpUrl ?? this.web3RpcHttpUrl,
+      web3RpcWebsocketUrl: web3RpcWebsocketUrl ?? this.web3RpcWebsocketUrl,
+      web3WebSocketUrl: web3WebSocketUrl ?? this.web3WebSocketUrl,
+      symbol: symbol ?? this.symbol,
+      explorerUrl: explorerUrl ?? this.explorerUrl,
+      enabled: enabled ?? this.enabled,
+      label: label ?? this.label,
+      chainId: chainId ?? this.chainId,
+      isAdded: isAdded ?? this.isAdded,
+      networkType: networkType ?? this.networkType,
+    );
   }
 
   Map<String, dynamic> toMap() => {
@@ -200,8 +203,8 @@ class Network {
       ),
       const Network(
         logo: 'assets/svg/networks/moonchain.svg',
-        web3RpcHttpUrl: 'https://rpc.mxc.com',
-        web3RpcWebsocketUrl: 'wss://rpc.mxc.com',
+        web3RpcHttpUrl: 'https://rpc.moonchain.com',
+        web3RpcWebsocketUrl: 'wss://rpc.moonchain.com',
         web3WebSocketUrl:
             'wss://explorer-v1.mxc.com/socket/v2/websocket?vsn=2.0.0',
         symbol: 'MXC',
