@@ -216,7 +216,7 @@ class _MXCButtonState extends State<MxcButton> with TickerProviderStateMixin {
 
     switch (widget.type) {
       case MXCWalletButtonType.primary:
-        return ColorsTheme.of(context).buttonBlue;
+        return ColorsTheme.of(context).buttonPrimary;
       case MXCWalletButtonType.primaryWhite:
         return ColorsTheme.of(context).btnBgWhite;
       case MXCWalletButtonType.pass:
@@ -239,11 +239,11 @@ class _MXCButtonState extends State<MxcButton> with TickerProviderStateMixin {
 
     switch (widget.type) {
       case MXCWalletButtonType.primary:
-        return ColorsTheme.of(context).btnBgBlue;
+        return ColorsTheme.of(context).btnBgPrimary;
       case MXCWalletButtonType.primaryWhite:
         return ColorsTheme.of(context).btnBgWhite;
       case MXCWalletButtonType.secondary:
-        return ColorsTheme.of(context).btnSecondaryBlue;
+        return ColorsTheme.of(context).btnSecondary;
       case MXCWalletButtonType.secondaryWhite:
         return ColorsTheme.of(context).borderWhite100;
       case MXCWalletButtonType.pass:
@@ -270,7 +270,7 @@ class _MXCButtonState extends State<MxcButton> with TickerProviderStateMixin {
       case MXCWalletButtonType.primaryWhite:
         return ColorsTheme.of(context).textBlack100;
       case MXCWalletButtonType.secondary:
-        return ColorsTheme.of(context).btnSecondaryBlue;
+        return ColorsTheme.of(context).btnSecondary;
       case MXCWalletButtonType.secondaryWhite:
       case MXCWalletButtonType.plainWhite:
         return ColorsTheme.of(context).textWhite;

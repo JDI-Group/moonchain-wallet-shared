@@ -25,22 +25,22 @@ class ColorsTheme {
   Color get backgroundLightGrey => const Color(0XFF212529);
 
   //primary
-  final primary = const Color(0xFF0F46F4);
-  final primary40 = const Color(0xFF062588);
-  final primary50 = const Color(0xFF072A9C);
-  final primary60 = const Color(0xFF082FAF);
-  final primary70 = const Color(0xFF0934C3);
-  final primary80 = const Color(0xFF0A3AD6);
-  final primary90 = const Color(0xFF0B3FEA);
-  final primary100 = const Color(0xFF2958F5);
-  final primary200 = const Color(0xFF3C67F6);
-  static const primary300 = Color(0xFF5077F7);
-  final primary400 = const Color(0xFF6386F8);
-  final primary500 = const Color(0xFF7795F9);
-  final primary600 = const Color(0xFF8AA4F9);
+  final primary = const Color(0xFFD2F159);
+  // final primary40 = const Color(0xFF062588);
+  // final primary50 = const Color(0xFF072A9C);
+  // final primary60 = const Color(0xFF082FAF);
+  // final primary70 = const Color(0xFF0934C3);
+  // final primary80 = const Color(0xFF0A3AD6);
+  // final primary90 = const Color(0xFF0B3FEA);
+  final primary100 = const Color(0xFFD2F159);
+  final primary200 = const Color(0xFFD2F159);
+  // static const primary300 = Color(0xFF5077F7);
+  final primary400 = const Color(0xFFD2F159);
+  // final primary500 = const Color(0xFF7795F9);
+  // final primary600 = const Color(0xFF8AA4F9);
 
-  final primaryBlue = const Color(0XFF478DE0);
-  Color get buttonBlue => primaryBlue;
+
+  Color get buttonPrimary => primary;
 
   final darkBlue = const Color(0xff0E1629);
   final charcoalGray = const Color(0xff333333);
@@ -55,13 +55,13 @@ class ColorsTheme {
 
   // Button color
   Color get btnBgWhite => white100;
-  Color get btnBgBlue => primary;
+  Color get btnBgPrimary => primary;
   Color get btnTextBlack => textBlack100;
   Color get btnTextInvert1 => textBlack200;
   Color get btnTextInvert2 => textWhite;
   Color get btnIconInvert1 => iconBlack200;
   Color get btnIconInvert2 => iconWhite;
-  Color get btnSecondaryBlue => primary200;
+  Color get btnSecondary => primary200;
 
   // Chip color
   Color get chipBgActive => primary;
@@ -188,7 +188,7 @@ class ColorsTheme {
   final disabledButtonText = const Color(0xFF5F6366);
   final textDisabled = const Color(0xFFA4A7AD);
 
-  Color get textError => const Color(0xFFD32740);
+  Color get textError => const Color(0xFFF74A4A);
   Color get textSecondary => const Color(0xFF74767B);
   Color get textPrimary => black100;
   Color get textWhite => white100;
@@ -223,7 +223,7 @@ class ColorsTheme {
   // tip
   final mainGreen = const Color(0xFF10C469);
   final mainRed = const Color(0xFFD22D2D);
-  final saturatedRed = const Color(0xffD32740);
+  final saturatedRed = const Color(0xFFF74A4A);
   final systemStatusActive = const Color(0xFF63C174);
   final systemStatusInActive = const Color(0xFFEC5E41);
   final systemStatusNotCritical = const Color(0xFFDB9036);
@@ -234,49 +234,46 @@ class ColorsThemeDark implements ColorsTheme {
 
   //primary
   @override
-  final primary = const Color(0xFF4C74F4);
+  final primary = const Color(0xFFD2F159);
+
+  // @override
+  // final primary40 = const Color(0xFF273E88);
+
+  // @override
+  // final primary50 = const Color(0xFF2D479C);
+
+  // @override
+  // final primary60 = const Color(0xFF3551AF);
+
+  // @override
+  // final primary70 = const Color(0xFF3B5AC3);
+
+  // @override
+  // final primary80 = const Color(0xFF4063D6);
+
+  // @override
+  // final primary90 = const Color(0xFF466CEA);
 
   @override
-  final primary40 = const Color(0xFF273E88);
+  final primary100 = const Color(0xFFD2F159);
 
   @override
-  final primary50 = const Color(0xFF2D479C);
+  final primary200 = const Color(0xFFD2F159);
+
+  // @override
+  // final primary300 = const Color(0xFF8DA6F7);
 
   @override
-  final primary60 = const Color(0xFF3551AF);
+  final primary400 = const Color(0xFFD2F159);
+
+  // @override
+  // final primary500 = const Color(0xFFB6C5F9);
+
+  // @override
+  // final primary600 = const Color(0xFFC7D3F9);
 
   @override
-  final primary70 = const Color(0xFF3B5AC3);
-
-  @override
-  final primary80 = const Color(0xFF4063D6);
-
-  @override
-  final primary90 = const Color(0xFF466CEA);
-
-  @override
-  final primary100 = const Color(0xFF6788F5);
-
-  @override
-  final primary200 = const Color(0xFF7996F6);
-
-  @override
-  final primary300 = const Color(0xFF8DA6F7);
-
-  @override
-  final primary400 = const Color(0xFFA1B6F8);
-
-  @override
-  final primary500 = const Color(0xFFB6C5F9);
-
-  @override
-  final primary600 = const Color(0xFFC7D3F9);
-
-  @override
-  final primaryBlue = const Color(0XFF478DE0);
-
-  @override
-  Color get buttonBlue => primaryBlue;
+  Color get buttonPrimary => primary;
 
   @override
   final darkBlue = const Color(0xff0E1629);
@@ -303,7 +300,7 @@ class ColorsThemeDark implements ColorsTheme {
   Color get btnBgWhite => white100;
 
   @override
-  Color get btnBgBlue => primary;
+  Color get btnBgPrimary => primary;
 
   @override
   Color get btnTextBlack => textBlack100;
@@ -321,7 +318,7 @@ class ColorsThemeDark implements ColorsTheme {
   Color get btnIconInvert2 => iconBlack200;
 
   @override
-  Color get btnSecondaryBlue => primary200;
+  Color get btnSecondary => primary200;
 
   // Chip color
   @override
@@ -603,7 +600,7 @@ class ColorsThemeDark implements ColorsTheme {
   Color get textDisabled => const Color(0xFF5F6366);
 
   @override
-  Color get textError => const Color(0xFFD32740);
+  Color get textError => const Color(0xFFF74A4A);
 
   @override
   Color get textSecondary => const Color(0xFFA5A6AC);
@@ -692,7 +689,7 @@ class ColorsThemeDark implements ColorsTheme {
   Color get mainRed => const Color(0xFFFF7878);
 
   @override
-  Color get saturatedRed => const Color(0xFFD32740);
+  Color get saturatedRed => const Color(0xFFF74A4A);
 
   @override
   Color get systemStatusActive => const Color(0xFF63C174);
