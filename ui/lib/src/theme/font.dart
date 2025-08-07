@@ -14,7 +14,7 @@ class FontTheme {
   TextStyle get _baseTextStyle => TextStyle(
         package: mxcUiPackageName,
         color: _colorsTheme.textPrimary,
-        fontFamily: 'Roboto',
+        fontFamily: 'Nunito',
         fontWeight: FontWeight.w400,
         height: 1.33333,
         decoration: TextDecoration.none,
@@ -22,7 +22,7 @@ class FontTheme {
 
   TextStyle get _baseTextStyleWithoutColor => const TextStyle(
         package: mxcUiPackageName,
-        fontFamily: 'Roboto',
+        fontFamily: 'Nunito',
         fontWeight: FontWeight.w400,
         height: 1.33333,
         decoration: TextDecoration.none,
