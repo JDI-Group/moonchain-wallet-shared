@@ -23,6 +23,7 @@ class ColorsTheme {
   Color get secondaryBackground => white100;
   Color get backgroundGrey6 => grey6;
   Color get backgroundLightGrey => const Color(0XFF212529);
+  Color get backgroundGrey => const Color(0XFF1E1F24);
 
   //primary
   final primary = const Color(0xFFD2F159);
@@ -132,6 +133,7 @@ class ColorsTheme {
 
   Color get whiteInvert => black100;
 
+  final black = Colors.black;
   final black100 = const Color(0xFF25282B);
   final black200 = const Color(0x4025282B);
   final black300 = const Color(0x8025282B);
@@ -196,6 +198,7 @@ class ColorsTheme {
   Color get textWhite100 => textSecondary;
   Color get textBlack200 => blackDeep;
   Color get textBlack100 => black100;
+  Color get textBlack => black;
   Color get textOrange => btcOrange;
   Color get textPurple500 => purple500;
   Color get snackbarText => const Color(0xFF000000);
@@ -354,6 +357,9 @@ class ColorsThemeDark implements ColorsTheme {
 
   @override
   Color get backgroundLightGrey => const Color(0XFF212529);
+
+  @override
+  Color get backgroundGrey => const Color(0XFF1E1F24);
 
   // background
   @override
@@ -622,6 +628,12 @@ class ColorsThemeDark implements ColorsTheme {
 
   @override
   Color get textBlack100 => const Color(0xFF25282B);
+
+  @override
+  Color get black => Colors.black;
+
+  @override
+  Color get textBlack => black;
 
   @override
   Color get textOrange => btcOrange;
