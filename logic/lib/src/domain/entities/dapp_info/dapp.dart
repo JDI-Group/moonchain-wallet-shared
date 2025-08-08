@@ -58,6 +58,7 @@ class Dapp extends Equatable {
         url: reviewApi?.url,
         icon: bookMark.image,
         iconV2: bookMark.image,
+        iconV3: bookMark.image,
       ),
     );
   }
@@ -82,6 +83,8 @@ class Dapp extends Equatable {
         icon: reviewApi?.icon != null ? '$prefix${reviewApi?.icon}' : null,
         iconV2:
             reviewApi?.iconV2 != null ? '$prefix${reviewApi?.iconV2}' : null,
+        iconV3:
+            reviewApi?.iconV3 != null ? '$prefix${reviewApi?.iconV3}' : null,
         method: reviewApi?.method,
         url: reviewApi?.url,
       ),
