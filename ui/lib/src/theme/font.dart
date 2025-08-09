@@ -108,6 +108,10 @@ class TextStylePack {
   DecoratableTextStyle get textWhite => DecoratableTextStyle(
         _primary.copyWith(color: colorsTheme.textWhite),
       );
+
+  DecoratableTextStyle get textWhite60 => DecoratableTextStyle(
+        _primary.copyWith(color: colorsTheme.textWhite60),
+      );
 }
 
 class DecoratableTextStyle {

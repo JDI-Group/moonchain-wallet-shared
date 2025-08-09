@@ -125,6 +125,7 @@ class ColorsTheme {
 
   final darkGray = const Color(0xFF131618);
 
+  final white60 = const Color(0xFFFFFFFF).withValues(alpha: 0.6);
   Color get white500 => white100;
   final white400 = const Color(0x52FFFFFF);
   final white300 = const Color(0xFFD7D8D9);
@@ -195,6 +196,7 @@ class ColorsTheme {
   Color get textPrimary => black100;
   Color get textWhite => white100;
   Color get textWhite50 => textSecondary;
+  Color get textWhite60 => textSecondary;
   Color get textWhite100 => textSecondary;
   Color get textBlack200 => blackDeep;
   Color get textBlack100 => black100;
@@ -466,6 +468,9 @@ class ColorsThemeDark implements ColorsTheme {
   final darkGray = const Color(0xFF131618);
 
   @override
+  final white60 = const Color(0xFFFFFFFF).withValues(alpha: 0.6);
+
+  @override
   final white500 = const Color(0x29FFFFFF);
 
   @override
@@ -619,6 +624,9 @@ class ColorsThemeDark implements ColorsTheme {
 
   @override
   Color get textWhite50 => white300;
+
+  @override
+  Color get textWhite60 => white60;
 
   @override
   Color get textWhite100 => white400;
