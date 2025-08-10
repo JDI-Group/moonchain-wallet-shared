@@ -6,7 +6,7 @@ import 'developer.dart';
 import 'localizations.dart';
 import 'permissions.dart';
 
-enum ProviderType { native, thirdParty }
+enum ProviderType { native, thirdParty, bookmark }
 
 extension ProviderTypeExtension on ProviderType {
   static ProviderType fromString(String value) {
@@ -15,6 +15,8 @@ extension ProviderTypeExtension on ProviderType {
         return ProviderType.native;
       case 'thirdParty':
         return ProviderType.thirdParty;
+      case 'bookmark':
+        return ProviderType.bookmark;
       default:
         throw Exception('Unknown provider type');
     }
