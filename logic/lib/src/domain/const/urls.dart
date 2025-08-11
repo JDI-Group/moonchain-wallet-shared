@@ -47,9 +47,9 @@ class Urls {
       'https://raw.githubusercontent.com/MXCzkEVM/mxc-tweets-list/main/tweets_list_v2.json';
 
   static const String dappStore =
-      'https://raw.githubusercontent.com/MXCzkEVM/MEP-1759-DApp-store/main/dapp-store.json';
+      'https://raw.githubusercontent.com/JDI-Group/moonchain-dapp-store/main/dapp-store.json';
   static const String dapp =
-      'https://raw.githubusercontent.com/MXCzkEVM/MEP-1759-DApp-store/main/dapp_store';
+      'https://raw.githubusercontent.com/JDI-Group/moonchain-dapp-store/main/dapp_store';
 
   // Remove the following method:
   // static String getLatestVersion(String appSecret, String groupId) =>
@@ -87,7 +87,7 @@ class Urls {
   static const String mxcStatus = 'https://mxc.instatus.com/';
 
   static const String dappRoot =
-      'https://raw.githubusercontent.com/MXCzkEVM/MEP-1759-DApp-store/main/';
+      'https://raw.githubusercontent.com/JDI-Group/moonchain-dapp-storee/main/';
 
   static const String iOSUrl =
       'https://apps.apple.com/us/app/axs-decentralized-wallet/id6460891587';
