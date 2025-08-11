@@ -36,6 +36,8 @@ class Dapp extends Equatable {
       app: AppInfo(
         url: bookMark.url,
         name: bookMark.title,
+        // Bookmark can't be most used
+        mostUsed: false,
         description: bookMark.description,
         ageRating: app?.ageRating,
         developer: app?.developer,

@@ -13,15 +13,18 @@ class DappItem extends Equatable {
   factory DappItem.fromMap(Map<String, dynamic> data) => DappItem(
         dappUrl: data['dappUrl'] as String?,
         enabled: data['enabled'] as bool?,
+        mostUsed: data['mostUsed'] ?? false,
       );
 
-  const DappItem({this.dappUrl, this.enabled});
+  const DappItem({this.dappUrl, this.enabled, this.mostUsed});
   final String? dappUrl;
   final bool? enabled;
+  final bool? mostUsed;
 
   Map<String, dynamic> toMap() => {
         'dappUrl': dappUrl,
         'enabled': enabled,
+        'mostUsed': mostUsed,
       };
 
   /// `dart:convert`
@@ -32,13 +35,15 @@ class DappItem extends Equatable {
   DappItem copyWith({
     String? dappUrl,
     bool? enabled,
+    bool? mostUsed,
   }) {
     return DappItem(
       dappUrl: dappUrl ?? this.dappUrl,
       enabled: enabled ?? this.enabled,
+      mostUsed: mostUsed ?? this.mostUsed,
     );
   }
 
   @override
-  List<Object?> get props => [dappUrl, enabled];
+  List<Object?> get props => [dappUrl, enabled, mostUsed];
 }

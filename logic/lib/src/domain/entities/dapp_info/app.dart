@@ -39,6 +39,7 @@ class AppInfo extends Equatable {
         name: data['name'] as String?,
         url: data['URL'] as String?,
         version: data['version'] as String?,
+        mostUsed: data['mostUsed'] as bool? ?? false,
         description: data['description'] as String?,
         developer: data['developer'] == null
             ? null
@@ -59,6 +60,7 @@ class AppInfo extends Equatable {
 
   const AppInfo({
     this.name,
+    this.mostUsed,
     this.url,
     this.version,
     this.description,
@@ -70,6 +72,7 @@ class AppInfo extends Equatable {
     this.providerType,
   });
   final String? name;
+  final bool? mostUsed;
   final String? url;
   final String? version;
   final String? description;
@@ -82,6 +85,7 @@ class AppInfo extends Equatable {
 
   Map<String, dynamic> toMap() => {
         'name': name,
+        'mostUsed': mostUsed,
         'URL': url,
         'version': version,
         'description': description,
@@ -100,6 +104,7 @@ class AppInfo extends Equatable {
 
   AppInfo copyWith({
     String? name,
+    bool? mostUsed,
     String? url,
     String? version,
     String? description,
@@ -112,6 +117,7 @@ class AppInfo extends Equatable {
   }) {
     return AppInfo(
       name: name ?? this.name,
+      mostUsed: mostUsed ?? this.mostUsed,
       url: url ?? this.url,
       version: version ?? this.version,
       description: description ?? this.description,
@@ -131,6 +137,7 @@ class AppInfo extends Equatable {
   List<Object?> get props {
     return [
       name,
+      mostUsed,
       url,
       version,
       description,
