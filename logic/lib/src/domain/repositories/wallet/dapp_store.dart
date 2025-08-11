@@ -78,10 +78,6 @@ class DappStoreRepository {
       res.add(data);
     }
 
-    res.sort((a, b) => b.reviewApi!.icons!.islarge
-        .toString()
-        .compareTo(a.reviewApi!.icons!.islarge.toString()),);
-
     return res;
   }
 }

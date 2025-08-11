@@ -4,7 +4,6 @@ import 'package:equatable/equatable.dart';
 
 import 'body.dart';
 import 'headers.dart';
-import 'icons.dart';
 
 class ReviewApi extends Equatable {
   /// `dart:convert`
@@ -23,9 +22,6 @@ class ReviewApi extends Equatable {
         body: data['body'] == null
             ? null
             : Body.fromMap(data['body'] as Map<String, dynamic>),
-        icons: data['icons'] == null
-            ? null
-            : Icons.fromMap(data['icons'] as Map<String, dynamic>),
         icon: data['icon'],
         iconV2: data['iconV2'],
         iconV3: data['iconV3'],
@@ -36,7 +32,6 @@ class ReviewApi extends Equatable {
     this.method,
     this.headers,
     this.body,
-    this.icons,
     this.icon,
     this.iconV2,
     this.iconV3,
@@ -45,7 +40,6 @@ class ReviewApi extends Equatable {
   final String? method;
   final Headers? headers;
   final Body? body;
-  final Icons? icons;
   final String? icon;
   final String? iconV2;
   final String? iconV3;
@@ -55,7 +49,6 @@ class ReviewApi extends Equatable {
         'method': method,
         'headers': headers?.toMap(),
         'body': body?.toMap(),
-        'icons': icons?.toMap(),
         'icon': icon,
         'iconV2': iconV2,
         'iconV3': iconV3,
@@ -71,7 +64,6 @@ class ReviewApi extends Equatable {
     String? method,
     Headers? headers,
     Body? body,
-    Icons? icons,
     String? icon,
     String? iconV2,
     String? iconV3,
@@ -81,7 +73,6 @@ class ReviewApi extends Equatable {
       method: method ?? this.method,
       headers: headers ?? this.headers,
       body: body ?? this.body,
-      icons: icons ?? this.icons,
       icon: icon ?? this.icon,
       iconV2: iconV2 ?? this.iconV2,
       iconV3: iconV3 ?? this.iconV3,
@@ -97,7 +88,6 @@ class ReviewApi extends Equatable {
         method,
         headers,
         body,
-        icons,
         icon,
         iconV2,
         iconV3,
