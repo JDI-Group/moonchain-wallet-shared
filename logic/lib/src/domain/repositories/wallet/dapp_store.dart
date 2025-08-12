@@ -43,7 +43,7 @@ class DappStoreRepository {
     for (int i = 0; i < list.length; i++) {
       final data = await MXCFileHelpers.getDAppJson(list[i].dappUrl!);
       final dapp = Dapp.fromJson(data);
-      final finalDApp = dapp.appendPrefixToIcons(Assets.dappStorePath);
+      final finalDApp = dapp.appendPrefixToIcons(AssetsPath.dappStorePath);
       res.add(finalDApp);
     }
 
@@ -71,7 +71,7 @@ class DappStoreRepository {
         handleFailure: () async {
           final dappJson = await MXCFileHelpers.getDAppJson(list[i].dappUrl!);
           final dapp = Dapp.fromJson(dappJson);
-          return dapp.appendPrefixToIcons(Assets.dappStorePath);
+          return dapp.appendPrefixToIcons(AssetsPath.dappStorePath);
         },
       );
 

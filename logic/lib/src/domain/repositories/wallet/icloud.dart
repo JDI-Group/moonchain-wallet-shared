@@ -54,7 +54,7 @@ class ICloudRepository {
 
   Future<String> readBackupFile() async {
     final localFile = await MXCFileHelpers.writeToTempFile('');
-    final fileName = Assets.tempSeedPhaseFileName;
+    final fileName = AssetsPath.tempSeedPhaseFileName;
     StreamSubscription<double>? downloadProgressSub;
 
     try {

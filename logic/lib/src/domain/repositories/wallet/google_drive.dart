@@ -54,7 +54,7 @@ class GoogleDriveRepository {
   ) async {
     _googleAuthHeaders = googleAuthHeaders;
 
-    final fileName = Assets.tempSeedPhaseFileName;
+    final fileName = AssetsPath.tempSeedPhaseFileName;
 
     final existingFile = await _googleDriveFileUtils.doesFileExist(fileName);
 

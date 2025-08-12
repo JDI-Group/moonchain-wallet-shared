@@ -1,7 +1,7 @@
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 
-class Assets {
+class AssetsPath {
   static const String mxcLogic = 'mxc_logic';
 
   static const String dappStorePath =

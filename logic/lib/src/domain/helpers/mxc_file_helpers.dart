@@ -5,12 +5,12 @@ import 'package:path_provider/path_provider.dart';
 
 class MXCFileHelpers {
   static Future<String> getDAppStoreJson() async {
-    const fileName = Assets.dappStoreJson;
+    const fileName = AssetsPath.dappStoreJson;
     return await MXCFile.readFileFromAssets(fileName);
   }
 
   static Future<String> getDAppJson(String appName) async {
-    final fileName = Assets.dappStore(appName);
+    final fileName = AssetsPath.dappStore(appName);
     return await MXCFile.readFileFromAssets(fileName);
   }
 
@@ -23,27 +23,27 @@ class MXCFileHelpers {
       );
 
   static Future<String> _getMoonchainTokenList() async {
-    const fileName = Assets.moonchainTokenListPath;
+    const fileName = AssetsPath.moonchainTokenListPath;
     return await MXCFile.readFileFromAssets(fileName);
   }
 
   static Future<String> _getGenevaTokenList() async {
-    const fileName = Assets.genevaTokenListPath;
+    const fileName = AssetsPath.genevaTokenListPath;
     return await MXCFile.readFileFromAssets(fileName);
   }
 
   static Future<String> _getEthereumTokenList() async {
-    const fileName = Assets.ethereumTokenListPath;
+    const fileName = AssetsPath.ethereumTokenListPath;
     return await MXCFile.readFileFromAssets(fileName);
   }
 
   static Future<String> getIpfsGatewayListJson() async {
-    const fileName = Assets.ipfsGatewayListJsonPath;
+    const fileName = AssetsPath.ipfsGatewayListJsonPath;
     return await MXCFile.readFileFromAssets(fileName);
   }
 
   static Future<String> getTweetsListJson() async {
-    const fileName = Assets.tweetsListJsonPath;
+    const fileName = AssetsPath.tweetsListJsonPath;
     return await MXCFile.readFileFromAssets(fileName);
   }
 
@@ -58,18 +58,18 @@ class MXCFileHelpers {
   static Future<String> writeSeedPhase(String content) async {
     String filePath;
     if (Platform.isAndroid) {
-      filePath = Assets.seedPhasePathAndroid(0);
+      filePath = AssetsPath.seedPhasePathAndroid(0);
       final doesPathExist =
           await MXCDirectory.directoryExists(filePath, hasFileName: true);
       if (doesPathExist) {
         return await writeFileContent(filePath, content);
       } else {
-        filePath = Assets.seedPhasePathAndroid(1);
+        filePath = AssetsPath.seedPhasePathAndroid(1);
         return await writeFileContent(filePath, content);
       }
     } else {
       // IOS
-      filePath = await Assets.seedPhasePathIOS();
+      filePath = await AssetsPath.seedPhasePathIOS();
       return await writeFileContent(filePath, content, recursive: true);
     }
   }
@@ -79,7 +79,7 @@ class MXCFileHelpers {
     String content,
   ) async {
     final tempDir = await getTemporaryDirectory();
-    final fileName = Assets.tempSeedPhaseFileName;
+    final fileName = AssetsPath.tempSeedPhaseFileName;
 
     final fullPath = '${tempDir.path}/$fileName';
     File file = await File(fullPath).create();
