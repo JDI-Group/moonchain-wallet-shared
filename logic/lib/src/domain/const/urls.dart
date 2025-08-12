@@ -87,7 +87,7 @@ class Urls {
   static const String mxcStatus = 'https://mxc.instatus.com/';
 
   static const String dappRoot =
-      'https://raw.githubusercontent.com/JDI-Group/moonchain-dapp-storee/main/';
+      'https://raw.githubusercontent.com/JDI-Group/moonchain-dapp-store/main/';
 
   static const String iOSUrl =
       'https://apps.apple.com/us/app/axs-decentralized-wallet/id6460891587';
