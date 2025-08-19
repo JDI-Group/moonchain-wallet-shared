@@ -112,20 +112,24 @@ class MxcTextField extends FormField<String> {
           ),
         );
 
-  MxcTextField.multiline(
-      {required Key? key,
-      String? label,
-      required TextEditingController this.controller,
-      String? hint,
-      FormFieldValidator<String>? validator,
-      AutovalidateMode? autovalidateMode,
-      TextInputAction? action,
-      Color? textColor,
-      bool autoFocus = false,
-      Color? borderUnFocusColor,
-      Color? borderFocusColor,
-      MxcTextFieldButton? suffixButton})
-      : super(
+  MxcTextField.multiline({
+    required Key? key,
+    String? label,
+    required TextEditingController this.controller,
+    String? hint,
+    FormFieldValidator<String>? validator,
+    AutovalidateMode? autovalidateMode,
+    TextInputAction? action,
+    Color? textColor,
+    int? maxLines,
+    bool autoFocus = false,
+    Color? borderUnFocusColor,
+    Color? borderFocusColor,
+    FocusNode? focusNode,
+    MxcTextFieldButton? suffixButton,
+    bool expands = false,
+    int? minLines,
+  }) : super(
           key: key,
           initialValue: controller.text,
           validator: validator,
@@ -139,7 +143,7 @@ class MxcTextField extends FormField<String> {
               obscure: false,
               readOnly: false,
               width: double.infinity,
-              maxLines: 7,
+              maxLines: maxLines ?? 7,
               action: action,
               errorText: field.errorText,
               textColor: textColor,
@@ -147,6 +151,9 @@ class MxcTextField extends FormField<String> {
               borderFocusColor: borderFocusColor,
               borderUnFocusColor: borderUnFocusColor,
               suffixButton: suffixButton,
+              focusNode: focusNode,
+              expands: expands,
+              minLines: minLines,
             );
           },
         );
@@ -225,37 +232,39 @@ class MxcTextFieldFormState extends FormFieldState<String> {
 }
 
 class _MxcNonFormTextField extends StatefulWidget {
-  const _MxcNonFormTextField(
-      {required Key? key,
-      required this.label,
-      required TextEditingController controller,
-      this.hint,
-      this.action,
-      this.readOnly = false,
-      this.suffixButton,
-      this.width = double.infinity,
-      this.maxLines = 1,
-      this.focusNode,
-      this.keyboardType,
-      this.suffixText,
-      this.obscure = false,
-      this.errorText,
-      this.followText,
-      this.onChanged,
-      this.useAnimation = true,
-      this.backgroundColor,
-      this.margin,
-      this.padding,
-      this.borderRadius,
-      this.borderUnFocusColor,
-      this.borderFocusColor,
-      this.prefix,
-      this.onFocused,
-      this.onTapOutside,
-      this.textColor,
-      this.autoFocus = false,
-      this.hasClearButton = true})
-      : _controller = controller,
+  const _MxcNonFormTextField({
+    required Key? key,
+    required this.label,
+    required TextEditingController controller,
+    this.hint,
+    this.action,
+    this.readOnly = false,
+    this.suffixButton,
+    this.width = double.infinity,
+    this.maxLines = 1,
+    this.focusNode,
+    this.keyboardType,
+    this.suffixText,
+    this.obscure = false,
+    this.errorText,
+    this.followText,
+    this.onChanged,
+    this.useAnimation = true,
+    this.backgroundColor,
+    this.margin,
+    this.padding,
+    this.borderRadius,
+    this.borderUnFocusColor,
+    this.borderFocusColor,
+    this.prefix,
+    this.onFocused,
+    this.onTapOutside,
+    this.textColor,
+    this.autoFocus = false,
+    this.hasClearButton = true,
+    this.expands = false,
+    this.minLines,
+  })  : _controller = controller,
         _initialValue = null,
         disabled = false,
         super(key: key);
@@ -286,7 +295,9 @@ class _MxcNonFormTextField extends StatefulWidget {
       this.onTapOutside,
       this.textColor,
       this.autoFocus = false,
-      this.hasClearButton = true})
+      this.hasClearButton = true,
+      this.expands = false,
+      this.minLines})
       : _initialValue = text,
         readOnly = true,
         _controller = null,
@@ -326,6 +337,8 @@ class _MxcNonFormTextField extends StatefulWidget {
   final BorderRadiusGeometry? borderRadius;
   final Color? borderUnFocusColor;
   final Color? borderFocusColor;
+  final bool expands;
+  final int? minLines;
 
   final Widget? prefix;
 
@@ -462,6 +475,8 @@ class _MxcNonFormTextFieldState extends State<_MxcNonFormTextField> {
                           controller: controller,
                           cursorColor: ColorsTheme.of(context).textPrimary,
                           autofocus: widget.autoFocus,
+                          expands: widget.expands,
+                          minLines: widget.minLines,
                           style: (widget.disabled)
                               ? FontTheme.of(context).body1().copyWith(
                                     color: ColorsTheme.of(context)
