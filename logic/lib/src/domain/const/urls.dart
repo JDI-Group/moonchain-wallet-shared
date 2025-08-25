@@ -1,4 +1,5 @@
 import 'package:mxc_logic/mxc_logic.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class Urls {
   static String tokenInstances(String baseUrl, String hash, TokenType type) =>
@@ -73,6 +74,8 @@ class Urls {
 
   static const String chainsList =
       'https://raw.githubusercontent.com/MXCzkEVM/chains-list/main/chains_list_v2.json';
+  // static const String chainsList =
+  //     'https://raw.githubusercontent.com/JDI-Group/chains-list/main/chains_list_v2.json';
 
   static getMXCNftMarketPlace(int chainId) =>
       MXCFunctionHelpers.mxcChainsSeparatedFunctions<String>(
@@ -232,4 +235,21 @@ class Urls {
   static const String mnsSubGraphs = 'subgraphs/name/mnsdomains/mns';
 
   static Uri getUri(String url) => Uri.parse(url);
+
+  // AI
+  static const String aiBaseEndpoint =
+      'https://moonbaseservice.mchain.ai/v1/api/';
+  static final Map<String, String> aiHeader = {
+    'Authorization': 'Bearer ${dotenv.env['AI_API_KEY']!}',
+    'Content-Type': 'application/json',
+    'accept': 'application/json',
+  };
+  static Map<String, String> aiHeaderWithStream() {
+    final aiHeaderUpdated = aiHeader;
+    aiHeaderUpdated.addAll({'responseType': 'stream'});
+    return aiHeaderUpdated;
+  }
+
+  static String newConversation(String userId) => '${aiBaseEndpoint}new_conversation?user_id=$userId';
+  static const String completion = '${aiBaseEndpoint}completion';
 }
