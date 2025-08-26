@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'data.dart';
+export  'ai_message.dart';
 
 class AiNewConversationResponse {
 

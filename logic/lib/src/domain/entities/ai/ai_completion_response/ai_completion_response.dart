@@ -7,7 +7,8 @@ class AiCompletionResponse {
 
   factory AiCompletionResponse.fromJson(String data) {
     return AiCompletionResponse.fromMap(
-        json.decode(data) as Map<String, dynamic>);
+      json.decode(data) as Map<String, dynamic>,
+    );
   }
 
   factory AiCompletionResponse.fromMap(Map<String, dynamic> json) {

@@ -1,5 +1,4 @@
 class AIMessage {
-
   AIMessage({this.content, this.role});
   String? content;
   String? role;
@@ -13,4 +12,7 @@ class AIMessage {
         'content': content,
         'role': role,
       };
+
+  @override
+  List<Object?> get props => [content, role];
 }
