@@ -30,3 +30,4 @@ export 'miner_list_model/miner_list_model.dart';
 export 'miner_get_total_claim/miner_get_total_claim.dart';
 export 'blueberry_ring/blueberry_ring.dart';
 export 'domain_names_query_response.dart';
+export 'ai/ai.dart';
