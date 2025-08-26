@@ -96,5 +96,9 @@ extension MxcThemeDataExtension on MxcThemeData {
         iconTheme: IconThemeData(
           color: colors.textPrimary,
         ),
+        textSelectionTheme: TextSelectionThemeData(
+          selectionColor: colors.primary, // highlight color
+          selectionHandleColor: colors.primary, // 👈
+        ),
       );
 }

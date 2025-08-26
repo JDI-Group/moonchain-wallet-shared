@@ -473,7 +473,7 @@ class _MxcNonFormTextFieldState extends State<_MxcNonFormTextField> {
                           maxLines: widget.maxLines,
                           textInputAction: widget.action,
                           controller: controller,
-                          cursorColor: ColorsTheme.of(context).textPrimary,
+                          cursorColor: ColorsTheme.of(context).primary,
                           autofocus: widget.autoFocus,
                           expands: widget.expands,
                           minLines: widget.minLines,
@@ -837,7 +837,7 @@ class _MxcMiniNonFormTextFieldState extends State<_MxcMiniNonFormTextField> {
   Color getColorFont() {
     if (widget.disabled) return ColorsTheme.of(context).fullRoundButton;
     if (widget.error) return ColorsTheme.of(context).mainRed;
-    if (focused) return ColorsTheme.of(context).purpleMain;
+    if (focused) return ColorsTheme.of(context).primary;
     return ColorsTheme.of(context).textPrimary;
   }
 
