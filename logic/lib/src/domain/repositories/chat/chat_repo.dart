@@ -37,7 +37,7 @@ class ChatRepository {
 
   Stream<String> sendMessage(
     String conversationId,
-    String message,
+    List<AIMessage> messages,
     String myName,
   ) async* {
     Request request = Request(
@@ -51,7 +51,7 @@ class ChatRepository {
     request.body = jsonEncode(
       AiCompletionRequestBody(
         conversationId: conversationId,
-        messages: [AIMessage(content: message, role: 'user')],
+        messages: messages,
         myname: myName,
         quote: false,
       ).toJson(),
