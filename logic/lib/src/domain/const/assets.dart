@@ -11,6 +11,8 @@ class AssetsPath {
       '${dappStorePath}dapp_store/$dappName';
   static String dappsThumbnail(String image) =>
       '${dappStorePath}mxc_dapps_thumbnails/$image.png';
+  static String dappsThumbnailV3(String icon) =>
+      '${dappStorePath}mxc_dapps_thumbnails/icons_v3/$icon.svg';
 
   static const String tokenListPath =
       'packages/$mxcLogic/assets/cache/wannseeswap-tokenlist/';
