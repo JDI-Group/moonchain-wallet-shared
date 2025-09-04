@@ -45,4 +45,7 @@ class Config {
   // ICloud config 
   static const iCloudContainerId = 'iCloud.moonchain.mxc';
   static const iCloudFolderName = 'MoonBase';
+
+  // AI agent name 
+  static const aiAgentName = 'MoonChain AI';
 }
