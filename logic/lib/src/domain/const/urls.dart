@@ -252,4 +252,7 @@ class Urls {
 
   static String newConversation(String userId) => '${aiBaseEndpoint}new_conversation?user_id=$userId';
   static const String completion = '${aiBaseEndpoint}completion';
+
+  static const String reporterEndpoint = '';
+  static const String reporterInfo = '${reporterEndpoint}info';
 }

@@ -2,6 +2,7 @@ import 'package:mxc_logic/mxc_logic.dart';
 import 'package:mxc_logic/src/data/api/client/web3_client.dart';
 import 'package:mxc_logic/src/data/data.dart';
 import 'package:mxc_logic/src/domain/repositories/chat/chat_repo.dart';
+import 'package:mxc_logic/src/domain/repositories/reporter/reporter.dart';
 import 'package:mxc_logic/src/domain/repositories/wallet/google_drive.dart';
 import 'package:mxc_logic/src/domain/repositories/wallet/icloud.dart';
 
@@ -63,4 +64,6 @@ class Web3Repository {
   ICloudRepository get iCloudRepository => ICloudRepository(_web3client);
 
   ChatRepository get chatRepository => ChatRepository(_web3client);
+
+  ReporterRepository get reporterRepository => ReporterRepository(_web3client);
 }
