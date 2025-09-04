@@ -1,12 +1,12 @@
 [submodule "logic/assets/cache/MEP-1759-DApp-store"]
 	path = logic/assets/cache/MEP-1759-DApp-store
-	url = https://github.com/MXCzkEVM/MEP-1759-DApp-store.git
+	url = https://github.com/JDI-Group/moonchain-dapp-store.git
 [submodule "logic/assets/cache/wannseeswap-tokenlist"]
 	path = logic/assets/cache/wannseeswap-tokenlist
-	url = https://github.com/MXCzkEVM/wannseeswap-tokenlist.git
+	url = https://github.com/JDI-Group/moonchain-tokens.git
 [submodule "logic/assets/cache/ipfs-gateway-list"]
 	path = logic/assets/cache/ipfs-gateway-list
-	url = https://github.com/MXCzkEVM/ipfs-gateway-list.git
+	url = https://github.com/JDI-Group/ipfs-list.git
 [submodule "logic/assets/cache/mxc-tweets-list"]
 	path = logic/assets/cache/mxc-tweets-list
-	url = https://github.com/MXCzkEVM/mxc-tweets-list.git
+	url = https://github.com/JDI-Group/moonchain-tweets
