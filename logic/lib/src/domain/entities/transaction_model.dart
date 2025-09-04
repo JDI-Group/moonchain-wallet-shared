@@ -6,7 +6,14 @@ enum TransactionType { sent, received, contractCall, all, unknown }
 
 enum TransferType { coin, erc20, erc1155, erc721, none }
 
-enum TransactionStatus { done, pending, failed }
+enum TransactionStatus {
+  done('✅'),
+  pending('⏳'),
+  failed('❌');
+
+  const TransactionStatus(this.icon);
+  final String icon;
+}
 
 /// cancelSpeedUp = null (show both buttons) => speed up => (show cancel) cancel ==> Show nothing
 /// speedUpCancel = null (show both buttons) => cancel => (show speed up cancellation) speed up  ==> Show speed up cancellation
