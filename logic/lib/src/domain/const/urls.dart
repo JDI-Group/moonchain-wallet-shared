@@ -87,7 +87,7 @@ class Urls {
   static const String mxcMainnetNftMarketPlace = 'https://nft.moonchain.com/';
   static const String mxcTestnetNftMarketPlace =
       'https://geneva-nft.moonchain.com/';
-  static const String mxcStatus = 'https://mxc.instatus.com/';
+  static const String mxcStatus = 'https://mchain.instatus.com/';
 
   static const String dappRoot =
       'https://raw.githubusercontent.com/JDI-Group/moonchain-dapp-store/main/';
