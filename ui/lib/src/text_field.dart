@@ -3,29 +3,30 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mxc_ui/mxc_ui.dart';
 
 class MxcTextField extends FormField<String> {
-  MxcTextField(
-      {required Key? key,
-      String? label,
-      required TextEditingController this.controller,
-      String? hint,
-      FormFieldValidator<String>? validator,
-      TextInputAction? action,
-      bool readOnly = false,
-      MxcTextFieldButton? suffixButton,
-      double width = double.infinity,
-      FocusNode? focusNode,
-      TextInputType? keyboardType,
-      String? suffixText,
-      bool obscure = false,
-      AutovalidateMode? autovalidateMode,
-      String? followText,
-      String? errorText,
-      ValueChanged<String>? onChanged,
-      final ValueChanged<bool>? onFocused,
-      Function(PointerDownEvent)? onTapOutside,
-      bool autoFocus = false,
-      bool hasClearButton = true})
-      : super(
+  MxcTextField({
+    required Key? key,
+    String? label,
+    required TextEditingController this.controller,
+    String? hint,
+    FormFieldValidator<String>? validator,
+    TextInputAction? action,
+    bool readOnly = false,
+    MxcTextFieldButton? suffixButton,
+    double width = double.infinity,
+    FocusNode? focusNode,
+    TextInputType? keyboardType,
+    String? suffixText,
+    bool obscure = false,
+    AutovalidateMode? autovalidateMode,
+    String? followText,
+    String? errorText,
+    ValueChanged<String>? onChanged,
+    final ValueChanged<bool>? onFocused,
+    Function(PointerDownEvent)? onTapOutside,
+    bool autoFocus = false,
+    bool hasClearButton = true,
+    double? fontSize,
+  }) : super(
           key: key,
           initialValue: controller.text,
           validator: validator,
@@ -51,6 +52,7 @@ class MxcTextField extends FormField<String> {
               onTapOutside: onTapOutside,
               autoFocus: autoFocus,
               hasClearButton: hasClearButton,
+              fontSize: fontSize,
             );
           },
         );
@@ -68,6 +70,7 @@ class MxcTextField extends FormField<String> {
     String? suffixText,
     bool obscure = false,
     String? followText,
+    double? fontSize,
   })  : controller = null,
         super(
           key: key,
@@ -83,6 +86,7 @@ class MxcTextField extends FormField<String> {
             suffixText: suffixText,
             width: width,
             followText: followText,
+            fontSize: fontSize,
           ),
         );
 
@@ -96,6 +100,7 @@ class MxcTextField extends FormField<String> {
     FocusNode? focusNode,
     String? suffixText,
     bool obscure = false,
+    double? fontSize,
   })  : controller = null,
         super(
           key: key,
@@ -109,6 +114,7 @@ class MxcTextField extends FormField<String> {
             obscure: obscure,
             suffixText: suffixText,
             width: width,
+            fontSize: fontSize,
           ),
         );
 
@@ -129,6 +135,8 @@ class MxcTextField extends FormField<String> {
     MxcTextFieldButton? suffixButton,
     bool expands = false,
     int? minLines,
+    bool? hasClearButton,
+    double? fontSize,
   }) : super(
           key: key,
           initialValue: controller.text,
@@ -154,6 +162,8 @@ class MxcTextField extends FormField<String> {
               focusNode: focusNode,
               expands: expands,
               minLines: minLines,
+              hasClearButton: hasClearButton ?? true,
+              fontSize: fontSize,
             );
           },
         );
@@ -170,6 +180,7 @@ class MxcTextField extends FormField<String> {
     TextInputAction? action,
     ValueChanged<String>? onChanged,
     Widget? prefix,
+    double? fontSize,
   }) : super(
           key: key,
           initialValue: controller.text,
@@ -193,6 +204,7 @@ class MxcTextField extends FormField<String> {
               borderRadius: const BorderRadius.all(Radius.circular(100)),
               onChanged: onChanged,
               prefix: prefix,
+              fontSize: fontSize,
             );
           },
         );
@@ -264,41 +276,43 @@ class _MxcNonFormTextField extends StatefulWidget {
     this.hasClearButton = true,
     this.expands = false,
     this.minLines,
+    this.fontSize,
   })  : _controller = controller,
         _initialValue = null,
         disabled = false,
         super(key: key);
 
-  const _MxcNonFormTextField.viewOnly(
-      {Key? key,
-      required this.label,
-      required String text,
-      this.hint,
-      this.action,
-      this.suffixButton,
-      this.width = double.infinity,
-      this.focusNode,
-      this.keyboardType,
-      this.suffixText,
-      this.obscure = false,
-      this.disabled = false,
-      this.followText,
-      this.useAnimation = true,
-      this.backgroundColor,
-      this.margin,
-      this.padding,
-      this.borderRadius,
-      this.borderUnFocusColor,
-      this.borderFocusColor,
-      this.prefix,
-      this.onFocused,
-      this.onTapOutside,
-      this.textColor,
-      this.autoFocus = false,
-      this.hasClearButton = true,
-      this.expands = false,
-      this.minLines})
-      : _initialValue = text,
+  const _MxcNonFormTextField.viewOnly({
+    Key? key,
+    required this.label,
+    required String text,
+    this.hint,
+    this.action,
+    this.suffixButton,
+    this.width = double.infinity,
+    this.focusNode,
+    this.keyboardType,
+    this.suffixText,
+    this.obscure = false,
+    this.disabled = false,
+    this.followText,
+    this.useAnimation = true,
+    this.backgroundColor,
+    this.margin,
+    this.padding,
+    this.borderRadius,
+    this.borderUnFocusColor,
+    this.borderFocusColor,
+    this.prefix,
+    this.onFocused,
+    this.onTapOutside,
+    this.textColor,
+    this.fontSize,
+    this.autoFocus = false,
+    this.hasClearButton = true,
+    this.expands = false,
+    this.minLines,
+  })  : _initialValue = text,
         readOnly = true,
         _controller = null,
         maxLines = 1,
@@ -343,6 +357,7 @@ class _MxcNonFormTextField extends StatefulWidget {
   final Widget? prefix;
 
   final Color? textColor;
+  final double? fontSize;
 
   @override
   State<_MxcNonFormTextField> createState() => _MxcNonFormTextFieldState();
@@ -481,10 +496,12 @@ class _MxcNonFormTextFieldState extends State<_MxcNonFormTextField> {
                               ? FontTheme.of(context).body1().copyWith(
                                     color: ColorsTheme.of(context)
                                         .backgroundDisabled,
+                                    fontSize: widget.fontSize,
                                   )
-                              : FontTheme.of(context)
-                                  .body1()
-                                  .copyWith(color: widget.textColor),
+                              : FontTheme.of(context).body1().copyWith(
+                                    color: widget.textColor,
+                                    fontSize: widget.fontSize,
+                                  ),
                           obscureText: widget.obscure,
                           onChanged: widget.onChanged,
                           onTapOutside: widget.onTapOutside,
@@ -492,9 +509,11 @@ class _MxcNonFormTextFieldState extends State<_MxcNonFormTextField> {
                             isDense: true,
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                             hintText: widget.hint,
-                            hintStyle: FontTheme.of(context)
-                                .subtitle1()
-                                .copyWith(color: ColorsTheme.of(context).grey1),
+                            hintStyle:
+                                FontTheme.of(context).subtitle1().copyWith(
+                                      color: ColorsTheme.of(context).grey1,
+                                      fontSize: widget.fontSize,
+                                    ),
                             enabledBorder: InputBorder.none,
                             focusedBorder: InputBorder.none,
                             errorBorder: InputBorder.none,
