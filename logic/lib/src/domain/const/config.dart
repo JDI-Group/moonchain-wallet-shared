@@ -4,11 +4,22 @@ class Config {
   // App related config
   static const int mxcMainnetChainId = 18686;
   static const int mxcTestnetChainId = 5167004;
+  static const int mchTestnetChainId = 177888;
+  static const int mchMainnetChainId = 999888;
   static const int ethereumMainnetChainId = 1;
+  static const int bnbMainnetChainId = 56;
   static const int ethDecimals = 18;
-  static const String mxcSymbol = 'MXC';
+
+  static String getLogoUri(int chainId)  =>
+      MXCFunctionHelpers.mxcChainsSeparatedFunctions<String>(
+        chainId: chainId,
+        mxcMainnetFunc: () => mxcLogoUri,
+        mchMainnetFunc: () => mchLogoUri,
+        mchTestnetFunc: () => mchLogoUri,
+      );
+
   static const String mxcLogoUri = 'assets/svg/networks/mxc.svg';
-  static const String mxcName = 'MXC Token';
+  static const String mchLogoUri = 'assets/svg/networks/mch.svg';
   static const priority = 1.1;
   static EtherAmount maxPriorityFeePerGas = MxcAmount.fromDoubleByGWei(1.5);
   static const dappSectionFeeDivision = 1.5;
