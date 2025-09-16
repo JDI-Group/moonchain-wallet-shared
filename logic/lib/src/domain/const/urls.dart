@@ -94,7 +94,7 @@ class Urls {
       'https://raw.githubusercontent.com/JDI-Group/moonchain-dapp-store/main/';
 
   static const String iOSUrl =
-      'https://apps.apple.com/us/app/axs-decentralized-wallet/id6460891587';
+      'https://apps.apple.com/us/app/moonbase-the-mining-hub/id6736371768';
 
   static const String weChat = 'weixin://';
   static const String telegram = 'tg://';
