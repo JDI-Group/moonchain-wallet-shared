@@ -68,10 +68,12 @@ class Urls {
         testnetFunc: () => testnetApiBaseUrl,
       );
 
-  static const String mainnetApiBaseUrl =
+  static const String mxcMainnetApiBaseUrl =
       'https://explorer-v1.moonchain.com/api/v2/';
-  static const String testnetApiBaseUrl =
-      'https://geneva-explorer-v1.moonchain.com/api/v2/';
+  static const String mchMainnetApiBaseUrl =
+      'https://explorer-v1.mchain.ai/api/v2/';
+  static const String mchTestnetApiBaseUrl =
+      'https://hudson-explorer-v1.mchain.ai/api/v2/';
 
   static const String chainsList =
       'https://raw.githubusercontent.com/MXCzkEVM/chains-list/main/chains_list_v2.json';
