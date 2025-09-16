@@ -42,10 +42,11 @@ class Urls {
       'https://raw.githubusercontent.com/MXCzkEVM/wannseeswap-tokenlist/main/tokenlist.json';
   static const String ethereumMainnetTokenListUrl =
       'https://raw.githubusercontent.com/MXCzkEVM/wannseeswap-tokenlist/main/tokenlist-ethereum.json';
+
   static const String defaultIpfsGateway =
-      'https://raw.githubusercontent.com/MXCzkEVM/ipfs-gateway-list/main/ipfs_gateway_list.json';
+      'https://raw.githubusercontent.com/JDI-Group/ipfs-list/refs/heads/main/ipfs_gateway_list.json';
   static const String defaultTweets =
-      'https://raw.githubusercontent.com/MXCzkEVM/mxc-tweets-list/main/tweets_list_v2.json';
+      'https://raw.githubusercontent.com/JDI-Group/moonchain-tweets/refs/heads/main/tweets_list_v2.json';
 
   static const String dappStore =
       'https://raw.githubusercontent.com/JDI-Group/moonchain-dapp-store/main/dapp-store.json';
