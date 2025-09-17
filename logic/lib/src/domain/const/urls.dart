@@ -65,7 +65,7 @@ class Urls {
 
   // Add this new static constant:
   static const String latestVersionYaml =
-      'https://raw.githubusercontent.com/MXCzkEVM/moonchain-wallet/refs/heads/main/pubspec.yaml';
+      'https://raw.githubusercontent.com/JDI-Group/moonchain-wallet/refs/heads/main/pubspec.yaml';
 
   static String getApiBaseUrl(int chainId) =>
       MXCFunctionHelpers.mxcChainsSeparatedFunctions(
