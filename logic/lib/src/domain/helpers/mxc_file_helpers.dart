@@ -17,18 +17,24 @@ class MXCFileHelpers {
   static Future<String> getTokenList(int chainId) =>
       MXCFunctionHelpers.chainsSeparatedFunctions<Future<String>>(
         chainId: chainId,
-        moonChainFunc: () => _getMoonchainTokenList(),
-        genevaFunc: () => _getGenevaTokenList(),
+        mxcMainnetFunc: () => _getMXCMainnetTokenList(),
+        mchMainnetFunc: () => _getMCHMainnetTokenList(),
+        mchTestnetFunc: () => _getMCHTestnetTokenList(),
         ethereumFunc: () => _getEthereumTokenList(),
       );
 
-  static Future<String> _getMoonchainTokenList() async {
-    const fileName = AssetsPath.moonchainTokenListPath;
+  static Future<String> _getMXCMainnetTokenList() async {
+    const fileName = AssetsPath.mxcMainnetTokenListPath;
     return await MXCFile.readFileFromAssets(fileName);
   }
 
-  static Future<String> _getGenevaTokenList() async {
-    const fileName = AssetsPath.genevaTokenListPath;
+  static Future<String> _getMCHMainnetTokenList() async {
+    const fileName = AssetsPath.mchMainnetTokenListPath;
+    return await MXCFile.readFileFromAssets(fileName);
+  }
+
+  static Future<String> _getMCHTestnetTokenList() async {
+    const fileName = AssetsPath.mchTestnetTokenListPath;
     return await MXCFile.readFileFromAssets(fileName);
   }
 
