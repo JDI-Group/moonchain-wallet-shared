@@ -70,8 +70,9 @@ class Urls {
   static String getApiBaseUrl(int chainId) =>
       MXCFunctionHelpers.mxcChainsSeparatedFunctions(
         chainId: chainId,
-        mainnetFunc: () => mainnetApiBaseUrl,
-        testnetFunc: () => testnetApiBaseUrl,
+        mxcMainnetFunc: () => mxcMainnetApiBaseUrl,
+        mchMainnetFunc: () => mchMainnetApiBaseUrl,
+        mchTestnetFunc: () => mchTestnetApiBaseUrl,
       );
 
   static const String mxcMainnetApiBaseUrl =
@@ -89,13 +90,14 @@ class Urls {
   static getMXCNftMarketPlace(int chainId) =>
       MXCFunctionHelpers.mxcChainsSeparatedFunctions<String>(
         chainId: chainId,
-        mainnetFunc: () => mxcMainnetNftMarketPlace,
-        testnetFunc: () => mxcTestnetNftMarketPlace,
+        mxcMainnetFunc: () => mxcMainnetNftMarketPlace,
+        mchMainnetFunc: () => throw 'N/A',
+        mchTestnetFunc: () => throw 'N/A'
       );
 
   static const String mxcMainnetNftMarketPlace = 'https://nft.moonchain.com/';
-  static const String mxcTestnetNftMarketPlace =
-      'https://geneva-nft.moonchain.com/';
+  static const String mchMainnetNftMarketPlace = 'https://nft.moonchain.com/';
+  static const String mchTestnetNftMarketPlace = 'https://nft.moonchain.com/';
   static const String mxcStatus = 'https://mchain.instatus.com/';
 
   static const String dappRoot =
@@ -115,17 +117,20 @@ class Urls {
       'https://doc.moonchain.com/docs/intro/';
 
   /// Used to retrieve the latest epoch details
-  static String mepEpochListTestnet(int page, int pageLimit) =>
+  static String mchMainnetMepEpochList(int page, int pageLimit) =>
       'https://geneva-mining-api.matchx.io/mep2542/getEpochList?page=$page&limit=$pageLimit';
-  static String mepEpochListMainnet(int page, int pageLimit) =>
+  static String mchTestnetMepEpochList(int page, int pageLimit) =>
+      'https://geneva-mining-api.matchx.io/mep2542/getEpochList?page=$page&limit=$pageLimit';
+  static String mxcMainnetMepEpochList(int page, int pageLimit) =>
       'https://mining-api.matchx.io/mep2542/getEpochList?page=$page&limit=$pageLimit';
 
-  static String mepEpochList(int chainId, int page, int pageLimit) {
-    if (MXCChains.isMXCMainnet(chainId)) {
-      return mepEpochListMainnet(page, pageLimit);
-    }
-    return mepEpochListTestnet(page, pageLimit);
-  }
+  static String mepEpochList(int chainId, int page, int pageLimit) =>
+      MXCFunctionHelpers.mxcChainsSeparatedFunctions(
+        chainId: chainId,
+        mxcMainnetFunc: () => mxcMainnetMepEpochList(page, pageLimit),
+        mchMainnetFunc: () => throw 'N/A',
+        mchTestnetFunc: () => throw 'N/A',
+      );
 
   static const String mxcWalletTermsConditions =
       'https://doc.moonchain.com/docs/Resources/tns/';
@@ -139,13 +144,24 @@ class Urls {
   static const String bitmart = 'https://www.bitmart.com/en-US/';
   static const String htx = 'https://www.htx.com/';
 
-  static const String mainnetJannowitz = 'https://jannowitz.moonchain.com/';
-  static const String testnetJannowitz = 'https://geneva-bridge.moonchain.com/';
+  static const String mxcMainnetJannowitz = 'https://jannowitz.moonchain.com/';
+  static const String mchMainnetJannowitz = 'https://jannowitz.moonchain.com/';
+  static const String mchTestnetJannowitz = 'https://jannowitz.moonchain.com/';
 
-  static String mainnetMns(String name) =>
+  static getMnsUrl(int chainId, String name) =>
+      MXCFunctionHelpers.mxcChainsSeparatedFunctions(
+        chainId: chainId,
+        mxcMainnetFunc: () => mxcMainnetMns(name),
+        mchMainnetFunc: () => throw 'N/A',
+        mchTestnetFunc: () => throw 'N/A',
+      );
+
+  static String mxcMainnetMns(String name) =>
       'https://mns.moonchain.com/$name.mxc/register';
-  static String testnetMns(String name) =>
-      'https://geneva-mns.moonchain.com/$name.mxc/register';
+  static String mchMainnetMns(String name) =>
+      throw 'N/A';
+  static String mchTestnetMns(String name) =>
+      throw 'N/A';
 
   static String txExplorer(String hash) {
     return 'tx/$hash';
@@ -197,8 +213,11 @@ class Urls {
   static const minerDappTestnet = 'https://geneva-mining.matchx.io/';
   static const minerDappMainnet = 'https://mining.matchx.io/';
 
-  static String networkJannowitz(int chainId) =>
-      MXCChains.isMXCMainnet(chainId) ? mainnetJannowitz : testnetJannowitz;
+  static String networkJannowitz(int chainId) => MXCChains.isMXCMainnet(chainId)
+      ? mxcMainnetJannowitz
+      : MXCChains.isMCHMainnet(chainId)
+          ? mchMainnetJannowitz
+          : mchTestnetJannowitz;
 
   static String getMepGraphQlLink(int chainId) =>
       MXCChains.isMXCMainnet(chainId) ? mepGraphQlMainnet : mepGraphQlGeneva;
@@ -211,18 +230,24 @@ class Urls {
   static String getBlueberryRingDapp(int chainId) =>
       MXCFunctionHelpers.mxcChainsSeparatedFunctions(
         chainId: chainId,
-        mainnetFunc: () => mainnetBlueberryRingDapp,
-        testnetFunc: () => testnetBlueberryRingDapp,
+        mxcMainnetFunc: () => mxcMainnetBlueberryRingDapp,
+        mchMainnetFunc: () => throw 'N/A',
+        mchTestnetFunc: () => throw 'N/A',
       );
 
   // Ring dapp urls
-  static List<String> getRingDappUrls() =>
-      [mainnetBlueberryRingDapp, testnetBlueberryRingDapp];
+  static List<String> getRingDappUrls() => [
+        mxcMainnetBlueberryRingDapp,
+        mchMainnetBlueberryRingDapp,
+        mchTestnetBlueberryRingDapp
+      ];
 
   // Ring
-  static const String mainnetBlueberryRingDapp =
+  static const String mxcMainnetBlueberryRingDapp =
       'https://app.blueberryring.com/';
-  static const String testnetBlueberryRingDapp =
+  static const String mchMainnetBlueberryRingDapp =
+      'https://testnet.blueberryring.com/';
+  static const String mchTestnetBlueberryRingDapp =
       'https://testnet.blueberryring.com/';
 
   static const blueberryRingDappClaim = 'api/claim';
@@ -233,19 +258,22 @@ class Urls {
   static String getMXCGraphNodeUrl(int chainId) =>
       MXCFunctionHelpers.mxcChainsSeparatedFunctions(
         chainId: chainId,
-        mainnetFunc: () => mainnetMXCGraphNode,
-        testnetFunc: () => testnetMXCGraphNode,
+        mxcMainnetFunc: () => mainnetMXCGraphNode,
+        mchMainnetFunc: () => throw 'N/A',
+        mchTestnetFunc: () => throw 'N/A',
       );
 
   static const String mainnetMXCGraphNode = 'https://mxc-graph.mxc.com/';
-  static const String testnetMXCGraphNode =
+  static const String mchMainnetGraphNode =
+      'https://geneva-graph-node.moonchain.com/';
+  static const String mchTestnetGraphNode =
       'https://geneva-graph-node.moonchain.com/';
 
   static const String mnsSubGraphs = 'subgraphs/name/mnsdomains/mns';
 
   static Uri getUri(String url) => Uri.parse(url);
 
-  // AI
+  // AI used for all chains
   static const String aiBaseEndpoint =
       'https://moonbaseservice.mchain.ai/v1/api/';
   static final Map<String, String> aiHeader = {
@@ -259,7 +287,8 @@ class Urls {
     return aiHeaderUpdated;
   }
 
-  static String newConversation(String userId) => '${aiBaseEndpoint}new_conversation?user_id=$userId';
+  static String newConversation(String userId) =>
+      '${aiBaseEndpoint}new_conversation?user_id=$userId';
   static const String completion = '${aiBaseEndpoint}completion';
 
   static const String reporterEndpoint = 'https://reporter.mchain.ai/';
