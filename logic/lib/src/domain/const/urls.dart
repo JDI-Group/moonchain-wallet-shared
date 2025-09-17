@@ -16,32 +16,38 @@ class Urls {
   static String getTokenListUrl(int chainId) =>
       MXCFunctionHelpers.chainsSeparatedFunctions<String>(
         chainId: chainId,
-        moonChainFunc: () => mainnetTokenListUrl,
-        genevaFunc: () => testnetTokenListUrl,
+        mxcMainnetFunc: () => mxcMainnetTokenListUrl,
+        mchMainnetFunc: () => mchMainnetTokenListUrl,
+        mchTestnetFunc: () => mchTestnetTokenListUrl,
         ethereumFunc: () => ethereumMainnetTokenListUrl,
       );
 
   static String getTokenListRepoUrl(int chainId) =>
       MXCFunctionHelpers.chainsSeparatedFunctions<String>(
         chainId: chainId,
-        moonChainFunc: () => mainnetTokenListRepoUrl,
-        genevaFunc: () => testnetTokenListRepoUrl,
+        mxcMainnetFunc: () => mxcMainnetTokenListRepoUrl,
+        mchMainnetFunc: () => mchMainnetTokenListRepoUrl,
+        mchTestnetFunc: () => mchTestnetTokenListRepoUrl,
         ethereumFunc: () => ethereumMainnetTokenListRepoUrl,
       );
 
-  static const String mainnetTokenListRepoUrl =
-      'https://github.com/MXCzkEVM/wannseeswap-tokenlist/blob/main/tokenlist-mainnet.json';
-  static const String testnetTokenListRepoUrl =
-      'https://github.com/MXCzkEVM/wannseeswap-tokenlist/blob/main/tokenlist.json';
+  static const String mxcMainnetTokenListRepoUrl =
+      'https://github.com/JDI-Group/moonchain-tokens/blob/main/tokenlist-mxc-mainnet.json';
+  static const String mchMainnetTokenListRepoUrl =
+      'https://github.com/JDI-Group/moonchain-tokens/blob/main/tokenlist-mch-mainnet.json';
+  static const String mchTestnetTokenListRepoUrl =
+      'https://github.com/JDI-Group/moonchain-tokens/blob/main/tokenlist-mch-testnet.json';
   static const String ethereumMainnetTokenListRepoUrl =
-      'https://github.com/MXCzkEVM/wannseeswap-tokenlist/blob/main/tokenlist-ethereum.json';
+      'https://github.com/JDI-Group/moonchain-tokens/blob/main/tokenlist-ethereum-mainnet.json';
 
-  static const String mainnetTokenListUrl =
-      'https://raw.githubusercontent.com/MXCzkEVM/wannseeswap-tokenlist/main/tokenlist-mainnet.json';
-  static const String testnetTokenListUrl =
-      'https://raw.githubusercontent.com/MXCzkEVM/wannseeswap-tokenlist/main/tokenlist.json';
+  static const String mxcMainnetTokenListUrl =
+      'https://raw.githubusercontent.com/JDI-Group/moonchain-tokens/main/tokenlist-mxc-mainnet.json';
+  static const String mchMainnetTokenListUrl =
+      'https://raw.githubusercontent.com/JDI-Group/moonchain-tokens/main/tokenlist-mch-mainnet.json';
+  static const String mchTestnetTokenListUrl =
+      'https://raw.githubusercontent.com/JDI-Group/moonchain-tokens/main/tokenlist-mch-testnet.json';
   static const String ethereumMainnetTokenListUrl =
-      'https://raw.githubusercontent.com/MXCzkEVM/wannseeswap-tokenlist/main/tokenlist-ethereum.json';
+      'https://raw.githubusercontent.com/JDI-Group/moonchain-tokens/main/tokenlist-ethereum-mainnet.json';
 
   static const String defaultIpfsGateway =
       'https://raw.githubusercontent.com/JDI-Group/ipfs-list/refs/heads/main/ipfs_gateway_list.json';
