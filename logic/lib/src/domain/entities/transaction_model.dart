@@ -25,6 +25,7 @@ class TransactionModel {
   factory TransactionModel.fromMXCTransaction(
     MoonchainTransactionModel mxcTransaction,
     String walletAddress,
+    Network chain,
   ) {
     String? value = '0';
     Token token = const Token();
@@ -94,8 +95,8 @@ class TransactionModel {
           );
           value = mxcTransaction.value ?? '0';
           token = token.copyWith(
-            logoUri: Config.mxcLogoUri,
-            symbol: Config.mxcName,
+            logoUri: Config.getLogoUri(chain.chainId),
+            symbol: chain.symbol,
           );
 
           if (mxcTransaction.decodedInput?.methodId ==
@@ -114,7 +115,7 @@ class TransactionModel {
       } else if (mxcTransaction.transactionTypes != null &&
           mxcTransaction.transactionTypes!.contains('coin_transfer')) {
         token =
-            token.copyWith(logoUri: Config.mxcLogoUri, symbol: Config.mxcName);
+            token.copyWith(logoUri: Config.getLogoUri(chain.chainId), symbol: chain.symbol);
 
         timeStamp = mxcTransaction.timestamp!;
 
