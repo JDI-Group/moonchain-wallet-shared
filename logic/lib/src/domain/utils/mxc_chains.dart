@@ -3,7 +3,8 @@ import 'package:mxc_logic/mxc_logic.dart';
 class MXCChains {
   static bool isMXCChains(int chainId) {
     return chainId == Config.mxcMainnetChainId ||
-        chainId == Config.mxcTestnetChainId;
+        chainId == Config.mchMainnetChainId ||
+        chainId == Config.mchTestnetChainId;
   }
 
   static bool isMXCChainsPlusEthereum(int chainId) {
@@ -14,8 +15,12 @@ class MXCChains {
     return chainId == Config.mxcMainnetChainId;
   }
 
-  static bool isMXCTestnet(int chainId) {
-    return chainId == Config.mxcTestnetChainId;
+  static bool isMCHTestnet(int chainId) {
+    return chainId == Config.mchTestnetChainId;
+  }
+
+  static bool isMCHMainnet(int chainId) {
+    return chainId == Config.mchMainnetChainId;
   }
 
   static bool isEthereumMainnet(int chainId) {
