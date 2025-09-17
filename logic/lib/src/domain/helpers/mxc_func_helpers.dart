@@ -18,13 +18,16 @@ class MXCFunctionHelpers {
 
   static T mxcChainsSeparatedFunctions<T>({
     required int chainId,
-    required T Function() mainnetFunc,
-    required T Function() testnetFunc,
+    required T Function() mxcMainnetFunc,
+    required T Function() mchTestnetFunc,
+    required T Function() mchMainnetFunc,
   }) {
     if (MXCChains.isMXCMainnet(chainId)) {
-      return mainnetFunc();
-    } else if (MXCChains.isMXCTestnet(chainId)) {
-      return testnetFunc();
+      return mxcMainnetFunc();
+    } else if (MXCChains.isMCHMainnet(chainId)) {
+      return mchMainnetFunc();
+    } else if (MXCChains.isMCHTestnet(chainId)) {
+      return mchTestnetFunc();
     } else {
       throw 'Unknown chain id given';
     }
@@ -32,14 +35,17 @@ class MXCFunctionHelpers {
 
   static T chainsSeparatedFunctions<T>({
     required int chainId,
-    required T Function() moonChainFunc,
-    required T Function() genevaFunc,
+    required T Function() mxcMainnetFunc,
+    required T Function() mchMainnetFunc,
+    required T Function() mchTestnetFunc,
     required T Function() ethereumFunc,
   }) {
     if (MXCChains.isMXCMainnet(chainId)) {
-      return moonChainFunc();
-    } else if (MXCChains.isMXCTestnet(chainId)) {
-      return genevaFunc();
+      return mxcMainnetFunc();
+    } else if (MXCChains.isMCHTestnet(chainId)) {
+      return mchTestnetFunc();
+    } else if (MXCChains.isMCHMainnet(chainId)) {
+      return mchMainnetFunc();
     } else if (MXCChains.isEthereumMainnet(chainId)) {
       return ethereumFunc();
     } else {
