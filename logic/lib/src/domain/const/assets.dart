@@ -17,11 +17,14 @@ class AssetsPath {
   static const String tokenListPath =
       'packages/$mxcLogic/assets/cache/wannseeswap-tokenlist/';
   static const String tokenListAssetsPath = '${tokenListPath}assets/';
-  static const String moonchainTokenListPath =
-      '${tokenListPath}tokenlist-mainnet.json';
-  static const String genevaTokenListPath = '${tokenListPath}tokenlist.json';
+  static const String mxcMainnetTokenListPath =
+      '${tokenListPath}tokenlist-mxc-mainnet.json';
   static const String ethereumTokenListPath =
-      '${tokenListPath}tokenlist-ethereum.json';
+      '${tokenListPath}tokenlist-ethereum-mainnet.json';
+  static const String mchMainnetTokenListPath =
+      '${tokenListPath}tokenlist-mch-mainnet.json';
+    static const String mchTestnetTokenListPath =
+      '${tokenListPath}tokenlist-mch-testnet.json';
 
   static const String ipfsGatewayListPath =
       'packages/$mxcLogic/assets/cache/ipfs-gateway-list/';
