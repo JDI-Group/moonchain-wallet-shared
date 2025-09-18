@@ -145,7 +145,7 @@ class Urls {
   static const String htx = 'https://www.htx.com/';
 
   static const String mxcMainnetJannowitz = 'https://jannowitz.moonchain.com/';
-  static const String mchMainnetJannowitz = 'https://jannowitz.moonchain.com/';
+  static const String mchMainnetJannowitz = 'https://bridge.mchain.ai/';
   static const String mchTestnetJannowitz = 'https://jannowitz.moonchain.com/';
 
   static getMnsUrl(int chainId, String name) =>
