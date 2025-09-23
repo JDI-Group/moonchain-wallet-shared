@@ -83,9 +83,7 @@ class Urls {
       'https://hudson-explorer-v1.mchain.ai/api/v2/';
 
   static const String chainsList =
-      'https://raw.githubusercontent.com/JDI-Group/chains-list/test/chains_list_v2.json';
-  // static const String chainsList =
-  //     'https://raw.githubusercontent.com/JDI-Group/chains-list/main/chains_list_v2.json';
+      'https://raw.githubusercontent.com/JDI-Group/chains-list/refs/heads/main/chains_list_v2.json';
 
   static getMXCNftMarketPlace(int chainId) =>
       MXCFunctionHelpers.mxcChainsSeparatedFunctions<String>(
