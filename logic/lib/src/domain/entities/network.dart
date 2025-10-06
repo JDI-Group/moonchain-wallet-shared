@@ -217,8 +217,8 @@ class Network {
       ),
       const Network(
         logo: 'assets/svg/networks/mxc.svg',
-        web3RpcHttpUrl: 'https://rpc.moonchain.com',
-        web3RpcWebsocketUrl: 'wss://rpc.moonchain.com',
+        web3RpcHttpUrl: 'https://rpc.mxc.com',
+        web3RpcWebsocketUrl: 'wss://rpc.mxc.com',
         web3WebSocketUrl:
             'wss://explorer-v1.mxc.com/socket/v2/websocket?vsn=2.0.0',
         symbol: 'MXC',
