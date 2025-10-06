@@ -67,7 +67,10 @@ class PricingRepository {
       for (int i = 0; i < tokens.length; i++) {
         final currentToken = tokens[i];
         // The price of a token with 0 balance is zero
-        if (currentToken.balance == 0.0) continue;
+        if (currentToken.balance == 0.0) {
+          tokens[i] = currentToken.copyWith(balancePrice: 0.0);
+          continue;
+        }
         if (currentToken.address != null) {
           try {
             // First if will handle in case the token is the XSD token
